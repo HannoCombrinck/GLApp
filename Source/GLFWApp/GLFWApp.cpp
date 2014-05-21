@@ -10,7 +10,9 @@ using namespace std;
 namespace baselib {
 
 	GLFWApp::GLFWApp()
-		: m_sWindowTitle("GLFWApp")
+		: m_bAppRunning(false)
+		, m_bInitialized(false)
+		, m_sWindowTitle("GLFWApp")
 		, m_iWidth(640)
 		, m_iHeight(480)
 		, m_bFullscreen(false)
@@ -31,6 +33,14 @@ namespace baselib {
 		void errorCallback(int iErrorCode, const char* szErrorMessage)
 		{
 			cout << "GLFW Error: " << iErrorCode << " : " << szErrorMessage << endl;
+		}
+
+		static void keyEventCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+		{
+			cout << "Key: " << key << " , Action: " << action << endl;
+
+			if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+				glfwSetWindowShouldClose(window, GL_TRUE);
 		}
 	}
 
@@ -54,13 +64,40 @@ namespace baselib {
 			assert("Failed to create GLFW window" && false);
 		}
 		glfwMakeContextCurrent(m_pWindow);
+
+		// Set event callbacks
+		glfwSetKeyCallback(m_pWindow, keyEventCallback);
+
+		// Successfully created window and context
+		setAppRunning(true);
+		m_bInitialized = true;
 	}
 
 	void GLFWApp::destroy()
 	{
+		if (!m_bInitialized)
+			return;
+		 
 		if (m_pWindow)
 			glfwDestroyWindow(m_pWindow);
 		glfwTerminate();
+
+		m_bInitialized = false;
+	}
+
+	void GLFWApp::processEvents()
+	{
+		if (glfwWindowShouldClose(m_pWindow))
+			setAppRunning(false);
+
+		glfwPollEvents();
+		// TODO: Handle additional events manually e.g. mouse move.
+	}
+
+	void GLFWApp::swapBuffers()
+	{
+		assert(m_bInitialized && "App must be initialized before calling GLFWApp::swapBuffers()");
+		glfwSwapBuffers(m_pWindow);
 	}
 
 }
