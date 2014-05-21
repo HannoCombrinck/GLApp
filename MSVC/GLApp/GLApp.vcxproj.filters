@@ -9,10 +9,27 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
+    <Filter Include="Header/Source Files\GLFWApp">
+      <UniqueIdentifier>{1e752703-f6ed-435b-a05e-e5f142a0a3d4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\main.cpp">
       <Filter>Header/Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\App.cpp">
+      <Filter>Header/Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\GLFWApp\GLFWApp.cpp">
+      <Filter>Header/Source Files\GLFWApp</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\Source\App.h">
+      <Filter>Header/Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\GLFWApp\GLFWApp.h">
+      <Filter>Header/Source Files\GLFWApp</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
