@@ -40,6 +40,12 @@ namespace baselib
 		int getMinorVersion() const { return m_iMinorVersion; }
 
 	private:
+		void keyEvent(int iKey, int iAction);
+		void mouseMove();
+		void mouseButton(int iButton, int iAction);
+		void mouseScroll(int iScroll);
+		void mouseEnter(int iEnter);
+
 		virtual void onKeyPress(int iKey) {}
 		virtual void onKeyRelease(int iKey) {}
 		virtual void onMouseMove(int iX, int iY) {}
@@ -48,6 +54,11 @@ namespace baselib
 		virtual void onMouseLeftRelease(int iX, int iY) {}
 		virtual void onMouseRightClick(int iX, int iY) {}
 		virtual void onMouseRightRelease(int iX, int iY) {}
+		virtual void onMouseMiddleClick(int iX, int iY) {}
+		virtual void onMouseMiddleRelease(int iX, int iY) {}
+		virtual void onMouseScroll(int iScroll) {}
+		virtual void onMouseEnter() {}
+		virtual void onMouseExit() {}
 		virtual void onWindowResize(int iWidth, int iHeight) {}
 
 		bool m_bAppRunning;
@@ -60,5 +71,9 @@ namespace baselib
 		int m_iMinorVersion;
 		GLFWwindow* m_pWindow;
 
+		int m_iMouseX;
+		int m_iMouseY;
+		int m_iMouseXPrev;
+		int m_iMouseYPrev;
 	};
 }
