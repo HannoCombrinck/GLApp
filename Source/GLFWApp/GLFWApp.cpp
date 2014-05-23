@@ -139,13 +139,17 @@ namespace baselib {
 		// Successfully created window and context
 		setAppRunning(true);
 		m_bInitialized = true;
+
+		onStart();
 	}
 
 	void GLFWApp::destroy()
 	{
 		if (!m_bInitialized)
 			return;
-		 
+		
+		onDestroy();
+
 		if (m_pWindow)
 			glfwDestroyWindow(m_pWindow);
 		glfwTerminate();

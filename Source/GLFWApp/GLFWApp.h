@@ -66,6 +66,11 @@ namespace baselib
 		void mouseScroll(double dScroll);
 		void mouseEnter(int iEnter);
 
+		//! Called after window and OpenGL context was successfully created. Derived app should do initialization here.
+		virtual void onStart() {}
+		//! Called before window and OpenGL context is destroyed. Derived app should do cleanup here before window is destroyed.
+		virtual void onDestroy() {}
+
 		//! Called when a key is pressed.
 		virtual void onKeyPress(int iKey) {}
 		//! Called when a key is released.
