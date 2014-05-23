@@ -75,11 +75,13 @@
     <ClCompile Include="..\..\Source\GLFWApp\GLFWApp.cpp" />
     <ClCompile Include="..\..\Source\Logging\Log.cpp" />
     <ClCompile Include="..\..\Source\main.cpp" />
+    <ClCompile Include="..\..\Source\Math\Math.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\BaseApp.h" />
     <ClInclude Include="..\..\Source\GLFWApp\GLFWApp.h" />
     <ClInclude Include="..\..\Source\Logging\Log.h" />
+    <ClInclude Include="..\..\Source\Math\Math.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

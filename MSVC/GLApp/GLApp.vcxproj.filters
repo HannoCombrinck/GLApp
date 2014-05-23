@@ -15,6 +15,9 @@
     <Filter Include="Header/Source Files\Logging">
       <UniqueIdentifier>{389340c9-0108-4219-9d19-8eb7a8ff1c3e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header/Source Files\Math">
+      <UniqueIdentifier>{ee3b25a5-912b-49bd-be07-43f1c467bec1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\main.cpp">
@@ -29,6 +32,9 @@
     <ClCompile Include="..\..\Source\BaseApp.cpp">
       <Filter>Header/Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Math\Math.cpp">
+      <Filter>Header/Source Files\Math</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\GLFWApp\GLFWApp.h">
@@ -39,6 +45,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\BaseApp.h">
       <Filter>Header/Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Math\Math.h">
+      <Filter>Header/Source Files\Math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
