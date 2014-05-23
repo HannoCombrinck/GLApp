@@ -20,25 +20,25 @@
     <ClCompile Include="..\..\Source\main.cpp">
       <Filter>Header/Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\App.cpp">
-      <Filter>Header/Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\GLFWApp\GLFWApp.cpp">
       <Filter>Header/Source Files\GLFWApp</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Logging\Log.cpp">
       <Filter>Header/Source Files\Logging</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\BaseApp.cpp">
+      <Filter>Header/Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\App.h">
-      <Filter>Header/Source Files</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\GLFWApp\GLFWApp.h">
       <Filter>Header/Source Files\GLFWApp</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Logging\Log.h">
       <Filter>Header/Source Files\Logging</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\BaseApp.h">
+      <Filter>Header/Source Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

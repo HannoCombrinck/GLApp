@@ -4,11 +4,11 @@
 
 namespace baselib
 {
-	class App : public GLFWApp
+	class BaseApp : public GLFWApp
 	{
 	public:
-		App();
-		virtual ~App();
+		BaseApp();
+		virtual ~BaseApp();
 
 	private:
 	};
