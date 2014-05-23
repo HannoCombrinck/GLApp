@@ -12,6 +12,9 @@
     <Filter Include="Header/Source Files\GLFWApp">
       <UniqueIdentifier>{1e752703-f6ed-435b-a05e-e5f142a0a3d4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header/Source Files\Logging">
+      <UniqueIdentifier>{389340c9-0108-4219-9d19-8eb7a8ff1c3e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\main.cpp">
@@ -23,6 +26,9 @@
     <ClCompile Include="..\..\Source\GLFWApp\GLFWApp.cpp">
       <Filter>Header/Source Files\GLFWApp</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Logging\Log.cpp">
+      <Filter>Header/Source Files\Logging</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\App.h">
@@ -30,6 +36,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\GLFWApp\GLFWApp.h">
       <Filter>Header/Source Files\GLFWApp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Logging\Log.h">
+      <Filter>Header/Source Files\Logging</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
