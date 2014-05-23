@@ -15,7 +15,7 @@ namespace baselib
 		virtual ~GLFWApp();
 
 		//! Create the main GLFW window, OpenGL context and associate the context with the window.
-		void start();
+		void init();
 		//! Destroy the window and terminate GLFW.
 		void destroy();
 
@@ -24,10 +24,11 @@ namespace baselib
 		//! Swap the front and back buffers.
 		void swapBuffers();
 
-		//! Set the app "running" state. When set to false the main update loop will terminate.
-		void setAppRunning(bool b) { m_bAppRunning = b; }
-		//! Getter for setAppRunning().
+		//! Returns false if the app should be terminated.
 		bool isAppRunning() const { return m_bAppRunning; }
+		//! Returns true if the window and context was successfully created.
+		bool isInitialized() const { return m_bInitialized; }
+
 
 		//! Set window title text.
 		void setWindowTitle(const std::string& s) { m_sWindowTitle = s; }
@@ -60,6 +61,11 @@ namespace baselib
 		int getMinorVersion() const { return m_iMinorVersion; }
 
 	private:
+		//! Set the app "running" state. When set to false the main update loop will terminate.
+		void setAppRunning(bool b) { m_bAppRunning = b; }
+		//! Set the app initialized state.
+		void setInitialized(bool b) { m_bInitialized = b; }
+
 		void keyEvent(int iKey, int iAction);
 		void mouseMove();
 		void mouseButton(int iButton, int iAction);
@@ -67,7 +73,7 @@ namespace baselib
 		void mouseEnter(int iEnter);
 
 		//! Called after window and OpenGL context was successfully created. Derived app should do initialization here.
-		virtual void onStart() {}
+		virtual void onInit() {}
 		//! Called before window and OpenGL context is destroyed. Derived app should do cleanup here before window is destroyed.
 		virtual void onDestroy() {}
 

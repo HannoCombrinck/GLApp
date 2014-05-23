@@ -25,11 +25,12 @@ namespace baselib {
 		, m_iMouseXPrev(0)
 		, m_iMouseYPrev(0)
 	{
-
+		LOG_VERBOSE << "GLFWApp constructor";
 	}
 
 	GLFWApp::~GLFWApp()
 	{
+		LOG_VERBOSE << "GLFWApp destructor";
 		destroy();
 	}
 
@@ -109,7 +110,7 @@ namespace baselib {
 		}
 	}
 
-	void GLFWApp::start()
+	void GLFWApp::init()
 	{
 		// Set error callback
 		glfwSetErrorCallback(errorCallback);
@@ -138,14 +139,14 @@ namespace baselib {
 
 		// Successfully created window and context
 		setAppRunning(true);
-		m_bInitialized = true;
+		setInitialized(true);
 
-		onStart();
+		onInit();
 	}
 
 	void GLFWApp::destroy()
 	{
-		if (!m_bInitialized)
+		if (!isInitialized())
 			return;
 		
 		onDestroy();
@@ -154,7 +155,7 @@ namespace baselib {
 			glfwDestroyWindow(m_pWindow);
 		glfwTerminate();
 
-		m_bInitialized = false;
+		setInitialized(false);
 	}
 
 	void GLFWApp::processEvents()
@@ -259,7 +260,7 @@ namespace baselib {
 
 	void GLFWApp::swapBuffers()
 	{
-		assert(m_bInitialized && "App must be initialized before calling GLFWApp::swapBuffers()");
+		assert(isInitialized() && "App must be initialized before calling GLFWApp::swapBuffers()");
 		glfwSwapBuffers(m_pWindow);
 	}
 

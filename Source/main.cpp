@@ -1,17 +1,15 @@
-#include <GLFWApp/GLFWApp.h>
+#include <BaseApp.h>
 
 using namespace std;
 using namespace baselib;
 
 int main(int arc, char** argv)
 {
-	GLFWApp app;
+	BaseApp app;
+	// Set startup configuration before calling init - width, height, GL context version etc.
+	// Otherwise hard coded defaults are used. 
+	app.init();
 	app.start();
-	while (app.isAppRunning())
-	{
-		app.processEvents();
-		app.swapBuffers();
-	}
 	app.destroy();
 	
 	system("pause");
