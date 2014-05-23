@@ -1,10 +1,10 @@
 #include "GLFWApp.h"
 
-#include <assert.h>
-#include <iostream>
-#include <vector>
-
+#include <Logging/Log.h>
 #include <GLFW/glfw3.h>
+
+#include <assert.h>
+#include <vector>
 
 using namespace std;
 
@@ -37,7 +37,7 @@ namespace baselib {
 	{
 		void errorCallback(int iErrorCode, const char* szErrorMessage)
 		{
-			cout << "GLFW Error: " << iErrorCode << " : " << szErrorMessage << endl;
+			LOG_ERROR << "GLFW Error: " << iErrorCode << " : " << szErrorMessage;
 		}
 
 		enum EventType
@@ -64,7 +64,7 @@ namespace baselib {
 
 		void keyEventCallback(GLFWwindow* pWindow, int iKey, int iScancode, int iAction, int iMods)
 		{
-			cout << "Key : " << iKey << " , " << iScancode << " , " << iAction << endl;
+			LOG_DEBUG << "Key : " << iKey << " , " << iScancode << " , " << iAction;
 
 			InputEvent sEvent;
 			sEvent.eType = KEY_EVENT;
@@ -79,7 +79,7 @@ namespace baselib {
 
 		void mouseButtonCallback(GLFWwindow* pWindow, int iButton, int iAction, int iMods)
 		{
-			cout << "Mouse button: " << iButton << " , " << iAction << endl;
+			LOG_DEBUG << "Mouse button: " << iButton << " , " << iAction;
 
 			InputEvent sEvent;
 			sEvent.eType = MOUSE_BUTTON_EVENT;
@@ -90,7 +90,7 @@ namespace baselib {
 
 		void mouseEnterCallback(GLFWwindow* pWindow, int iEnter)
 		{
-			cout << "Mouse enter: " << iEnter << endl;
+			LOG_DEBUG << "Mouse enter: " << iEnter;
 
 			InputEvent sEvent;
 			sEvent.eType = MOUSE_ENTER_EVENT;
@@ -100,7 +100,7 @@ namespace baselib {
 
 		void mouseScrollCallback(GLFWwindow* pWindow, double dX, double dY)
 		{
-			cout << "Mouse scroll : dx = " << dX << " , dy = " << dY << endl;
+			LOG_DEBUG << "Mouse scroll : dx = " << dX << " , dy = " << dY;
 
 			InputEvent sEvent;
 			sEvent.eType = MOUSE_SCROLL_EVENT;
@@ -203,8 +203,8 @@ namespace baselib {
 		// Handle mouse move
 		if (m_iMouseX != m_iMouseXPrev || m_iMouseY != m_iMouseYPrev)
 		{
-			cout << "New mouse pos : " << m_iMouseX << " , " << m_iMouseY << endl;
-			cout << "Delta mouse : " << m_iMouseX - m_iMouseXPrev << " , " << m_iMouseY - m_iMouseYPrev << endl;
+			LOG_DEBUG << "New mouse pos : " << m_iMouseX << " , " << m_iMouseY;
+			LOG_DEBUG << "Delta mouse : " << m_iMouseX - m_iMouseXPrev << " , " << m_iMouseY - m_iMouseYPrev;
 
 			onMouseMove(m_iMouseX, m_iMouseY);
 			onMouseMoveRel(m_iMouseX - m_iMouseXPrev, m_iMouseY - m_iMouseYPrev);
