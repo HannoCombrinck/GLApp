@@ -42,33 +42,37 @@ namespace baselib {
 
 		enum EventType
 		{
+			INVALID_EVENT,
 			KEY_EVENT,
 			MOUSE_BUTTON_EVENT,
 			MOUSE_SCROLL_EVENT,
 			MOUSE_ENTER_EVENT
 		};
 
-		struct GLFWEvent
+		struct InputEvent
 		{
-			GLFWEvent(EventType _eType, int _i1, int _i2, int _i3) 
-				: eType(_eType)
-				, i1(_i1)
-				, i2(_i2)
-				, i3(_i3)
-			{ }
+			InputEvent() : eType(INVALID_EVENT), i1(0), i2(0), i3(0), d1(0.0) {}
 
 			EventType eType;
 			int i1;
 			int i2;
 			int i3;
+			double d1;
 		};
 
-		std::vector<GLFWEvent> aEvents;
+		std::vector<InputEvent> aEvents;
 
 		void keyEventCallback(GLFWwindow* pWindow, int iKey, int iScancode, int iAction, int iMods)
 		{
 			cout << "Key : " << iKey << " , " << iScancode << " , " << iAction << endl;
-			aEvents.push_back(GLFWEvent(KEY_EVENT, iKey, iScancode, iAction));
+
+			InputEvent sEvent;
+			sEvent.eType = KEY_EVENT;
+			sEvent.i1 = iKey;
+			sEvent.i2 = iScancode;
+			sEvent.i3 = iAction;
+			aEvents.push_back(sEvent);
+
 			if (iKey == GLFW_KEY_ESCAPE && iAction == GLFW_PRESS)
 				glfwSetWindowShouldClose(pWindow, GL_TRUE);
 		}
@@ -76,19 +80,32 @@ namespace baselib {
 		void mouseButtonCallback(GLFWwindow* pWindow, int iButton, int iAction, int iMods)
 		{
 			cout << "Mouse button: " << iButton << " , " << iAction << endl;
-			aEvents.push_back(GLFWEvent(MOUSE_BUTTON_EVENT, iButton, iAction, 0));
+
+			InputEvent sEvent;
+			sEvent.eType = MOUSE_BUTTON_EVENT;
+			sEvent.i1 = iButton;
+			sEvent.i2 = iAction;
+			aEvents.push_back(sEvent);
 		}
 
 		void mouseEnterCallback(GLFWwindow* pWindow, int iEnter)
 		{
 			cout << "Mouse enter: " << iEnter << endl;
-			aEvents.push_back(GLFWEvent(MOUSE_ENTER_EVENT, iEnter, 0, 0));
+
+			InputEvent sEvent;
+			sEvent.eType = MOUSE_ENTER_EVENT;
+			sEvent.i1 = iEnter;
+			aEvents.push_back(sEvent);
 		}
 
 		void mouseScrollCallback(GLFWwindow* pWindow, double dX, double dY)
 		{
 			cout << "Mouse scroll : dx = " << dX << " , dy = " << dY << endl;
-			aEvents.push_back(GLFWEvent(MOUSE_SCROLL_EVENT, int(dY), 0, 0));
+
+			InputEvent sEvent;
+			sEvent.eType = MOUSE_SCROLL_EVENT;
+			sEvent.d1 = dY;
+			aEvents.push_back(sEvent);
 		}
 	}
 
@@ -158,11 +175,10 @@ namespace baselib {
 				case KEY_EVENT: keyEvent(sEvent.i1 /*sEvent.i2*/, sEvent.i3); break;
 				case MOUSE_BUTTON_EVENT: mouseButton(sEvent.i1, sEvent.i2); break;
 				case MOUSE_ENTER_EVENT: mouseEnter(sEvent.i1); break;
-				case MOUSE_SCROLL_EVENT: mouseScroll(sEvent.i1); break;
+				case MOUSE_SCROLL_EVENT: mouseScroll(sEvent.d1); break;
 				default: assert(false); break;
 			}
 		}
-		
 	}
 
 	void GLFWApp::keyEvent(int iKey, int iAction)
@@ -224,9 +240,9 @@ namespace baselib {
 		}
 	}
 
-	void GLFWApp::mouseScroll(int iScroll)
+	void GLFWApp::mouseScroll(double dScroll)
 	{
-		onMouseScroll(iScroll);
+		onMouseScroll(dScroll);
 	}
 
 	void GLFWApp::mouseEnter(int iEnter)
