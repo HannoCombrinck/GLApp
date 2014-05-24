@@ -18,6 +18,9 @@
     <Filter Include="Header/Source Files\Math">
       <UniqueIdentifier>{ee3b25a5-912b-49bd-be07-43f1c467bec1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header/Source Files\Graphics">
+      <UniqueIdentifier>{37837ecb-7774-40ce-a80a-af38bac1ccbb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\main.cpp">
@@ -35,6 +38,9 @@
     <ClCompile Include="..\..\Source\Math\Math.cpp">
       <Filter>Header/Source Files\Math</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Graphics\ShaderObject.cpp">
+      <Filter>Header/Source Files\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\GLFWApp\GLFWApp.h">
@@ -48,6 +54,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Math\Math.h">
       <Filter>Header/Source Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Graphics\ShaderObject.h">
+      <Filter>Header/Source Files\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
