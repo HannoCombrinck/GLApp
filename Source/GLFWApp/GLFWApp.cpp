@@ -6,8 +6,6 @@
 #include <assert.h>
 #include <vector>
 
-using namespace std;
-
 namespace baselib {
 
 	GLFWApp::GLFWApp()
@@ -117,7 +115,10 @@ namespace baselib {
 
 		// Init GLFW
 		if (!glfwInit())
-			assert("GLFW init error" && false);
+		{
+			LOG_ERROR << "GLFW init error";
+			assert(false);
+		}
 
 		// Create window and set context
 		GLFWmonitor *pMonitor = NULL;
@@ -132,7 +133,8 @@ namespace baselib {
 		if (!m_pWindow)
 		{
 			glfwTerminate();
-			assert("Failed to create GLFW window" && false);
+			LOG_ERROR << "Failed to create GLFW window";
+			assert(false);
 		}
 		glfwMakeContextCurrent(m_pWindow);
 

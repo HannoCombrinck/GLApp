@@ -5,8 +5,6 @@
 #include <iostream>
 #include <assert.h>
 
-using namespace std;
-
 namespace baselib
 {
 	enum LOG_LEVEL
@@ -25,7 +23,7 @@ namespace baselib
 		Logger();
 		~Logger();
 		
-		ostringstream& GetStream(LOG_LEVEL level);
+		std::ostringstream& GetStream(LOG_LEVEL level);
 
 		static void SetLogLevel(LOG_LEVEL eLevel) { m_LogLevel = eLevel; }
 		static LOG_LEVEL GetLogLevel() { return m_LogLevel; }
@@ -37,9 +35,9 @@ namespace baselib
 		static bool GetAddLogLevel() { return m_bAddLogLevel; }
 
 	private:
-		string LevelToString(LOG_LEVEL level);
+		std::string LevelToString(LOG_LEVEL level);
 
-		ostringstream m_OutStream;
+		std::ostringstream m_OutStream;
 
 		static LOG_LEVEL m_LogLevel;
 		static bool m_bAddTimeStamp;

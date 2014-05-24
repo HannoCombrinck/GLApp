@@ -13,13 +13,13 @@ namespace baselib {
 
 	Logger::~Logger()
 	{
-	   m_OutStream << endl;
-	   cout << m_OutStream.str();
+	   m_OutStream << std::endl;
+	   std::cout << m_OutStream.str();
 	}
 
-	string Logger::LevelToString(LOG_LEVEL level)
+	std::string Logger::LevelToString(LOG_LEVEL level)
 	{
-		string logLevelStr = "";
+		std::string logLevelStr = "";
 		switch (level)
 		{
 		case LOGLEVEL_ERROR: logLevelStr = "Error"; break;
@@ -33,7 +33,7 @@ namespace baselib {
 	}
 
 	// From http://msdn.microsoft.com/en-us/library/a442x3ye.aspx
-	static const string currentDateTime() {
+	static const std::string currentDateTime() {
 		struct tm newtime;
 		char am_pm[] = "AM";
 		__time64_t long_time;
@@ -64,10 +64,10 @@ namespace baselib {
 		   exit(1);
 		}
 		timebuf[19] = '\0';
-		return string(timebuf) + " " + string(am_pm);
+		return std::string(timebuf) + " " + std::string(am_pm);
 	}
 
-	ostringstream& Logger::GetStream(LOG_LEVEL level)
+	std::ostringstream& Logger::GetStream(LOG_LEVEL level)
 	{
 		if (GetAddTimeStamp())
 		{
