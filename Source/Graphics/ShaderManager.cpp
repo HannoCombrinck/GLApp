@@ -20,6 +20,23 @@ namespace baselib { namespace graphics {
 	
 	boost::shared_ptr<ShaderObject> ShaderManager::createShaderObject(const fs::path& fsPath)
 	{
+		// Check is shader object already exists
+		auto iter = m_aShaderObjectMap.find(fsPath.string());
+		if (iter != m_aShaderObjectMap.end())
+		{
+			LOG_VERBOSE << fsPath << " shader object already loaded.";
+			if (auto sp = iter->second.lock())
+			{
+				LOG_VERBOSE << "Returning reference to existing shader object";
+				return sp;
+			}
+			else
+			{
+				LOG_VERBOSE << fsPath << " doesn't exist anymore. Removing from manager and reloading from file.";
+				m_aShaderObjectMap.erase(iter);
+			}
+		}
+
 		// Check if file exists
 		if (!fs::exists(fsPath))
 		{
@@ -36,7 +53,7 @@ namespace baselib { namespace graphics {
 		
 		// Get shader type from extension
 		std::string sExtension = fsPath.extension().string();
-		auto eType = getShaderObjectType(sExtension);
+		auto eType = getTypeFromExtension(sExtension);
 		
 		// Check for valid extension
 		if (eType == ShaderObject::INVALID_SHADER)
@@ -49,7 +66,11 @@ namespace baselib { namespace graphics {
 		std::string sSource = loadSourceFromFile(fsPath);
 
 		LOG_INFO << "Loading shader from file: " << fsPath;
-		return createShaderObject(sSource, eType);
+
+		auto spShaderObject = createShaderObject(sSource, eType);
+		spShaderObject->setName(fsPath.string());
+		m_aShaderObjectMap[spShaderObject->getName()] = spShaderObject; // Add to shader map
+		return spShaderObject;
 	}
 
 	boost::shared_ptr<ShaderObject> ShaderManager::createShaderObject(const std::string& sShaderSource, ShaderObject::ShaderType eType)
@@ -101,9 +122,15 @@ namespace baselib { namespace graphics {
 		int iCompileStatus = 0;
 		glGetShaderiv(uShaderObjectID, GL_COMPILE_STATUS, &iCompileStatus);
 		if (iCompileStatus == GL_TRUE)
+		{
 			LOG_INFO << "Successfully compiled " << sShaderType << " shader.";
+		}
 		else
+		{
 			LOG_ERROR << "Failed to compile " << sShaderType << " shader.";
+			glDeleteShader(uShaderObjectID);
+			uShaderObjectID = ~0;
+		}
 
 		// Get GLSL compiler log
 		int iLogLength = 0;
@@ -116,10 +143,18 @@ namespace baselib { namespace graphics {
 
 		assert(iCompileStatus == GL_TRUE);
 
-		// Continue here
-		// TODO: Create ShaderObject here
-		auto spShaderObject = boost::shared_ptr<ShaderObject>();
+		auto spShaderObject = boost::shared_ptr<ShaderObject>(new ShaderObject("", eType, uShaderObjectID, sShaderType, shared_from_this()));
 		return spShaderObject;
+	}
+
+	void ShaderManager::destroyShaderObject(unsigned int uShaderObjectID)
+	{
+		if (uShaderObjectID == ~0)
+		{
+			LOG_ERROR << "Trying destroy shader object that doesn't have an ID";
+			assert(false);
+		}
+		glDeleteShader(uShaderObjectID);
 	}
 
 	std::string ShaderManager::loadSourceFromFile(const fs::path& fsPath)
@@ -135,23 +170,22 @@ namespace baselib { namespace graphics {
 		sSource.assign(std::istreambuf_iterator<char>(inFile), std::istreambuf_iterator<char>());
 
 		inFile.close();
-
 		return sSource;
 	}
 
-	ShaderObject::ShaderType ShaderManager::getShaderObjectType(const std::string& sExtension)
+	ShaderObject::ShaderType ShaderManager::getTypeFromExtension(const std::string& sExtension)
 	{
-		if (sExtension == "vert")
+		if (sExtension == ".vert")
 			return ShaderObject::VERTEX_SHADER;
-		else if (sExtension == "tesc")
+		else if (sExtension == ".tesc")
 			return ShaderObject::TESS_CONTROL_SHADER;
-		else if (sExtension == "tese")
+		else if (sExtension == ".tese")
 			return ShaderObject::TESS_EVALUATION_SHADER;
-		else if (sExtension == "geom")
+		else if (sExtension == ".geom")
 			return ShaderObject::GEOMETRY_SHADER;
-		else if (sExtension == "frag")
+		else if (sExtension == ".frag")
 			return ShaderObject::FRAGMENT_SHADER;
-		else if (sExtension == "comp")
+		else if (sExtension == ".comp")
 			return ShaderObject::COMPUTE_SHADER;
 		else
 			return ShaderObject::INVALID_SHADER;		
