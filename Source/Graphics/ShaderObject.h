@@ -13,11 +13,12 @@ namespace baselib
 			enum ShaderType
 			{
 				VERTEX_SHADER,
-				TES_CONTROL_SHADER,
-				TES_EVALUATION_SHADER,
+				TESS_CONTROL_SHADER,
+				TESS_EVALUATION_SHADER,
 				GEOMETRY_SHADER,
 				FRAGMENT_SHADER,
-				COMPUTE_SHADER
+				COMPUTE_SHADER,
+				INVALID_SHADER
 			};
 
 			//! Constructor
