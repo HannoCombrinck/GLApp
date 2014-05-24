@@ -21,9 +21,6 @@
     <Filter Include="Header/Source Files\Graphics">
       <UniqueIdentifier>{37837ecb-7774-40ce-a80a-af38bac1ccbb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header/Source Files\Tests">
-      <UniqueIdentifier>{290d2fcd-b93d-4610-94c4-fd2409ac7479}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\main.cpp">
