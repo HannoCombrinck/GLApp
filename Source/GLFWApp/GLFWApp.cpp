@@ -269,4 +269,9 @@ namespace baselib {
 		glfwSwapBuffers(m_pWindow);
 	}
 
+	double GLFWApp::GetTime() const
+	{
+		return glfwGetTime();
+	}
+
 }

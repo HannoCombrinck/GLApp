@@ -13,6 +13,7 @@ namespace baselib
 	typedef glm::mat4 Mat4;
 
 	const float PI = 3.14159265f;
+	const float EPSILON = 1E-6f;
 
 	//! Assumes unit quaternion and calculate w component.
 	void calcQuatWComponent(glm::quat &q);

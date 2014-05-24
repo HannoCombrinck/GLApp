@@ -28,7 +28,8 @@ namespace baselib
 		bool isAppRunning() const { return m_bAppRunning; }
 		//! Returns true if the window and context was successfully created.
 		bool isInitialized() const { return m_bInitialized; }
-
+		//! Return time elapsed from application start.
+		double GetTime() const;
 
 		//! Set window title text.
 		void setWindowTitle(const std::string& s) { m_sWindowTitle = s; }
@@ -115,19 +116,19 @@ namespace baselib
 		virtual void onWindowRefresh() {}
 
 
-		bool m_bAppRunning;			 //<! While true the main update loop will execute. When set to false the main loop terminates and the app closes.
-		bool m_bInitialized;		 //<! True after the main window and OpenGL context was successfully created. 
-		std::string m_sWindowTitle;	 //<! The current window title.
-		int m_iWidth;				 //<! Window width in pixels.
-		int m_iHeight;				 //<! Window height in pixels.
-		bool m_bFullscreen;			 //<! True when in full screen mode and false when in windowed mode.
-		int m_iMajorVersion;		 //<! The major version of the OpenGL context. May not be the actual version of context that was created - could fall back to older version.
-		int m_iMinorVersion;		 //<! The minor version of the OpenGL context. May not be the actual version of context that was created - could fall back to older version.
-		GLFWwindow* m_pWindow;		 //<! The GLFW window.
+		bool m_bAppRunning;			 //!< While true the main update loop will execute. When set to false the main loop terminates and the app closes.
+		bool m_bInitialized;		 //!< True after the main window and OpenGL context was successfully created. 
+		std::string m_sWindowTitle;	 //!< The current window title.
+		int m_iWidth;				 //!< Window width in pixels.
+		int m_iHeight;				 //!< Window height in pixels.
+		bool m_bFullscreen;			 //!< True when in full screen mode and false when in windowed mode.
+		int m_iMajorVersion;		 //!< The major version of the OpenGL context. May not be the actual version of context that was created - could fall back to older version.
+		int m_iMinorVersion;		 //!< The minor version of the OpenGL context. May not be the actual version of context that was created - could fall back to older version.
+		GLFWwindow* m_pWindow;		 //!< The GLFW window.
 
-		int m_iMouseX;				 //<! The current X coordinate of the mouse in pixels relative to the top left corner of the window.
-		int m_iMouseY;				 //<! The current Y coordinate of the mouse in pixels relative to the top left corner of the window.
-		int m_iMouseXPrev;			 //<! The previous X coordinate of the mouse in pixels relative to the top left corner of the window.
-		int m_iMouseYPrev;			 //<! The previous Y coordinate of the mouse in pixels relative to the top left corner of the window.
+		int m_iMouseX;				 //!< The current X coordinate of the mouse in pixels relative to the top left corner of the window.
+		int m_iMouseY;				 //!< The current Y coordinate of the mouse in pixels relative to the top left corner of the window.
+		int m_iMouseXPrev;			 //!< The previous X coordinate of the mouse in pixels relative to the top left corner of the window.
+		int m_iMouseYPrev;			 //!< The previous Y coordinate of the mouse in pixels relative to the top left corner of the window.
 	};
 }
