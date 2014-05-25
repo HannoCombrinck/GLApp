@@ -55,6 +55,15 @@
     <ClCompile Include="..\..\Source\Graphics\Geometry.cpp">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Graphics\Shader.cpp">
+      <Filter>Header/Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Graphics\Texture.cpp">
+      <Filter>Header/Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Graphics\RenderState.cpp">
+      <Filter>Header/Source Files\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\GLFWApp\GLFWApp.h">
@@ -88,6 +97,15 @@
       <Filter>Header/Source Files\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Graphics\Geometry.h">
+      <Filter>Header/Source Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Graphics\Shader.h">
+      <Filter>Header/Source Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Graphics\Texture.h">
+      <Filter>Header/Source Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Graphics\RenderState.h">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
