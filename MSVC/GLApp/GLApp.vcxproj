@@ -86,6 +86,7 @@
     <ClCompile Include="..\..\Source\Graphics\ShaderObject.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Spatial.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Texture.cpp" />
+    <ClCompile Include="..\..\Source\Graphics\VertexList.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Visual.cpp" />
     <ClCompile Include="..\..\Source\Logging\Log.cpp" />
     <ClCompile Include="..\..\Source\main.cpp" />
@@ -103,6 +104,7 @@
     <ClInclude Include="..\..\Source\Graphics\ShaderObject.h" />
     <ClInclude Include="..\..\Source\Graphics\Spatial.h" />
     <ClInclude Include="..\..\Source\Graphics\Texture.h" />
+    <ClInclude Include="..\..\Source\Graphics\VertexList.h" />
     <ClInclude Include="..\..\Source\Graphics\Visual.h" />
     <ClInclude Include="..\..\Source\Logging\Log.h" />
     <ClInclude Include="..\..\Source\Math\Math.h" />
