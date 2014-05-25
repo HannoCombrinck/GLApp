@@ -1,9 +1,7 @@
 #include "ShaderManager.h"
 
 #include <GL/glew.h>
-
 #include <boost/filesystem/fstream.hpp>
-
 #include <Logging/Log.h>
 
 namespace baselib { namespace graphics {

@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-
 #include <boost/weak_ptr.hpp>
 
 namespace baselib 
