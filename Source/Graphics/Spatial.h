@@ -39,6 +39,9 @@ namespace baselib
 			bool getUseLocalAsWorld() const { return m_bUseLocalAsWorld; }
 
 		private:
+			//! Called from update().
+			virtual void onUpdate(const Mat4& mParent) {}
+
 			std::string m_sName;		//!< Spatial name.
 			Mat4 m_mLocal;				//!< Local space transform.
 			Mat4 m_mWorld;				//!< World space transform.

@@ -24,6 +24,8 @@ namespace baselib { namespace graphics {
 			m_mWorld = m_mLocal;
 		else
 			m_mWorld = mParent * m_mLocal;
+
+		onUpdate(mParent);
 	}
 
 } }
