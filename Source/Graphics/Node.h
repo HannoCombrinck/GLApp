@@ -21,9 +21,9 @@ namespace baselib
 		class Node : public Spatial, public boost::enable_shared_from_this<Node>
 		{
 		public:
-			//! Constructor
+			//! Constructor.
 			Node();
-			//! Destructor
+			//! Destructor.
 			~Node();
 
 

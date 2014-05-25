@@ -19,9 +19,9 @@ namespace baselib
 		class Material
 		{
 		public:
-			//! Constructor
+			//! Constructor.
 			Material();
-			//! Destructor
+			//! Destructor.
 			~Material();
 
 			//! Set the shader instance.

@@ -10,9 +10,9 @@ namespace baselib
 		class Spatial
 		{
 		public:
-			//! Constructor
+			//! Constructor.
 			Spatial();
-			//! Destructor
+			//! Destructor.
 			~Spatial();
 
 			//! Update the world transform

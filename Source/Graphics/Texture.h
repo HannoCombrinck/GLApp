@@ -7,9 +7,9 @@ namespace baselib
 		class Texture
 		{
 		public:
-			//! Constructor
+			//! Constructor.
 			Texture();
-			//! Destructor
+			//! Destructor.
 			~Texture();
 		
 		private:

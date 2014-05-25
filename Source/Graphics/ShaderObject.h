@@ -30,9 +30,9 @@ namespace baselib
 				INVALID_SHADER
 			};
 
-			//! Constructor
+			//! Constructor.
 			ShaderObject(const std::string& sName, ShaderType eType, unsigned int iID, const std::string& sSource, const boost::shared_ptr<ShaderManager>& spShaderManager);
-			//! Destructor
+			//! Destructor.
 			~ShaderObject();
 
 			//! Set shader name.

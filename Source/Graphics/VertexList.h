@@ -25,9 +25,9 @@ namespace baselib
 		class VertexList
 		{
 		public:
-			//! Constructors
+			//! Constructor.
 			VertexList();
-			//! Destructor
+			//! Destructor.
 			~VertexList();
 
 			//! Clear all vertices and indices.

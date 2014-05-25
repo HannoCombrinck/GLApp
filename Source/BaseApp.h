@@ -7,9 +7,9 @@ namespace baselib
 	class BaseApp : public GLFWApp
 	{
 	public:
-		//! Constructor
+		//! Constructor.
 		BaseApp();
-		//! Destructor
+		//! Destructor.
 		virtual ~BaseApp();
 
 		//! Start and run the main update loop in this thread. This function returns when the app is stopped.

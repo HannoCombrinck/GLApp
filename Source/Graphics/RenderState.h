@@ -7,9 +7,9 @@ namespace baselib
 		class RenderState
 		{
 		public:
-			//! Constructor
+			//! Constructor.
 			RenderState();
-			//! Destructor
+			//! Destructor.
 			~RenderState();
 		
 		private:

@@ -18,9 +18,9 @@ namespace baselib
 		class ShaderManager : public boost::enable_shared_from_this<ShaderManager>
 		{
 		public:
-			//! Constructor
+			//! Constructor.
 			ShaderManager();
-			//! Destructor
+			//! Destructor.
 			~ShaderManager();
 
 			// TODO: Create shader (i.e. shader program)

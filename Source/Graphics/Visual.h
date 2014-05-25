@@ -19,9 +19,9 @@ namespace baselib
 		class Visual : public Spatial
 		{
 		public:
-			//! Constructor
+			//! Constructor.
 			Visual();
-			//! Destructor
+			//! Destructor.
 			~Visual();
 
 			//! Set the material for this visual.
