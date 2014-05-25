@@ -77,8 +77,10 @@
   <ItemGroup>
     <ClCompile Include="..\..\Source\BaseApp.cpp" />
     <ClCompile Include="..\..\Source\GLFWApp\GLFWApp.cpp" />
+    <ClCompile Include="..\..\Source\Graphics\Node.cpp" />
     <ClCompile Include="..\..\Source\Graphics\ShaderManager.cpp" />
     <ClCompile Include="..\..\Source\Graphics\ShaderObject.cpp" />
+    <ClCompile Include="..\..\Source\Graphics\Spatial.cpp" />
     <ClCompile Include="..\..\Source\Logging\Log.cpp" />
     <ClCompile Include="..\..\Source\main.cpp" />
     <ClCompile Include="..\..\Source\Math\Math.cpp" />
@@ -86,8 +88,10 @@
   <ItemGroup>
     <ClInclude Include="..\..\Source\BaseApp.h" />
     <ClInclude Include="..\..\Source\GLFWApp\GLFWApp.h" />
+    <ClInclude Include="..\..\Source\Graphics\Node.h" />
     <ClInclude Include="..\..\Source\Graphics\ShaderManager.h" />
     <ClInclude Include="..\..\Source\Graphics\ShaderObject.h" />
+    <ClInclude Include="..\..\Source\Graphics\Spatial.h" />
     <ClInclude Include="..\..\Source\Logging\Log.h" />
     <ClInclude Include="..\..\Source\Math\Math.h" />
   </ItemGroup>
