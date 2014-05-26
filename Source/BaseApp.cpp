@@ -2,11 +2,16 @@
 
 #include <Logging/Log.h>
 
+#include <Graphics/Renderer.h>
+
+using namespace baselib::graphics;
+
 namespace baselib {
 
 	BaseApp::BaseApp()
 		: m_dCurrentTime(0.0)
 		, m_dPreviousTime(0.0)
+		, m_spRenderer(boost::shared_ptr<Renderer>())
 	{
 		LOG_VERBOSE << "BaseApp constructor";
 	}
@@ -43,12 +48,15 @@ namespace baselib {
 
 	void BaseApp::render()
 	{
+		assert(m_spRenderer);
 
 	}
 
 	void BaseApp::onInit()
 	{
 		LOG_VERBOSE << "BaseApp onInit";
+
+		m_spRenderer = boost::shared_ptr<Renderer>(new Renderer());
 	}
 
 	void BaseApp::onDestroy()

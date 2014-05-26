@@ -24,6 +24,8 @@ namespace baselib
 			//! Get uniform index from name.
 			int getUniform(const std::string& sName) const;
 		
+			// TODO: Add all setUniform* and setAttribute* functions
+
 		private:
 			unsigned int m_uID; //!< Shader program ID.
 			

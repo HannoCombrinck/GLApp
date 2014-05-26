@@ -21,8 +21,10 @@ namespace baselib
 		class Geometry
 		{
 		public:
-			//! Constructor.
+			//! Default Constructor.
 			Geometry();
+			//! Constructor with initial VAO, VBO and IB
+			Geometry(unsigned int uVAO, unsigned int uVBO, unsigned int uIB);
 			//! Destructor.
 			~Geometry();
 		
@@ -31,14 +33,26 @@ namespace baselib
 			//! Getter for setVertexList().
 			boost::shared_ptr<VertexList> getVertexList() const { return m_spVertexList; }
 
-			//! Set the geometry buffer ID.
-			void setBufferID(unsigned int uID) { m_uID = uID; }
-			//! Getter for setBufferID().
-			unsigned int getBufferID() const { return m_uID; }
+			//! Set the VAO.
+			void setVAO(unsigned int uVAO) { m_uVAO = uVAO; }
+			//! Get the VAO.
+			unsigned int getVAO() const { return m_uVAO; }
+
+			//! Set the vertex buffer i.e. VBO.
+			void setVBO(unsigned int uVBO) { m_uVBO = uVBO; }
+			//! Get the vertex buffer i.e. VBO.
+			unsigned int getVBO() const { return m_uVBO; }
+
+			//! Set the index buffer.
+			void setIB(unsigned int uIB) { m_uIB = uIB; }
+			//! Get the index buffer.
+			unsigned int getIB() const { return m_uIB; }
 
 		private:
-			boost::shared_ptr<VertexList> m_spVertexList; //!< The original vertex list from which the buffer was created.
-			unsigned int m_uID;							  //!< The geometry buffer ID - i.e. OpenGL Vertex Array Object (VAO).
+			boost::shared_ptr<VertexList> m_spVertexList; //!< The vertex list from which the hardware buffers are created.
+			unsigned int m_uVAO;						  //!< The geometry VAO - Vertex array object.
+			unsigned int m_uVBO;						  //!< The geometry VBO - Vertex buffer object
+			unsigned int m_uIB;							  //!< The geometry index buffer.
 
 		};
 	}
