@@ -67,6 +67,9 @@
     <ClCompile Include="..\..\Source\Graphics\VertexList.cpp">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Graphics\Renderer.cpp">
+      <Filter>Header/Source Files\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\GLFWApp\GLFWApp.h">
@@ -112,6 +115,9 @@
       <Filter>Header/Source Files\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Graphics\VertexList.h">
+      <Filter>Header/Source Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Graphics\Renderer.h">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClInclude>
   </ItemGroup>

@@ -80,6 +80,7 @@
     <ClCompile Include="..\..\Source\Graphics\Geometry.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Material.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Node.cpp" />
+    <ClCompile Include="..\..\Source\Graphics\Renderer.cpp" />
     <ClCompile Include="..\..\Source\Graphics\RenderState.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Shader.cpp" />
     <ClCompile Include="..\..\Source\Graphics\ShaderManager.cpp" />
@@ -98,6 +99,7 @@
     <ClInclude Include="..\..\Source\Graphics\Geometry.h" />
     <ClInclude Include="..\..\Source\Graphics\Material.h" />
     <ClInclude Include="..\..\Source\Graphics\Node.h" />
+    <ClInclude Include="..\..\Source\Graphics\Renderer.h" />
     <ClInclude Include="..\..\Source\Graphics\RenderState.h" />
     <ClInclude Include="..\..\Source\Graphics\Shader.h" />
     <ClInclude Include="..\..\Source\Graphics\ShaderManager.h" />
