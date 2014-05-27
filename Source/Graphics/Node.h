@@ -10,14 +10,6 @@ namespace baselib
 {
 	namespace graphics
 	{
-		class Visual;
-	}
-}
-
-namespace baselib 
-{
-	namespace graphics
-	{
 		class Node : public Spatial, public boost::enable_shared_from_this<Node>
 		{
 		public:
@@ -25,7 +17,6 @@ namespace baselib
 			Node();
 			//! Destructor.
 			~Node();
-
 
 			//! Add a child node. The child node's parent reference is set to this node.
 			void addChild(const boost::shared_ptr<Node>& spNode);
@@ -47,7 +38,6 @@ namespace baselib
 
 			std::vector<boost::shared_ptr<Node>> m_aChildren; //!< List of children Nodes.
 			boost::weak_ptr<Node> m_wpParent;				  //!< Weak reference to parent Node.
-			boost::shared_ptr<Visual> m_spVisual;			  //!< Visual associated with this Node.
 		};
 	}
 }
