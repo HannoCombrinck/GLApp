@@ -18,7 +18,7 @@ namespace baselib { namespace graphics {
 	
 	boost::shared_ptr<ShaderObject> ShaderManager::createShaderObject(const fs::path& fsPath)
 	{
-		// Check is shader object already exists
+		// Check if shader object already exists
 		auto iter = m_aShaderObjectMap.find(fsPath.string());
 		if (iter != m_aShaderObjectMap.end())
 		{
