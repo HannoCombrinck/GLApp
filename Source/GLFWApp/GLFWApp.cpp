@@ -13,12 +13,6 @@ namespace baselib {
 
 	GLFWApp::GLFWApp()
 		: m_bAppRunning(false)
-		, m_sWindowTitle("GLFWApp")
-		, m_iWidth(640)
-		, m_iHeight(480)
-		, m_bFullscreen(false)
-		, m_iMajorVersion(3)
-		, m_iMinorVersion(2)
 		, m_pWindow(NULL)
 		, m_iMouseX(0)
 		, m_iMouseY(0)
@@ -26,7 +20,7 @@ namespace baselib {
 		, m_iMouseYPrev(0)
 	{
 		LOG_VERBOSE << "GLFWApp constructor";
-		init();
+		init(640, 480, false, 3, 2, "GLFWApp");
 	}
 
 	GLFWApp::~GLFWApp()
@@ -47,6 +41,11 @@ namespace baselib {
 		boost::signals2::signal<void (int iButton, int iAction)> MouseButtonSignal;
 		boost::signals2::signal<void (int iEnter)> MouseEnterSignal;
 		boost::signals2::signal<void (double dScroll)> MouseScrollSignal;
+		boost::signals2::signal<void (int iWidth, int iHeight)> WindowMoveSignal;
+		boost::signals2::signal<void (int iWidth, int iHeight)> WindowResizeSignal;
+		boost::signals2::signal<void (int iWidth, int iHeight)> WindowFrameBufferResizeSignal;
+		boost::signals2::signal<void ()> WindowRefreshSignal;
+		boost::signals2::signal<void ()> WindowCloseSignal;
 
 		void keyEventCallback(GLFWwindow* pWindow, int iKey, int iScancode, int iAction, int iMods)
 		{
@@ -70,9 +69,34 @@ namespace baselib {
 		{
 			MouseScrollSignal(dY);
 		}
+
+		void windowMoveCallback(GLFWwindow* pWindow, int iWidth, int iHeight)
+		{
+			WindowMoveSignal(iWidth, iHeight);
+		}
+
+		void windowResizeCallback(GLFWwindow* pWindow, int iWidth, int iHeight)
+		{
+			WindowResizeSignal(iWidth, iHeight);
+		}
+
+		void windowFrameBufferResizeCallback(GLFWwindow* pWindow, int iWidth, int iHeight)
+		{
+			WindowFrameBufferResizeSignal(iWidth, iHeight);
+		}
+
+		void windowRefreshCallback(GLFWwindow* pWindow)
+		{
+			WindowRefreshSignal();
+		}
+
+		void windowCloseCallback(GLFWwindow* pWindow)
+		{
+			WindowCloseSignal();
+		}
 	}
 
-	void GLFWApp::init()
+	void GLFWApp::init(int iWidth, int iHeight, bool bFullscreen, int iMajorVersion, int iMinorVersion, const std::string& sWindowTitle)
 	{
 		// Set error callback
 		glfwSetErrorCallback(errorCallback);
@@ -86,14 +110,14 @@ namespace baselib {
 
 		// Create window and set context
 		GLFWmonitor *pMonitor = NULL;
-		if (m_bFullscreen)
+		if (bFullscreen)
 			pMonitor = glfwGetPrimaryMonitor();
 
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, m_iMajorVersion);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, m_iMinorVersion);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, iMajorVersion);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, iMinorVersion);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // TODO: Test forward compatible vs not forward compatible
-		m_pWindow = glfwCreateWindow(m_iWidth, m_iHeight, m_sWindowTitle.c_str(), pMonitor, NULL);
+		m_pWindow = glfwCreateWindow(iWidth, iHeight, sWindowTitle.c_str(), pMonitor, NULL);
 		if (!m_pWindow)
 		{
 			glfwTerminate();
@@ -111,8 +135,16 @@ namespace baselib {
 		m_MouseEnterConnection = MouseEnterSignal.connect(boost::bind(&GLFWApp::mouseEnter, this, _1));
 		glfwSetScrollCallback(m_pWindow, mouseScrollCallback);
 		m_MouseScrollConnection = MouseScrollSignal.connect(boost::bind(&GLFWApp::mouseScroll, this, _1));
-		// Add window events ???
-
+		glfwSetWindowPosCallback(m_pWindow, windowMoveCallback);
+		m_WindowMoveConnection = WindowMoveSignal.connect(boost::bind(&GLFWApp::windowMove, this, _1, _2));
+		glfwSetWindowSizeCallback(m_pWindow, windowResizeCallback);
+		m_WindowResizeConnection = WindowResizeSignal.connect(boost::bind(&GLFWApp::windowResize, this, _1, _2));
+		glfwSetFramebufferSizeCallback(m_pWindow, windowFrameBufferResizeCallback);
+		m_WindowFrameBufferResizeConnection = WindowFrameBufferResizeSignal.connect(boost::bind(&GLFWApp::windowFrameBufferResize, this, _1, _2));
+		glfwSetWindowRefreshCallback(m_pWindow, windowRefreshCallback);
+		m_WindowRefreshConnection = WindowRefreshSignal.connect(boost::bind(&GLFWApp::windowRefresh, this));
+		glfwSetWindowCloseCallback(m_pWindow, windowCloseCallback);
+		m_WindowCloseConnection = WindowCloseSignal.connect(boost::bind(&GLFWApp::windowClose, this));
 
 		// Successfully created window and context
 		setAppRunning(true);
@@ -124,14 +156,10 @@ namespace baselib {
 			LOG_ERROR << "Failed to initialize GLEW: " << glewGetErrorString(eError);
 			assert(false);
 		}
-
-		onInit();
 	}
 
 	void GLFWApp::destroy()
 	{
-		onDestroy();
-
 		if (m_pWindow)
 			glfwDestroyWindow(m_pWindow);
 		glfwTerminate();
@@ -218,6 +246,36 @@ namespace baselib {
 			onMouseMove(m_iMouseX, m_iMouseY);
 			onMouseMoveRel(m_iMouseX - m_iMouseXPrev, m_iMouseY - m_iMouseYPrev);
 		}
+	}
+
+	void GLFWApp::windowMove(int iX, int iY)
+	{
+		LOG_VERBOSE << "Window move: " << iX << ", " << iY;
+		onWindowMove(iX, iY);
+	}
+
+	void GLFWApp::windowResize(int iWidth, int iHeight)
+	{
+		LOG_VERBOSE << "Window resize: " << iWidth << ", " << iHeight;
+		onWindowResize(iWidth, iHeight);
+	}
+
+	void GLFWApp::windowFrameBufferResize(int iWidth, int iHeight)
+	{
+		LOG_VERBOSE << "Window frame buffer resize: " << iWidth << ", " << iHeight;
+		onWindowFrameBufferResize(iWidth, iHeight);
+	}
+
+	void GLFWApp::windowRefresh()
+	{
+		LOG_VERBOSE << "Window refresh";
+		onWindowRefresh();
+	}
+
+	void GLFWApp::windowClose()
+	{
+		LOG_VERBOSE << "Window close";
+		onWindowClose();
 	}
 
 	void GLFWApp::swapBuffers()

@@ -31,10 +31,10 @@ namespace baselib
 		//! Main render function. Called from main loop.
 		void render();
 
-		//! Called after window and context gets created. Initialization happens here.
-		virtual void onInit();
-		//! Called before window and context gets destroyed. Cleanup happens here.
-		virtual void onDestroy();
+		//! Initialization happens here.
+		void init();
+		//! Cleanup happens here.
+		void destroy();
 
 		double m_dCurrentTime;  //!< Current time elapsed since application started.
 		double m_dPreviousTime; //!< Time elapsed up to previous update cycle. So time elapsed since previous update = m_dCurrentTime - m_dPreviousTime.

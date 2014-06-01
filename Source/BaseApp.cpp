@@ -14,11 +14,13 @@ namespace baselib {
 		, m_spRenderer(boost::shared_ptr<Renderer>())
 	{
 		LOG_VERBOSE << "BaseApp constructor";
+		init();
 	}
 
 	BaseApp::~BaseApp()
 	{
 		LOG_VERBOSE << "BaseApp destructor";
+		destroy();
 	}
 
 	void BaseApp::start()
@@ -51,14 +53,14 @@ namespace baselib {
 
 	}
 
-	void BaseApp::onInit()
+	void BaseApp::init()
 	{
 		LOG_VERBOSE << "BaseApp onInit";
 
 		m_spRenderer = boost::shared_ptr<Renderer>(new Renderer());
 	}
 
-	void BaseApp::onDestroy()
+	void BaseApp::destroy()
 	{
 		LOG_VERBOSE << "BaseApp onDestroy";
 	}
