@@ -250,31 +250,26 @@ namespace baselib {
 
 	void GLFWApp::windowMove(int iX, int iY)
 	{
-		LOG_VERBOSE << "Window move: " << iX << ", " << iY;
 		onWindowMove(iX, iY);
 	}
 
 	void GLFWApp::windowResize(int iWidth, int iHeight)
 	{
-		LOG_VERBOSE << "Window resize: " << iWidth << ", " << iHeight;
 		onWindowResize(iWidth, iHeight);
 	}
 
 	void GLFWApp::windowFrameBufferResize(int iWidth, int iHeight)
 	{
-		LOG_VERBOSE << "Window frame buffer resize: " << iWidth << ", " << iHeight;
 		onWindowFrameBufferResize(iWidth, iHeight);
 	}
 
 	void GLFWApp::windowRefresh()
 	{
-		LOG_VERBOSE << "Window refresh";
 		onWindowRefresh();
 	}
 
 	void GLFWApp::windowClose()
 	{
-		LOG_VERBOSE << "Window close";
 		onWindowClose();
 	}
 
