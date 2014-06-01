@@ -1,6 +1,7 @@
 #include "GLFWApp.h"
 
 #include <Logging/Log.h>
+#include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
 #include <assert.h>
@@ -147,6 +148,14 @@ namespace baselib {
 		// Successfully created window and context
 		setAppRunning(true);
 		setInitialized(true);
+
+		// Initialize GL extension wrangler
+		GLenum eError = glewInit();
+		if (eError != GLEW_OK)
+		{
+			LOG_ERROR << "Failed to initialize GLEW: " << glewGetErrorString(eError);
+			assert(false);
+		}
 
 		onInit();
 	}

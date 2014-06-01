@@ -10,21 +10,17 @@ namespace baselib { namespace graphics {
 	Renderer::Renderer()
 	{
 		LOG_VERBOSE << "Renderer constructor";
+		init();
 	}
 
 	Renderer::~Renderer()
 	{
 		LOG_VERBOSE << "Renderer destructor";
+		destroy();
 	}
 
 	void Renderer::init()
 	{
-		if (!glewInit())
-		{
-			LOG_ERROR << "Failed to initialize GLEW.";
-			assert(false);
-		}
-
 		//////////////////////////////////////////////////////////////////////////
 		// Temp settings for testing - these will be encapsulated elsewhere
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -35,6 +31,11 @@ namespace baselib { namespace graphics {
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glViewport(0, 0, 640, 480);
 		//////////////////////////////////////////////////////////////////////////
+	}
+
+	void Renderer::destroy()
+	{
+
 	}
 
 	boost::shared_ptr<Geometry> Renderer::createGeometry(const boost::shared_ptr<VertexList>& spVertexList)

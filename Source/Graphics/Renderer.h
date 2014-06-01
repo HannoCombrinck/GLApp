@@ -23,14 +23,14 @@ namespace baselib
 			//! Destructor.
 			~Renderer();
 		
-			//! Initialize renderer.
-			void init();
-
 			//! Create Geometry from a VertexList
 			boost::shared_ptr<Geometry> createGeometry(const boost::shared_ptr<VertexList>& spVertexList);
 
 		private:
-
+			//! Initialize renderer.
+			void init();
+			//! Destroy renderer.
+			void destroy();
 
 		};
 	}
