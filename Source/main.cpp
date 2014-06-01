@@ -5,12 +5,8 @@ using namespace baselib;
 
 int main(int arc, char** argv)
 {
-	BaseApp app;
-	// Set startup configuration before calling init - width, height, GL context version etc.
-	// Otherwise hard coded defaults are used. 
-	app.init();
+	BaseApp app; // Default constructor uses default window settings (window size etc.)
 	app.start();
-	app.destroy();
 	
 	system("pause");
 	return 0;

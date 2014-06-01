@@ -4,6 +4,8 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
+#include <boost/bind.hpp>
+
 #include <assert.h>
 #include <vector>
 
@@ -11,7 +13,6 @@ namespace baselib {
 
 	GLFWApp::GLFWApp()
 		: m_bAppRunning(false)
-		, m_bInitialized(false)
 		, m_sWindowTitle("GLFWApp")
 		, m_iWidth(640)
 		, m_iHeight(480)
@@ -25,6 +26,7 @@ namespace baselib {
 		, m_iMouseYPrev(0)
 	{
 		LOG_VERBOSE << "GLFWApp constructor";
+		init();
 	}
 
 	GLFWApp::~GLFWApp()
@@ -40,38 +42,15 @@ namespace baselib {
 			LOG_ERROR << "GLFW Error: " << iErrorCode << " : " << szErrorMessage;
 		}
 
-		enum EventType
-		{
-			INVALID_EVENT,
-			KEY_EVENT,
-			MOUSE_BUTTON_EVENT,
-			MOUSE_SCROLL_EVENT,
-			MOUSE_ENTER_EVENT
-		};
-
-		struct InputEvent
-		{
-			InputEvent() : eType(INVALID_EVENT), i1(0), i2(0), i3(0), d1(0.0) {}
-
-			EventType eType;
-			int i1;
-			int i2;
-			int i3;
-			double d1;
-		};
-
-		std::vector<InputEvent> aEvents;
+		// Event callback signals
+		boost::signals2::signal<void (int iKey, int iActions)> KeyEventSignal;
+		boost::signals2::signal<void (int iButton, int iAction)> MouseButtonSignal;
+		boost::signals2::signal<void (int iEnter)> MouseEnterSignal;
+		boost::signals2::signal<void (double dScroll)> MouseScrollSignal;
 
 		void keyEventCallback(GLFWwindow* pWindow, int iKey, int iScancode, int iAction, int iMods)
 		{
-			//LOG_DEBUG << "Key : " << iKey << " , " << iScancode << " , " << iAction;
-
-			InputEvent sEvent;
-			sEvent.eType = KEY_EVENT;
-			sEvent.i1 = iKey;
-			sEvent.i2 = iScancode;
-			sEvent.i3 = iAction;
-			aEvents.push_back(sEvent);
+			KeyEventSignal(iKey, iAction);
 
 			if (iKey == GLFW_KEY_ESCAPE && iAction == GLFW_PRESS)
 				glfwSetWindowShouldClose(pWindow, GL_TRUE);
@@ -79,33 +58,17 @@ namespace baselib {
 
 		void mouseButtonCallback(GLFWwindow* pWindow, int iButton, int iAction, int iMods)
 		{
-			//LOG_DEBUG << "Mouse button: " << iButton << " , " << iAction;
-
-			InputEvent sEvent;
-			sEvent.eType = MOUSE_BUTTON_EVENT;
-			sEvent.i1 = iButton;
-			sEvent.i2 = iAction;
-			aEvents.push_back(sEvent);
+			MouseButtonSignal(iButton, iAction);
 		}
 
 		void mouseEnterCallback(GLFWwindow* pWindow, int iEnter)
 		{
-			//LOG_DEBUG << "Mouse enter: " << iEnter;
-
-			InputEvent sEvent;
-			sEvent.eType = MOUSE_ENTER_EVENT;
-			sEvent.i1 = iEnter;
-			aEvents.push_back(sEvent);
+			MouseEnterSignal(iEnter);
 		}
 
 		void mouseScrollCallback(GLFWwindow* pWindow, double dX, double dY)
 		{
-			//LOG_DEBUG << "Mouse scroll : dx = " << dX << " , dy = " << dY;
-
-			InputEvent sEvent;
-			sEvent.eType = MOUSE_SCROLL_EVENT;
-			sEvent.d1 = dY;
-			aEvents.push_back(sEvent);
+			MouseScrollSignal(dY);
 		}
 	}
 
@@ -139,18 +102,23 @@ namespace baselib {
 		}
 		glfwMakeContextCurrent(m_pWindow);
 
-		// Set event callbacks
+		// Setup event callbacks
 		glfwSetKeyCallback(m_pWindow, keyEventCallback);
+		m_KeyEventConnection = KeyEventSignal.connect(boost::bind(&GLFWApp::keyEvent, this, _1, _2));
 		glfwSetMouseButtonCallback(m_pWindow, mouseButtonCallback);
+		m_MouseButtonConnection = MouseButtonSignal.connect(boost::bind(&GLFWApp::mouseButton, this, _1, _2));
 		glfwSetCursorEnterCallback(m_pWindow, mouseEnterCallback);
+		m_MouseEnterConnection = MouseEnterSignal.connect(boost::bind(&GLFWApp::mouseEnter, this, _1));
 		glfwSetScrollCallback(m_pWindow, mouseScrollCallback);
+		m_MouseScrollConnection = MouseScrollSignal.connect(boost::bind(&GLFWApp::mouseScroll, this, _1));
+		// Add window events ???
+
 
 		// Successfully created window and context
 		setAppRunning(true);
-		setInitialized(true);
 
 		// Initialize GL extension wrangler
-		GLenum eError = glewInit();
+		auto eError = glewInit();
 		if (eError != GLEW_OK)
 		{
 			LOG_ERROR << "Failed to initialize GLEW: " << glewGetErrorString(eError);
@@ -162,16 +130,11 @@ namespace baselib {
 
 	void GLFWApp::destroy()
 	{
-		if (!isInitialized())
-			return;
-		
 		onDestroy();
 
 		if (m_pWindow)
 			glfwDestroyWindow(m_pWindow);
 		glfwTerminate();
-
-		setInitialized(false);
 	}
 
 	void GLFWApp::processEvents()
@@ -180,26 +143,10 @@ namespace baselib {
 		if (glfwWindowShouldClose(m_pWindow))
 			setAppRunning(false);
 
-		// Let callbacks create event queue
 		glfwPollEvents();
 
-		// Get mouse position and handle mouse movements
+		// Get mouse position manually and handle mouse movements
 		mouseMove();
-
-		// Process event queue
-		while (!aEvents.empty())
-		{
-			auto sEvent = aEvents.back();
-			aEvents.pop_back();
-			switch (sEvent.eType)
-			{
-				case KEY_EVENT: keyEvent(sEvent.i1 /*sEvent.i2*/, sEvent.i3); break;
-				case MOUSE_BUTTON_EVENT: mouseButton(sEvent.i1, sEvent.i2); break;
-				case MOUSE_ENTER_EVENT: mouseEnter(sEvent.i1); break;
-				case MOUSE_SCROLL_EVENT: mouseScroll(sEvent.d1); break;
-				default: assert(false); break;
-			}
-		}
 	}
 
 	void GLFWApp::keyEvent(int iKey, int iAction)
@@ -208,28 +155,6 @@ namespace baselib {
 			onKeyPress(iKey);
 		else if (iAction == GLFW_RELEASE)
 			onKeyRelease(iKey);
-	}
-
-	void GLFWApp::mouseMove()
-	{
-		// Get mouse position
-		double xPos = 0.0;
-		double yPos = 0.0;
-		glfwGetCursorPos(m_pWindow, &xPos, &yPos);
-		m_iMouseXPrev = m_iMouseX;
-		m_iMouseYPrev = m_iMouseY;
-		m_iMouseX = int(floor(xPos));
-		m_iMouseY = int(floor(yPos));
-
-		// Handle mouse move
-		if (m_iMouseX != m_iMouseXPrev || m_iMouseY != m_iMouseYPrev)
-		{
-			//LOG_DEBUG << "New mouse pos : " << m_iMouseX << " , " << m_iMouseY;
-			//LOG_DEBUG << "Delta mouse : " << m_iMouseX - m_iMouseXPrev << " , " << m_iMouseY - m_iMouseYPrev;
-
-			onMouseMove(m_iMouseX, m_iMouseY);
-			onMouseMoveRel(m_iMouseX - m_iMouseXPrev, m_iMouseY - m_iMouseYPrev);
-		}
 	}
 
 	void GLFWApp::mouseButton(int iButton, int iAction)
@@ -274,9 +199,29 @@ namespace baselib {
 			onMouseExit();
 	}
 
+	void GLFWApp::mouseMove()
+	{
+		// Get mouse position
+		double xPos = 0.0;
+		double yPos = 0.0;
+		glfwGetCursorPos(m_pWindow, &xPos, &yPos);
+		m_iMouseXPrev = m_iMouseX;
+		m_iMouseYPrev = m_iMouseY;
+		m_iMouseX = int(floor(xPos));
+		m_iMouseY = int(floor(yPos));
+
+		// Handle mouse move
+		if (m_iMouseX != m_iMouseXPrev || m_iMouseY != m_iMouseYPrev)
+		{
+			//LOG_DEBUG << "New mouse pos : " << m_iMouseX << " , " << m_iMouseY;
+			//LOG_DEBUG << "Delta mouse : " << m_iMouseX - m_iMouseXPrev << " , " << m_iMouseY - m_iMouseYPrev;
+			onMouseMove(m_iMouseX, m_iMouseY);
+			onMouseMoveRel(m_iMouseX - m_iMouseXPrev, m_iMouseY - m_iMouseYPrev);
+		}
+	}
+
 	void GLFWApp::swapBuffers()
 	{
-		assert(isInitialized() && "App must be initialized before calling GLFWApp::swapBuffers()");
 		glfwSwapBuffers(m_pWindow);
 	}
 

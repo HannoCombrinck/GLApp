@@ -2,6 +2,8 @@
 
 #include <string>
 
+#include <boost/signals2.hpp>
+
 struct GLFWwindow;
 
 namespace baselib
@@ -14,11 +16,6 @@ namespace baselib
 		//! Destructor.
 		virtual ~GLFWApp();
 
-		//! Create the main GLFW window, OpenGL context and associate the context with the window.
-		void init();
-		//! Destroy the window and terminate GLFW.
-		void destroy();
-
 		//! Process all application events. (i.e. key presses, mouse clicks, window resize etc.)
 		void processEvents();
 		//! Swap the front and back buffers.
@@ -26,8 +23,6 @@ namespace baselib
 
 		//! Returns false if the app should be terminated.
 		bool isAppRunning() const { return m_bAppRunning; }
-		//! Returns true if the window and context was successfully created.
-		bool isInitialized() const { return m_bInitialized; }
 		//! Return time elapsed from application start.
 		double GetTime() const;
 
@@ -61,18 +56,31 @@ namespace baselib
 		//! Getter for setMinorVersion().
 		int getMinorVersion() const { return m_iMinorVersion; }
 
+		
 	private:
+		//! Create the main GLFW window, OpenGL context and associate the context with the window.
+		void init();
+		//! Destroy the window and terminate GLFW.
+		void destroy();
+
 		//! Set the app "running" state. When set to false the main update loop will terminate.
 		void setAppRunning(bool b) { m_bAppRunning = b; }
-		//! Set the app initialized state.
-		void setInitialized(bool b) { m_bInitialized = b; }
 
+		//! Key event callback.
 		void keyEvent(int iKey, int iAction);
-		void mouseMove();
+		boost::signals2::scoped_connection m_KeyEventConnection;
+		//! Mouse button event callback.
 		void mouseButton(int iButton, int iAction);
-		void mouseScroll(double dScroll);
+		boost::signals2::scoped_connection m_MouseButtonConnection;
+		//! Mouse enter/exit event callback.
 		void mouseEnter(int iEnter);
-
+		boost::signals2::scoped_connection m_MouseEnterConnection;
+		//! Mouse wheel scroll event callback.
+		void mouseScroll(double dScroll);
+		boost::signals2::scoped_connection m_MouseScrollConnection;
+		//! Mouse move event callback.		
+		void mouseMove();
+		
 		//! Called after window and OpenGL context was successfully created. Derived app should do initialization here.
 		virtual void onInit() {}
 		//! Called before window and OpenGL context is destroyed. Derived app should do cleanup here before window is destroyed.
@@ -115,9 +123,7 @@ namespace baselib
 		//! Called when window is refreshed.
 		virtual void onWindowRefresh() {}
 
-
 		bool m_bAppRunning;			 //!< While true the main update loop will execute. When set to false the main loop terminates and the app closes.
-		bool m_bInitialized;		 //!< True after the main window and OpenGL context was successfully created. 
 		std::string m_sWindowTitle;	 //!< The current window title.
 		int m_iWidth;				 //!< Window width in pixels.
 		int m_iHeight;				 //!< Window height in pixels.

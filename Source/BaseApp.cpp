@@ -24,7 +24,6 @@ namespace baselib {
 	void BaseApp::start()
 	{
 		LOG_VERBOSE << "BaseApp starting main loop..";
-		assert(isInitialized() && "App must be initialized before starting.");
 		
 		m_dCurrentTime = GetTime();
 		while (isAppRunning())
