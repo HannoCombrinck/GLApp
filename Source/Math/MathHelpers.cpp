@@ -1,4 +1,4 @@
-#include "Math.h"
+#include "MathHelpers.h"
 
 namespace baselib {
 
@@ -8,7 +8,7 @@ namespace baselib {
 		q.w = (t < 0.0f) ? 0.0f : -sqrt(t);
 	}
 
-	glm::quat multiplyQuat(glm::quat &q1, glm::quat &q2) 
+	glm::quat multiplyQuat(const glm::quat &q1, const glm::quat &q2) 
 	{
 		Vec3 v1(q1.x, q1.y, q1.z);
 		Vec3 v2(q2.x, q2.y, q2.z);
@@ -19,21 +19,20 @@ namespace baselib {
 		return glm::quat(s, v.x, v.y, v.z);
 	}
 
-	glm::quat slerpQuat(glm::quat &q1, glm::quat &q2, float u) 
+	glm::quat slerpQuat(const glm::quat &q1, const glm::quat &q2, float u) 
 	{
 		float cosOmega = glm::dot(q1, q2);
+		glm::quat q2flipped = q2;
 		if (cosOmega < 0.0f) 
 		{
-			q2.w = q2.w*-1;
-			q2.x = q2.x*-1;
-			q2.y = q2.y*-1;
-			q2.z = q2.z*-1;
-			cosOmega = -cosOmega;
+			q2flipped *= -1;
+			cosOmega *= -1;
 		}
 
 		float k0, k1;
+		//if small angle then do norml linear interp. instead of spherical
 		if (cosOmega > 0.99999f) 
-		{ //if small angle then do norml linear interp. instead of spherical
+		{ 
 			k0 = 1.0f - u;
 			k1 = u;
 		}
@@ -48,7 +47,7 @@ namespace baselib {
 			k1 = sin(u*omega)*sinOmegaInv;
 		}
 
-		glm::quat result(q1.w*k0 + q2.w*k1, q1.x*k0 + q2.x*k1, q1.y*k0 + q2.y*k1, q1.z*k0 + q2.z*k1);
+		glm::quat result(q1.w*k0 + q2flipped.w*k1, q1.x*k0 + q2flipped.x*k1, q1.y*k0 + q2flipped.y*k1, q1.z*k0 + q2flipped.z*k1);
 		result = glm::normalize(result);
 		return result;
 	}

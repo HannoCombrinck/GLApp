@@ -91,7 +91,7 @@
     <ClCompile Include="..\..\Source\Graphics\Visual.cpp" />
     <ClCompile Include="..\..\Source\Logging\Log.cpp" />
     <ClCompile Include="..\..\Source\main.cpp" />
-    <ClCompile Include="..\..\Source\Math\Math.cpp" />
+    <ClCompile Include="..\..\Source\Math\MathHelpers.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\BaseApp.h" />
@@ -110,6 +110,7 @@
     <ClInclude Include="..\..\Source\Graphics\Visual.h" />
     <ClInclude Include="..\..\Source\Logging\Log.h" />
     <ClInclude Include="..\..\Source\Math\Math.h" />
+    <ClInclude Include="..\..\Source\Math\MathHelpers.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -31,9 +31,6 @@
     <ClCompile Include="..\..\Source\BaseApp.cpp">
       <Filter>Header/Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Math\Math.cpp">
-      <Filter>Header/Source Files\Math</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Graphics\ShaderObject.cpp">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClCompile>
@@ -69,6 +66,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Graphics\Renderer.cpp">
       <Filter>Header/Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Math\MathHelpers.cpp">
+      <Filter>Header/Source Files\Math</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -119,6 +119,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Graphics\Renderer.h">
       <Filter>Header/Source Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Math\MathHelpers.h">
+      <Filter>Header/Source Files\Math</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
