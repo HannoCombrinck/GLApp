@@ -38,6 +38,20 @@ namespace baselib { namespace graphics {
 
 	}
 
+	//namespace
+	//{
+	//	unsigned int getGLType(unsigned int uType)
+	//	{
+	//		switch (uType)
+	//		{
+	//			case: TYPE_FLOAT: return GL_FLOAT; break;
+	//			case: TYPE_INT: return GL_INT; break;
+	//			case: TYPE_BOOL: return GL_BOOL; break;
+	//		}
+	//	}
+	//}
+
+
 	boost::shared_ptr<Geometry> Renderer::createGeometry(const boost::shared_ptr<VertexList>& spVertexList)
 	{
 		LOG_DEBUG << "Creating geometry hardware buffers...";
@@ -53,8 +67,8 @@ namespace baselib { namespace graphics {
 		glBufferData(GL_ARRAY_BUFFER, spVertexList->getVertexData().size()*sizeof(Vertex), &spVertexList->getVertexData()[0], GL_STATIC_DRAW);
 
 		// connect the xyz to the "vert" attribute of the vertex shader
-		//glEnableVertexAttribArray(gWoodenCrate.shaders->attrib("vert"));
-		//glVertexAttribPointer(gWoodenCrate.shaders->attrib("vert"), 3, GL_FLOAT, GL_FALSE, 5*sizeof(GLfloat), NULL);
+		//glVertexAttribPointer(/*index*/0, /*num members i.e. 3 floats for position*/ 3, /*type of elements*/ GL_FLOAT, /*normalized*/ GL_FALSE, /*stride i.e. size of entire vertex struct*/ sizeof(Vertex), /*position data*/ NULL);
+		//glEnableVertexAttribArray(/*index*/ 0);
 
 		// connect the uv coords to the "vertTexCoord" attribute of the vertex shader
 		//glEnableVertexAttribArray(gWoodenCrate.shaders->attrib("vertTexCoord"));

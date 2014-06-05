@@ -61,9 +61,6 @@
     <ClCompile Include="..\..\Source\Graphics\RenderState.cpp">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Graphics\VertexList.cpp">
-      <Filter>Header/Source Files\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Graphics\Renderer.cpp">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClCompile>

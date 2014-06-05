@@ -3,49 +3,88 @@
 #include <Math/Math.h>
 #include <vector>
 
+#include <Logging/Log.h>
+
 using namespace std;
 
 namespace baselib
 {
 	namespace graphics
 	{
-		//! Fixed 64 byte vertex structure
-		#pragma pack(push,1)
-		struct Vertex 
+		enum VertexAttributeType
 		{
-			float x, y, z; // 0 
-			float nx, ny, nz; // 12 
-			float tx, ty, tz; // 24 
-			float btx, bty, btz; // 36
-			float u, v; // 48 
-			float u2, v2; // 56 
+			TYPE_FLOAT,
+			TYPE_INT,
+			TYPE_BOOL,
 		};
-		#pragma pack(pop)
+
+		struct VertexAttribute 
+		{
+			//! Constructor.
+			VertexAttribute(const string& _sName, int _iAttribIndex, int _iNumElements, VertexAttributeType _eType)
+				: sName(_sName)
+				, iAttribIndex(_iAttribIndex)
+				, iNumElements(_iNumElements)
+				, eType(_eType) {}
+
+			string sName;				//!< Vertex attribute name.
+			int iAttribIndex;			//!< Index of the vertex attribute (as defined in shader via layout qualifier.
+			int iNumElements;			//!< The number of elements that make up the vertex attribute.s
+			VertexAttributeType eType;  //!< The type of the attribute elements.
+		};
+
+		class VertexLayout
+		{
+		public:
+			//! Add a vertex attribute to the layout.
+			void add(const VertexAttribute& va) { m_Attributes.push_back(va); }
+			//! Get a reference to the vertex attribute list.
+			const vector<VertexAttribute>& getAttributes() const { return m_Attributes; }
+
+		private:
+			vector<VertexAttribute> m_Attributes;  //!< The list of vertex list attributes that define the vertex layout.
+		};
  
+		template <class VertexType>
 		class VertexList
 		{
 		public:
 			//! Constructor.
-			VertexList();
+			VertexList() { LOG_VERBOSE << "VertexList constructor";	}
 			//! Destructor.
-			~VertexList();
+			~VertexList() { LOG_VERBOSE << "VertexList destructor"; }
+
+			//! Set the vertex layout.
+			void setVertexLayout(const boost::shared_ptr<VertexLayout>& spVertexLayout) { m_spVertexLayout = spVertexLayout; }
+			//! Get the vertex layout.
+			boost::shared_ptr<VertexLayout> getVertexLayout() const { return m_spVertexLayout; }
 
 			//! Clear all vertices and indices.
-			void clear();
- 
+			void clear() 
+			{ 
+				m_aVertices.clear(); 
+				m_aIndices.clear(); 
+			}
+
 			//! Add a vertex to the list.
-			void addVertex(Vertex vertex) { m_aVertices.push_back(vertex); }
+			void addVertex(VertexType vertex) { m_aVertices.push_back(vertex); }
 			//! Add an index to the list.
 			void addIndex(unsigned int uIndex) { m_aIndices.push_back(uIndex); }
 
+			//! Modify the vertex data.
+			vector<VertexType>& modifyVertexData() { return m_aVertices;}
 			//! Get the vertex data.
-			const vector<Vertex>& getVertexData() const { return m_aVertices; }
+			const vector<VertexType>& getVertexData() const { return m_aVertices; }
+
+			//! Modify the index data.
+			vector<unsigned int>& modifyIndexData() { return m_aIndices; }
 			//! Get the index data.
 			const vector<unsigned int>& getIndexData() const { return m_aIndices; }
 	
 		private:
-			vector<Vertex> m_aVertices;		 //!< The vertex data.
-			vector<unsigned int> m_aIndices; //!< The index data.
+			boost::shared_ptr<VertexLayout> m_spVertexLayout;	//!< The vertex layout description.
+			vector<VertexType> m_aVertices;						//!< The vertex data.
+			vector<unsigned int> m_aIndices;					//!< The index data.
 		};
 	}
 }

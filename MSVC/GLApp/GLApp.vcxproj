@@ -87,7 +87,6 @@
     <ClCompile Include="..\..\Source\Graphics\ShaderObject.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Spatial.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Texture.cpp" />
-    <ClCompile Include="..\..\Source\Graphics\VertexList.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Visual.cpp" />
     <ClCompile Include="..\..\Source\Logging\Log.cpp" />
     <ClCompile Include="..\..\Source\main.cpp" />

@@ -6,14 +6,6 @@ namespace baselib
 {
 	namespace graphics
 	{
-		class VertexList;
-	}
-}
-
-namespace baselib 
-{
-	namespace graphics
-	{
 		/*!
 		 *  Geometry assumes the existence of certain vertex attributes in shader during creation.
 		 *  Default implementation just for static geometry i.e. buffer created once and never changes.
@@ -28,11 +20,6 @@ namespace baselib
 			//! Destructor.
 			~Geometry();
 		
-			//! Set the vertex list.
-			void setVertexList(const boost::shared_ptr<VertexList>& spVertexList) { m_spVertexList = spVertexList; }
-			//! Getter for setVertexList().
-			boost::shared_ptr<VertexList> getVertexList() const { return m_spVertexList; }
-
 			//! Set the VAO.
 			void setVAO(unsigned int uVAO) { m_uVAO = uVAO; }
 			//! Get the VAO.
@@ -49,7 +36,6 @@ namespace baselib
 			unsigned int getIB() const { return m_uIB; }
 
 		private:
-			boost::shared_ptr<VertexList> m_spVertexList; //!< The vertex list from which the hardware buffers are created.
 			unsigned int m_uVAO;						  //!< The geometry VAO - Vertex array object.
 			unsigned int m_uVBO;						  //!< The geometry VBO - Vertex buffer object
 			unsigned int m_uIB;							  //!< The geometry index buffer.
