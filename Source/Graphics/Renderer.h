@@ -18,6 +18,29 @@ namespace baselib
 		class Renderer
 		{
 		public:
+			
+			// Render states
+			enum RenderStates
+			{
+				STATE_ALPHA_TEST,
+				STATE_ALPHA_TEST_FUNC,
+				STATE_ALPHA_TEST_REF,
+				STATE_BLEND,
+				STATE_BLEND_SRC,
+				STATE_BLEND_DST,
+				STATE_BLEND_FUNC,
+
+				STATE_DEPTH_WRITE,
+				STATE_DEPTH_TEST,
+				STATE_DEPTH_FUNC,
+				STATE_DEPTH_CLEAR_VALUE,
+				
+				STATE_CULL,
+				STATE_CULL_MODE,
+				STATE_DEPTH_BIAS,
+				STATE_MULTISAMPLE,
+			};
+
 			//! Constructor.
 			Renderer();
 			//! Destructor.
