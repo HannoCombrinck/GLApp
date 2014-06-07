@@ -87,4 +87,85 @@ namespace baselib { namespace graphics {
 		return boost::shared_ptr<Geometry>(new Geometry(uVAO, uVBO, uIB));
 	}
 
+	void Renderer::setRenderState(unsigned int uState, unsigned int uValue)
+	{
+		assert(uState < STATE_COUNT);
+
+		if (m_auState[uState] == uValue)
+		{
+			LOG_VERBOSE << "Ignoring redundant state change";
+			return;
+		}
+
+		applyRenderState(uState, uValue);
+	}
+
+	void Renderer::applyRenderState(unsigned int uState, unsigned int uValue)
+	{
+		switch (uState)
+		{
+		case STATE_ALPHA_TEST: 
+			assert(false);
+			break;
+		case STATE_ALPHA_TEST_FUNC: 
+			assert(false);
+			break;
+		case STATE_ALPHA_TEST_REF: 
+			assert(false);
+			break;
+		case STATE_BLEND: 
+			if (uValue == TRUE)
+				glEnable(GL_BLEND);
+			else if (uValue == FALSE)
+				glDisable(GL_BLEND);
+			else
+			{
+				LOG_ERROR << "Invalid render state value";
+				assert(false);
+			}
+			break;
+		case STATE_BLEND_SRC:
+			assert(false);
+			break;
+		case STATE_BLEND_DST: 
+			assert(false);
+			break;
+		case STATE_BLEND_FUNC: 
+			assert(false);
+			break;
+		case STATE_DEPTH_WRITE: 
+			assert(false);
+			break;
+		case STATE_DEPTH_TEST: 
+			assert(false);
+			break;
+		case STATE_DEPTH_FUNC: 
+			assert(false);
+			break;
+		case STATE_DEPTH_CLEAR_VALUE: 
+			assert(false);
+			break;
+		case STATE_CULL: 
+			if (uValue == TRUE)
+				glEnable(GL_CULL_FACE);
+			else if (uValue == FALSE)
+				glDisable(GL_CULL_FACE);
+			else
+			{
+				LOG_ERROR << "Invalid render state value";
+				assert(false);
+			}
+			break;
+		case STATE_CULL_MODE: 
+			assert(false);
+			break;
+		case STATE_DEPTH_BIAS: 
+			assert(false);
+			break;
+		case STATE_MULTISAMPLE: 
+			assert(false);
+			break;
+		}
+	}
+
 } }

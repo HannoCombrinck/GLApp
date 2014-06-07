@@ -1,5 +1,6 @@
 #pragma once
 
+#include <assert.h>
 #include <boost/shared_ptr.hpp>
 
 namespace baselib 
@@ -39,6 +40,23 @@ namespace baselib
 				STATE_CULL_MODE,
 				STATE_DEPTH_BIAS,
 				STATE_MULTISAMPLE,
+
+				STATE_COUNT
+			};
+
+			enum RenderStateValues
+			{
+				FALSE,
+				TRUE,
+				ONE,
+				SRC,
+				SRC_ALPHA,
+				ONE_MINUS_SRC,
+				ONE_MINUS_SRC_ALPHA,
+				FRONT_FACE,
+				BACK_FACE,
+
+				STATE_VALUE_COUNT
 			};
 
 			//! Constructor.
@@ -49,11 +67,20 @@ namespace baselib
 			//! Create Geometry from a VertexList
 			boost::shared_ptr<Geometry> createGeometry(const boost::shared_ptr<VertexList>& spVertexList);
 
+			//! Set the current render state - ignores redundant changes.
+			void setRenderState(unsigned int uState, unsigned int uValue);
+			//! Get the current render state.
+			unsigned int getRenderState(unsigned int uState) const { assert(uState < STATE_COUNT); return m_auState[uState]; }
+
 		private:
 			//! Initialize renderer.
 			void init();
 			//! Destroy renderer.
 			void destroy();
+			//! Apply a render state.
+			void applyRenderState(unsigned int uState, unsigned int uValue);
+
+			unsigned int m_auState[STATE_COUNT];
 
 		};
 	}
