@@ -58,7 +58,7 @@ namespace baselib { namespace graphics {
 	boost::shared_ptr<ShaderObject> ShaderManager::createShaderObject(const fs::path& fsPath)
 	{
 		// Check if shader object already exists
-		auto iter = m_aShaderObjectMap.find(fsPath.string());
+		auto iter = m_aShaderObjectMap.find(fs::canonical(fsPath).string());
 		if (iter != m_aShaderObjectMap.end())
 		{
 			LOG_VERBOSE << fsPath << " shader object already loaded.";
@@ -105,7 +105,7 @@ namespace baselib { namespace graphics {
 		LOG_INFO << "Loading shader from file: " << fsPath;
 
 		auto spShaderObject = createShaderObject(sSource, eType);
-		spShaderObject->setName(fsPath.string());
+		spShaderObject->setName(fs::canonical(fsPath).string());
 		m_aShaderObjectMap[spShaderObject->getName()] = spShaderObject; // Add to shader map
 		return spShaderObject;
 	}
