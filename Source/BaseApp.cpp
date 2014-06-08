@@ -50,13 +50,17 @@ namespace baselib {
 	void BaseApp::render()
 	{
 		assert(m_spRenderer);
-
+		m_spRenderer->clear();
+		// bind shader
+		// bind VAO
+		// draw - glDraw*
+		// unbind VAO
+		// unbind shader
 	}
 
 	void BaseApp::init()
 	{
 		LOG_VERBOSE << "BaseApp init";
-
 		m_spRenderer = boost::shared_ptr<Renderer>(new Renderer());
 	}
 

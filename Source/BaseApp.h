@@ -39,6 +39,7 @@ namespace baselib
 		double m_dCurrentTime;  //!< Current time elapsed since application started.
 		double m_dPreviousTime; //!< Time elapsed up to previous update cycle. So time elapsed since previous update = m_dCurrentTime - m_dPreviousTime.
 
-		boost::shared_ptr<graphics::Renderer> m_spRenderer;
+		boost::shared_ptr<graphics::Renderer> m_spRenderer; //!< Main renderer
+
 	};
 }

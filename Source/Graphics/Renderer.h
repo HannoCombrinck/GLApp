@@ -94,8 +94,13 @@ namespace baselib
 			//! Create Geometry from a VertexList
 			//boost::shared_ptr<Geometry> createGeometry(const boost::shared_ptr<VertexList>& spVertexList);
 
-			//! Clear the current render target.
+			//! Clear all buffers for current render target.
+			void clear();
+			//! Clear buffers specified by mask for current render target.
 			void clear(unsigned int uMask);
+
+			//! Set the active viewport.
+			void setViewport(const Vec4& vViewport);
 
 			//! Set the clear colour.
 			void setClearColour(const Vec4& v);
@@ -115,8 +120,9 @@ namespace baselib
 			//! Apply a render state.
 			void applyRenderState(unsigned int uState, unsigned int uValue);
 
-			unsigned int m_auState[STATE_COUNT];  //!< Current render state values.
+			
 			Vec4 m_vClearColour;				  //!< Current clear colour. Current render target will be cleared to this colour when calling clear().
+			unsigned int m_auState[STATE_COUNT];  //!< Current render state values.
 
 		};
 	}

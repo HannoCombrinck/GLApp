@@ -17,6 +17,12 @@
     <Filter Include="Header/Source Files\Graphics">
       <UniqueIdentifier>{37837ecb-7774-40ce-a80a-af38bac1ccbb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Data">
+      <UniqueIdentifier>{e4d25820-ffbe-4360-843d-6c5aa04f3209}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Data\Shaders">
+      <UniqueIdentifier>{da1f3455-8131-436a-96e2-8314bb0ba1b8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\main.cpp">
@@ -126,5 +132,13 @@
     <ClInclude Include="..\..\Source\Graphics\ShaderPipeline.h">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\Data\Shaders\test.frag">
+      <Filter>Data\Shaders</Filter>
+    </None>
+    <None Include="..\..\Data\Shaders\test.vert">
+      <Filter>Data\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

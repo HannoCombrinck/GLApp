@@ -25,7 +25,7 @@ namespace baselib { namespace graphics {
 
 		//////////////////////////////////////////////////////////////////////////
 		// Temp settings for testing - these will be encapsulated elsewhere
-		setClearColour(Vec4(1.0f, 2.0f, 3.0f, 4.0f));
+		setClearColour(Vec4(0.0f, 0.0f, 0.0f, 0.0f));
 		setRenderState(STATE_DEPTH_TEST, TRUE);
 		setRenderState(STATE_CULL_MODE, CULL_NONE);
 		setRenderState(STATE_BLEND, FALSE);
@@ -89,6 +89,11 @@ namespace baselib { namespace graphics {
 //		return boost::shared_ptr<Geometry>(new Geometry(uVAO, uVBO, uIB));
 //	}
 
+	void Renderer::clear()
+	{
+		clear(COLOUR_BUFFER | DEPTH_BUFFER | ACCUMULATION_BUFFER | STENCIL_BUFFER);
+	}
+
 	void Renderer::clear(unsigned int uMask)
 	{
 		unsigned int uGLMask = 0;
@@ -98,6 +103,11 @@ namespace baselib { namespace graphics {
 		uGLMask |= (uMask & STENCIL_BUFFER) ? GL_STENCIL_BUFFER_BIT : 0;
 
 		glClear(uGLMask);
+	}
+
+	void Renderer::setViewport(const Vec4& vViewport)
+	{
+		glViewport(int(vViewport.x), int(vViewport.y), int(vViewport.z), int(vViewport.w));
 	}
 
 	void Renderer::setClearColour(const Vec4& v)
