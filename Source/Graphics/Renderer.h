@@ -9,13 +9,6 @@ namespace baselib
 {
 	namespace graphics
 	{
-	}
-}
-
-namespace baselib 
-{
-	namespace graphics
-	{
 		class Renderer
 		{
 		public:
@@ -54,7 +47,7 @@ namespace baselib
 			{
 				UNINITIALIZED = 0,
 
-				// Bool values
+				// Boolean values
 				FALSE,
 				TRUE,
 
@@ -76,7 +69,7 @@ namespace baselib
 				FUNC_MIN,
 				FUNC_MAX,
 
-				// Cull modes
+				// Cull mode values
 				CULL_NONE,
 				CULL_FRONT,
 				CULL_BACK,

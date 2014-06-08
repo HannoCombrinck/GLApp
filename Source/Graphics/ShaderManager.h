@@ -3,8 +3,6 @@
 #include <string>
 #include <boost/unordered_map.hpp>
 #include <boost/shared_ptr.hpp>
-#include <boost/weak_ptr.hpp>
-#include <boost/enable_shared_from_this.hpp>
 #include <boost/filesystem.hpp>
 
 #include <Graphics/ShaderObject.h>
@@ -15,7 +13,7 @@ namespace baselib
 {
 	namespace graphics
 	{
-		class ShaderManager : public boost::enable_shared_from_this<ShaderManager>
+		class ShaderManager
 		{
 		public:
 			//! Constructor.
