@@ -9,7 +9,6 @@ namespace baselib
 {
 	namespace graphics
 	{
-		class Geometry;
 	}
 }
 
@@ -43,12 +42,18 @@ namespace baselib
 				STATE_CULL_MODE,
 				STATE_DEPTH_BIAS,
 				STATE_MULTISAMPLE,
+				DEPTH_BIAS_NONE,
+				DEPTH_BIAS_FILL,
+				DEPTH_BIAS_LINE,
+				DEPTH_BIAS_POINT,
 
 				STATE_COUNT
 			};
 
 			enum RenderStateValues
 			{
+				UNINITIALIZED = 0,
+
 				// Bool values
 				FALSE,
 				TRUE,
@@ -80,6 +85,14 @@ namespace baselib
 				STATE_VALUE_COUNT
 			};
 
+			enum ClearMasks
+			{
+				COLOUR_BUFFER = 1,
+				DEPTH_BUFFER = 2,
+				ACCUMULATION_BUFFER = 4,
+				STENCIL_BUFFER = 8
+			};
+
 			//! Constructor.
 			Renderer();
 			//! Destructor.
@@ -87,6 +100,9 @@ namespace baselib
 		
 			//! Create Geometry from a VertexList
 			//boost::shared_ptr<Geometry> createGeometry(const boost::shared_ptr<VertexList>& spVertexList);
+
+			//! Clear the current render target.
+			void clear(unsigned int uMask);
 
 			//! Set the clear colour.
 			void setClearColour(const Vec4& v);

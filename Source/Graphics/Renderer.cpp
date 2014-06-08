@@ -2,7 +2,6 @@
 
 #include <GL/glew.h>
 #include <Logging/Log.h>
-#include <Graphics/Geometry.h>
 #include <Graphics/VertexList.h>
 
 namespace baselib { namespace graphics {
@@ -21,6 +20,9 @@ namespace baselib { namespace graphics {
 
 	void Renderer::init()
 	{
+		// Temp Should set to default OpenGL states.
+		memset(m_auState, 0, sizeof(unsigned int)*STATE_COUNT);
+
 		//////////////////////////////////////////////////////////////////////////
 		// Temp settings for testing - these will be encapsulated elsewhere
 		setClearColour(Vec4(1.0f, 2.0f, 3.0f, 4.0f));
@@ -30,7 +32,6 @@ namespace baselib { namespace graphics {
 		setRenderState(STATE_BLEND_SRC, SRC_ALPHA);
 		setRenderState(STATE_BLEND_DST, ONE_MINUS_SRC_ALPHA);
 
-		glShadeModel(GL_SMOOTH);
 		glViewport(0, 0, 640, 480);
 		//////////////////////////////////////////////////////////////////////////
 	}
@@ -87,6 +88,17 @@ namespace baselib { namespace graphics {
 //		LOG_DEBUG << "Successfully created geometry hardware buffers.";
 //		return boost::shared_ptr<Geometry>(new Geometry(uVAO, uVBO, uIB));
 //	}
+
+	void Renderer::clear(unsigned int uMask)
+	{
+		unsigned int uGLMask = 0;
+		uGLMask |= (uMask & COLOUR_BUFFER) ? GL_COLOR_BUFFER_BIT : 0;
+		uGLMask |= (uMask & DEPTH_BUFFER) ? GL_DEPTH_BUFFER_BIT : 0;
+		uGLMask |= (uMask & ACCUMULATION_BUFFER) ? GL_ACCUM_BUFFER_BIT : 0;
+		uGLMask |= (uMask & STENCIL_BUFFER) ? GL_STENCIL_BUFFER_BIT : 0;
+
+		glClear(uGLMask);
+	}
 
 	void Renderer::setClearColour(const Vec4& v)
 	{
@@ -197,6 +209,14 @@ namespace baselib { namespace graphics {
 		case STATE_DEPTH_BIAS:			
 			assert(false); break;
 		case STATE_MULTISAMPLE:			
+			assert(false); break;
+		case DEPTH_BIAS_NONE:
+			assert(false); break;
+		case DEPTH_BIAS_FILL:
+			assert(false); break;
+		case DEPTH_BIAS_LINE:
+			assert(false); break;
+		case DEPTH_BIAS_POINT:
 			assert(false); break;
 		}
 	}

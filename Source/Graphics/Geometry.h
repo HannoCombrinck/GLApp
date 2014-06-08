@@ -6,10 +6,6 @@ namespace baselib
 {
 	namespace graphics
 	{
-		/*!
-		 *  Geometry assumes the existence of certain vertex attributes in shader during creation.
-		 *  Default implementation just for static geometry i.e. buffer created once and never changes.
-		 */
 		class Geometry
 		{
 		public:
@@ -37,6 +33,7 @@ namespace baselib
 
 		private:
 			unsigned int m_uVAO;						  //!< The geometry VAO - Vertex array object.
+			// VBO and IB should move down to implementations - Geometry should maintain VAO level state only.
 			unsigned int m_uVBO;						  //!< The geometry VBO - Vertex buffer object
 			unsigned int m_uIB;							  //!< The geometry index buffer.
 
