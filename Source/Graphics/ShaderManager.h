@@ -29,15 +29,8 @@ namespace baselib
 			boost::shared_ptr<ShaderObject> createShaderObject(const fs::path& fsPath);
 			//! Creates, compiles and returns a shader object from source.
 			boost::shared_ptr<ShaderObject> createShaderObject(const std::string& sShaderSource, ShaderObject::ShaderType eType);
-			//! Destroys the shader object.
-			void destroyShaderObject(unsigned int uShaderObjectID);
 
 		private:
-			//! Loads source code from a text file into sSource string.
-			std::string loadSourceFromFile(const fs::path& fsPath);
-			//! Get shader type from the file extension.
-			ShaderObject::ShaderType getTypeFromExtension(const std::string& sExtension);
-
 			boost::unordered_map<std::string, boost::weak_ptr<ShaderObject>> m_aShaderObjectMap; //!< Map with weak references to all created ShaderObjects.
 
 		};

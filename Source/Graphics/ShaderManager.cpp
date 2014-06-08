@@ -15,6 +15,45 @@ namespace baselib { namespace graphics {
 	{
 		LOG_VERBOSE << "ShaderManager destructor";
 	}
+
+	namespace
+	{
+		// Loads source code from a text file into sSource string.
+		std::string loadSourceFromFile(const fs::path& fsPath)
+		{
+			fs::ifstream inFile(fsPath);
+			if (!inFile.is_open())
+			{
+				LOG_ERROR << "Failed to open file " << fsPath;
+				assert(false);
+			}
+
+			std::string sSource;
+			sSource.assign(std::istreambuf_iterator<char>(inFile), std::istreambuf_iterator<char>());
+
+			inFile.close();
+			return sSource;
+		}
+
+		// Get shader type from the file extension.
+		ShaderObject::ShaderType getTypeFromExtension(const std::string& sExtension)
+		{
+			if (sExtension == ".vert")
+				return ShaderObject::VERTEX_SHADER;
+			else if (sExtension == ".tesc")
+				return ShaderObject::TESS_CONTROL_SHADER;
+			else if (sExtension == ".tese")
+				return ShaderObject::TESS_EVALUATION_SHADER;
+			else if (sExtension == ".geom")
+				return ShaderObject::GEOMETRY_SHADER;
+			else if (sExtension == ".frag")
+				return ShaderObject::FRAGMENT_SHADER;
+			else if (sExtension == ".comp")
+				return ShaderObject::COMPUTE_SHADER;
+			else
+				return ShaderObject::INVALID_SHADER;		
+		}
+	}
 	
 	boost::shared_ptr<ShaderObject> ShaderManager::createShaderObject(const fs::path& fsPath)
 	{
@@ -141,52 +180,8 @@ namespace baselib { namespace graphics {
 
 		assert(iCompileStatus == GL_TRUE);
 
-		auto spShaderObject = boost::shared_ptr<ShaderObject>(new ShaderObject("", eType, uShaderObjectID, sShaderType, shared_from_this()));
+		auto spShaderObject = boost::shared_ptr<ShaderObject>(new ShaderObject("", eType, uShaderObjectID, sShaderType));
 		return spShaderObject;
-	}
-
-	void ShaderManager::destroyShaderObject(unsigned int uShaderObjectID)
-	{
-		if (uShaderObjectID == ~0)
-		{
-			LOG_ERROR << "Trying destroy shader object that doesn't have an ID";
-			assert(false);
-		}
-		glDeleteShader(uShaderObjectID);
-	}
-
-	std::string ShaderManager::loadSourceFromFile(const fs::path& fsPath)
-	{
-		fs::ifstream inFile(fsPath);
-		if (!inFile.is_open())
-		{
-			LOG_ERROR << "Failed to open file " << fsPath;
-			assert(false);
-		}
-
-		std::string sSource;
-		sSource.assign(std::istreambuf_iterator<char>(inFile), std::istreambuf_iterator<char>());
-
-		inFile.close();
-		return sSource;
-	}
-
-	ShaderObject::ShaderType ShaderManager::getTypeFromExtension(const std::string& sExtension)
-	{
-		if (sExtension == ".vert")
-			return ShaderObject::VERTEX_SHADER;
-		else if (sExtension == ".tesc")
-			return ShaderObject::TESS_CONTROL_SHADER;
-		else if (sExtension == ".tese")
-			return ShaderObject::TESS_EVALUATION_SHADER;
-		else if (sExtension == ".geom")
-			return ShaderObject::GEOMETRY_SHADER;
-		else if (sExtension == ".frag")
-			return ShaderObject::FRAGMENT_SHADER;
-		else if (sExtension == ".comp")
-			return ShaderObject::COMPUTE_SHADER;
-		else
-			return ShaderObject::INVALID_SHADER;		
 	}
 
 } }

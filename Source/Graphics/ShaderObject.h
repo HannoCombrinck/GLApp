@@ -7,14 +7,6 @@ namespace baselib
 {
 	namespace graphics
 	{
-		class ShaderManager;
-	}
-}
-
-namespace baselib 
-{
-	namespace graphics
-	{
 		class ShaderObject
 		{
 		public:
@@ -31,7 +23,7 @@ namespace baselib
 			};
 
 			//! Constructor.
-			ShaderObject(const std::string& sName, ShaderType eType, unsigned int iID, const std::string& sSource, const boost::shared_ptr<ShaderManager>& spShaderManager);
+			ShaderObject(const std::string& sName, ShaderType eType, unsigned int iID, const std::string& sSource);
 			//! Destructor.
 			~ShaderObject();
 
@@ -60,7 +52,6 @@ namespace baselib
 			std::string m_sSource;								//!< The shader object source code.
 			ShaderType m_eType;									//!< Type of shader object.
 			unsigned int m_uID;									//!< Uniqe ID.
-			boost::weak_ptr<ShaderManager> m_wpShaderManager;	//!< Weak reference to the shader manager that created this shader.
 		};
 	}
 }
