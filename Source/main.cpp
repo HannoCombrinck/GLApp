@@ -22,7 +22,7 @@ struct MyVert
 void testFunc() 
 {
 	VertexList<MyVert> vertexList;
-	boost::shared_ptr<VertexLayout> spVL;
+	auto spVL = boost::shared_ptr<VertexLayout>(new VertexLayout());
 	spVL->add(VertexAttribute("position", 0, 3, TYPE_FLOAT));
 	spVL->add(VertexAttribute("normal", 1, 3, TYPE_FLOAT));
 	spVL->add(VertexAttribute("texcoord", 2, 2, TYPE_FLOAT));
@@ -39,7 +39,7 @@ int main(int arc, char** argv)
 	testFunc();
 	system("pause");
 
-	//BaseApp app; // Default constructor uses default window settings (window size etc.)
-	//app.start();
+	BaseApp app; // Default constructor uses default window settings (window size etc.)
+	app.start();
 	return 0;
 }

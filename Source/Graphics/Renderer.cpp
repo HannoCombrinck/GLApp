@@ -23,12 +23,14 @@ namespace baselib { namespace graphics {
 	{
 		//////////////////////////////////////////////////////////////////////////
 		// Temp settings for testing - these will be encapsulated elsewhere
-		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-		glEnable(GL_DEPTH_TEST);
+		setClearColour(Vec4(1.0f, 2.0f, 3.0f, 4.0f));
+		setRenderState(STATE_DEPTH_TEST, TRUE);
+		setRenderState(STATE_CULL_MODE, CULL_NONE);
+		setRenderState(STATE_BLEND, FALSE);
+		setRenderState(STATE_BLEND_SRC, SRC_ALPHA);
+		setRenderState(STATE_BLEND_DST, ONE_MINUS_SRC_ALPHA);
+
 		glShadeModel(GL_SMOOTH);
-		glDisable(GL_CULL_FACE);
-		glDisable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glViewport(0, 0, 640, 480);
 		//////////////////////////////////////////////////////////////////////////
 	}
@@ -51,40 +53,45 @@ namespace baselib { namespace graphics {
 	//	}
 	//}
 
+//	boost::shared_ptr<Geometry> Renderer::createGeometry(const boost::shared_ptr<VertexList>& spVertexList)
+//	{
+//		LOG_DEBUG << "Creating geometry hardware buffers...";
+//		// Create VAO
+//		unsigned int uVAO = ~0;
+//		glGenVertexArrays(1, &uVAO);
+//		glBindVertexArray(uVAO);
+//
+//		// Create VBO
+//		unsigned int uVBO = ~0;
+//		glGenBuffers(1, &uVBO);
+//		glBindBuffer(GL_ARRAY_BUFFER, uVBO);
+//		glBufferData(GL_ARRAY_BUFFER, spVertexList->getVertexData().size()*sizeof(Vertex), &spVertexList->getVertexData()[0], GL_STATIC_DRAW);
+//
+//		// connect the xyz to the "vert" attribute of the vertex shader
+//		//glVertexAttribPointer(/*index*/0, /*num members i.e. 3 floats for position*/ 3, /*type of elements*/ GL_FLOAT, /*normalized*/ GL_FALSE, /*stride i.e. size of entire vertex struct*/ sizeof(Vertex), /*position data*/ NULL);
+//		//glEnableVertexAttribArray(/*index*/ 0);
+//
+//		// connect the uv coords to the "vertTexCoord" attribute of the vertex shader
+//		//glEnableVertexAttribArray(gWoodenCrate.shaders->attrib("vertTexCoord"));
+//		//glVertexAttribPointer(gWoodenCrate.shaders->attrib("vertTexCoord"), 2, GL_FLOAT, GL_TRUE,  5*sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
+//
+//		unsigned int uIB = ~0;
+//		glGenBuffers(1, &uIB);
+//		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uIB);
+//		glBufferData(GL_ELEMENT_ARRAY_BUFFER, spVertexList->getIndexData().size()*sizeof(unsigned int), &spVertexList->getIndexData()[0], GL_STATIC_DRAW);
+//
+//		glBindVertexArray(0);
+//		glBindBuffer(GL_ARRAY_BUFFER, 0);
+//		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+//
+//		LOG_DEBUG << "Successfully created geometry hardware buffers.";
+//		return boost::shared_ptr<Geometry>(new Geometry(uVAO, uVBO, uIB));
+//	}
 
-	boost::shared_ptr<Geometry> Renderer::createGeometry(const boost::shared_ptr<VertexList>& spVertexList)
+	void Renderer::setClearColour(const Vec4& v)
 	{
-		LOG_DEBUG << "Creating geometry hardware buffers...";
-		// Create VAO
-		unsigned int uVAO = ~0;
-		glGenVertexArrays(1, &uVAO);
-		glBindVertexArray(uVAO);
-
-		// Create VBO
-		unsigned int uVBO = ~0;
-		glGenBuffers(1, &uVBO);
-		glBindBuffer(GL_ARRAY_BUFFER, uVBO);
-		glBufferData(GL_ARRAY_BUFFER, spVertexList->getVertexData().size()*sizeof(Vertex), &spVertexList->getVertexData()[0], GL_STATIC_DRAW);
-
-		// connect the xyz to the "vert" attribute of the vertex shader
-		//glVertexAttribPointer(/*index*/0, /*num members i.e. 3 floats for position*/ 3, /*type of elements*/ GL_FLOAT, /*normalized*/ GL_FALSE, /*stride i.e. size of entire vertex struct*/ sizeof(Vertex), /*position data*/ NULL);
-		//glEnableVertexAttribArray(/*index*/ 0);
-
-		// connect the uv coords to the "vertTexCoord" attribute of the vertex shader
-		//glEnableVertexAttribArray(gWoodenCrate.shaders->attrib("vertTexCoord"));
-		//glVertexAttribPointer(gWoodenCrate.shaders->attrib("vertTexCoord"), 2, GL_FLOAT, GL_TRUE,  5*sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
-
-		unsigned int uIB = ~0;
-		glGenBuffers(1, &uIB);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uIB);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, spVertexList->getIndexData().size()*sizeof(unsigned int), &spVertexList->getIndexData()[0], GL_STATIC_DRAW);
-
-		glBindVertexArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-
-		LOG_DEBUG << "Successfully created geometry hardware buffers.";
-		return boost::shared_ptr<Geometry>(new Geometry(uVAO, uVBO, uIB));
+		glClearColor(v.r, v.g, v.b, v.a);
+		m_vClearColour = v;
 	}
 
 	void Renderer::setRenderState(unsigned int uState, unsigned int uValue)
@@ -100,71 +107,97 @@ namespace baselib { namespace graphics {
 		applyRenderState(uState, uValue);
 	}
 
+	namespace
+	{
+		void enableGLState(unsigned int uState, unsigned int uBool)
+		{
+			switch (uBool)
+			{
+			case Renderer::TRUE: glEnable(uState); break;
+			case Renderer::FALSE: glDisable(uState); break;
+			default: LOG_ERROR << "Invalid render state value - expected TRUE or FALSE."; assert(false); break;
+			}
+		}
+
+		unsigned int getGLBlendFactor(unsigned int uBlendFactor)
+		{
+			switch (uBlendFactor)
+			{
+			case Renderer::ONE: return GL_ONE; break;
+			case Renderer::SRC: return GL_SRC_COLOR; break;
+			case Renderer::SRC_ALPHA: return GL_SRC_ALPHA; break;
+			case Renderer::DST: return GL_DST_COLOR; break;
+			case Renderer::DST_ALPHA: return GL_DST_ALPHA; break;
+			case Renderer::ONE_MINUS_SRC: return GL_ONE_MINUS_SRC_COLOR; break;
+			case Renderer::ONE_MINUS_SRC_ALPHA: return GL_ONE_MINUS_SRC_ALPHA; break;
+			case Renderer::ONE_MINUS_DST: return GL_ONE_MINUS_DST_COLOR; break;
+			case Renderer::ONE_MINUS_DST_ALPHA: return GL_ONE_MINUS_DST_ALPHA; break;
+			default: LOG_ERROR << "Invalid render state value - expected blend factor value."; assert(false); return 0; break;
+			}
+		}
+
+		unsigned int getGLBlendOp(unsigned int uBlendOp)
+		{
+			switch (uBlendOp)
+			{
+			case Renderer::FUNC_ADD: return GL_FUNC_ADD; break;
+			case Renderer::FUNC_SUBTRACT: return GL_FUNC_SUBTRACT; break;
+			case Renderer::FUNC_REVERSE_SUBTRACT: return GL_FUNC_REVERSE_SUBTRACT; break;
+			case Renderer::FUNC_MIN: return GL_MIN; break;
+			case Renderer::FUNC_MAX: return GL_MAX; break;
+			default: LOG_ERROR << "Invalid render state value - expected blend operation value."; assert(false); return 0; break;
+			}
+		}
+
+		unsigned int getGLCullMode(unsigned int uCullMode)
+		{
+			switch (uCullMode)
+			{
+			case Renderer::CULL_BACK: return GL_BACK; break;
+			case Renderer::CULL_FRONT: return GL_FRONT; break;
+			case Renderer::CULL_FRONT_AND_BACK: return GL_FRONT_AND_BACK; break;
+			default: LOG_ERROR << "Invalid render state value - expected cull mode."; assert(false); return 0; break;
+			}
+		}
+	}
+
 	void Renderer::applyRenderState(unsigned int uState, unsigned int uValue)
 	{
 		switch (uState)
 		{
-		case STATE_ALPHA_TEST: 
-			assert(false);
-			break;
-		case STATE_ALPHA_TEST_FUNC: 
-			assert(false);
-			break;
-		case STATE_ALPHA_TEST_REF: 
-			assert(false);
-			break;
-		case STATE_BLEND: 
-			if (uValue == TRUE)
-				glEnable(GL_BLEND);
-			else if (uValue == FALSE)
-				glDisable(GL_BLEND);
+		case STATE_ALPHA_TEST:			
+			assert(false); break;
+		case STATE_ALPHA_TEST_FUNC:		
+			assert(false); break;
+		case STATE_ALPHA_TEST_REF:		
+			assert(false); break;
+		case STATE_BLEND:				
+			enableGLState(GL_BLEND, uValue); break;
+		case STATE_BLEND_SRC:			
+			glBlendFunc(getGLBlendFactor(uValue), m_auState[STATE_BLEND_DST]); break;
+		case STATE_BLEND_DST:			
+			glBlendFunc(m_auState[STATE_BLEND_SRC], getGLBlendFactor(uValue)); break;
+		case STATE_BLEND_OP:
+			glBlendEquation(getGLBlendOp(uValue)); break;
+		case STATE_DEPTH_WRITE:			
+			assert(false); break;
+		case STATE_DEPTH_TEST:			
+			enableGLState(GL_DEPTH, uValue); break;
+		case STATE_DEPTH_FUNC:			
+			assert(false); break;
+		case STATE_DEPTH_CLEAR_VALUE:	
+			assert(false); break;
+		case STATE_CULL_MODE:
+			if (uValue == CULL_NONE)
+				enableGLState(GL_CULL_FACE, FALSE);
 			else
-			{
-				LOG_ERROR << "Invalid render state value";
-				assert(false);
-			}
+				enableGLState(GL_CULL_FACE, TRUE);
+			glCullFace(getGLCullMode(uValue));
 			break;
-		case STATE_BLEND_SRC:
-			assert(false);
-			break;
-		case STATE_BLEND_DST: 
-			assert(false);
-			break;
-		case STATE_BLEND_FUNC: 
-			assert(false);
-			break;
-		case STATE_DEPTH_WRITE: 
-			assert(false);
-			break;
-		case STATE_DEPTH_TEST: 
-			assert(false);
-			break;
-		case STATE_DEPTH_FUNC: 
-			assert(false);
-			break;
-		case STATE_DEPTH_CLEAR_VALUE: 
-			assert(false);
-			break;
-		case STATE_CULL: 
-			if (uValue == TRUE)
-				glEnable(GL_CULL_FACE);
-			else if (uValue == FALSE)
-				glDisable(GL_CULL_FACE);
-			else
-			{
-				LOG_ERROR << "Invalid render state value";
-				assert(false);
-			}
-			break;
-		case STATE_CULL_MODE: 
-			assert(false);
-			break;
-		case STATE_DEPTH_BIAS: 
-			assert(false);
-			break;
-		case STATE_MULTISAMPLE: 
-			assert(false);
-			break;
+		case STATE_DEPTH_BIAS:			
+			assert(false); break;
+		case STATE_MULTISAMPLE:			
+			assert(false); break;
 		}
 	}
 
