@@ -201,10 +201,14 @@ namespace baselib { namespace graphics {
 			assert(false); break;
 		case STATE_CULL_MODE:
 			if (uValue == CULL_NONE)
+			{
 				enableGLState(GL_CULL_FACE, FALSE);
+			}
 			else
+			{
 				enableGLState(GL_CULL_FACE, TRUE);
-			glCullFace(getGLCullMode(uValue));
+				glCullFace(getGLCullMode(uValue));
+			}
 			break;
 		case STATE_DEPTH_BIAS:			
 			assert(false); break;
