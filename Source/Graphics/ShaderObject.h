@@ -22,8 +22,6 @@ namespace baselib
 				INVALID_SHADER
 			};
 
-			//! Constructor.
-			ShaderObject(const std::string& sName, ShaderType eType, unsigned int iID, const std::string& sSource);
 			//! Destructor.
 			~ShaderObject();
 
@@ -31,27 +29,22 @@ namespace baselib
 			void setName(const std::string& sName) { m_sName = sName; }
 			//! Get shader name.
 			std::string getName() const { return m_sName; }
-
-			//! Set the shader source
-			void setSource(const std::string& sSource) { m_sSource = sSource; }
 			//! Get the shader source.
 			std::string getSource() const { return m_sSource; }
-
-			//! Set the shader type.
-			void setType(ShaderType eType) { m_eType = eType; }
 			//! Get the shader type.
 			ShaderType getType() const { return m_eType; }
-
-			//! Set shader ID.
-			void setID(unsigned int uID) { m_uID = uID; }
 			//! Get shader ID.
 			unsigned int getID() const { return m_uID; }
 
 		private:
-			std::string m_sName;								//!< Shader name.
-			std::string m_sSource;								//!< The shader object source code.
-			ShaderType m_eType;									//!< Type of shader object.
-			unsigned int m_uID;									//!< Uniqe ID.
+			friend class ShaderManager;
+			//! Private constructor - must be created using ShaderManager.
+			ShaderObject(const std::string& sName, ShaderType eType, unsigned int iID, const std::string& sSource);
+
+			std::string m_sName;	//!< Shader name.
+			std::string m_sSource;	//!< The shader object source code.
+			ShaderType m_eType;		//!< Type of shader object.
+			unsigned int m_uID;		//!< Uniqe ID.
 		};
 	}
 }

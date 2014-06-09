@@ -1,8 +1,12 @@
 #include "ShaderManager.h"
 
 #include <GL/glew.h>
+
 #include <boost/filesystem/fstream.hpp>
+#include <boost/range/algorithm/for_each.hpp>
+
 #include <Logging/Log.h>
+#include <Graphics/ShaderPipeline.h>
 
 namespace baselib { namespace graphics {
 
@@ -53,8 +57,55 @@ namespace baselib { namespace graphics {
 			else
 				return ShaderObject::INVALID_SHADER;		
 		}
+
+		// Check for valid shader object combinations.
+		bool isValidPipeline(const std::vector<boost::shared_ptr<ShaderObject>>& aspShaderObjects)
+		{
+			bool bValid = true;
+
+			// Count number of shader objects per type.
+			int iCount[ShaderObject::INVALID_SHADER];
+			memset(iCount, 0, sizeof(int) * ShaderObject::INVALID_SHADER);
+
+			boost::for_each(aspShaderObjects, [&iCount, &bValid](const boost::shared_ptr<ShaderObject>& spShaderObject) {
+				unsigned int uType = spShaderObject->getType();
+
+				if (uType < 0 || uType >= ShaderObject::INVALID_SHADER)
+				{
+					LOG_ERROR << "Shader object has invalid type";
+					assert(false);
+				}
+				
+				iCount[uType] += 1;
+
+				if (iCount[uType] > 1)
+				{
+					LOG_ERROR << "Only one shader object of each type is allowed per shader pipeline.";
+					bValid = false;
+					return;
+				}
+			});
+
+			// TODO: Check for valid shader object combinations
+			//if (iCount[ShaderObject::VERTEX_SHADER] != 1)
+			//	bValid = false;
+			
+			return bValid;
+		}
 	}
-	
+
+	boost::shared_ptr<ShaderPipeline> ShaderManager::createShaderPipeline(const std::vector<boost::shared_ptr<ShaderObject>>& aspShaderObjects)
+	{
+		if (!isValidPipeline(aspShaderObjects))
+		{
+			LOG_ERROR << "Trying to create shader pipeline with invalid combination of shader objects.";
+			assert(false);
+		}
+
+		// TODO: Create and link ShaderPipeline
+		return boost::shared_ptr<ShaderPipeline>();
+	}
+
 	boost::shared_ptr<ShaderObject> ShaderManager::createShaderObject(const fs::path& fsPath)
 	{
 		// Check if shader object already exists
@@ -114,6 +165,7 @@ namespace baselib { namespace graphics {
 	{
 		unsigned int uGLShaderType = ~0;
 		std::string sShaderType;
+		// TODO: Add helper functions to get shader type string and GL shader type.
 		switch (eType)
 		{
 		case ShaderObject::VERTEX_SHADER: 

@@ -13,6 +13,14 @@ namespace baselib
 {
 	namespace graphics
 	{
+		class ShaderPipeline;
+	}
+}
+
+namespace baselib 
+{
+	namespace graphics
+	{
 		class ShaderManager
 		{
 		public:
@@ -21,7 +29,8 @@ namespace baselib
 			//! Destructor.
 			~ShaderManager();
 
-			// TODO: Create shader (i.e. shader program)
+			//! Creates and links a shader pipeline with the given shader objects.
+			boost::shared_ptr<ShaderPipeline> createShaderPipeline(const std::vector<boost::shared_ptr<ShaderObject>>& aspShaderObjects);
 
 			//! Creates, compiles and returns a shader object from file. File extension determines shader type.
 			boost::shared_ptr<ShaderObject> createShaderObject(const fs::path& fsPath);

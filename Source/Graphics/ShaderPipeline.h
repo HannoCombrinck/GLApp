@@ -9,8 +9,6 @@ namespace baselib
 		class ShaderPipeline
 		{
 		public:
-			//! Constructor.
-			ShaderPipeline(const std::string& sName, unsigned int uID);
 			//! Destructor.
 			~ShaderPipeline();
 
@@ -25,6 +23,10 @@ namespace baselib
 			unsigned int getID() const { return m_uID; }
 
 		private:
+			//! Private constructor - must be created using ShaderManager.
+			friend class ShaderManager;
+			ShaderPipeline(const std::string& sName, unsigned int uID);
+
 			std::string m_sName;  //!< Pipeline name.
 			unsigned int m_uID;	  //!< Uniqe ID.
 		};
