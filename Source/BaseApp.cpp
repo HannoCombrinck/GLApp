@@ -55,7 +55,7 @@ namespace baselib {
 
 	void BaseApp::init()
 	{
-		LOG_VERBOSE << "BaseApp onInit";
+		LOG_VERBOSE << "BaseApp init";
 
 		m_spRenderer = boost::shared_ptr<Renderer>(new Renderer());
 	}
