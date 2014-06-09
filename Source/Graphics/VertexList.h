@@ -21,16 +21,16 @@ namespace baselib
 		struct VertexAttribute 
 		{
 			//! Constructor.
-			VertexAttribute(const string& _sName, int _iAttribIndex, int _iNumElements, VertexAttributeType _eType)
+			VertexAttribute(const string& _sName, int _iAttribIndex, int _iNumElements, unsigned int _uType)
 				: sName(_sName)
 				, iAttribIndex(_iAttribIndex)
 				, iNumElements(_iNumElements)
-				, eType(_eType) {}
+				, uType(_uType) {}
 
-			string sName;				//!< Vertex attribute name.
-			int iAttribIndex;			//!< Index of the vertex attribute (as defined in shader via layout qualifier.
-			int iNumElements;			//!< The number of elements that make up the vertex attribute.s
-			VertexAttributeType eType;  //!< The type of the attribute elements.
+			string sName;		//!< Vertex attribute name.
+			int iAttribIndex;	//!< Index of the vertex attribute (as defined in shader via layout qualifier.
+			int iNumElements;	//!< The number of elements that make up the vertex attribute.s
+			unsigned int uType;	//!< The type of the attribute elements.
 		};
 
 		class VertexLayout

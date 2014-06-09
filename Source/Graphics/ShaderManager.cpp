@@ -10,9 +10,32 @@
 
 namespace baselib { namespace graphics {
 
+	namespace
+	{
+		boost::unordered_map<std::string, unsigned int> aShaderExtensionMap;
+		boost::unordered_map<unsigned int, std::pair<std::string, unsigned int>> aShaderTypeMap;
+
+		void registerShader(unsigned int uType, const std::string& sType, const std::string& sExtension, unsigned int uGLType)
+		{
+			aShaderExtensionMap[sExtension] = uType;
+			aShaderTypeMap[uType] = std::make_pair(sType, uGLType);
+		}
+
+		unsigned int getTypeFromExtension(const std::string& sExtension) { return aShaderExtensionMap[sExtension]; }
+		unsigned int getGLShaderType(unsigned int uType) { return aShaderTypeMap[uType].second;	}
+		std::string getShaderTypeString(unsigned int uType) { return aShaderTypeMap[uType].first; }
+	}
+
 	ShaderManager::ShaderManager()
 	{
 		LOG_VERBOSE << "ShaderManager constructor";
+
+		registerShader(ShaderObject::VERTEX_SHADER,		     "vertex",				    ".vert", GL_VERTEX_SHADER);
+		registerShader(ShaderObject::TESS_CONTROL_SHADER,    "tessellation control",    ".tesc", GL_TESS_CONTROL_SHADER);
+		registerShader(ShaderObject::TESS_EVALUATION_SHADER, "tessellation evaluation", ".tese", GL_TESS_EVALUATION_SHADER);
+		registerShader(ShaderObject::GEOMETRY_SHADER,		 "geometry",				".geom", GL_GEOMETRY_SHADER);
+		registerShader(ShaderObject::FRAGMENT_SHADER,		 "fragment",				".frag", GL_FRAGMENT_SHADER);
+		registerShader(ShaderObject::COMPUTE_SHADER,		 "compute",					".comp", GL_COMPUTE_SHADER);
 	}
 
 	ShaderManager::~ShaderManager()
@@ -38,39 +61,20 @@ namespace baselib { namespace graphics {
 			inFile.close();
 			return sSource;
 		}
-
-		// Get shader type from the file extension.
-		ShaderObject::ShaderType getTypeFromExtension(const std::string& sExtension)
-		{
-			if (sExtension == ".vert")
-				return ShaderObject::VERTEX_SHADER;
-			else if (sExtension == ".tesc")
-				return ShaderObject::TESS_CONTROL_SHADER;
-			else if (sExtension == ".tese")
-				return ShaderObject::TESS_EVALUATION_SHADER;
-			else if (sExtension == ".geom")
-				return ShaderObject::GEOMETRY_SHADER;
-			else if (sExtension == ".frag")
-				return ShaderObject::FRAGMENT_SHADER;
-			else if (sExtension == ".comp")
-				return ShaderObject::COMPUTE_SHADER;
-			else
-				return ShaderObject::INVALID_SHADER;		
-		}
-
+		
 		// Check for valid shader object combinations.
 		bool isValidPipeline(const std::vector<boost::shared_ptr<ShaderObject>>& aspShaderObjects)
 		{
 			bool bValid = true;
 
 			// Count number of shader objects per type.
-			int iCount[ShaderObject::INVALID_SHADER];
-			memset(iCount, 0, sizeof(int) * ShaderObject::INVALID_SHADER);
+			int iCount[ShaderObject::NUM_SHADER_TYPES];
+			memset(iCount, 0, sizeof(int) * ShaderObject::NUM_SHADER_TYPES);
 
 			boost::for_each(aspShaderObjects, [&iCount, &bValid](const boost::shared_ptr<ShaderObject>& spShaderObject) {
 				unsigned int uType = spShaderObject->getType();
 
-				if (uType < 0 || uType >= ShaderObject::INVALID_SHADER)
+				if (uType < 0 || uType >= ShaderObject::NUM_SHADER_TYPES)
 				{
 					LOG_ERROR << "Shader object has invalid type";
 					assert(false);
@@ -86,7 +90,8 @@ namespace baselib { namespace graphics {
 				}
 			});
 
-			// TODO: Check for valid shader object combinations
+			// TODO: Check for valid shader object combiations
+
 			//if (iCount[ShaderObject::VERTEX_SHADER] != 1)
 			//	bValid = false;
 			
@@ -102,7 +107,8 @@ namespace baselib { namespace graphics {
 			assert(false);
 		}
 
-		// TODO: Create and link ShaderPipeline
+		LOG_ERROR << "TODO: Create ShaderPipeline object";
+		assert(false);
 		return boost::shared_ptr<ShaderPipeline>();
 	}
 
@@ -141,10 +147,10 @@ namespace baselib { namespace graphics {
 		
 		// Get shader type from extension
 		std::string sExtension = fsPath.extension().string();
-		auto eType = getTypeFromExtension(sExtension);
+		auto uType = getTypeFromExtension(sExtension);
 		
 		// Check for valid extension
-		if (eType == ShaderObject::INVALID_SHADER)
+		if (uType == ShaderObject::INVALID_SHADER)
 		{
 			LOG_ERROR << "Invalid shader source file extension: " << sExtension << "\nValid extensions are:\n.vert\n.tesc\n.tese\n.geom\n.frag\n.comp";
 			assert(false);
@@ -155,45 +161,19 @@ namespace baselib { namespace graphics {
 
 		LOG_INFO << "Loading shader from file: " << fsPath;
 
-		auto spShaderObject = createShaderObject(sSource, eType);
+		auto spShaderObject = createShaderObject(sSource, uType);
 		spShaderObject->setName(fs::canonical(fsPath).string());
 		m_aShaderObjectMap[spShaderObject->getName()] = spShaderObject; // Add to shader map
 		return spShaderObject;
 	}
 
-	boost::shared_ptr<ShaderObject> ShaderManager::createShaderObject(const std::string& sShaderSource, ShaderObject::ShaderType eType)
+	boost::shared_ptr<ShaderObject> ShaderManager::createShaderObject(const std::string& sShaderSource, unsigned int uType)
 	{
-		unsigned int uGLShaderType = ~0;
-		std::string sShaderType;
-		// TODO: Add helper functions to get shader type string and GL shader type.
-		switch (eType)
-		{
-		case ShaderObject::VERTEX_SHADER: 
-			uGLShaderType = GL_VERTEX_SHADER;
-			sShaderType = "vertex";
-			break;
-		case ShaderObject::TESS_CONTROL_SHADER: 
-			uGLShaderType = GL_TESS_CONTROL_SHADER;
-			sShaderType = "tessellation control";
-			break;
-		case ShaderObject::TESS_EVALUATION_SHADER: 
-			uGLShaderType = GL_TESS_EVALUATION_SHADER;
-			sShaderType = "tessellation evaluation";
-			break;
-		case ShaderObject::GEOMETRY_SHADER: 
-			uGLShaderType = GL_GEOMETRY_SHADER;
-			sShaderType = "geometry";
-			break;
-		case ShaderObject::FRAGMENT_SHADER: 
-			uGLShaderType = GL_FRAGMENT_SHADER;
-			sShaderType = "fragment";
-			break;
-		case ShaderObject::COMPUTE_SHADER: 
-			uGLShaderType = GL_COMPUTE_SHADER;
-			sShaderType = "compute";
-			break;
-		default: assert(false); break; // This should never happen
-		}
+		// Get GL shader type
+		unsigned int uGLShaderType = getGLShaderType(uType);
+
+		// Get shader type as a string
+		std::string sShaderType = getShaderTypeString(uType);
 
 		// Create the shader
 		LOG_INFO << "Creating " << sShaderType << " shader...";
@@ -219,6 +199,7 @@ namespace baselib { namespace graphics {
 			LOG_ERROR << "Failed to compile " << sShaderType << " shader.";
 			glDeleteShader(uShaderObjectID);
 			uShaderObjectID = ~0;
+			// Assert after logging GLSL compiler errors
 		}
 
 		// Get GLSL compiler log
@@ -228,11 +209,12 @@ namespace baselib { namespace graphics {
 		glGetShaderInfoLog(uShaderObjectID, iLogLength, NULL, szLog);
 		std::string sCompilerLog(szLog);
 		delete[] szLog;
+
 		LOG_INFO << sCompilerLog;
 
 		assert(iCompileStatus == GL_TRUE);
 
-		auto spShaderObject = boost::shared_ptr<ShaderObject>(new ShaderObject("", eType, uShaderObjectID, sShaderType));
+		auto spShaderObject = boost::shared_ptr<ShaderObject>(new ShaderObject("", uType, uShaderObjectID, sShaderType));
 		return spShaderObject;
 	}
 
