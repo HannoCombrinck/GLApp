@@ -7,6 +7,9 @@ namespace baselib
 {
 	namespace graphics
 	{
+		/*! @brief A ShaderObject represents a single programmable stage in a render pipeline.
+		 *
+		 */
 		class ShaderObject
 		{
 		public:

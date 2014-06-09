@@ -21,6 +21,9 @@ namespace baselib
 {
 	namespace graphics
 	{
+		/*! @brief ShaderManager creates and managers ShaderObjects and ShaderPipelines.
+		 *
+		 */
 		class ShaderManager
 		{
 		public:

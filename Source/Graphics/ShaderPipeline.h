@@ -6,6 +6,11 @@ namespace baselib
 {
 	namespace graphics
 	{
+		/*! @brief A ShaderPipeline is a template to create Shader instances from.
+		 *
+		 *  Shader instances created from the same pipeline share the same ID
+		 *  but have different uniforms, textures etc.
+		 */
 		class ShaderPipeline
 		{
 		public:
@@ -16,6 +21,8 @@ namespace baselib
 			std::string getName() const { return m_sName; }
 			//! Get pipeline ID.
 			unsigned int getID() const { return m_uID; }
+
+			//! Create a Shader instance based on this pipeline.
 
 		private:
 			friend class ShaderManager;
