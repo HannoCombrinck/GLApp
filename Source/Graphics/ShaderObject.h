@@ -1,7 +1,6 @@
 #pragma once
 
 #include <string>
-#include <boost/weak_ptr.hpp>
 
 namespace baselib 
 {
@@ -42,7 +41,7 @@ namespace baselib
 
 		private:
 			friend class ShaderManager;
-			//! Private constructor - must be created using ShaderManager.
+			//! Private constructor - must be created by ShaderManager.
 			ShaderObject(const std::string& sName, unsigned int uType, unsigned int iID, const std::string& sSource);
 
 			std::string m_sName;	//!< Shader name.

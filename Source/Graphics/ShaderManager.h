@@ -3,6 +3,7 @@
 #include <string>
 #include <boost/unordered_map.hpp>
 #include <boost/shared_ptr.hpp>
+#include <boost/weak_ptr.hpp>
 #include <boost/filesystem.hpp>
 
 #include <Graphics/ShaderObject.h>

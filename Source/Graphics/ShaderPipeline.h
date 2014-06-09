@@ -26,7 +26,7 @@ namespace baselib
 
 		private:
 			friend class ShaderManager;
-			//! Private constructor - must be created using ShaderManager.
+			//! Private constructor - must be created by ShaderManager.
 			ShaderPipeline(const std::string& sName, unsigned int uID);
 
 			std::string m_sName;  //!< Pipeline name.
