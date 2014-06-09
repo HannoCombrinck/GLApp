@@ -76,6 +76,9 @@
     <ClCompile Include="..\..\Source\Graphics\ShaderPipeline.cpp">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Graphics\StaticGeometry.cpp">
+      <Filter>Header/Source Files\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\GLFWApp\GLFWApp.h">
@@ -130,6 +133,9 @@
       <Filter>Header/Source Files\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Graphics\ShaderPipeline.h">
+      <Filter>Header/Source Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Graphics\StaticGeometry.h">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClInclude>
   </ItemGroup>

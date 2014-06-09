@@ -4,10 +4,8 @@
 
 namespace baselib { namespace graphics {
 
-	Geometry::Geometry(unsigned int uVAO, unsigned int uVBO, unsigned int uIB)
+	Geometry::Geometry(unsigned int uVAO)
 		: m_uVAO(uVAO)
-		, m_uVBO(uVBO)
-		, m_uIB(uIB)
 	{
 		LOG_VERBOSE << "Geometry constructor";
 	}

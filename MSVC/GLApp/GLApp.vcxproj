@@ -87,6 +87,7 @@
     <ClCompile Include="..\..\Source\Graphics\ShaderObject.cpp" />
     <ClCompile Include="..\..\Source\Graphics\ShaderPipeline.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Spatial.cpp" />
+    <ClCompile Include="..\..\Source\Graphics\StaticGeometry.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Texture.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Visual.cpp" />
     <ClCompile Include="..\..\Source\Logging\Log.cpp" />
@@ -106,6 +107,7 @@
     <ClInclude Include="..\..\Source\Graphics\ShaderObject.h" />
     <ClInclude Include="..\..\Source\Graphics\ShaderPipeline.h" />
     <ClInclude Include="..\..\Source\Graphics\Spatial.h" />
+    <ClInclude Include="..\..\Source\Graphics\StaticGeometry.h" />
     <ClInclude Include="..\..\Source\Graphics\Texture.h" />
     <ClInclude Include="..\..\Source\Graphics\VertexList.h" />
     <ClInclude Include="..\..\Source\Graphics\Visual.h" />
