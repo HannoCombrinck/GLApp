@@ -99,7 +99,7 @@ namespace baselib { namespace graphics {
 		}
 	}
 
-	boost::shared_ptr<ShaderPipeline> ShaderManager::createShaderPipeline(const std::vector<boost::shared_ptr<ShaderObject>>& aspShaderObjects)
+	boost::shared_ptr<ShaderPipeline> ShaderManager::createShaderPipeline(const std::string& sName, const std::vector<boost::shared_ptr<ShaderObject>>& aspShaderObjects)
 	{
 		if (!isValidPipeline(aspShaderObjects))
 		{
@@ -107,9 +107,49 @@ namespace baselib { namespace graphics {
 			assert(false);
 		}
 
-		LOG_ERROR << "TODO: Create ShaderPipeline object";
-		assert(false);
-		return boost::shared_ptr<ShaderPipeline>();
+		// Create shader program
+		LOG_INFO << "Creating shader pipeline...";
+		unsigned int uShaderProgramID = glCreateProgram();
+		assert(uShaderProgramID);
+
+		// Attach shader objects
+		LOG_INFO << "Attaching shader objects to pipeline...";
+		boost::for_each(aspShaderObjects, [&uShaderProgramID](const boost::shared_ptr<ShaderObject>& spShaderObject) {
+			glAttachShader(uShaderProgramID, spShaderObject->getID());
+		});
+
+		// Link shader program
+		LOG_INFO << "Linking shader pipeline...";
+		glLinkProgram(uShaderProgramID);
+
+		// Detach shader objects
+		boost::for_each(aspShaderObjects, [&uShaderProgramID](const boost::shared_ptr<ShaderObject>& spShaderObject) {
+			glDetachShader(uShaderProgramID, spShaderObject->getID());
+		});
+
+		// Check linker status
+		int iLinkStatus = 0;
+		glGetProgramiv(uShaderProgramID, GL_LINK_STATUS, &iLinkStatus);
+		if (iLinkStatus == GL_FALSE)
+		{
+			LOG_ERROR << "Failed to link shader pipeline.";
+
+			// Get linker log
+			int iLogLength = 0;
+			glGetProgramiv(uShaderProgramID, GL_INFO_LOG_LENGTH, &iLogLength);
+			char *szLog = new char[iLogLength + 1];
+			glGetProgramInfoLog(uShaderProgramID, iLogLength, NULL, szLog);
+			std::string sLinkerLog(szLog);
+			delete[] szLog;
+			glDeleteProgram(uShaderProgramID);
+
+			LOG_INFO << sLinkerLog;
+
+			assert(false);
+		}
+
+		LOG_INFO << "Successfully created shader pipeline: " << sName;
+		return boost::shared_ptr<ShaderPipeline>(new ShaderPipeline(sName, uShaderProgramID));
 	}
 
 	boost::shared_ptr<ShaderObject> ShaderManager::createShaderObject(const fs::path& fsPath)
@@ -178,6 +218,7 @@ namespace baselib { namespace graphics {
 		// Create the shader
 		LOG_INFO << "Creating " << sShaderType << " shader...";
 		unsigned int uShaderObjectID = glCreateShader(uGLShaderType);
+		assert(uShaderObjectID);
 
 		// Commit the shader source to compiler
 		const char* szShaderSource = sShaderSource.c_str();

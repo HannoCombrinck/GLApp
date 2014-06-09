@@ -1,5 +1,7 @@
 #include "ShaderPipeline.h"
 
+#include <GL/glew.h>
+
 #include <Logging/Log.h>
 
 namespace baselib { namespace graphics {
@@ -14,6 +16,7 @@ namespace baselib { namespace graphics {
 	ShaderPipeline::~ShaderPipeline()
 	{
 		LOG_VERBOSE << "ShaderPipeline destructor";
+		glDeleteProgram(getID());
 	}
 
 } }

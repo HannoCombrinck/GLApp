@@ -30,7 +30,7 @@ namespace baselib
 			~ShaderManager();
 
 			//! Creates and links a shader pipeline with the given shader objects.
-			boost::shared_ptr<ShaderPipeline> createShaderPipeline(const std::vector<boost::shared_ptr<ShaderObject>>& aspShaderObjects);
+			boost::shared_ptr<ShaderPipeline> createShaderPipeline(const std::string& sName, const std::vector<boost::shared_ptr<ShaderObject>>& aspShaderObjects);
 
 			//! Creates, compiles and returns a shader object from file. File extension determines shader type.
 			boost::shared_ptr<ShaderObject> createShaderObject(const fs::path& fsPath);

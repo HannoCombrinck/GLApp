@@ -45,7 +45,7 @@ namespace baselib
 			std::string m_sName;	//!< Shader name.
 			std::string m_sSource;	//!< The shader object source code.
 			unsigned int m_uType;	//!< Type of shader object.
-			unsigned int m_uID;		//!< Uniqe ID.
+			unsigned int m_uID;		//!< Shader object ID.
 		};
 	}
 }
