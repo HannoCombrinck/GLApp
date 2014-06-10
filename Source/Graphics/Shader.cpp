@@ -5,7 +5,8 @@
 
 namespace baselib { namespace graphics {
 
-	Shader::Shader()
+	Shader::Shader(unsigned int uID)
+		: m_uID(uID)
 	{
 		LOG_VERBOSE << "Shader constructor";
 	}

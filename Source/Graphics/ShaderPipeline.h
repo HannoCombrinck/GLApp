@@ -2,6 +2,16 @@
 
 #include <string>
 
+#include <boost/shared_ptr.hpp>
+
+namespace baselib 
+{
+	namespace graphics
+	{
+		class Shader;
+	}
+}
+
 namespace baselib 
 {
 	namespace graphics
@@ -19,12 +29,13 @@ namespace baselib
 			//! Destructor.
 			~ShaderPipeline();
 
+			//! Create a Shader instance based on this pipeline.
+			boost::shared_ptr<Shader> createShader();
+
 			//! Get pipeline name.
 			std::string getName() const { return m_sName; }
 			//! Get pipeline ID.
 			unsigned int getID() const { return m_uID; }
-
-			//! Create a Shader instance based on this pipeline.
 
 		protected:
 			//! Protected constructor - must be created by ShaderManager.
