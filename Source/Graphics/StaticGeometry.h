@@ -6,6 +6,9 @@ namespace baselib
 {
 	namespace graphics
 	{
+		/*! @brief Contains the hardware buffers for a static piece of geometry (i.e. Geometry that is created once and doesn't change).
+		 *
+		 */
 		class StaticGeometry : public Geometry
 		{
 		public:

@@ -16,6 +16,9 @@ namespace baselib
 {
 	namespace graphics
 	{
+		/*! @brief A Material encapsulates shader(s), texture(s) and render state.
+		 *
+		 */
 		class Material
 		{
 		public:

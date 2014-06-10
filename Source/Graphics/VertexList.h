@@ -18,6 +18,10 @@ namespace baselib
 			TYPE_BOOL,
 		};
 
+		/*! @brief Defines a single vertex attribute.
+		 *
+		 *  A VertexAttribute's index and type should match up with vertex attributes in shaders.
+		 */
 		struct VertexAttribute 
 		{
 			//! Constructor.
@@ -33,6 +37,9 @@ namespace baselib
 			unsigned int uType;	//!< The type of the attribute elements.
 		};
 
+		/*! @brief Defines a vertex layout as a list of vertex attributes.
+		 *
+		 */
 		class VertexLayout
 		{
 		public:
@@ -45,6 +52,10 @@ namespace baselib
 			vector<VertexAttribute> m_Attributes;  //!< The list of vertex list attributes that define the vertex layout.
 		};
  
+		/*! @brief A VertexList holds vertex data, index data and the vertex layout description.
+		 *
+		 *  Geometry buffers are created from VertexLists.
+		 */
 		template <class VertexType>
 		class VertexList
 		{

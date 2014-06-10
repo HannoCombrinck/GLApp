@@ -10,6 +10,10 @@ struct GLFWwindow;
 
 namespace baselib
 {
+	/*! @brief Base application that handles windowing, events and OpenGL context.
+	 *
+	 *  Inherit from this class to create a OpenGL ready window that handles user input.
+	 */
 	class GLFWApp
 	{
 	public:

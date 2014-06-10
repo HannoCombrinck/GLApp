@@ -16,6 +16,10 @@ namespace baselib
 {
 	namespace graphics
 	{
+		/*! @brief A Visual is Spatial object that can be rendered.
+		 *
+		 *  A Visual contains everything required to perform a single draw call (i.e. Some kind of Geometry and a Material).
+		 */
 		class Visual : public Spatial
 		{
 		public:

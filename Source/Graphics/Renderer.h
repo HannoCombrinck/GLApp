@@ -9,6 +9,9 @@ namespace baselib
 {
 	namespace graphics
 	{
+		/*! @brief Renderer interface. Wrapper for OpenGL API.
+		 *
+		 */
 		class Renderer
 		{
 		public:

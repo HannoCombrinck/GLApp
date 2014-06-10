@@ -4,6 +4,9 @@ namespace baselib
 {
 	namespace graphics
 	{
+		/*! @brief Contains the hardware buffer for a piece of geometry.
+		 *
+		 */
 		class Geometry
 		{
 		public:

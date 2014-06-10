@@ -8,8 +8,8 @@ namespace baselib
 	{
 		/*! @brief A Shader is an instance of a ShaderPipeline.
 		 *
-		 * A Shader has unique uniforms, textures etc. but can be an instance 
-		 * of the same pipeline as other Shaders (i.e. share the shader program ID).
+		 *  A Shader has unique uniforms, textures etc. but can be an instance 
+		 *  of the same pipeline as other Shaders (i.e. share the shader program ID).
 		 */
 		class Shader
 		{

@@ -7,6 +7,10 @@ namespace baselib
 {
 	namespace graphics
 	{
+		/*! @brief Base class for any object that has spatial information (i.e. any object that has a position and orientation).
+		 *
+		 *  Spatials have local and world transformations so they can be organized into a spatial hierarchy.
+		 */
 		class Spatial
 		{
 		public:
