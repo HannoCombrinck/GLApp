@@ -30,7 +30,7 @@ namespace baselib
 			~ShaderPipeline();
 
 			//! Create a Shader instance based on this pipeline.
-			boost::shared_ptr<Shader> createShader();
+			boost::shared_ptr<Shader> createInstance();
 
 			//! Get pipeline name.
 			std::string getName() const { return m_sName; }

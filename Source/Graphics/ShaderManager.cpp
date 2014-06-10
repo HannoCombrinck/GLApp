@@ -127,24 +127,26 @@ namespace baselib { namespace graphics {
 			glDetachShader(uShaderProgramID, spShaderObject->getID());
 		});
 
-		// Check linker status
+		// Get linker status
 		int iLinkStatus = 0;
 		glGetProgramiv(uShaderProgramID, GL_LINK_STATUS, &iLinkStatus);
+
+		// Get linker log
+		int iLogLength = 0;
+		glGetProgramiv(uShaderProgramID, GL_INFO_LOG_LENGTH, &iLogLength);
+		char *szLog = new char[iLogLength + 1];
+		glGetProgramInfoLog(uShaderProgramID, iLogLength, NULL, szLog);
+		std::string sLinkerLog(szLog);
+		delete[] szLog;
+		glDeleteProgram(uShaderProgramID);
+
+		if (!sLinkerLog.empty())
+			LOG_INFO << sLinkerLog;
+
+		// Check linker status
 		if (iLinkStatus == GL_FALSE)
 		{
 			LOG_ERROR << "Failed to link shader pipeline.";
-
-			// Get linker log
-			int iLogLength = 0;
-			glGetProgramiv(uShaderProgramID, GL_INFO_LOG_LENGTH, &iLogLength);
-			char *szLog = new char[iLogLength + 1];
-			glGetProgramInfoLog(uShaderProgramID, iLogLength, NULL, szLog);
-			std::string sLinkerLog(szLog);
-			delete[] szLog;
-			glDeleteProgram(uShaderProgramID);
-
-			LOG_INFO << sLinkerLog;
-
 			assert(false);
 		}
 
@@ -155,7 +157,12 @@ namespace baselib { namespace graphics {
 	boost::shared_ptr<ShaderObject> ShaderManager::createShaderObject(const fs::path& fsPath)
 	{
 		// Check if shader object already exists
-		auto iter = m_aShaderObjectMap.find(fs::canonical(fsPath).string());
+		if (!fs::exists(fsPath))
+		{
+			assert(false);
+		}
+		std::string sCanonicalPath = fs::canonical(fsPath).string();
+		auto iter = m_aShaderObjectMap.find(sCanonicalPath);
 		if (iter != m_aShaderObjectMap.end())
 		{
 			LOG_VERBOSE << fsPath << " shader object already loaded.";
@@ -202,7 +209,7 @@ namespace baselib { namespace graphics {
 		LOG_INFO << "Loading shader from file: " << fsPath;
 
 		auto spShaderObject = createShaderObject(sSource, uType);
-		spShaderObject->setName(fs::canonical(fsPath).string());
+		spShaderObject->setName(sCanonicalPath);
 		m_aShaderObjectMap[spShaderObject->getName()] = spShaderObject; // Add to shader map
 		return spShaderObject;
 	}
@@ -251,7 +258,8 @@ namespace baselib { namespace graphics {
 		std::string sCompilerLog(szLog);
 		delete[] szLog;
 
-		LOG_INFO << sCompilerLog;
+		if (!sCompilerLog.empty())
+			LOG_INFO << sCompilerLog;
 
 		assert(iCompileStatus == GL_TRUE);
 

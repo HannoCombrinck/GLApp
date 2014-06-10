@@ -3,6 +3,8 @@
 #include <Logging/Log.h>
 
 #include <Graphics/Renderer.h>
+#include <Graphics/ShaderManager.h>
+#include <Graphics/ShaderPipeline.h>
 
 using namespace baselib::graphics;
 
@@ -13,6 +15,7 @@ namespace baselib {
 		, m_dCurrentTime(0.0)
 		, m_dPreviousTime(0.0)
 		, m_spRenderer(boost::shared_ptr<Renderer>())
+		, m_spShader(boost::shared_ptr<Shader>())
 	{
 		LOG_VERBOSE << "BaseApp constructor";
 		init();
@@ -63,6 +66,20 @@ namespace baselib {
 	{
 		LOG_VERBOSE << "BaseApp init";
 		m_spRenderer = boost::shared_ptr<Renderer>(new Renderer());
+
+		auto spShaderManager = boost::shared_ptr<ShaderManager>(new ShaderManager());
+
+		auto spVertexShader = spShaderManager->createShaderObject("../../Data/Shaders/test.vert");
+		auto spFragmentShader = spShaderManager->createShaderObject("../../Data/Shaders/test.frag");
+
+		std::vector<boost::shared_ptr<ShaderObject>> aspShaders;
+		aspShaders.push_back(spVertexShader);
+		aspShaders.push_back(spFragmentShader);
+
+		auto spShaderPipeline = spShaderManager->createShaderPipeline("TestPipeline", aspShaders);
+		
+		m_spShader = spShaderPipeline->createInstance();
+
 	}
 
 	void BaseApp::destroy()

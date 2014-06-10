@@ -19,7 +19,7 @@ namespace baselib { namespace graphics {
 		glDeleteProgram(getID());
 	}
 
-	boost::shared_ptr<Shader> ShaderPipeline::createShader()
+	boost::shared_ptr<Shader> ShaderPipeline::createInstance()
 	{
 		return boost::shared_ptr<Shader>(new Shader(m_uID));
 	}
