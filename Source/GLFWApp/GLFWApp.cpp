@@ -11,7 +11,7 @@
 
 namespace baselib {
 
-	GLFWApp::GLFWApp()
+	GLFWApp::GLFWApp(int iWidth, int iHeight, bool bFullscreen, int iMajorVersion, int iMinorVersion, const std::string& sWindowTitle)
 		: m_bAppRunning(false)
 		, m_pWindow(NULL)
 		, m_iMouseX(0)
@@ -20,7 +20,7 @@ namespace baselib {
 		, m_iMouseYPrev(0)
 	{
 		LOG_VERBOSE << "GLFWApp constructor";
-		init(640, 480, false, 3, 2, "GLFWApp");
+		init(iWidth, iHeight, bFullscreen, iMajorVersion, iMinorVersion, sWindowTitle);
 	}
 
 	GLFWApp::~GLFWApp()

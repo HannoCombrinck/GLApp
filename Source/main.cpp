@@ -39,7 +39,7 @@ int main(int arc, char** argv)
 	testFunc();
 	system("pause");
 
-	BaseApp app; // Default constructor uses default window settings (window size etc.)
+	BaseApp app(640, 480, false, 3, 2, "GLFWApp"); 
 	app.start();
 	return 0;
 }

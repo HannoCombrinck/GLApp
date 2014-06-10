@@ -14,11 +14,14 @@ namespace baselib
 
 namespace baselib
 {
+	/*! @brief Test app
+	 *
+	 */
 	class BaseApp : public GLFWApp
 	{
 	public:
 		//! Constructor.
-		BaseApp();
+		BaseApp(int iWidth, int iHeight, bool bFullscreen, int iMajorVersion, int iMinorVersion, const std::string& sWindowTitle);
 		//! Destructor.
 		virtual ~BaseApp();
 

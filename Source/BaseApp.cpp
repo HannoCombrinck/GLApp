@@ -7,9 +7,10 @@
 using namespace baselib::graphics;
 
 namespace baselib {
-
-	BaseApp::BaseApp()
-		: m_dCurrentTime(0.0)
+	
+	BaseApp::BaseApp(int iWidth, int iHeight, bool bFullscreen, int iMajorVersion, int iMinorVersion, const std::string& sWindowTitle)
+		: GLFWApp(iWidth, iHeight, bFullscreen, iMajorVersion, iMinorVersion, sWindowTitle)
+		, m_dCurrentTime(0.0)
 		, m_dPreviousTime(0.0)
 		, m_spRenderer(boost::shared_ptr<Renderer>())
 	{

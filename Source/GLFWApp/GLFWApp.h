@@ -18,7 +18,7 @@ namespace baselib
 	{
 	public:
 		//! Constructor.
-		GLFWApp();
+		GLFWApp(int iWidth, int iHeight, bool bFullscreen, int iMajorVersion, int iMinorVersion, const std::string& sWindowTitle);
 		//! Destructor.
 		virtual ~GLFWApp();
 
