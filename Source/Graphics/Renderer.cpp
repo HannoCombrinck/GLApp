@@ -22,6 +22,8 @@ namespace baselib { namespace graphics {
 	{
 		// Temp Should set to default OpenGL states.
 		memset(m_auState, 0, sizeof(unsigned int)*STATE_COUNT);
+		m_auState[STATE_BLEND_DST] = ONE;
+		m_auState[STATE_BLEND_SRC] = ONE;
 
 		//////////////////////////////////////////////////////////////////////////
 		// Temp settings for testing - these will be encapsulated elsewhere
@@ -126,6 +128,7 @@ namespace baselib { namespace graphics {
 			return;
 		}
 
+		m_auState[uState] = uValue;
 		applyRenderState(uState, uValue);
 	}
 
@@ -196,15 +199,15 @@ namespace baselib { namespace graphics {
 		case STATE_BLEND:				
 			enableGLState(GL_BLEND, uValue); break;
 		case STATE_BLEND_SRC:			
-			glBlendFunc(getGLBlendFactor(uValue), m_auState[STATE_BLEND_DST]); break;
+			glBlendFunc(getGLBlendFactor(uValue), getGLBlendFactor(m_auState[STATE_BLEND_DST])); break;
 		case STATE_BLEND_DST:			
-			glBlendFunc(m_auState[STATE_BLEND_SRC], getGLBlendFactor(uValue)); break;
+			glBlendFunc(getGLBlendFactor(m_auState[STATE_BLEND_SRC]), getGLBlendFactor(uValue)); break;
 		case STATE_BLEND_OP:
 			glBlendEquation(getGLBlendOp(uValue)); break;
 		case STATE_DEPTH_WRITE:			
 			assert(false); break;
 		case STATE_DEPTH_TEST:			
-			enableGLState(GL_DEPTH, uValue); break;
+			enableGLState(GL_DEPTH_TEST, uValue); break;
 		case STATE_DEPTH_FUNC:			
 			assert(false); break;
 		case STATE_DEPTH_CLEAR_VALUE:	

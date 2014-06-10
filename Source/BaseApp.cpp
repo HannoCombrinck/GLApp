@@ -69,8 +69,8 @@ namespace baselib {
 
 		auto spShaderManager = boost::shared_ptr<ShaderManager>(new ShaderManager());
 
-		auto spVertexShader = spShaderManager->createShaderObject("../../Data/Shaders/test.vert");
-		auto spFragmentShader = spShaderManager->createShaderObject("../../Data/Shaders/test.frag");
+		auto spVertexShader = spShaderManager->createShaderObject("../Data/Shaders/test.vert");
+		auto spFragmentShader = spShaderManager->createShaderObject("../Data/Shaders/test.frag");
 
 		std::vector<boost::shared_ptr<ShaderObject>> aspShaders;
 		aspShaders.push_back(spVertexShader);
