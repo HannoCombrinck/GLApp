@@ -8,7 +8,7 @@
 
 #include <Graphics/ShaderObject.h>
 
-namespace fs = boost::filesystem3;
+namespace fs = boost::filesystem;
 
 namespace baselib 
 {
