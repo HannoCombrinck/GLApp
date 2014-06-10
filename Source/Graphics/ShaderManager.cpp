@@ -84,13 +84,13 @@ namespace baselib { namespace graphics {
 
 				if (iCount[uType] > 1)
 				{
-					LOG_ERROR << "Only one shader object of each type is allowed per shader pipeline.";
+					LOG_ERROR << "Only one shader object of each type is allowed per shader pipeline";
 					bValid = false;
 					return;
 				}
 			});
 
-			// TODO: Check for valid shader object combiations
+			// TODO: Check for valid shader object combinations
 
 			//if (iCount[ShaderObject::VERTEX_SHADER] != 1)
 			//	bValid = false;
@@ -103,23 +103,23 @@ namespace baselib { namespace graphics {
 	{
 		if (!isValidPipeline(aspShaderObjects))
 		{
-			LOG_ERROR << "Trying to create shader pipeline with invalid combination of shader objects.";
+			LOG_ERROR << "Trying to create shader pipeline with invalid combination of shader objects";
 			assert(false);
 		}
 
 		// Create shader program
-		LOG_INFO << "Creating shader pipeline...";
+		LOG_INFO << "Creating shader pipeline";
 		unsigned int uShaderProgramID = glCreateProgram();
 		assert(uShaderProgramID);
 
 		// Attach shader objects
-		LOG_INFO << "Attaching shader objects to pipeline...";
+		LOG_INFO << "Attaching shader objects to pipeline";
 		boost::for_each(aspShaderObjects, [&uShaderProgramID](const boost::shared_ptr<ShaderObject>& spShaderObject) {
 			glAttachShader(uShaderProgramID, spShaderObject->getID());
 		});
 
 		// Link shader program
-		LOG_INFO << "Linking shader pipeline...";
+		LOG_INFO << "Linking shader pipeline";
 		glLinkProgram(uShaderProgramID);
 
 		// Detach shader objects
@@ -146,7 +146,7 @@ namespace baselib { namespace graphics {
 		// Check linker status
 		if (iLinkStatus == GL_FALSE)
 		{
-			LOG_ERROR << "Failed to link shader pipeline.";
+			LOG_ERROR << "Failed to link shader pipeline";
 			assert(false);
 		}
 
@@ -156,28 +156,6 @@ namespace baselib { namespace graphics {
 
 	boost::shared_ptr<ShaderObject> ShaderManager::createShaderObject(const fs::path& fsPath)
 	{
-		// Check if shader object already exists
-		if (!fs::exists(fsPath))
-		{
-			assert(false);
-		}
-		std::string sCanonicalPath = fs::canonical(fsPath).string();
-		auto iter = m_aShaderObjectMap.find(sCanonicalPath);
-		if (iter != m_aShaderObjectMap.end())
-		{
-			LOG_VERBOSE << fsPath << " shader object already loaded.";
-			if (auto sp = iter->second.lock())
-			{
-				LOG_VERBOSE << "Returning reference to existing shader object";
-				return sp;
-			}
-			else
-			{
-				LOG_VERBOSE << fsPath << " doesn't exist anymore. Removing from manager and reloading from file.";
-				m_aShaderObjectMap.erase(iter);
-			}
-		}
-
 		// Check if file exists
 		if (!fs::exists(fsPath))
 		{
@@ -185,10 +163,27 @@ namespace baselib { namespace graphics {
 			assert(false);
 		}
 
+		std::string sCanonicalPath = fs::canonical(fsPath).string();
+		auto iter = m_aShaderObjectMap.find(sCanonicalPath);
+		if (iter != m_aShaderObjectMap.end())
+		{
+			LOG_VERBOSE << sCanonicalPath << " shader object already loaded";
+			if (auto sp = iter->second.lock())
+			{
+				LOG_VERBOSE << "Returning reference to existing shader object";
+				return sp;
+			}
+			else
+			{
+				LOG_VERBOSE << sCanonicalPath << " doesn't exist anymore. Removing from manager and reloading from file";
+				m_aShaderObjectMap.erase(iter);
+			}
+		}
+
 		// Check if file has extension
 		if (!fsPath.has_extension())
 		{
-			LOG_ERROR << "Shader source file " << fsPath << " does not have an extension.";
+			LOG_ERROR << "Shader source file " << sCanonicalPath << " does not have an extension";
 			assert(false);
 		}
 		
@@ -204,9 +199,9 @@ namespace baselib { namespace graphics {
 		}
 
 		// Load the shader source from file
-		std::string sSource = loadSourceFromFile(fsPath);
+		std::string sSource = loadSourceFromFile(sCanonicalPath);
 
-		LOG_INFO << "Loading shader from file: " << fsPath;
+		LOG_INFO << "Loading shader from file: " << sCanonicalPath;
 
 		auto spShaderObject = createShaderObject(sSource, uType);
 		spShaderObject->setName(sCanonicalPath);
@@ -223,7 +218,7 @@ namespace baselib { namespace graphics {
 		std::string sShaderType = getShaderTypeString(uType);
 
 		// Create the shader
-		LOG_INFO << "Creating " << sShaderType << " shader...";
+		LOG_INFO << "Creating " << sShaderType << " shader";
 		unsigned int uShaderObjectID = glCreateShader(uGLShaderType);
 		assert(uShaderObjectID);
 
@@ -232,7 +227,7 @@ namespace baselib { namespace graphics {
 		glShaderSource(uShaderObjectID, 1, (const char**)&szShaderSource, NULL);
 
 		// Compile the shader
-		LOG_INFO << "Compiling " << sShaderType << " shader...";
+		LOG_INFO << "Compiling " << sShaderType << " shader";
 		glCompileShader(uShaderObjectID);
 
 		// Get GLSL compiler status
@@ -240,11 +235,11 @@ namespace baselib { namespace graphics {
 		glGetShaderiv(uShaderObjectID, GL_COMPILE_STATUS, &iCompileStatus);
 		if (iCompileStatus == GL_TRUE)
 		{
-			LOG_INFO << "Successfully compiled " << sShaderType << " shader.";
+			LOG_INFO << "Successfully compiled " << sShaderType << " shader";
 		}
 		else
 		{
-			LOG_ERROR << "Failed to compile " << sShaderType << " shader.";
+			LOG_ERROR << "Failed to compile " << sShaderType << " shader";
 			glDeleteShader(uShaderObjectID);
 			uShaderObjectID = ~0;
 			// Assert after logging GLSL compiler errors

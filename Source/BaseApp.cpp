@@ -29,7 +29,7 @@ namespace baselib {
 
 	void BaseApp::start()
 	{
-		LOG_VERBOSE << "BaseApp starting main loop..";
+		LOG_VERBOSE << "BaseApp starting main loop";
 		
 		m_dCurrentTime = GetTime();
 		while (isAppRunning())

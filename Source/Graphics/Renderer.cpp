@@ -56,7 +56,7 @@ namespace baselib { namespace graphics {
 
 //	boost::shared_ptr<Geometry> Renderer::createGeometry(const boost::shared_ptr<VertexList>& spVertexList)
 //	{
-//		LOG_DEBUG << "Creating geometry hardware buffers...";
+//		LOG_DEBUG << "Creating geometry hardware buffers";
 //		// Create VAO
 //		unsigned int uVAO = ~0;
 //		glGenVertexArrays(1, &uVAO);
@@ -85,7 +85,7 @@ namespace baselib { namespace graphics {
 //		glBindBuffer(GL_ARRAY_BUFFER, 0);
 //		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 //
-//		LOG_DEBUG << "Successfully created geometry hardware buffers.";
+//		LOG_DEBUG << "Successfully created geometry hardware buffers";
 //		return boost::shared_ptr<Geometry>(new Geometry(uVAO, uVBO, uIB));
 //	}
 
@@ -137,7 +137,7 @@ namespace baselib { namespace graphics {
 			{
 			case Renderer::TRUE: glEnable(uState); break;
 			case Renderer::FALSE: glDisable(uState); break;
-			default: LOG_ERROR << "Invalid render state value - expected TRUE or FALSE."; assert(false); break;
+			default: LOG_ERROR << "Invalid render state value - expected TRUE or FALSE"; assert(false); break;
 			}
 		}
 
@@ -154,7 +154,7 @@ namespace baselib { namespace graphics {
 			case Renderer::ONE_MINUS_SRC_ALPHA: return GL_ONE_MINUS_SRC_ALPHA; break;
 			case Renderer::ONE_MINUS_DST: return GL_ONE_MINUS_DST_COLOR; break;
 			case Renderer::ONE_MINUS_DST_ALPHA: return GL_ONE_MINUS_DST_ALPHA; break;
-			default: LOG_ERROR << "Invalid render state value - expected blend factor value."; assert(false); return 0; break;
+			default: LOG_ERROR << "Invalid render state value - expected blend factor value"; assert(false); return 0; break;
 			}
 		}
 
@@ -167,7 +167,7 @@ namespace baselib { namespace graphics {
 			case Renderer::FUNC_REVERSE_SUBTRACT: return GL_FUNC_REVERSE_SUBTRACT; break;
 			case Renderer::FUNC_MIN: return GL_MIN; break;
 			case Renderer::FUNC_MAX: return GL_MAX; break;
-			default: LOG_ERROR << "Invalid render state value - expected blend operation value."; assert(false); return 0; break;
+			default: LOG_ERROR << "Invalid render state value - expected blend operation value"; assert(false); return 0; break;
 			}
 		}
 
@@ -178,7 +178,7 @@ namespace baselib { namespace graphics {
 			case Renderer::CULL_BACK: return GL_BACK; break;
 			case Renderer::CULL_FRONT: return GL_FRONT; break;
 			case Renderer::CULL_FRONT_AND_BACK: return GL_FRONT_AND_BACK; break;
-			default: LOG_ERROR << "Invalid render state value - expected cull mode."; assert(false); return 0; break;
+			default: LOG_ERROR << "Invalid render state value - expected cull mode"; assert(false); return 0; break;
 			}
 		}
 	}
