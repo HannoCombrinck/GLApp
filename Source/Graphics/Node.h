@@ -10,7 +10,7 @@ namespace baselib
 {
 	namespace graphics
 	{
-		/*! @brief Defines a Spatial Node in directed acyclic graph.
+		/*! @brief Defines a Spatial Node in a directed acyclic graph.
 		 *
 		 */
 		class Node : public Spatial, public boost::enable_shared_from_this<Node>
