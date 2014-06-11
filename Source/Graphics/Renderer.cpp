@@ -93,7 +93,7 @@ namespace baselib { namespace graphics {
 
 	void Renderer::clear()
 	{
-		clear(COLOUR_BUFFER | DEPTH_BUFFER | ACCUMULATION_BUFFER | STENCIL_BUFFER);
+		clear(COLOUR_BUFFER | DEPTH_BUFFER | STENCIL_BUFFER);
 	}
 
 	void Renderer::clear(unsigned int uMask)
@@ -101,7 +101,6 @@ namespace baselib { namespace graphics {
 		unsigned int uGLMask = 0;
 		uGLMask |= (uMask & COLOUR_BUFFER) ? GL_COLOR_BUFFER_BIT : 0;
 		uGLMask |= (uMask & DEPTH_BUFFER) ? GL_DEPTH_BUFFER_BIT : 0;
-		uGLMask |= (uMask & ACCUMULATION_BUFFER) ? GL_ACCUM_BUFFER_BIT : 0;
 		uGLMask |= (uMask & STENCIL_BUFFER) ? GL_STENCIL_BUFFER_BIT : 0;
 
 		glClear(uGLMask);

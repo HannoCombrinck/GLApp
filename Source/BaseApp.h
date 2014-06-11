@@ -8,6 +8,7 @@ namespace baselib
 	namespace graphics
 	{
 		class Renderer;
+		class ShaderPipeline;
 		class Shader;
 	}
 }
@@ -44,6 +45,7 @@ namespace baselib
 		double m_dPreviousTime; //!< Time elapsed up to previous update cycle. So time elapsed since previous update = m_dCurrentTime - m_dPreviousTime.
 
 		boost::shared_ptr<graphics::Renderer> m_spRenderer; //!< Main renderer
+		boost::shared_ptr<graphics::ShaderPipeline> m_spShaderPipeline; //!< Test shader pipeline
 		boost::shared_ptr<graphics::Shader> m_spShader;		//!< Test shader
 	};
 }

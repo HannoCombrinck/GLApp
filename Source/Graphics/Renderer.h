@@ -85,8 +85,7 @@ namespace baselib
 			{
 				COLOUR_BUFFER = 1,
 				DEPTH_BUFFER = 2,
-				ACCUMULATION_BUFFER = 4,
-				STENCIL_BUFFER = 8
+				STENCIL_BUFFER = 4
 			};
 
 			//! Constructor.

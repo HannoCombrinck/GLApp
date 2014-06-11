@@ -36,8 +36,8 @@ void testFunc()
 
 int main(int arc, char** argv)
 {
-	testFunc();
-	system("pause");
+	//testFunc();
+	//system("pause");
 
 	BaseApp app(640, 480, false, 3, 2, "GLFWApp"); 
 	app.start();

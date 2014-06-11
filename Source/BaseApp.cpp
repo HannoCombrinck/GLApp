@@ -15,6 +15,7 @@ namespace baselib {
 		, m_dCurrentTime(0.0)
 		, m_dPreviousTime(0.0)
 		, m_spRenderer(boost::shared_ptr<Renderer>())
+		, m_spShaderPipeline(boost::shared_ptr<ShaderPipeline>())
 		, m_spShader(boost::shared_ptr<Shader>())
 	{
 		LOG_VERBOSE << "BaseApp constructor";
@@ -76,9 +77,9 @@ namespace baselib {
 		aspShaders.push_back(spVertexShader);
 		aspShaders.push_back(spFragmentShader);
 
-		auto spShaderPipeline = spShaderManager->createShaderPipeline("TestPipeline", aspShaders);
+		m_spShaderPipeline = spShaderManager->createShaderPipeline("TestPipeline", aspShaders);
 		
-		m_spShader = spShaderPipeline->createInstance();
+		m_spShader = m_spShaderPipeline->createInstance();
 
 	}
 
