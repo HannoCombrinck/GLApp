@@ -242,8 +242,6 @@ namespace baselib {
 		// Handle mouse move
 		if (m_iMouseX != m_iMouseXPrev || m_iMouseY != m_iMouseYPrev)
 		{
-			//LOG_DEBUG << "New mouse pos : " << m_iMouseX << " , " << m_iMouseY;
-			//LOG_DEBUG << "Delta mouse : " << m_iMouseX - m_iMouseXPrev << " , " << m_iMouseY - m_iMouseYPrev;
 			onMouseMove(m_iMouseX, m_iMouseY);
 			onMouseMoveRel(m_iMouseX - m_iMouseXPrev, m_iMouseY - m_iMouseYPrev);
 		}
