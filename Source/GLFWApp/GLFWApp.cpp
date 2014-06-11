@@ -150,6 +150,7 @@ namespace baselib {
 		setAppRunning(true);
 
 		// Initialize GL extension wrangler
+		glewExperimental = true;
 		auto eError = glewInit();
 		if (eError != GLEW_OK)
 		{
