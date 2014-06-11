@@ -138,7 +138,6 @@ namespace baselib { namespace graphics {
 		glGetProgramInfoLog(uShaderProgramID, iLogLength, NULL, szLog);
 		std::string sLinkerLog(szLog);
 		delete[] szLog;
-		glDeleteProgram(uShaderProgramID);
 
 		if (!sLinkerLog.empty())
 			LOG_INFO << sLinkerLog;
@@ -147,6 +146,7 @@ namespace baselib { namespace graphics {
 		if (iLinkStatus == GL_FALSE)
 		{
 			LOG_ERROR << "Failed to link shader pipeline";
+			glDeleteProgram(uShaderProgramID);
 			assert(false);
 		}
 
