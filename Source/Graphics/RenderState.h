@@ -10,7 +10,7 @@ namespace baselib
 			//! Constructor.
 			RenderState();
 			//! Destructor.
-			~RenderState();
+			virtual ~RenderState();
 		
 		private:
 

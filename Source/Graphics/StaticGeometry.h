@@ -15,7 +15,7 @@ namespace baselib
 			friend class Renderer;
 
 			//! Destructor.
-			~StaticGeometry();
+			virtual ~StaticGeometry();
 		
 			//! Get the vertex buffer i.e. VBO.
 			unsigned int getVBO() const { return m_uVBO; }

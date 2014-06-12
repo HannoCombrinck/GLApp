@@ -10,7 +10,7 @@ namespace baselib
 			//! Constructor.
 			Texture();
 			//! Destructor.
-			~Texture();
+			virtual ~Texture();
 		
 		private:
 

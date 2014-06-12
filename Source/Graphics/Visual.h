@@ -26,7 +26,7 @@ namespace baselib
 			//! Constructor.
 			Visual();
 			//! Destructor.
-			~Visual();
+			virtual ~Visual();
 
 			//! Set the material for this visual.
 			void setMaterial(const boost::shared_ptr<Material>& spMaterial) { m_spMaterial = spMaterial; }

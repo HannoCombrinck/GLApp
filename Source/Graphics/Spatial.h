@@ -17,7 +17,7 @@ namespace baselib
 			//! Constructor.
 			Spatial();
 			//! Destructor.
-			~Spatial();
+			virtual ~Spatial();
 
 			//! Update the world transform
 			void update(const Mat4& mParent);

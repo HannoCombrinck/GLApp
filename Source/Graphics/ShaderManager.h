@@ -31,7 +31,7 @@ namespace baselib
 			//! Constructor.
 			ShaderManager();
 			//! Destructor.
-			~ShaderManager();
+			virtual ~ShaderManager();
 
 			//! Creates and links a shader pipeline with the given shader objects.
 			boost::shared_ptr<ShaderPipeline> createShaderPipeline(const std::string& sName, const std::vector<boost::shared_ptr<ShaderObject>>& aspShaderObjects);

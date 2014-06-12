@@ -17,7 +17,7 @@ namespace baselib
 			friend class ShaderPipeline;
 
 			//! Destructor.
-			~Shader();
+			virtual ~Shader();
 
 			//! Get shader ID.
 			unsigned int getID() const { return m_uID; }

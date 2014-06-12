@@ -62,7 +62,7 @@ namespace baselib
 			//! Constructor.
 			VertexListInterface() {}
 			//! Destructor.
-			~VertexListInterface() {}
+			virtual ~VertexListInterface() {}
 
 			//! Get a pointer to the vertex buffer data.
 			virtual const void* getVertexBufferData() const = 0;
@@ -92,7 +92,7 @@ namespace baselib
 				assert(m_spVertexLayout);
 			}
 
-			~VertexList() 
+			virtual ~VertexList() 
 			{ 
 				LOG_VERBOSE << "VertexList destructor"; 
 			}

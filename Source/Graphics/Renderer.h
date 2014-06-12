@@ -99,7 +99,7 @@ namespace baselib
 			//! Constructor.
 			Renderer();
 			//! Destructor.
-			~Renderer();
+			virtual ~Renderer();
 		
 			//! Clear all buffers for current render target.
 			void clear();

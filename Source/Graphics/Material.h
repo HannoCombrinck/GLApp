@@ -25,7 +25,7 @@ namespace baselib
 			//! Constructor.
 			Material();
 			//! Destructor.
-			~Material();
+			virtual ~Material();
 
 			//! Set the shader instance.
 			void setShader(const boost::shared_ptr<Shader>& spShader) { m_spShader = spShader; }

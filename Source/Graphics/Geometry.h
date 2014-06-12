@@ -11,7 +11,7 @@ namespace baselib
 		{
 		public:
 			//! Destructor.
-			~Geometry();
+			virtual ~Geometry();
 		
 			//! Get the VAO.
 			unsigned int getVAO() const { return m_uVAO; }

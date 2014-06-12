@@ -27,7 +27,7 @@ namespace baselib
 			friend class ShaderManager;
 
 			//! Destructor.
-			~ShaderPipeline();
+			virtual ~ShaderPipeline();
 
 			//! Create a Shader instance based on this pipeline.
 			boost::shared_ptr<Shader> createInstance();

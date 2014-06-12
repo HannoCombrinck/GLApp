@@ -19,7 +19,7 @@ namespace baselib
 			//! Constructor.
 			Node();
 			//! Destructor.
-			~Node();
+			virtual ~Node();
 
 			//! Add a child node. The child node's parent reference is set to this node.
 			void addChild(const boost::shared_ptr<Node>& spNode);

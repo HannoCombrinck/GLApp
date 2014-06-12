@@ -28,7 +28,7 @@ namespace baselib
 			};
 
 			//! Destructor.
-			~ShaderObject();
+			virtual ~ShaderObject();
 
 			//! Set shader name.
 			void setName(const std::string& sName) { m_sName = sName; }
