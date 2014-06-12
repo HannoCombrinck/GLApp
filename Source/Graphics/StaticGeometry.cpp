@@ -1,5 +1,6 @@
 #include "StaticGeometry.h"
 
+#include <GL/glew.h>
 #include <Logging/Log.h>
 
 namespace baselib { namespace graphics {
@@ -15,6 +16,8 @@ namespace baselib { namespace graphics {
 	StaticGeometry::~StaticGeometry()
 	{
 		LOG_VERBOSE << "StaticGeometry destructor";
+		glDeleteBuffers(1, &m_uVBO);
+		glDeleteBuffers(1, &m_uIB);
 	}
 
 } }

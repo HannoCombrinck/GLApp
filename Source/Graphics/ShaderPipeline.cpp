@@ -16,7 +16,7 @@ namespace baselib { namespace graphics {
 	ShaderPipeline::~ShaderPipeline()
 	{
 		LOG_VERBOSE << "ShaderPipeline destructor";
-		glDeleteProgram(getID());
+		glDeleteProgram(m_uID);
 	}
 
 	boost::shared_ptr<Shader> ShaderPipeline::createInstance()

@@ -18,7 +18,7 @@ namespace baselib { namespace graphics {
 	ShaderObject::~ShaderObject()
 	{
 		LOG_VERBOSE << "ShaderObject destructor";
-		glDeleteShader(getID());
+		glDeleteShader(m_uID);
 	}
 
 } }
