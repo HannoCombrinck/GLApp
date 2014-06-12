@@ -2,8 +2,16 @@
 
 #include <assert.h>
 #include <boost/shared_ptr.hpp>
-
 #include <Math/Math.h>
+
+namespace baselib 
+{
+	namespace graphics
+	{
+		class StaticGeometry;
+		class VertexListInterface;
+	}
+}
 
 namespace baselib 
 {
@@ -93,15 +101,12 @@ namespace baselib
 			//! Destructor.
 			~Renderer();
 		
-			//! Create Geometry from a VertexList
-			//boost::shared_ptr<Geometry> createGeometry(const boost::shared_ptr<VertexList>& spVertexList);
-
 			//! Clear all buffers for current render target.
 			void clear();
 			//! Clear buffers specified by mask for current render target.
 			void clear(unsigned int uMask);
 
-			//! Set the active viewport.
+			//! Set the active view port.
 			void setViewport(const Vec4& vViewport);
 
 			//! Set the clear colour.
@@ -114,6 +119,9 @@ namespace baselib
 			//! Get the current render state.
 			unsigned int getRenderState(unsigned int uState) const { assert(uState < STATE_COUNT); return m_auState[uState]; }
 
+			//! Create a static geometry.
+			boost::shared_ptr<StaticGeometry> createStaticGeometry(const boost::shared_ptr<VertexListInterface>& spVertexList);
+
 		private:
 			//! Initialize renderer.
 			void init();
@@ -121,7 +129,6 @@ namespace baselib
 			void destroy();
 			//! Apply a render state.
 			void applyRenderState(unsigned int uState, unsigned int uValue);
-
 			
 			Vec4 m_vClearColour;				  //!< Current clear colour. Current render target will be cleared to this colour when calling clear().
 			unsigned int m_auState[STATE_COUNT];  //!< Current render state values.

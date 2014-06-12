@@ -66,6 +66,7 @@ namespace baselib {
 	void BaseApp::init()
 	{
 		LOG_VERBOSE << "BaseApp init";
+
 		m_spRenderer = boost::shared_ptr<Renderer>(new Renderer());
 
 		auto spShaderManager = boost::shared_ptr<ShaderManager>(new ShaderManager());
@@ -78,9 +79,7 @@ namespace baselib {
 		aspShaders.push_back(spFragmentShader);
 
 		m_spShaderPipeline = spShaderManager->createShaderPipeline("TestPipeline", aspShaders);
-		
 		m_spShader = m_spShaderPipeline->createInstance();
-
 	}
 
 	void BaseApp::destroy()

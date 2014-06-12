@@ -3,6 +3,9 @@
 #include <GL/glew.h>
 #include <Logging/Log.h>
 #include <Graphics/VertexList.h>
+#include <Graphics/StaticGeometry.h>
+
+#include <boost/range/algorithm/for_each.hpp>
 
 namespace baselib { namespace graphics {
 
@@ -43,54 +46,6 @@ namespace baselib { namespace graphics {
 
 	}
 
-	//namespace
-	//{
-	//	unsigned int getGLType(unsigned int uType)
-	//	{
-	//		switch (uType)
-	//		{
-	//			case: TYPE_FLOAT: return GL_FLOAT; break;
-	//			case: TYPE_INT: return GL_INT; break;
-	//			case: TYPE_BOOL: return GL_BOOL; break;
-	//		}
-	//	}
-	//}
-
-//	boost::shared_ptr<Geometry> Renderer::createGeometry(const boost::shared_ptr<VertexList>& spVertexList)
-//	{
-//		LOG_DEBUG << "Creating geometry hardware buffers";
-//		// Create VAO
-//		unsigned int uVAO = ~0;
-//		glGenVertexArrays(1, &uVAO);
-//		glBindVertexArray(uVAO);
-//
-//		// Create VBO
-//		unsigned int uVBO = ~0;
-//		glGenBuffers(1, &uVBO);
-//		glBindBuffer(GL_ARRAY_BUFFER, uVBO);
-//		glBufferData(GL_ARRAY_BUFFER, spVertexList->getVertexData().size()*sizeof(Vertex), &spVertexList->getVertexData()[0], GL_STATIC_DRAW);
-//
-//		// connect the xyz to the "vert" attribute of the vertex shader
-//		//glVertexAttribPointer(/*index*/0, /*num members i.e. 3 floats for position*/ 3, /*type of elements*/ GL_FLOAT, /*normalized*/ GL_FALSE, /*stride i.e. size of entire vertex struct*/ sizeof(Vertex), /*position data*/ NULL);
-//		//glEnableVertexAttribArray(/*index*/ 0);
-//
-//		// connect the uv coords to the "vertTexCoord" attribute of the vertex shader
-//		//glEnableVertexAttribArray(gWoodenCrate.shaders->attrib("vertTexCoord"));
-//		//glVertexAttribPointer(gWoodenCrate.shaders->attrib("vertTexCoord"), 2, GL_FLOAT, GL_TRUE,  5*sizeof(GLfloat), (const GLvoid*)(3 * sizeof(GLfloat)));
-//
-//		unsigned int uIB = ~0;
-//		glGenBuffers(1, &uIB);
-//		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uIB);
-//		glBufferData(GL_ELEMENT_ARRAY_BUFFER, spVertexList->getIndexData().size()*sizeof(unsigned int), &spVertexList->getIndexData()[0], GL_STATIC_DRAW);
-//
-//		glBindVertexArray(0);
-//		glBindBuffer(GL_ARRAY_BUFFER, 0);
-//		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-//
-//		LOG_DEBUG << "Successfully created geometry hardware buffers";
-//		return boost::shared_ptr<Geometry>(new Geometry(uVAO, uVBO, uIB));
-//	}
-
 	void Renderer::clear()
 	{
 		clear(COLOUR_BUFFER | DEPTH_BUFFER | STENCIL_BUFFER);
@@ -129,6 +84,66 @@ namespace baselib { namespace graphics {
 
 		m_auState[uState] = uValue;
 		applyRenderState(uState, uValue);
+	}
+
+	namespace
+	{
+		GLenum getGLType(unsigned int uType)
+		{
+			switch (uType)
+			{
+			case TYPE_FLOAT: return GL_FLOAT; break;
+			case TYPE_INT: return GL_INT; break;
+			case TYPE_BOOL: return GL_BOOL; break;
+			default: assert(false); return 0; break;
+			}
+		}
+
+		GLboolean getGLBool(bool bValue)
+		{
+			if (bValue) 
+				return GL_TRUE;
+			return GL_FALSE;
+		}
+	}
+
+	boost::shared_ptr<StaticGeometry> Renderer::createStaticGeometry(const boost::shared_ptr<VertexListInterface>& spVertexList)
+	{
+		LOG_DEBUG << "Creating static geometry hardware buffers";
+		
+		// Create VAO
+		unsigned int uVAO = ~0;
+		glGenVertexArrays(1, &uVAO);
+		glBindVertexArray(uVAO);
+
+		// Create vertex buffer (VBO)
+		unsigned int uVBO = ~0;
+		glGenBuffers(1, &uVBO);
+		glBindBuffer(GL_ARRAY_BUFFER, uVBO);
+		glBufferData(GL_ARRAY_BUFFER, spVertexList->getVertexBufferSize(), spVertexList->getVertexBufferData(), GL_STATIC_DRAW);
+
+		// Set vertex attribute layouts
+		auto spVertexLayout = spVertexList->getVertexLayout();
+		int iVertexSize = spVertexList->getVertexSize();
+		auto aAttributes = spVertexLayout->getAttributes();
+		boost::for_each(aAttributes, [iVertexSize](const VertexAttribute& va) {
+			glVertexAttribPointer(va.iIndex, va.iNumElements, getGLType(va.uType), getGLBool(va.bNormalized), iVertexSize, (const GLvoid*)va.iOffset); // Cast offset parameter to (const GLVoid*) because of legacy glVertexAttribPointer() function prototype. It should just be an int.
+			glEnableVertexAttribArray(va.iIndex);
+		});
+
+		// Create index buffer
+		unsigned int uIB = ~0;
+		glGenBuffers(1, &uIB);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uIB);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, spVertexList->getIndexBufferSize(), spVertexList->getIndexBufferData(), GL_STATIC_DRAW);
+
+		// Unbind all buffers
+		glBindVertexArray(0);
+		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+		LOG_DEBUG << "Successfully created static geometry hardware buffers";
+		return boost::shared_ptr<StaticGeometry>(new StaticGeometry(uVAO, uVBO, uIB));
 	}
 
 	namespace

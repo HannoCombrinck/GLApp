@@ -22,11 +22,11 @@ namespace baselib {
 		std::string logLevelStr = "";
 		switch (level)
 		{
-		case LOGLEVEL_ERROR: logLevelStr = "Error"; break;
-		case LOGLEVEL_WARNING: logLevelStr = "Warning"; break;
-		case LOGLEVEL_INFO: logLevelStr = "Info"; break;
+		case LOGLEVEL_ERROR: logLevelStr = "     Error"; break;
+		case LOGLEVEL_WARNING: logLevelStr = "   Warning"; break;
+		case LOGLEVEL_INFO: logLevelStr = "      Info"; break;
 		case LOGLEVEL_DEBUG_INFO: logLevelStr = "Debug Info"; break;
-		case LOGLEVEL_VERBOSE: logLevelStr = "Verbose"; break;
+		case LOGLEVEL_VERBOSE: logLevelStr = "   Verbose"; break;
 		default: assert(false); 
 		}
 		return logLevelStr;
