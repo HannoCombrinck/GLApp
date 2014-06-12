@@ -10,9 +10,9 @@ namespace baselib
 		class Renderer;
 		class ShaderPipeline;
 		class Shader;
+		class StaticGeometry;
 	}
 }
-
 
 namespace baselib
 {
@@ -47,5 +47,6 @@ namespace baselib
 		boost::shared_ptr<graphics::Renderer> m_spRenderer; //!< Main renderer
 		boost::shared_ptr<graphics::ShaderPipeline> m_spShaderPipeline; //!< Test shader pipeline
 		boost::shared_ptr<graphics::Shader> m_spShader;		//!< Test shader
+		boost::shared_ptr<graphics::StaticGeometry> m_spStaticGeom; //!< Test geometry
 	};
 }

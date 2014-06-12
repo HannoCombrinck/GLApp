@@ -5,6 +5,8 @@
 #include <Graphics/Renderer.h>
 #include <Graphics/ShaderManager.h>
 #include <Graphics/ShaderPipeline.h>
+#include <Graphics/StaticGeometry.h>
+#include <Graphics/VertexList.h>
 
 using namespace baselib::graphics;
 
@@ -17,6 +19,7 @@ namespace baselib {
 		, m_spRenderer(boost::shared_ptr<Renderer>())
 		, m_spShaderPipeline(boost::shared_ptr<ShaderPipeline>())
 		, m_spShader(boost::shared_ptr<Shader>())
+		, m_spStaticGeom(boost::shared_ptr<StaticGeometry>())
 	{
 		LOG_VERBOSE << "BaseApp constructor";
 		init();
@@ -63,12 +66,27 @@ namespace baselib {
 		// unbind shader
 	}
 
+	// Test vertex
+	struct MyVert
+	{
+		MyVert(Vec3 vP, Vec3 vN, Vec2 _vUV)
+			: vPos(vP)
+			, vNormal(vN)
+			, vUV(_vUV) {}
+
+		Vec3 vPos;
+		Vec3 vNormal;
+		Vec2 vUV;
+	};
+
 	void BaseApp::init()
 	{
 		LOG_VERBOSE << "BaseApp init";
 
+		// Create test renderer
 		m_spRenderer = boost::shared_ptr<Renderer>(new Renderer());
 
+		// Create test shader manager and test shader
 		auto spShaderManager = boost::shared_ptr<ShaderManager>(new ShaderManager());
 
 		auto spVertexShader = spShaderManager->createShaderObject("../Data/Shaders/test.vert");
@@ -80,6 +98,24 @@ namespace baselib {
 
 		m_spShaderPipeline = spShaderManager->createShaderPipeline("TestPipeline", aspShaders);
 		m_spShader = m_spShaderPipeline->createInstance();
+
+
+		// Create test VertexList
+		auto spVL = boost::shared_ptr<VertexLayout>(new VertexLayout());
+		spVL->add(VertexAttribute("position", 0, 3, TYPE_FLOAT, 0));
+		spVL->add(VertexAttribute("normal", 1, 3, TYPE_FLOAT, 3*sizeof(float)));
+		spVL->add(VertexAttribute("texcoord", 2, 2, TYPE_FLOAT, 6*sizeof(float)));
+
+		auto spVertexList = boost::shared_ptr<VertexList<MyVert>>(new VertexList<MyVert>(spVL));
+		spVertexList->addVertex(MyVert(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 1.0f), Vec2(0.0, 0.0)));
+		spVertexList->addVertex(MyVert(Vec3(1.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 1.0f), Vec2(1.0, 0.0)));
+		spVertexList->addVertex(MyVert(Vec3(1.0f, 1.0f, 0.0f), Vec3(0.0f, 0.0f, 1.0f), Vec2(1.0, 1.0)));
+		spVertexList->addIndex(0);
+		spVertexList->addIndex(1);
+		spVertexList->addIndex(2);
+
+		// Create test static geometry
+		m_spStaticGeom = m_spRenderer->createStaticGeometry(spVertexList);
 	}
 
 	void BaseApp::destroy()
