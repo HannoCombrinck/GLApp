@@ -4,7 +4,7 @@ namespace baselib
 {
 	namespace graphics
 	{
-		/*! @brief Contains the hardware buffer for a piece of geometry.
+		/*! @brief Wrapper for hardware buffer that contains geometry information.
 		 *
 		 */
 		class Geometry
@@ -13,6 +13,11 @@ namespace baselib
 			//! Destructor.
 			virtual ~Geometry();
 		
+			//! Bind geometry buffer.
+			void bind();
+			//! Unbind geometry buffer.
+			void unbind();
+
 			//! Get the VAO.
 			unsigned int getVAO() const { return m_uVAO; }
 

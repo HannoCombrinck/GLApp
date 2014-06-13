@@ -17,4 +17,14 @@ namespace baselib { namespace graphics {
 		glDeleteBuffers(1, &m_uVAO);
 	}
 
+	void Geometry::bind()
+	{
+		glBindVertexArray(m_uVAO);
+	}
+
+	void Geometry::unbind()
+	{
+		glBindVertexArray(0);
+	}
+
 } }
