@@ -49,7 +49,7 @@ namespace baselib { namespace graphics {
 
 	void Renderer::drawIndexed(PrimitiveType ePrimitiveType, unsigned int uIndexCount, unsigned int uIndexType, unsigned int uIndexOffset)
 	{
-
+		glDrawElements(GL_TRIANGLES, uIndexCount, uIndexType, (const GLvoid*) uIndexOffset);
 	}
 
 	//void Renderer::draw(const boost::shared_ptr<Geometry>& spGeometry)
@@ -152,10 +152,11 @@ namespace baselib { namespace graphics {
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uIB);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, spVertexList->getIndexBufferSize(), spVertexList->getIndexBufferData(), GL_STATIC_DRAW);
 
-		// Unbind all buffers
+		// Unbind VAO - the VBO state is contained in VAO so unbinding VAO also unbinds VBO.
+		// If VBO's are unbinded here they are removed from VAO state and isn't valid anymore.
+		//glBindBuffer(GL_ARRAY_BUFFER, 0);
+		//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 
 		LOG_DEBUG << "Successfully created static geometry hardware buffers";
 		return boost::shared_ptr<StaticGeometry>(new StaticGeometry(uVAO, uVBO, uIB));

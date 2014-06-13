@@ -9,6 +9,8 @@
 #include <Graphics/StaticGeometry.h>
 #include <Graphics/VertexList.h>
 
+#include <GL/glew.h> //Temp: remove this
+
 using namespace baselib::graphics;
 
 namespace baselib {
@@ -62,9 +64,9 @@ namespace baselib {
 		m_spRenderer->clear();
 
 		m_spShader->bind();
-		// bind: m_spStaticGeom->getVAO();
-		// draw - glDraw*
-		// unbind VAO
+		m_spStaticGeom->bind();
+		m_spRenderer->drawIndexed(Renderer::TRIANGLES, 3, GL_UNSIGNED_INT, 0);
+		m_spStaticGeom->unbind();
 		m_spShader->unbind();
 	}
 
