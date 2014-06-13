@@ -35,8 +35,6 @@ namespace baselib
 		static bool GetAddLogLevel() { return m_bAddLogLevel; }
 
 	private:
-		std::string LevelToString(LOG_LEVEL level);
-
 		std::ostringstream m_OutStream;
 
 		static LOG_LEVEL m_LogLevel;
