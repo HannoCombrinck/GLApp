@@ -68,10 +68,14 @@ namespace baselib
 			virtual const void* getVertexBufferData() const = 0;
 			//! Get the vertex buffer size in bytes.
 			virtual unsigned int getVertexBufferSize() const = 0;
+			//! Get the number of vertices.
+			virtual unsigned int getNumVertices() const = 0;
 			//! Get a pointer to the index buffer data.
 			virtual const void* getIndexBufferData() const = 0;
 			//! Get the index buffer size in bytes.
 			virtual unsigned int getIndexBufferSize() const = 0;
+			//! Get the number of indices.
+			virtual unsigned int getNumIndices() const = 0;
 			//! Get the vertex attribute layout.
 			virtual boost::shared_ptr<VertexLayout> getVertexLayout() const = 0;
 			//! Get vertex size in bytes.
@@ -99,8 +103,10 @@ namespace baselib
 
 			virtual const void* getVertexBufferData() const { return reinterpret_cast<const void*>(&m_aVertices[0]); }
 			virtual unsigned int getVertexBufferSize() const { return m_aVertices.size() * sizeof(VertexType); }
+			virtual unsigned int getNumVertices() const { return m_aVertices.size(); }
 			virtual const void* getIndexBufferData() const { return reinterpret_cast<const void*>(&m_aVertices[0]); }
 			virtual unsigned int getIndexBufferSize() const { return m_aIndices.size() * sizeof(unsigned int); }
+			virtual unsigned int getNumIndices() const { return m_aIndices.size(); }
 			virtual boost::shared_ptr<VertexLayout> getVertexLayout() const { return m_spVertexLayout; }
 			virtual int getVertexSize() const { return sizeof(VertexType); }
 

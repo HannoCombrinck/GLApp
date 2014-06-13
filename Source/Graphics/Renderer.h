@@ -8,6 +8,7 @@ namespace baselib
 {
 	namespace graphics
 	{
+		class Geometry;
 		class StaticGeometry;
 		class VertexListInterface;
 	}
@@ -25,8 +26,10 @@ namespace baselib
 		public:
 			
 			// Render states
-			enum RenderStates
+			enum RenderState
 			{
+				INVALID_RENDER_STATE,
+
 				// Blend/Alpha states
 				STATE_ALPHA_TEST,
 				STATE_ALPHA_TEST_FUNC,
@@ -54,7 +57,7 @@ namespace baselib
 				STATE_COUNT
 			};
 
-			enum RenderStateValues
+			enum RenderStateValue
 			{
 				UNINITIALIZED = 0,
 
@@ -89,11 +92,31 @@ namespace baselib
 				STATE_VALUE_COUNT
 			};
 
-			enum ClearMasks
+			enum ClearMask
 			{
 				COLOUR_BUFFER = 1,
 				DEPTH_BUFFER = 2,
 				STENCIL_BUFFER = 4
+			};
+
+			enum PrimitiveType
+			{
+				INVALID_PRIMITIVE = 0,
+
+				POINTS, 
+				LINE_STRIP, 
+				LINE_LOOP, 
+				LINES, 
+				LINE_STRIP_ADJACENCY, 
+				LINES_ADJACENCY, 
+				TRIANGLE_STRIP, 
+				TRIANGLE_FAN, 
+				TRIANGLES, 
+				TRIANGLE_STRIP_ADJACENCY, 
+				TRIANGLES_ADJACENCY,
+				PATCHES,
+
+				PRIMITIVE_TYPE_COUNT
 			};
 
 			//! Constructor.
@@ -101,10 +124,13 @@ namespace baselib
 			//! Destructor.
 			virtual ~Renderer();
 		
+			//! Draw indexed geometry.
+			void drawIndexed(PrimitiveType ePrimitiveType, unsigned int uIndexCount, unsigned int uIndexType, unsigned int uIndexOffset);
+
 			//! Clear all buffers for current render target.
 			void clear();
 			//! Clear buffers specified by mask for current render target.
-			void clear(unsigned int uMask);
+			void clear(ClearMask eMask);
 
 			//! Set the active view port.
 			void setViewport(const Vec4& vViewport);
@@ -115,9 +141,9 @@ namespace baselib
 			Vec4 getClearColour() const { return m_vClearColour; }
 
 			//! Set the current render state - ignores redundant changes.
-			void setRenderState(unsigned int uState, unsigned int uValue);
-			//! Get the current render state.
-			unsigned int getRenderState(unsigned int uState) const { assert(uState < STATE_COUNT); return m_auState[uState]; }
+			void setRenderState(RenderState eState, RenderStateValue eValue);
+			//! Get the current value of a render state.
+			RenderStateValue getRenderState(RenderState eState) const { assert(eState < STATE_COUNT); return m_aeState[eState]; }
 
 			//! Create a static geometry.
 			boost::shared_ptr<StaticGeometry> createStaticGeometry(const boost::shared_ptr<VertexListInterface>& spVertexList);
@@ -128,10 +154,10 @@ namespace baselib
 			//! Destroy renderer.
 			void destroy();
 			//! Apply a render state.
-			void applyRenderState(unsigned int uState, unsigned int uValue);
+			void applyRenderState(RenderState eState, RenderStateValue eValue);
 			
-			Vec4 m_vClearColour;				  //!< Current clear colour. Current render target will be cleared to this colour when calling clear().
-			unsigned int m_auState[STATE_COUNT];  //!< Current render state values.
+			Vec4 m_vClearColour;					  //!< Current clear colour. Current render target will be cleared to this colour when calling clear().
+			RenderStateValue m_aeState[STATE_COUNT];  //!< Current render state values.
 
 		};
 	}

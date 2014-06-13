@@ -19,6 +19,11 @@ namespace baselib
 			//! Destructor.
 			virtual ~Shader();
 
+			//! Bind shader.
+			void bind();
+			//! Unbind shader.
+			void unbind();
+
 			//! Get shader ID.
 			unsigned int getID() const { return m_uID; }
 

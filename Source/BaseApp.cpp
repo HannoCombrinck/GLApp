@@ -5,6 +5,7 @@
 #include <Graphics/Renderer.h>
 #include <Graphics/ShaderManager.h>
 #include <Graphics/ShaderPipeline.h>
+#include <Graphics/Shader.h>
 #include <Graphics/StaticGeometry.h>
 #include <Graphics/VertexList.h>
 
@@ -59,11 +60,12 @@ namespace baselib {
 	{
 		assert(m_spRenderer);
 		m_spRenderer->clear();
-		// bind shader
-		// bind VAO
+
+		m_spShader->bind();
+		// bind: m_spStaticGeom->getVAO();
 		// draw - glDraw*
 		// unbind VAO
-		// unbind shader
+		m_spShader->unbind();
 	}
 
 	// Test vertex

@@ -24,9 +24,9 @@ namespace baselib { namespace graphics {
 	void Renderer::init()
 	{
 		// Temp Should set to default OpenGL states.
-		memset(m_auState, 0, sizeof(unsigned int)*STATE_COUNT);
-		m_auState[STATE_BLEND_DST] = ONE;
-		m_auState[STATE_BLEND_SRC] = ONE;
+		memset(m_aeState, 0, sizeof(unsigned int)*STATE_COUNT);
+		m_aeState[STATE_BLEND_DST] = ONE;
+		m_aeState[STATE_BLEND_SRC] = ONE;
 
 		//////////////////////////////////////////////////////////////////////////
 		// Temp settings for testing - these will be encapsulated elsewhere
@@ -46,17 +46,32 @@ namespace baselib { namespace graphics {
 
 	}
 
-	void Renderer::clear()
+
+	void Renderer::drawIndexed(PrimitiveType ePrimitiveType, unsigned int uIndexCount, unsigned int uIndexType, unsigned int uIndexOffset)
 	{
-		clear(COLOUR_BUFFER | DEPTH_BUFFER | STENCIL_BUFFER);
+
 	}
 
-	void Renderer::clear(unsigned int uMask)
+	//void Renderer::draw(const boost::shared_ptr<Geometry>& spGeometry)
+	//{
+	//	// For now assume all geometries have index buffers.
+	//	glBindVertexArray(spGeometry->getVAO());
+	//	//glDrawElements(GL_TRIANGLES, /*num indices*/, /*index type i.e. unsigned int*/, /*offset into index buffer*/)
+	//	glBindVertexArray(0);
+	//	assert(false);
+	//}
+
+	void Renderer::clear()
+	{
+		clear(ClearMask(COLOUR_BUFFER | DEPTH_BUFFER | STENCIL_BUFFER));
+	}
+
+	void Renderer::clear(ClearMask eMask)
 	{
 		unsigned int uGLMask = 0;
-		uGLMask |= (uMask & COLOUR_BUFFER) ? GL_COLOR_BUFFER_BIT : 0;
-		uGLMask |= (uMask & DEPTH_BUFFER) ? GL_DEPTH_BUFFER_BIT : 0;
-		uGLMask |= (uMask & STENCIL_BUFFER) ? GL_STENCIL_BUFFER_BIT : 0;
+		uGLMask |= (eMask & COLOUR_BUFFER) ? GL_COLOR_BUFFER_BIT : 0;
+		uGLMask |= (eMask & DEPTH_BUFFER) ? GL_DEPTH_BUFFER_BIT : 0;
+		uGLMask |= (eMask & STENCIL_BUFFER) ? GL_STENCIL_BUFFER_BIT : 0;
 
 		glClear(uGLMask);
 	}
@@ -72,18 +87,18 @@ namespace baselib { namespace graphics {
 		m_vClearColour = v;
 	}
 
-	void Renderer::setRenderState(unsigned int uState, unsigned int uValue)
+	void Renderer::setRenderState(RenderState eState, RenderStateValue eValue)
 	{
-		assert(uState < STATE_COUNT);
+		assert(eState < STATE_COUNT);
 
-		if (m_auState[uState] == uValue)
+		if (m_aeState[eState] == eValue)
 		{
 			LOG_VERBOSE << "Ignoring redundant state change";
 			return;
 		}
 
-		m_auState[uState] = uValue;
-		applyRenderState(uState, uValue);
+		m_aeState[eState] = eValue;
+		applyRenderState(eState, eValue);
 	}
 
 	namespace
@@ -148,19 +163,19 @@ namespace baselib { namespace graphics {
 
 	namespace
 	{
-		void enableGLState(unsigned int uState, unsigned int uBool)
+		void enableGLState(unsigned int uGLState, Renderer::RenderStateValue eValue)
 		{
-			switch (uBool)
+			switch (eValue)
 			{
-			case Renderer::TRUE: glEnable(uState); break;
-			case Renderer::FALSE: glDisable(uState); break;
+			case Renderer::TRUE: glEnable(uGLState); break;
+			case Renderer::FALSE: glDisable(uGLState); break;
 			default: LOG_ERROR << "Invalid render state value - expected TRUE or FALSE"; assert(false); break;
 			}
 		}
 
-		unsigned int getGLBlendFactor(unsigned int uBlendFactor)
+		unsigned int getGLBlendFactor(Renderer::RenderStateValue eBlendFactor)
 		{
-			switch (uBlendFactor)
+			switch (eBlendFactor)
 			{
 			case Renderer::ONE: return GL_ONE; break;
 			case Renderer::SRC: return GL_SRC_COLOR; break;
@@ -175,9 +190,9 @@ namespace baselib { namespace graphics {
 			}
 		}
 
-		unsigned int getGLBlendOp(unsigned int uBlendOp)
+		unsigned int getGLBlendOp(Renderer::RenderStateValue eBlendOp)
 		{
-			switch (uBlendOp)
+			switch (eBlendOp)
 			{
 			case Renderer::FUNC_ADD: return GL_FUNC_ADD; break;
 			case Renderer::FUNC_SUBTRACT: return GL_FUNC_SUBTRACT; break;
@@ -188,9 +203,9 @@ namespace baselib { namespace graphics {
 			}
 		}
 
-		unsigned int getGLCullMode(unsigned int uCullMode)
+		unsigned int getGLCullMode(Renderer::RenderStateValue eCullMode)
 		{
-			switch (uCullMode)
+			switch (eCullMode)
 			{
 			case Renderer::CULL_BACK: return GL_BACK; break;
 			case Renderer::CULL_FRONT: return GL_FRONT; break;
@@ -200,9 +215,9 @@ namespace baselib { namespace graphics {
 		}
 	}
 
-	void Renderer::applyRenderState(unsigned int uState, unsigned int uValue)
+	void Renderer::applyRenderState(RenderState eState, RenderStateValue eValue)
 	{
-		switch (uState)
+		switch (eState)
 		{
 		case STATE_ALPHA_TEST:			
 			assert(false); break;
@@ -211,30 +226,30 @@ namespace baselib { namespace graphics {
 		case STATE_ALPHA_TEST_REF:		
 			assert(false); break;
 		case STATE_BLEND:				
-			enableGLState(GL_BLEND, uValue); break;
+			enableGLState(GL_BLEND, eValue); break;
 		case STATE_BLEND_SRC:			
-			glBlendFunc(getGLBlendFactor(uValue), getGLBlendFactor(m_auState[STATE_BLEND_DST])); break;
+			glBlendFunc(getGLBlendFactor(eValue), getGLBlendFactor(m_aeState[STATE_BLEND_DST])); break;
 		case STATE_BLEND_DST:			
-			glBlendFunc(getGLBlendFactor(m_auState[STATE_BLEND_SRC]), getGLBlendFactor(uValue)); break;
+			glBlendFunc(getGLBlendFactor(m_aeState[STATE_BLEND_SRC]), getGLBlendFactor(eValue)); break;
 		case STATE_BLEND_OP:
-			glBlendEquation(getGLBlendOp(uValue)); break;
+			glBlendEquation(getGLBlendOp(eValue)); break;
 		case STATE_DEPTH_WRITE:			
 			assert(false); break;
 		case STATE_DEPTH_TEST:			
-			enableGLState(GL_DEPTH_TEST, uValue); break;
+			enableGLState(GL_DEPTH_TEST, eValue); break;
 		case STATE_DEPTH_FUNC:			
 			assert(false); break;
 		case STATE_DEPTH_CLEAR_VALUE:	
 			assert(false); break;
 		case STATE_CULL_MODE:
-			if (uValue == CULL_NONE)
+			if (eValue == CULL_NONE)
 			{
 				enableGLState(GL_CULL_FACE, FALSE);
 			}
 			else
 			{
 				enableGLState(GL_CULL_FACE, TRUE);
-				glCullFace(getGLCullMode(uValue));
+				glCullFace(getGLCullMode(eValue));
 			}
 			break;
 		case STATE_DEPTH_BIAS:			

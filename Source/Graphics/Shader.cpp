@@ -16,6 +16,16 @@ namespace baselib { namespace graphics {
 		LOG_VERBOSE << "Shader destructor";
 	}
 
+	void Shader::bind()
+	{
+		glUseProgram(m_uID);
+	}
+
+	void Shader::unbind()
+	{
+		glUseProgram(0);
+	}
+
 	int Shader::getAttribute(const std::string& sName) const
 	{
 		assert(!sName.empty());
