@@ -37,18 +37,18 @@ namespace baselib
 			//! Get the shader source.
 			std::string getSource() const { return m_sSource; }
 			//! Get the shader type.
-			unsigned int getType() const { return m_uType; }
+			ShaderType getType() const { return m_eType; }
 			//! Get shader ID.
 			unsigned int getID() const { return m_uID; }
 
 		protected:
 			//! Protected constructor - must be created by ShaderManager.
-			ShaderObject(const std::string& sName, unsigned int uType, unsigned int iID, const std::string& sSource);
+			ShaderObject(const std::string& sName, ShaderType eType, unsigned int iID, const std::string& sSource);
 
 		private:
 			std::string m_sName;	//!< Shader name.
 			std::string m_sSource;	//!< The shader object source code.
-			unsigned int m_uType;	//!< Type of shader object.
+			ShaderType m_eType;	//!< Type of shader object.
 			unsigned int m_uID;		//!< Shader object ID.
 		};
 	}

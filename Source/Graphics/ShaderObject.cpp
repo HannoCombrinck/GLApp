@@ -6,9 +6,8 @@
 
 namespace baselib { namespace graphics {
 
-	ShaderObject::ShaderObject(const std::string& sName, unsigned int uType, unsigned int iID, const std::string& sSource)
-		: m_sName(sName)
-		, m_uType(uType)
+	ShaderObject::ShaderObject(const std::string& sName, ShaderType eType, unsigned int iID, const std::string& sSource) : m_sName(sName)
+		, m_eType(eType)
 		, m_uID(iID)
 		, m_sSource(sSource)
 	{

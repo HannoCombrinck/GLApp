@@ -12,18 +12,18 @@ namespace baselib { namespace graphics {
 
 	namespace
 	{
-		boost::unordered_map<std::string, unsigned int> aShaderExtensionMap;
-		boost::unordered_map<unsigned int, std::pair<std::string, unsigned int>> aShaderTypeMap;
+		boost::unordered_map<std::string, ShaderObject::ShaderType> aShaderExtensionMap;
+		boost::unordered_map<ShaderObject::ShaderType, std::pair<std::string, unsigned int>> aShaderTypeMap;
 
-		void registerShader(unsigned int uType, const std::string& sType, const std::string& sExtension, unsigned int uGLType)
+		void registerShader(ShaderObject::ShaderType eType, const std::string& sType, const std::string& sExtension, unsigned int uGLType)
 		{
-			aShaderExtensionMap[sExtension] = uType;
-			aShaderTypeMap[uType] = std::make_pair(sType, uGLType);
+			aShaderExtensionMap[sExtension] = eType;
+			aShaderTypeMap[eType] = std::make_pair(sType, uGLType);
 		}
 
-		unsigned int getTypeFromExtension(const std::string& sExtension) { return aShaderExtensionMap[sExtension]; }
-		unsigned int getGLShaderType(unsigned int uType) { return aShaderTypeMap[uType].second;	}
-		std::string getShaderTypeString(unsigned int uType) { return aShaderTypeMap[uType].first; }
+		ShaderObject::ShaderType getTypeFromExtension(const std::string& sExtension) { return aShaderExtensionMap[sExtension]; }
+		unsigned int getGLShaderType(ShaderObject::ShaderType eType) { return aShaderTypeMap[eType].second;	}
+		std::string getShaderTypeString(ShaderObject::ShaderType eType) { return aShaderTypeMap[eType].first; }
 	}
 
 	ShaderManager::ShaderManager()
@@ -72,17 +72,17 @@ namespace baselib { namespace graphics {
 			memset(iCount, 0, sizeof(int) * ShaderObject::NUM_SHADER_TYPES);
 
 			boost::for_each(aspShaderObjects, [&iCount, &bValid](const boost::shared_ptr<ShaderObject>& spShaderObject) {
-				unsigned int uType = spShaderObject->getType();
+				ShaderObject::ShaderType eType = spShaderObject->getType();
 
-				if (uType < 0 || uType >= ShaderObject::NUM_SHADER_TYPES)
+				if (eType < 0 || eType >= ShaderObject::NUM_SHADER_TYPES)
 				{
 					LOG_ERROR << "Shader object has invalid type";
 					assert(false);
 				}
 				
-				iCount[uType] += 1;
+				iCount[eType] += 1;
 
-				if (iCount[uType] > 1)
+				if (iCount[eType] > 1)
 				{
 					LOG_ERROR << "Only one shader object of each type is allowed per shader pipeline";
 					bValid = false;
@@ -189,10 +189,10 @@ namespace baselib { namespace graphics {
 		
 		// Get shader type from extension
 		std::string sExtension = fsPath.extension().string();
-		auto uType = getTypeFromExtension(sExtension);
+		auto eType = getTypeFromExtension(sExtension);
 		
 		// Check for valid extension
-		if (uType == ShaderObject::INVALID_SHADER)
+		if (eType == ShaderObject::INVALID_SHADER)
 		{
 			LOG_ERROR << "Invalid shader source file extension: " << sExtension << "\nValid extensions are:\n.vert\n.tesc\n.tese\n.geom\n.frag\n.comp";
 			assert(false);
@@ -203,19 +203,19 @@ namespace baselib { namespace graphics {
 
 		LOG_INFO << "Loading shader from file: " << sCanonicalPath;
 
-		auto spShaderObject = createShaderObject(sSource, uType);
+		auto spShaderObject = createShaderObject(sSource, eType);
 		spShaderObject->setName(sCanonicalPath);
 		m_aShaderObjectMap[spShaderObject->getName()] = spShaderObject; // Add to shader map
 		return spShaderObject;
 	}
 
-	boost::shared_ptr<ShaderObject> ShaderManager::createShaderObject(const std::string& sShaderSource, unsigned int uType)
+	boost::shared_ptr<ShaderObject> ShaderManager::createShaderObject(const std::string& sShaderSource, ShaderObject::ShaderType eType)
 	{
 		// Get GL shader type
-		unsigned int uGLShaderType = getGLShaderType(uType);
+		unsigned int uGLShaderType = getGLShaderType(eType);
 
 		// Get shader type as a string
-		std::string sShaderType = getShaderTypeString(uType);
+		std::string sShaderType = getShaderTypeString(eType);
 
 		// Create the shader
 		LOG_INFO << "Creating " << sShaderType << " shader";
@@ -258,7 +258,7 @@ namespace baselib { namespace graphics {
 
 		assert(iCompileStatus == GL_TRUE);
 
-		return boost::shared_ptr<ShaderObject>(new ShaderObject("", uType, uShaderObjectID, sShaderType));;
+		return boost::shared_ptr<ShaderObject>(new ShaderObject("", eType, uShaderObjectID, sShaderType));;
 	}
 
 } }

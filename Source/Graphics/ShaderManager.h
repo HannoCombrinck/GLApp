@@ -39,7 +39,7 @@ namespace baselib
 			//! Creates, compiles and returns a shader object from file. File extension determines shader type.
 			boost::shared_ptr<ShaderObject> createShaderObject(const fs::path& fsPath);
 			//! Creates, compiles and returns a shader object from source.
-			boost::shared_ptr<ShaderObject> createShaderObject(const std::string& sShaderSource, unsigned int uType);
+			boost::shared_ptr<ShaderObject> createShaderObject(const std::string& sShaderSource, ShaderObject::ShaderType eType);
 
 		private:
 			boost::unordered_map<std::string, boost::weak_ptr<ShaderObject>> m_aShaderObjectMap; //!< Map with weak references to all created ShaderObjects.
