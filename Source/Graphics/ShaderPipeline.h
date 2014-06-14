@@ -1,7 +1,7 @@
 #pragma once
 
 #include <string>
-
+#include <vector>
 #include <boost/shared_ptr.hpp>
 
 namespace baselib 
@@ -9,6 +9,7 @@ namespace baselib
 	namespace graphics
 	{
 		class Shader;
+		class ShaderObject;
 	}
 }
 
@@ -41,9 +42,19 @@ namespace baselib
 			//! Protected constructor - must be created by ShaderManager.
 			ShaderPipeline(const std::string& sName, unsigned int uID);
 
+			/*! @brief Alternative constructor that takes list of of ShaderObjects and keeps them alive along with the pipeline.
+			 *
+			 *  It is not necessary to keep the shader objects alive to have a working pipeline
+			 *  but it's useful for debugging purposes. This constructor should, therefore, only 
+			 *  be used in debug configurations. See ShaderManager::createShaderPipeline() 
+			 *  for additional info.
+			 */
+			ShaderPipeline(const std::string& sName, unsigned int uID, const std::vector<boost::shared_ptr<ShaderObject>>& aspShaderObjects);
+
 		private:
 			std::string m_sName;  //!< Pipeline name.
 			unsigned int m_uID;	  //!< Shader pipeline ID.
+			std::vector<boost::shared_ptr<ShaderObject>> m_aspShaderObjects; //!< The shader objects used to create this pipeline. Only used for debugging.
 
 		};
 	}

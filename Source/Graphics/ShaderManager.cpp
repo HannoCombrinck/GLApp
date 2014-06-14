@@ -122,10 +122,12 @@ namespace baselib { namespace graphics {
 		LOG_INFO << "Linking shader pipeline";
 		glLinkProgram(uShaderProgramID);
 
-		// Detach shader objects
+		// Detach shader objects for release build only
+		#ifndef _DEBUG
 		boost::for_each(aspShaderObjects, [&uShaderProgramID](const boost::shared_ptr<ShaderObject>& spShaderObject) {
 			glDetachShader(uShaderProgramID, spShaderObject->getID());
 		});
+		#endif
 
 		// Get linker status
 		int iLinkStatus = 0;
@@ -151,7 +153,11 @@ namespace baselib { namespace graphics {
 		}
 
 		LOG_INFO << "Successfully created shader pipeline: " << sName;
+		#ifdef _DEBUG
+		return boost::shared_ptr<ShaderPipeline>(new ShaderPipeline(sName, uShaderProgramID, aspShaderObjects));
+		#else
 		return boost::shared_ptr<ShaderPipeline>(new ShaderPipeline(sName, uShaderProgramID));
+		#endif
 	}
 
 	boost::shared_ptr<ShaderObject> ShaderManager::createShaderObject(const fs::path& fsPath)
