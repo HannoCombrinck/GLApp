@@ -122,7 +122,10 @@ namespace baselib { namespace graphics {
 		LOG_INFO << "Linking shader pipeline";
 		glLinkProgram(uShaderProgramID);
 
-		// Detach shader objects for release build only
+		// Detach shader objects for release build only.
+		// After linking a shader program the shader objects can be detached and are no longer needed.
+		// Keeping them attached, and alive, is useful for debugging purposes though.
+		// gDEBugger can, for example, rebuild and relink programs on the fly if they remain attached.
 		#ifndef _DEBUG
 		boost::for_each(aspShaderObjects, [&uShaderProgramID](const boost::shared_ptr<ShaderObject>& spShaderObject) {
 			glDetachShader(uShaderProgramID, spShaderObject->getID());
@@ -153,6 +156,9 @@ namespace baselib { namespace graphics {
 		}
 
 		LOG_INFO << "Successfully created shader pipeline: " << sName;
+
+		// Let the ShaderPipeline keep the shader objects alive for debug configurations. For release
+		// configurations let them go out of scope and destroy the hardware buffers which are no longer required.
 		#ifdef _DEBUG
 		return boost::shared_ptr<ShaderPipeline>(new ShaderPipeline(sName, uShaderProgramID, aspShaderObjects));
 		#else
