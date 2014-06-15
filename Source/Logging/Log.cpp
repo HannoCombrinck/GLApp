@@ -19,7 +19,7 @@ namespace baselib {
 
 	namespace
 	{
-		std::string LevelToString(LOG_LEVEL level)
+		std::string levelToString(LOG_LEVEL level)
 		{
 			std::string logLevelStr = "";
 			switch (level)
@@ -70,20 +70,20 @@ namespace baselib {
 		}
 	}
 
-	std::ostringstream& Logger::GetStream(LOG_LEVEL level)
+	std::ostringstream& Logger::getStream(LOG_LEVEL level)
 	{
-		if (GetAddTimeStamp())
+		if (getAddTimeStamp())
 		{
 			m_OutStream << "[" << currentDateTime();
 
-			if (GetAddLogLevel())
-				m_OutStream << " - " << LevelToString(level) << "]:\t";
+			if (getAddLogLevel())
+				m_OutStream << " - " << levelToString(level) << "]:\t";
 			else
 				m_OutStream << "]:\t";
 		}
-		else if (GetAddLogLevel())
+		else if (getAddLogLevel())
 		{
-			m_OutStream << "[" << LevelToString(level) << "]:\t";
+			m_OutStream << "[" << levelToString(level) << "]:\t";
 		}
 		
 		return m_OutStream;

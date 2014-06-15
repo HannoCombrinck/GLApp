@@ -23,16 +23,16 @@ namespace baselib
 		Logger();
 		~Logger();
 		
-		std::ostringstream& GetStream(LOG_LEVEL level);
+		std::ostringstream& getStream(LOG_LEVEL level);
 
-		static void SetLogLevel(LOG_LEVEL eLevel) { m_LogLevel = eLevel; }
-		static LOG_LEVEL GetLogLevel() { return m_LogLevel; }
+		static void setLogLevel(LOG_LEVEL eLevel) { m_LogLevel = eLevel; }
+		static LOG_LEVEL getLogLevel() { return m_LogLevel; }
 		
-		static void SetAddTimeStamp(bool b) { m_bAddTimeStamp = b; }
-		static bool GetAddTimeStamp() { return m_bAddTimeStamp; }
+		static void setAddTimeStamp(bool b) { m_bAddTimeStamp = b; }
+		static bool getAddTimeStamp() { return m_bAddTimeStamp; }
 
-		static void SetAddLogLevel(bool b) { m_bAddLogLevel = b; }
-		static bool GetAddLogLevel() { return m_bAddLogLevel; }
+		static void setAddLogLevel(bool b) { m_bAddLogLevel = b; }
+		static bool getAddLogLevel() { return m_bAddLogLevel; }
 
 	private:
 		std::ostringstream m_OutStream;
@@ -43,22 +43,22 @@ namespace baselib
 	};
 
 	#define LOG_ERROR \
-		if (Logger::GetLogLevel() < LOGLEVEL_ERROR) ;\
-		else Logger().GetStream(LOGLEVEL_ERROR) 
+		if (Logger::getLogLevel() < LOGLEVEL_ERROR) ;\
+		else Logger().getStream(LOGLEVEL_ERROR) 
 
 	#define LOG_WARNING \
-		if (Logger::GetLogLevel() < LOGLEVEL_WARNING) ;\
-		else Logger().GetStream(LOGLEVEL_WARNING) 
+		if (Logger::getLogLevel() < LOGLEVEL_WARNING) ;\
+		else Logger().getStream(LOGLEVEL_WARNING) 
 
 	#define LOG_INFO \
-		if (Logger::GetLogLevel() < LOGLEVEL_INFO) ;\
-		else Logger().GetStream(LOGLEVEL_INFO) 
+		if (Logger::getLogLevel() < LOGLEVEL_INFO) ;\
+		else Logger().getStream(LOGLEVEL_INFO) 
 
 	#define LOG_DEBUG \
-		if (Logger::GetLogLevel() < LOGLEVEL_DEBUG_INFO) ;\
-		else Logger().GetStream(LOGLEVEL_DEBUG_INFO)
+		if (Logger::getLogLevel() < LOGLEVEL_DEBUG_INFO) ;\
+		else Logger().getStream(LOGLEVEL_DEBUG_INFO)
 
 	#define LOG_VERBOSE \
-	if (Logger::GetLogLevel() < LOGLEVEL_VERBOSE) ;\
-		else Logger().GetStream(LOGLEVEL_VERBOSE)
+	if (Logger::getLogLevel() < LOGLEVEL_VERBOSE) ;\
+		else Logger().getStream(LOGLEVEL_VERBOSE)
 }

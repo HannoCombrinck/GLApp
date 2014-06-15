@@ -7,7 +7,9 @@ using namespace baselib;
 
 int main(int arc, char** argv)
 {
-	Logger::SetAddTimeStamp(false);
+	Logger::setAddTimeStamp(false);
+	Logger::setLogLevel(LOGLEVEL_VERBOSE);
+
 	BaseApp app(640, 480, false, 3, 2, "GLFWApp"); 
 	app.start();
 	return 0;

@@ -108,18 +108,18 @@ namespace baselib { namespace graphics {
 		}
 
 		// Create shader program
-		LOG_INFO << "Creating shader pipeline";
+		LOG_INFO << "Creating shader pipeline " << sName;
 		unsigned int uShaderProgramID = glCreateProgram();
 		assert(uShaderProgramID);
 
 		// Attach shader objects
-		LOG_INFO << "Attaching shader objects to pipeline";
+		LOG_VERBOSE << "Attaching shader objects to pipeline";
 		boost::for_each(aspShaderObjects, [&uShaderProgramID](const boost::shared_ptr<ShaderObject>& spShaderObject) {
 			glAttachShader(uShaderProgramID, spShaderObject->getID());
 		});
 
 		// Link shader program
-		LOG_INFO << "Linking shader pipeline";
+		LOG_VERBOSE << "Linking shader pipeline";
 		glLinkProgram(uShaderProgramID);
 
 		// Detach shader objects for release build only.
@@ -154,8 +154,6 @@ namespace baselib { namespace graphics {
 			glDeleteProgram(uShaderProgramID);
 			assert(false);
 		}
-
-		LOG_INFO << "Successfully created shader pipeline: " << sName;
 
 		// Let the ShaderPipeline keep the shader objects alive for debug configurations. For release
 		// configurations let them go out of scope and destroy the hardware buffers which are no longer required.
@@ -213,7 +211,7 @@ namespace baselib { namespace graphics {
 		// Load the shader source from file
 		std::string sSource = loadSourceFromFile(sCanonicalPath);
 
-		LOG_INFO << "Loading shader from file: " << sCanonicalPath;
+		LOG_INFO << "Loading shader: " << sCanonicalPath;
 
 		auto spShaderObject = createShaderObject(sSource, eType);
 		spShaderObject->setName(sCanonicalPath);
@@ -230,7 +228,7 @@ namespace baselib { namespace graphics {
 		std::string sShaderType = getShaderTypeString(eType);
 
 		// Create the shader
-		LOG_INFO << "Creating " << sShaderType << " shader";
+		LOG_VERBOSE << "Creating " << sShaderType << " shader";
 		unsigned int uShaderObjectID = glCreateShader(uGLShaderType);
 		assert(uShaderObjectID);
 
@@ -247,7 +245,7 @@ namespace baselib { namespace graphics {
 		glGetShaderiv(uShaderObjectID, GL_COMPILE_STATUS, &iCompileStatus);
 		if (iCompileStatus == GL_TRUE)
 		{
-			LOG_INFO << "Successfully compiled " << sShaderType << " shader";
+			LOG_VERBOSE << "Successfully compiled " << sShaderType << " shader";
 		}
 		else
 		{

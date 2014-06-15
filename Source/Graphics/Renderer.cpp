@@ -36,8 +36,6 @@ namespace baselib { namespace graphics {
 		setRenderState(STATE_BLEND, FALSE);
 		setRenderState(STATE_BLEND_SRC, SRC_ALPHA);
 		setRenderState(STATE_BLEND_DST, ONE_MINUS_SRC_ALPHA);
-
-		glViewport(0, 0, 640, 480);
 		//////////////////////////////////////////////////////////////////////////
 	}
 
@@ -142,7 +140,7 @@ namespace baselib { namespace graphics {
 
 	boost::shared_ptr<StaticGeometry> Renderer::createStaticGeometry(const boost::shared_ptr<VertexListInterface>& spVertexList, Geometry::PrimitiveType ePrimitiveType)
 	{
-		LOG_DEBUG << "Creating static geometry hardware buffers";
+		LOG_VERBOSE << "Creating static geometry hardware buffers";
 		
 		// Create VAO
 		unsigned int uVAO = ~0;
@@ -176,7 +174,7 @@ namespace baselib { namespace graphics {
 		//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 		glBindVertexArray(0);
 
-		LOG_DEBUG << "Successfully created static geometry hardware buffers";
+		LOG_VERBOSE << "Successfully created static geometry hardware buffers";
 		return boost::shared_ptr<StaticGeometry>(new StaticGeometry(uVAO, uVBO, uIB, ePrimitiveType, spVertexList));
 	}
 
