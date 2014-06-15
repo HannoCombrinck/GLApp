@@ -32,8 +32,6 @@ namespace baselib { namespace graphics {
 		// Temp settings for testing - these will be encapsulated elsewhere
 		setClearColour(Vec4(0.0f, 0.0f, 0.0f, 0.0f));
 		setRenderState(STATE_DEPTH_TEST, TRUE);
-		setRenderState(STATE_CULL_MODE, CULL_NONE);
-		setRenderState(STATE_BLEND, FALSE);
 		setRenderState(STATE_BLEND_SRC, SRC_ALPHA);
 		setRenderState(STATE_BLEND_DST, ONE_MINUS_SRC_ALPHA);
 		//////////////////////////////////////////////////////////////////////////
@@ -99,6 +97,9 @@ namespace baselib { namespace graphics {
 
 	void Renderer::setClearColour(const Vec4& v)
 	{
+		if (glm::length(m_vClearColour - v) <= EPSILON)
+			return;
+
 		glClearColor(v.r, v.g, v.b, v.a);
 		m_vClearColour = v;
 	}

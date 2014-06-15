@@ -59,11 +59,6 @@ namespace baselib
 		class VertexListInterface
 		{
 		public:
-			//! Constructor.
-			VertexListInterface() {}
-			//! Destructor.
-			virtual ~VertexListInterface() {}
-
 			//! Get a pointer to the vertex buffer data.
 			virtual const void* getVertexBufferData() const = 0;
 			//! Get the vertex buffer size in bytes.
