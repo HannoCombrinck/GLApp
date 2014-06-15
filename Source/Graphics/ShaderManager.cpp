@@ -270,7 +270,7 @@ namespace baselib { namespace graphics {
 
 		assert(iCompileStatus == GL_TRUE);
 
-		return boost::shared_ptr<ShaderObject>(new ShaderObject("", eType, uShaderObjectID, sShaderType));;
+		return boost::shared_ptr<ShaderObject>(new ShaderObject("", eType, uShaderObjectID, sShaderSource));;
 	}
 
 } }
