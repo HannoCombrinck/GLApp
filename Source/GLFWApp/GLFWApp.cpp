@@ -126,6 +126,15 @@ namespace baselib {
 		}
 		glfwMakeContextCurrent(m_pWindow);
 
+		// Initialize GL extension wrangler
+		glewExperimental = true;
+		auto eError = glewInit();
+		if (eError != GLEW_OK)
+		{
+			LOG_ERROR << "Failed to initialize GLEW: " << glewGetErrorString(eError);
+			assert(false);
+		}
+
 		// Setup event callbacks
 		glfwSetKeyCallback(m_pWindow, keyEventCallback);
 		m_KeyEventConnection = KeyEventSignal.connect(boost::bind(&GLFWApp::keyEvent, this, _1, _2));
@@ -148,15 +157,6 @@ namespace baselib {
 
 		// Successfully created window and context
 		setAppRunning(true);
-
-		// Initialize GL extension wrangler
-		glewExperimental = true;
-		auto eError = glewInit();
-		if (eError != GLEW_OK)
-		{
-			LOG_ERROR << "Failed to initialize GLEW: " << glewGetErrorString(eError);
-			assert(false);
-		}
 	}
 
 	void GLFWApp::destroy()
