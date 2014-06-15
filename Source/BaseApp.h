@@ -41,6 +41,8 @@ namespace baselib
 		//! Cleanup happens here.
 		void destroy();
 
+		virtual void onWindowResize(int iWidth, int iHeight);
+
 		double m_dCurrentTime;  //!< Current time elapsed since application started.
 		double m_dPreviousTime; //!< Time elapsed up to previous update cycle. So time elapsed since previous update = m_dCurrentTime - m_dPreviousTime.
 

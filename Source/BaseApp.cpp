@@ -127,4 +127,10 @@ namespace baselib {
 		LOG_VERBOSE << "BaseApp onDestroy";
 	}
 
+	void BaseApp::onWindowResize(int iWidth, int iHeight)
+	{
+		if (m_spRenderer)
+			m_spRenderer->setViewportSize(Vec4(0, 0, iWidth, iHeight));
+	}
+
 }

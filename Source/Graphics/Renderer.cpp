@@ -60,7 +60,7 @@ namespace baselib { namespace graphics {
 			case Geometry::TRIANGLE_STRIP_ADJACENCY: return GL_TRIANGLE_STRIP_ADJACENCY; break;
 			case Geometry::TRIANGLES_ADJACENCY: return GL_TRIANGLES_ADJACENCY; break;
 			case Geometry::PATCHES: return GL_PATCHES; break;
-			default: assert(false); return 0; break;
+			default: LOG_ERROR << "Invalid primitive type."; assert(false); return 0; break;
 			}
 		}
 	}
@@ -90,7 +90,7 @@ namespace baselib { namespace graphics {
 		glClear(uGLMask);
 	}
 
-	void Renderer::setViewport(const Vec4& vViewport)
+	void Renderer::setViewportSize(const Vec4& vViewport)
 	{
 		glViewport(int(vViewport.x), int(vViewport.y), int(vViewport.z), int(vViewport.w));
 	}
@@ -127,7 +127,7 @@ namespace baselib { namespace graphics {
 			case TYPE_FLOAT: return GL_FLOAT; break;
 			case TYPE_INT: return GL_INT; break;
 			case TYPE_BOOL: return GL_BOOL; break;
-			default: assert(false); return 0; break;
+			default: LOG_ERROR << "Invalid vertex attribute type."; assert(false); return 0; break;
 			}
 		}
 
@@ -169,10 +169,7 @@ namespace baselib { namespace graphics {
 		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, uIB);
 		glBufferData(GL_ELEMENT_ARRAY_BUFFER, spVertexList->getIndexBufferSize(), spVertexList->getIndexBufferData(), GL_STATIC_DRAW);
 
-		// Unbind VAO - the VBO state is contained in VAO so unbinding VAO also unbinds VBO.
-		// If VBO's are unbinded here they are removed from VAO state and isn't valid anymore.
-		//glBindBuffer(GL_ARRAY_BUFFER, 0);
-		//glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+		// Unbind VAO
 		glBindVertexArray(0);
 
 		LOG_VERBOSE << "Successfully created static geometry hardware buffers";

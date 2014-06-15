@@ -116,7 +116,7 @@ namespace baselib
 			void clear(ClearMask eMask);
 
 			//! Set the active view port.
-			void setViewport(const Vec4& vViewport);
+			void setViewportSize(const Vec4& vViewport);
 
 			//! Set the clear colour.
 			void setClearColour(const Vec4& v);
