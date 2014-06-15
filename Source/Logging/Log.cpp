@@ -77,13 +77,13 @@ namespace baselib {
 			m_OutStream << "[" << currentDateTime();
 
 			if (getAddLogLevel())
-				m_OutStream << " - " << levelToString(level) << "]:\t";
+				m_OutStream << " - " << levelToString(level) << "]\t";
 			else
-				m_OutStream << "]:\t";
+				m_OutStream << "]\t";
 		}
 		else if (getAddLogLevel())
 		{
-			m_OutStream << "[" << levelToString(level) << "]:\t";
+			m_OutStream << "[" << levelToString(level) << "]\t";
 		}
 		
 		return m_OutStream;

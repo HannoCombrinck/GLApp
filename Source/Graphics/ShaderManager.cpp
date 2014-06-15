@@ -108,7 +108,7 @@ namespace baselib { namespace graphics {
 		}
 
 		// Create shader program
-		LOG_INFO << "Creating shader pipeline " << sName;
+		LOG_INFO << "Creating shader pipeline: " << sName;
 		unsigned int uShaderProgramID = glCreateProgram();
 		assert(uShaderProgramID);
 
@@ -211,7 +211,7 @@ namespace baselib { namespace graphics {
 		// Load the shader source from file
 		std::string sSource = loadSourceFromFile(sCanonicalPath);
 
-		LOG_INFO << "Loading shader: " << sCanonicalPath;
+		LOG_INFO << "Loading: " << sCanonicalPath;
 
 		auto spShaderObject = createShaderObject(sSource, eType);
 		spShaderObject->setName(sCanonicalPath);
