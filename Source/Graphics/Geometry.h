@@ -1,5 +1,15 @@
 #pragma once
 
+#include <boost/shared_ptr.hpp>
+
+namespace baselib 
+{
+	namespace graphics
+	{
+		class VertexListInterface;
+	}
+}
+
 namespace baselib 
 {
 	namespace graphics
@@ -10,6 +20,27 @@ namespace baselib
 		class Geometry
 		{
 		public:
+			//! Geometry primitive type.
+			enum PrimitiveType
+			{
+				INVALID_PRIMITIVE = 0,
+
+				POINTS, 
+				LINE_STRIP, 
+				LINE_LOOP, 
+				LINES, 
+				LINE_STRIP_ADJACENCY, 
+				LINES_ADJACENCY, 
+				TRIANGLE_STRIP, 
+				TRIANGLE_FAN, 
+				TRIANGLES, 
+				TRIANGLE_STRIP_ADJACENCY, 
+				TRIANGLES_ADJACENCY,
+				PATCHES,
+
+				PRIMITIVE_TYPE_COUNT
+			};
+
 			//! Destructor.
 			virtual ~Geometry();
 		
@@ -20,13 +51,19 @@ namespace baselib
 
 			//! Get the VAO.
 			unsigned int getVAO() const { return m_uVAO; }
+			//! Get the primitive type.
+			PrimitiveType getPrimitiveType() const { return m_ePrimitiveType; }
+			//! Get the vertex list.
+			boost::shared_ptr<VertexListInterface> getVertexList() const { return m_spVertexList; }
 
 		protected:
 			//! Protected constructor - derived classes must be created by Renderer.
-			Geometry(unsigned int uVAO);
+			Geometry(unsigned int uVAO, PrimitiveType ePrimitiveType, const boost::shared_ptr<VertexListInterface>& spVertexList);
 
 		private:
 			unsigned int m_uVAO;  //!< The geometry VAO - Vertex array object.
+			PrimitiveType m_ePrimitiveType; //!< The type of primitive shapes the geometry is composed of.
+			boost::shared_ptr<VertexListInterface> m_spVertexList; //!< The vertex list used to create this goemetry buffer.
 
 		};
 	}

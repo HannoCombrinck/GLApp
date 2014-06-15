@@ -1,14 +1,14 @@
 #pragma once
 
 #include <assert.h>
-#include <boost/shared_ptr.hpp>
 #include <Math/Math.h>
+
+#include <Graphics/Geometry.h>
 
 namespace baselib 
 {
 	namespace graphics
 	{
-		class Geometry;
 		class StaticGeometry;
 		class VertexListInterface;
 	}
@@ -99,33 +99,16 @@ namespace baselib
 				STENCIL_BUFFER = 4
 			};
 
-			enum PrimitiveType
-			{
-				INVALID_PRIMITIVE = 0,
-
-				POINTS, 
-				LINE_STRIP, 
-				LINE_LOOP, 
-				LINES, 
-				LINE_STRIP_ADJACENCY, 
-				LINES_ADJACENCY, 
-				TRIANGLE_STRIP, 
-				TRIANGLE_FAN, 
-				TRIANGLES, 
-				TRIANGLE_STRIP_ADJACENCY, 
-				TRIANGLES_ADJACENCY,
-				PATCHES,
-
-				PRIMITIVE_TYPE_COUNT
-			};
-
 			//! Constructor.
 			Renderer();
 			//! Destructor.
 			virtual ~Renderer();
 		
-			//! Draw indexed geometry.
-			void drawIndexed(PrimitiveType ePrimitiveType, unsigned int uIndexCount, unsigned int uIndexType, unsigned int uIndexOffset);
+			//! Draw indexed geometry defined by the buffers in the currently bound VAO.
+			void drawIndexed(Geometry::PrimitiveType ePrimitiveType, unsigned int uIndexCount, unsigned int uIndexOffset);
+
+			//! Flush the pipeline.
+			void flush();
 
 			//! Clear all buffers for current render target.
 			void clear();
@@ -146,7 +129,7 @@ namespace baselib
 			RenderStateValue getRenderState(RenderState eState) const { assert(eState < STATE_COUNT); return m_aeState[eState]; }
 
 			//! Create a static geometry.
-			boost::shared_ptr<StaticGeometry> createStaticGeometry(const boost::shared_ptr<VertexListInterface>& spVertexList);
+			boost::shared_ptr<StaticGeometry> createStaticGeometry(const boost::shared_ptr<VertexListInterface>& spVertexList, Geometry::PrimitiveType ePrimitiveType);
 
 		private:
 			//! Initialize renderer.

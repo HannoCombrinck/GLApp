@@ -26,14 +26,14 @@ namespace baselib
 				: sName(_sName)
 				, iIndex(_iIndex)
 				, iNumElements(_iNumElements)
-				, uType(_eType)
+				, eType(_eType)
 				, iOffset(_iOffset)
 				, bNormalized(_bNormalized) {}
 
 			std::string sName;			//!< Vertex attribute name.
 			int iIndex;					//!< Index of the vertex attribute (as defined in shader via layout qualifier.
 			int iNumElements;			//!< The number of elements that make up the vertex attribute
-			VertexAttributeType uType;	//!< The type of the attribute elements.
+			VertexAttributeType eType;	//!< The type of the attribute elements.
 			int iOffset;				//!< Offset of the attribute in bytes.
 			bool bNormalized;			//!< Is the attribute a normalized value (e.g. normal vectors are normalized, positions aren't)
 		};

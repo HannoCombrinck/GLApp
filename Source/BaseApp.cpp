@@ -65,7 +65,7 @@ namespace baselib {
 
 		m_spShader->bind();
 		m_spStaticGeom->bind();
-		m_spRenderer->drawIndexed(Renderer::TRIANGLES, 3, GL_UNSIGNED_INT, 0);
+		m_spRenderer->drawIndexed(m_spStaticGeom->getPrimitiveType(), m_spStaticGeom->getVertexList()->getNumIndices(), 0);
 		m_spStaticGeom->unbind();
 		m_spShader->unbind();
 	}
@@ -119,7 +119,7 @@ namespace baselib {
 		spVertexList->addIndex(2);
 
 		// Create test static geometry
-		m_spStaticGeom = m_spRenderer->createStaticGeometry(spVertexList);
+		m_spStaticGeom = m_spRenderer->createStaticGeometry(spVertexList, Geometry::TRIANGLES);
 	}
 
 	void BaseApp::destroy()

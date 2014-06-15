@@ -46,20 +46,38 @@ namespace baselib { namespace graphics {
 
 	}
 
-
-	void Renderer::drawIndexed(PrimitiveType ePrimitiveType, unsigned int uIndexCount, unsigned int uIndexType, unsigned int uIndexOffset)
+	namespace
 	{
-		glDrawElements(GL_TRIANGLES, uIndexCount, uIndexType, (const GLvoid*) uIndexOffset);
+		unsigned int getGLPrimitive(Geometry::PrimitiveType eType)
+		{
+			switch (eType)
+			{
+			case Geometry::POINTS: return GL_POINTS; break;
+			case Geometry::LINE_STRIP: return GL_LINE_STRIP; break;
+			case Geometry::LINE_LOOP: return GL_LINE_LOOP; break;
+			case Geometry::LINES: return GL_LINES; break;
+			case Geometry::LINE_STRIP_ADJACENCY: return GL_LINE_STRIP_ADJACENCY; break;
+			case Geometry::LINES_ADJACENCY: return GL_LINES_ADJACENCY; break;
+			case Geometry::TRIANGLE_STRIP: return GL_TRIANGLE_STRIP; break;
+			case Geometry::TRIANGLE_FAN: return GL_TRIANGLE_FAN; break;
+			case Geometry::TRIANGLES: return GL_TRIANGLES; break;
+			case Geometry::TRIANGLE_STRIP_ADJACENCY: return GL_TRIANGLE_STRIP_ADJACENCY; break;
+			case Geometry::TRIANGLES_ADJACENCY: return GL_TRIANGLES_ADJACENCY; break;
+			case Geometry::PATCHES: return GL_PATCHES; break;
+			default: assert(false); return 0; break;
+			}
+		}
 	}
 
-	//void Renderer::draw(const boost::shared_ptr<Geometry>& spGeometry)
-	//{
-	//	// For now assume all geometries have index buffers.
-	//	glBindVertexArray(spGeometry->getVAO());
-	//	//glDrawElements(GL_TRIANGLES, /*num indices*/, /*index type i.e. unsigned int*/, /*offset into index buffer*/)
-	//	glBindVertexArray(0);
-	//	assert(false);
-	//}
+	void Renderer::drawIndexed(Geometry::PrimitiveType ePrimitiveType, unsigned int uIndexCount, unsigned int uIndexOffset)
+	{
+		glDrawElements(getGLPrimitive(ePrimitiveType), uIndexCount, GL_UNSIGNED_INT, (const GLvoid*) uIndexOffset);
+	}
+
+	void Renderer::flush()
+	{
+		// glFlush() and glFinish() are legacy functions and dont' behave as expected. Find a different te flush the pipeline for profiling purposes.
+	}
 
 	void Renderer::clear()
 	{
@@ -103,9 +121,9 @@ namespace baselib { namespace graphics {
 
 	namespace
 	{
-		GLenum getGLType(unsigned int uType)
+		GLenum getGLType(VertexAttributeType eType)
 		{
-			switch (uType)
+			switch (eType)
 			{
 			case TYPE_FLOAT: return GL_FLOAT; break;
 			case TYPE_INT: return GL_INT; break;
@@ -122,7 +140,7 @@ namespace baselib { namespace graphics {
 		}
 	}
 
-	boost::shared_ptr<StaticGeometry> Renderer::createStaticGeometry(const boost::shared_ptr<VertexListInterface>& spVertexList)
+	boost::shared_ptr<StaticGeometry> Renderer::createStaticGeometry(const boost::shared_ptr<VertexListInterface>& spVertexList, Geometry::PrimitiveType ePrimitiveType)
 	{
 		LOG_DEBUG << "Creating static geometry hardware buffers";
 		
@@ -142,7 +160,7 @@ namespace baselib { namespace graphics {
 		int iVertexSize = spVertexList->getVertexSize();
 		auto aAttributes = spVertexLayout->getAttributes();
 		boost::for_each(aAttributes, [iVertexSize](const VertexAttribute& va) {
-			glVertexAttribPointer(va.iIndex, va.iNumElements, getGLType(va.uType), getGLBool(va.bNormalized), iVertexSize, (const GLvoid*)va.iOffset); // Cast offset parameter to (const GLVoid*) because of legacy glVertexAttribPointer() function prototype. It should just be an int.
+			glVertexAttribPointer(va.iIndex, va.iNumElements, getGLType(va.eType), getGLBool(va.bNormalized), iVertexSize, (const GLvoid*)va.iOffset); // Cast offset parameter to (const GLVoid*) because of legacy glVertexAttribPointer() function prototype. It should just be an int.
 			glEnableVertexAttribArray(va.iIndex);
 		});
 
@@ -159,7 +177,7 @@ namespace baselib { namespace graphics {
 		glBindVertexArray(0);
 
 		LOG_DEBUG << "Successfully created static geometry hardware buffers";
-		return boost::shared_ptr<StaticGeometry>(new StaticGeometry(uVAO, uVBO, uIB));
+		return boost::shared_ptr<StaticGeometry>(new StaticGeometry(uVAO, uVBO, uIB, ePrimitiveType, spVertexList));
 	}
 
 	namespace

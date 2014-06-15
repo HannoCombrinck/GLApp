@@ -24,7 +24,7 @@ namespace baselib
 
 		protected:
 			//! Protected constructor - must be created by Renderer.
-			StaticGeometry(unsigned int uVAO, unsigned int uVBO, unsigned int uIB);
+			StaticGeometry(unsigned int uVAO, unsigned int uVBO, unsigned int uIB, PrimitiveType ePrimitiveType, const boost::shared_ptr<VertexListInterface>& spVertexList);
 
 		private:
 			unsigned int m_uVBO; //!< The geometry VBO - Vertex buffer object

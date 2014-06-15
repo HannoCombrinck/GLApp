@@ -5,8 +5,10 @@
 
 namespace baselib { namespace graphics {
 
-	Geometry::Geometry(unsigned int uVAO)
+	Geometry::Geometry(unsigned int uVAO, PrimitiveType ePrimitiveType, const boost::shared_ptr<VertexListInterface>& spVertexList)
 		: m_uVAO(uVAO)
+		, m_ePrimitiveType(ePrimitiveType)
+		, m_spVertexList(spVertexList)
 	{
 		LOG_VERBOSE << "Geometry constructor";
 	}
