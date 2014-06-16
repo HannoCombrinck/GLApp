@@ -9,6 +9,8 @@
 #include <Graphics/StaticGeometry.h>
 #include <Graphics/VertexList.h>
 
+#include <Helpers/NullPtr.h>
+
 #include <GL/glew.h> //Temp: remove this
 
 using namespace baselib::graphics;
@@ -19,10 +21,10 @@ namespace baselib {
 		: GLFWApp(iWidth, iHeight, bFullscreen, iMajorVersion, iMinorVersion, sWindowTitle)
 		, m_dCurrentTime(0.0)
 		, m_dPreviousTime(0.0)
-		, m_spRenderer(boost::shared_ptr<Renderer>())
-		, m_spShaderPipeline(boost::shared_ptr<ShaderPipeline>())
-		, m_spShader(boost::shared_ptr<Shader>())
-		, m_spStaticGeom(boost::shared_ptr<StaticGeometry>())
+		, m_spRenderer(null_ptr)
+		, m_spShaderPipeline(null_ptr)
+		, m_spShader(null_ptr)
+		, m_spStaticGeom(null_ptr)
 	{
 		LOG_VERBOSE << "BaseApp constructor";
 		init();

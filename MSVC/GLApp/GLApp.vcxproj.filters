@@ -23,6 +23,9 @@
     <Filter Include="Data\Shaders">
       <UniqueIdentifier>{da1f3455-8131-436a-96e2-8314bb0ba1b8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header/Source Files\Helpers">
+      <UniqueIdentifier>{52296b28-59b5-421b-95d8-3fc395a6668f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\main.cpp">
@@ -81,6 +84,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Graphics\ShaderFactory.cpp">
       <Filter>Header/Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Helpers\NullPtr.cpp">
+      <Filter>Header/Source Files\Helpers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -143,6 +149,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Graphics\ShaderFactory.h">
       <Filter>Header/Source Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Helpers\ResourceCache.h">
+      <Filter>Header/Source Files\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Helpers\NullPtr.h">
+      <Filter>Header/Source Files\Helpers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

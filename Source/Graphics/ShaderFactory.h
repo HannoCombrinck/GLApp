@@ -7,6 +7,7 @@
 #include <boost/filesystem.hpp>
 
 #include <Graphics/ShaderObject.h>
+#include <Helpers/ResourceCache.h>
 
 namespace fs = boost::filesystem;
 
@@ -43,6 +44,7 @@ namespace baselib
 		private:
 			boost::unordered_map<std::string, boost::weak_ptr<ShaderObject>> m_aShaderObjectMap; //!< Map with weak references to all created ShaderObjects.
 		
+			ResourceCache<ShaderObject> m_ShaderCache;
 		};
 	}
 }
