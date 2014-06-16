@@ -173,24 +173,14 @@ namespace baselib { namespace graphics {
 			assert(false);
 		}
 
+		// Get canonical path
 		std::string sCanonicalPath = fs::canonical(fsPath).string();
-		auto iter = m_aShaderObjectMap.find(sCanonicalPath);
-		if (iter != m_aShaderObjectMap.end())
-		{
-			LOG_VERBOSE << sCanonicalPath << " shader object already loaded";
-			if (auto sp = iter->second.lock())
-			{
-				LOG_VERBOSE << "Returning reference to existing shader object";
-				return sp;
-			}
-			else
-			{
-				LOG_VERBOSE << sCanonicalPath << " doesn't exist anymore. Removing from manager and reloading from file";
-				m_aShaderObjectMap.erase(iter);
-			}
-		}
 
-		// Check if file has extension
+		// If shader object is already cached just return it
+		if (auto sp = m_ShaderCache.get(sCanonicalPath))
+			return sp;
+
+		// Check if file has an extension
 		if (!fsPath.has_extension())
 		{
 			LOG_ERROR << "Shader source file " << sCanonicalPath << " does not have an extension";
@@ -201,21 +191,22 @@ namespace baselib { namespace graphics {
 		std::string sExtension = fsPath.extension().string();
 		auto eType = getTypeFromExtension(sExtension);
 		
-		// Check for valid extension
+		// Check for valid type
 		if (eType == ShaderObject::INVALID_SHADER)
 		{
 			LOG_ERROR << "Invalid shader source file extension: " << sExtension << "\nValid extensions are:\n.vert\n.tesc\n.tese\n.geom\n.frag\n.comp";
 			assert(false);
 		}
 
-		// Load the shader source from file
-		std::string sSource = loadSourceFromFile(sCanonicalPath);
-
+		// Load the shader source from file and create the shader object
 		LOG_INFO << "Loading: " << sCanonicalPath;
-
+		std::string sSource = loadSourceFromFile(sCanonicalPath);
 		auto spShaderObject = createShaderObject(sSource, eType);
-		spShaderObject->setName(sCanonicalPath);
-		m_aShaderObjectMap[spShaderObject->getName()] = spShaderObject; // Add to shader map
+		spShaderObject->setName(fsPath.string());
+
+		// Cache the shader object
+		m_ShaderCache.add(sCanonicalPath, spShaderObject);
+
 		return spShaderObject;
 	}
 

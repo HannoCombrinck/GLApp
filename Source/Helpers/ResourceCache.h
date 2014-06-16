@@ -23,19 +23,34 @@ namespace baselib
 		virtual ~ResourceCache() { LOG_VERBOSE << "ResourceCache destructor"; }
 
 		//! Add a resource to the cache.
-		void add(const std::string& sName, const boost::shared_ptr<Resource>& spResource)
+		void add(const std::string& sName, const boost::weak_ptr<Resource>& wpResource)
 		{
-
+			m_ResourceMap[sName] = wpResource;
 		}
 
 		//! Get a resource from the cache.
 		boost::shared_ptr<Resource> get(const std::string& sName)
 		{
+			auto iter = m_ResourceMap.find(sName);
+			if (iter != m_ResourceMap.end())
+			{
+				LOG_VERBOSE << sName << " resource is cached";
+				if (auto sp = iter->second.lock())
+				{
+					LOG_VERBOSE << "Returning cached resource " << sName;
+					return sp;
+				}
+				else
+				{
+					LOG_VERBOSE << sName << " resource doesn't exist anymore. Removing reference.";
+					m_ResourceMap.erase(iter);
+				}
+			}
 			return null_ptr;
 		}
 
 	private:
-		boost::unordered_map<std::string, boost::weak_ptr<Resource>> m_aResourceMap; //!< Map with weak references to all created resources.
+		boost::unordered_map<std::string, boost::weak_ptr<Resource>> m_ResourceMap; //!< Map with weak references to all created resources.
 		
 	};
 }
