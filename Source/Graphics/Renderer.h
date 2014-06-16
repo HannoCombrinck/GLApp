@@ -46,6 +46,7 @@ namespace baselib
 				STATE_DEPTH_CLEAR_VALUE,
 				
 				// Rasterizer states
+				STATE_FILL_MODE,
 				STATE_CULL_MODE,
 				STATE_DEPTH_BIAS,
 				STATE_MULTISAMPLE,
@@ -88,6 +89,11 @@ namespace baselib
 				CULL_FRONT,
 				CULL_BACK,
 				CULL_FRONT_AND_BACK,
+
+				// Polygon fill mode values
+				FILL,
+				LINE,
+				POINT,
 
 				STATE_VALUE_COUNT
 			};

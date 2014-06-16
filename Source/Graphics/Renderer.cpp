@@ -72,7 +72,7 @@ namespace baselib { namespace graphics {
 
 	void Renderer::flush()
 	{
-		// glFlush() and glFinish() are legacy functions and dont' behave as expected. Find a different te flush the pipeline for profiling purposes.
+		// glFlush() and glFinish() are legacy functions and don't behave as expected. Find a different way to flush the pipeline for profiling purposes.
 	}
 
 	void Renderer::clear()
@@ -218,6 +218,17 @@ namespace baselib { namespace graphics {
 			}
 		}
 
+		unsigned int getGLPolygonMode(Renderer::RenderStateValue ePolygonMode)
+		{
+			switch (ePolygonMode)
+			{
+			case Renderer::FILL: return GL_FILL; break;
+			case Renderer::LINE: return GL_LINE; break;
+			case Renderer::POINT: return GL_POINT; break;
+			default: LOG_ERROR << "Invalid render state value - expected polygon fill mode value i.e. FILL, LINE or POINT"; assert(false); return 0; break;
+			}
+		}
+
 		unsigned int getGLCullMode(Renderer::RenderStateValue eCullMode)
 		{
 			switch (eCullMode)
@@ -256,6 +267,9 @@ namespace baselib { namespace graphics {
 			assert(false); break;
 		case STATE_DEPTH_CLEAR_VALUE:	
 			assert(false); break;
+		case STATE_FILL_MODE:
+			glPolygonMode(GL_FRONT_AND_BACK, getGLPolygonMode(eValue));
+			break;
 		case STATE_CULL_MODE:
 			if (eValue == CULL_NONE)
 			{
