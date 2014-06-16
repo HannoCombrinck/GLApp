@@ -1,12 +1,11 @@
 #pragma once
 
 #include <string>
-#include <boost/unordered_map.hpp>
 #include <boost/shared_ptr.hpp>
-#include <boost/weak_ptr.hpp>
 #include <boost/filesystem.hpp>
 
 #include <Graphics/Texture.h>
+#include <Helpers/ResourceCache.h>
 
 namespace fs = boost::filesystem;
 
@@ -14,16 +13,16 @@ namespace baselib
 {
 	namespace graphics
 	{
-		/*! @brief TextureManager creates and manages textures.
+		/*! @brief TextureFactory creates and caches textures.
 		 *
 		 */
-		class TextureManager
+		class TextureFactory
 		{
 		public:
 			//! Constructor.
-			TextureManager();
+			TextureFactory();
 			//! Destructor.
-			virtual ~TextureManager();
+			virtual ~TextureFactory();
 
 			//! Creates and returns a texture object from file.
 			boost::shared_ptr<Texture> createTexture(const fs::path& fsPath);
@@ -31,8 +30,8 @@ namespace baselib
 			//boost::shared_ptr<Texture> createTexture();
 
 		private:
-			boost::unordered_map<std::string, boost::weak_ptr<Texture>> m_aTextureMap; //!< Map with weak references to all created textures.
-		
+			ResourceCache<Texture> m_TextureCache; //!< Texture object cache.
+
 		};
 	}
 }

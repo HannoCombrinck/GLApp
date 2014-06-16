@@ -79,14 +79,14 @@
     <ClCompile Include="..\..\Source\Graphics\StaticGeometry.cpp">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Graphics\TextureManager.cpp">
-      <Filter>Header/Source Files\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Graphics\ShaderFactory.cpp">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Helpers\NullPtr.cpp">
       <Filter>Header/Source Files\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Graphics\TextureFactory.cpp">
+      <Filter>Header/Source Files\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -144,9 +144,6 @@
     <ClInclude Include="..\..\Source\Graphics\StaticGeometry.h">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Graphics\TextureManager.h">
-      <Filter>Header/Source Files\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Graphics\ShaderFactory.h">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClInclude>
@@ -155,6 +152,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Helpers\NullPtr.h">
       <Filter>Header/Source Files\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Graphics\TextureFactory.h">
+      <Filter>Header/Source Files\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

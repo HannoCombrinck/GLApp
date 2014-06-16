@@ -10,7 +10,7 @@ namespace baselib
 		class Texture
 		{
 		public:
-			friend class TextureManager;
+			friend class TextureFactory;
 
 			enum TextureType
 			{
@@ -35,7 +35,7 @@ namespace baselib
 			virtual TextureType getType() const = 0;
 
 		protected:
-			//! Protected constructor - must be constructed by TextureManager.
+			//! Protected constructor - must be constructed by TextureFactory.
 			Texture(unsigned int uID);
 
 		private:
