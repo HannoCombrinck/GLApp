@@ -40,9 +40,6 @@
     <ClCompile Include="..\..\Source\Graphics\ShaderObject.cpp">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Graphics\ShaderManager.cpp">
-      <Filter>Header/Source Files\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Graphics\Spatial.cpp">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClCompile>
@@ -82,6 +79,9 @@
     <ClCompile Include="..\..\Source\Graphics\TextureManager.cpp">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Graphics\ShaderFactory.cpp">
+      <Filter>Header/Source Files\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\GLFWApp\GLFWApp.h">
@@ -97,9 +97,6 @@
       <Filter>Header/Source Files\Math</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Graphics\ShaderObject.h">
-      <Filter>Header/Source Files\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Graphics\ShaderManager.h">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Graphics\Spatial.h">
@@ -142,6 +139,9 @@
       <Filter>Header/Source Files\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Graphics\TextureManager.h">
+      <Filter>Header/Source Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Graphics\ShaderFactory.h">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClInclude>
   </ItemGroup>

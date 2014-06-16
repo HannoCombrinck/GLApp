@@ -3,7 +3,7 @@
 #include <Logging/Log.h>
 
 #include <Graphics/Renderer.h>
-#include <Graphics/ShaderManager.h>
+#include <Graphics/ShaderFactory.h>
 #include <Graphics/ShaderPipeline.h>
 #include <Graphics/Shader.h>
 #include <Graphics/StaticGeometry.h>
@@ -91,16 +91,16 @@ namespace baselib {
 		m_spRenderer = boost::shared_ptr<Renderer>(new Renderer());
 
 		// Create test shader manager and test shader
-		auto spShaderManager = boost::shared_ptr<ShaderManager>(new ShaderManager());
+		auto spShaderFactory = boost::shared_ptr<ShaderFactory>(new ShaderFactory());
 
-		auto spVertexShader = spShaderManager->createShaderObject("../Data/Shaders/test.vert");
-		auto spFragmentShader = spShaderManager->createShaderObject("../Data/Shaders/test.frag");
+		auto spVertexShader = spShaderFactory->createShaderObject("../Data/Shaders/test.vert");
+		auto spFragmentShader = spShaderFactory->createShaderObject("../Data/Shaders/test.frag");
 
 		std::vector<boost::shared_ptr<ShaderObject>> aspShaders;
 		aspShaders.push_back(spVertexShader);
 		aspShaders.push_back(spFragmentShader);
 
-		m_spShaderPipeline = spShaderManager->createShaderPipeline("TestPipeline", aspShaders);
+		m_spShaderPipeline = spShaderFactory->createShaderPipeline("TestPipeline", aspShaders);
 		m_spShader = m_spShaderPipeline->createInstance();
 
 

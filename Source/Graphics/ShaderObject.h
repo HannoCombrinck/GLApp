@@ -12,7 +12,7 @@ namespace baselib
 		class ShaderObject
 		{
 		public:
-			friend class ShaderManager;
+			friend class ShaderFactory;
 
 			//! All possible types of shader objects
 			enum ShaderType
@@ -42,7 +42,7 @@ namespace baselib
 			unsigned int getID() const { return m_uID; }
 
 		protected:
-			//! Protected constructor - must be created by ShaderManager.
+			//! Protected constructor - must be created by ShaderFactory.
 			ShaderObject(const std::string& sName, ShaderType eType, unsigned int iID, const std::string& sSource);
 
 		private:
