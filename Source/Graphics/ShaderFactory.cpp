@@ -176,7 +176,7 @@ namespace baselib { namespace graphics {
 		// Get canonical path
 		std::string sCanonicalPath = fs::canonical(fsPath).string();
 
-		// If shader object is already cached just return it
+		// Check shader cache
 		if (auto sp = m_ShaderCache.get(sCanonicalPath))
 			return sp;
 

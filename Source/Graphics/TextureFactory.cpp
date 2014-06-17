@@ -1,6 +1,7 @@
 #include "TextureFactory.h"
 
 #include <GL/glew.h>
+#include <gli/gli.hpp>
 #include <Helpers/NullPtr.h>
 #include <Logging/Log.h>
 
@@ -18,6 +19,25 @@ namespace baselib { namespace graphics {
 
 	boost::shared_ptr<Texture> TextureFactory::createTexture(const fs::path& fsPath)
 	{
+		// Check if image file exists
+		if (!fs::exists(fsPath))
+		{
+			LOG_ERROR << "Cannot find image " << fsPath;
+			assert(false);
+		}
+
+		// Get canonical path
+		std::string sCanonicalPath = fs::canonical(fsPath).string();
+
+		// Check texture cache
+		if (auto sp = m_TextureCache.get(sCanonicalPath))
+			return sp;
+
+
+		// Load image from file
+		// Create texture from image
+		// Return texture
+
 		LOG_INFO << "TODO";
 		assert(false);
 		return null_ptr;
