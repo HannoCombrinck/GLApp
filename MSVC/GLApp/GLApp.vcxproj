@@ -78,6 +78,7 @@
     <ClCompile Include="..\..\Source\BaseApp.cpp" />
     <ClCompile Include="..\..\Source\GLFWApp\GLFWApp.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Geometry.cpp" />
+    <ClCompile Include="..\..\Source\Graphics\ImageLoader.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Material.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Node.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Renderer.cpp" />
@@ -100,6 +101,7 @@
     <ClInclude Include="..\..\Source\BaseApp.h" />
     <ClInclude Include="..\..\Source\GLFWApp\GLFWApp.h" />
     <ClInclude Include="..\..\Source\Graphics\Geometry.h" />
+    <ClInclude Include="..\..\Source\Graphics\ImageLoader.h" />
     <ClInclude Include="..\..\Source\Graphics\Material.h" />
     <ClInclude Include="..\..\Source\Graphics\Node.h" />
     <ClInclude Include="..\..\Source\Graphics\Renderer.h" />

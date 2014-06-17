@@ -88,6 +88,9 @@
     <ClCompile Include="..\..\Source\Graphics\TextureFactory.cpp">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Graphics\ImageLoader.cpp">
+      <Filter>Header/Source Files\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\GLFWApp\GLFWApp.h">
@@ -154,6 +157,9 @@
       <Filter>Header/Source Files\Helpers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Graphics\TextureFactory.h">
+      <Filter>Header/Source Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Graphics\ImageLoader.h">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
