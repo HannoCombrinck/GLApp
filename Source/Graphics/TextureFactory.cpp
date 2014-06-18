@@ -1,7 +1,6 @@
 #include "TextureFactory.h"
 
 #include <GL/glew.h>
-#include <gli/gli.hpp>
 #include <Helpers/NullPtr.h>
 #include <Logging/Log.h>
 

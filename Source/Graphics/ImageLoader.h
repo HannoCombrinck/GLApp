@@ -3,6 +3,9 @@
 #include <string>
 #include <boost/filesystem.hpp>
 
+#include <Graphics/Image.h>
+#include <Helpers/ResourceCache.h>
+
 namespace fs = boost::filesystem;
 
 namespace baselib 
@@ -20,7 +23,11 @@ namespace baselib
 			//! Destructor.
 			virtual ~ImageLoader();
 
+			//! Load an image from file
+			boost::shared_ptr<Image> loadImage(const fs::path& fsPath);
+
 		private:
+			ResourceCache<Image> m_ImageCache;
 		
 		};
 	}
