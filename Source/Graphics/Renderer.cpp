@@ -159,7 +159,7 @@ namespace baselib { namespace graphics {
 		int iVertexSize = spVertexList->getVertexSize();
 		auto aAttributes = spVertexLayout->getAttributes();
 		boost::for_each(aAttributes, [iVertexSize](const VertexAttribute& va) {
-			glVertexAttribPointer(va.iIndex, va.iNumElements, getGLType(va.eType), getGLBool(va.bNormalized), iVertexSize, (const GLvoid*)va.iOffset); // Cast offset parameter to (const GLVoid*) because of legacy glVertexAttribPointer() function prototype. It should just be an int.
+			glVertexAttribPointer(va.iIndex, va.iNumElements, getGLType(va.eType), getGLBool(va.bNormalized), iVertexSize, (const GLvoid*)va.iOffset);
 			glEnableVertexAttribArray(va.iIndex);
 		});
 
