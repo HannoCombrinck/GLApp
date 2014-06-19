@@ -11,6 +11,8 @@ namespace baselib
 		class ShaderPipeline;
 		class Shader;
 		class StaticGeometry;
+		class ImageLoader;
+		class Image;
 	}
 }
 
@@ -50,5 +52,7 @@ namespace baselib
 		boost::shared_ptr<graphics::ShaderPipeline> m_spShaderPipeline; //!< Test shader pipeline
 		boost::shared_ptr<graphics::Shader> m_spShader;		//!< Test shader
 		boost::shared_ptr<graphics::StaticGeometry> m_spStaticGeom; //!< Test geometry
+		boost::shared_ptr<graphics::ImageLoader> m_spImageLoader; //!< Test image loader
+		boost::shared_ptr<graphics::Image> m_spImage; //!< Test image
 	};
 }
