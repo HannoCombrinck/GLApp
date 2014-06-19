@@ -12,7 +12,7 @@ namespace baselib
 {
 	namespace graphics
 	{
-		/*! @brief ImageLoader wraps GLI and supports loading of several image formats.
+		/*! @brief ImageLoader
 		 *
 		 */
 		class ImageLoader

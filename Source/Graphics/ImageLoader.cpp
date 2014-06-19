@@ -2,7 +2,6 @@
 #include <Logging/Log.h>
 
 #include <Helpers/NullPtr.h>
-#include <gli/gli.hpp>
 
 namespace baselib { namespace graphics {
 
@@ -32,10 +31,6 @@ namespace baselib { namespace graphics {
 		if (auto sp = m_ImageCache.get(sCanonicalPath))
 			return sp;
 
-		// Load image from file using GLI
-		gli::texture2D gliTex(gli::load_dds(sCanonicalPath.c_str()));
-
-		
 		return null_ptr;
 	}
 
