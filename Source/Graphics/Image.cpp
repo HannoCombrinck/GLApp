@@ -16,6 +16,11 @@ namespace baselib { namespace graphics {
 	Image::~Image()
 	{
 		LOG_VERBOSE << "Image destructor";
+		if (m_pData)
+		{
+			delete []m_pData;
+			m_pData = 0;
+		}
 	}
 
 } }

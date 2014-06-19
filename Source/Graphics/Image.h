@@ -10,13 +10,13 @@ namespace baselib
 		class Image
 		{
 		public:
-			friend class ImageFactory;
+			friend class ImageLoader;
 
 			//! Destructor.
 			virtual ~Image();
 		
 		protected:
-			//! Protected constructor - must be constructed by ImageFactory.
+			//! Protected constructor - must be constructed by ImageLoader.
 			Image(int iWidth, int iHeight, int iBPP, unsigned char* pData);
 
 		private:

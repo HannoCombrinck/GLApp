@@ -3,6 +3,11 @@
 
 #include <Helpers/NullPtr.h>
 
+namespace
+{
+	#include <stblib/stb_image.c>
+}
+
 namespace baselib { namespace graphics {
 
 	ImageLoader::ImageLoader()
@@ -31,7 +36,14 @@ namespace baselib { namespace graphics {
 		if (auto sp = m_ImageCache.get(sCanonicalPath))
 			return sp;
 
-		return null_ptr;
+		// Load the image using stblib
+		int iX = 0;
+		int iY = 0;
+		int iChannels = 0;
+		unsigned char* pData = stbi_load(sCanonicalPath.c_str(), &iX, &iY, &iChannels, 0);
+		int iBPP = iChannels*8; // Assume 8 bits per pixel.
+
+		return boost::shared_ptr<Image>(new Image(iX, iY, iBPP, pData));
 	}
 
 } }
