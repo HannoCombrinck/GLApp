@@ -31,8 +31,6 @@ namespace baselib
 		
 			//! Bind texture.
 			void bind();
-			//! Unbind texture.
-			void unbind();
 
 			//! Get the texture object ID.
 			unsigned int getID() { return m_uID; }

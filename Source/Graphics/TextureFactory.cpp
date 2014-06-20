@@ -45,7 +45,7 @@ namespace baselib { namespace graphics {
 
 	boost::shared_ptr<Texture> TextureFactory::createTexture(const boost::shared_ptr<Image>& spImage)
 	{
-		glActiveTexture(0);
+		glActiveTexture(GL_TEXTURE0);
 
 		unsigned int uID;
 		glGenTextures(1, &uID);
@@ -58,8 +58,6 @@ namespace baselib { namespace graphics {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-		glBindTexture(GL_TEXTURE_2D, 0);
 
 		return boost::shared_ptr<Texture>(new Texture(uID, Texture::TEXTURE_2D));
 	}

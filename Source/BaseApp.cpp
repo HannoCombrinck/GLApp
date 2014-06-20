@@ -73,10 +73,10 @@ namespace baselib {
 
 		m_spShader->bind();
 		m_spTexture->bind();
+		glUniform1i(glGetUniformLocation(m_spShader->getID(), "sTestTexture"), 0);
 		m_spStaticGeom->bind();
 		m_spRenderer->drawIndexed(m_spStaticGeom->getPrimitiveType(), m_spStaticGeom->getVertexList()->getNumIndices(), 0);
 		m_spStaticGeom->unbind();
-		m_spTexture->unbind();
 		m_spShader->unbind();
 	}
 

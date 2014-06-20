@@ -23,13 +23,8 @@ namespace baselib { namespace graphics {
 
 	void Texture::bind()
 	{
-		glActiveTexture(0);
+		glActiveTexture(GL_TEXTURE0);
 		glBindTexture(GL_TEXTURE_2D, m_uID);
-	}
-
-	void Texture::unbind()
-	{
-		glBindTexture(GL_TEXTURE_2D, 0);
 	}
 
 } }
