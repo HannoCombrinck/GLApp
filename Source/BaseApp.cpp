@@ -118,7 +118,7 @@ namespace baselib {
 		auto spVL = boost::shared_ptr<VertexLayout>(new VertexLayout());
 		spVL->add(VertexAttribute("position", 0, 3, TYPE_FLOAT, 0));
 		spVL->add(VertexAttribute("normal", 1, 3, TYPE_FLOAT, 3*sizeof(float)));
-		spVL->add(VertexAttribute("texcoord", 2, 2, TYPE_FLOAT, 6*sizeof(float)));
+		spVL->add(VertexAttribute("texcoord", 2, 2, TYPE_FLOAT, 6*sizeof(float), true));
 
 		auto spVertexList = boost::shared_ptr<VertexList<MyVert>>(new VertexList<MyVert>(spVL));
 		spVertexList->addVertex(MyVert(Vec3(0.0f, 0.0f, 0.0f), Vec3(0.0f, 0.0f, 1.0f), Vec2(0.0, 0.0)));
