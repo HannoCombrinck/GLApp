@@ -26,9 +26,6 @@
     <Filter Include="Header/Source Files\Helpers">
       <UniqueIdentifier>{52296b28-59b5-421b-95d8-3fc395a6668f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Dependencies">
-      <UniqueIdentifier>{3b89230a-0154-489b-8a4b-3361c74287f1}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\main.cpp">
@@ -179,16 +176,5 @@
     <None Include="..\..\Data\Shaders\test.vert">
       <Filter>Data\Shaders</Filter>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <CopyDependencies Include="..\..\Libraries\DLL\glfw3_d.dll">
-      <Filter>Dependencies</Filter>
-    </CopyDependencies>
-    <CopyDependencies Include="..\..\Libraries\DLL\glew32.dll">
-      <Filter>Dependencies</Filter>
-    </CopyDependencies>
-    <CopyDependencies Include="..\..\Libraries\DLL\glfw3.dll">
-      <Filter>Dependencies</Filter>
-    </CopyDependencies>
   </ItemGroup>
 </Project>

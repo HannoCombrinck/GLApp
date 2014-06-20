@@ -169,7 +169,7 @@ namespace baselib { namespace graphics {
 		// Check if file exists
 		if (!fs::exists(fsPath))
 		{
-			LOG_ERROR << "Cannot find shader source file '" << fsPath << "' at '" << fs::absolute(fsPath) <<"'";
+			LOG_ERROR << "Cannot find shader source file " << fsPath;
 			assert(false);
 		}
 
