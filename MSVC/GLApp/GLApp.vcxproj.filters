@@ -26,6 +26,9 @@
     <Filter Include="Header/Source Files\Helpers">
       <UniqueIdentifier>{52296b28-59b5-421b-95d8-3fc395a6668f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Data\Textures">
+      <UniqueIdentifier>{fe6f2c9e-275a-4c50-a54b-4de2c3e32329}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\main.cpp">
@@ -175,6 +178,9 @@
     </None>
     <None Include="..\..\Data\Shaders\test.vert">
       <Filter>Data\Shaders</Filter>
+    </None>
+    <None Include="..\..\Data\Textures\test.tga">
+      <Filter>Data\Textures</Filter>
     </None>
   </ItemGroup>
 </Project>
