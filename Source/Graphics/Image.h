@@ -14,6 +14,15 @@ namespace baselib
 
 			//! Destructor.
 			virtual ~Image();
+
+			//! Get image width.
+			int getWidth() const { return m_iWidth; }
+			//! Get image height.
+			int getHeight() const { return m_iHeight; }
+			//! Get image depth.
+			int getBPP() const { return m_iBPP; }
+			//! Get image data.
+			unsigned char* getData() { return m_pData; }
 		
 		protected:
 			//! Protected constructor - must be constructed by ImageLoader.

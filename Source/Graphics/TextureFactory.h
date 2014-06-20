@@ -13,6 +13,14 @@ namespace baselib
 {
 	namespace graphics
 	{
+		class Image;
+	}
+}
+
+namespace baselib 
+{
+	namespace graphics
+	{
 		/*! @brief TextureFactory creates and caches textures.
 		 *
 		 */
@@ -26,8 +34,9 @@ namespace baselib
 
 			//! Creates and returns a texture object from file.
 			boost::shared_ptr<Texture> createTexture(const fs::path& fsPath);
-			//! Creates and returns a texture from image data.
-			//boost::shared_ptr<Texture> createTexture();
+
+			//! Creates and returns a texture from an image.
+			boost::shared_ptr<Texture> createTexture(const boost::shared_ptr<Image>& spImage);
 
 		private:
 			ResourceCache<Texture> m_TextureCache; //!< Texture object cache.
