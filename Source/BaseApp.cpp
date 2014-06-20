@@ -9,6 +9,7 @@
 #include <Graphics/StaticGeometry.h>
 #include <Graphics/VertexList.h>
 #include <Graphics/ImageLoader.h>
+#include <Graphics/TextureFactory.h>
 
 #include <Helpers/NullPtr.h>
 
@@ -28,6 +29,8 @@ namespace baselib {
 		, m_spStaticGeom(null_ptr)
 		, m_spImageLoader(null_ptr)
 		, m_spImage(null_ptr)
+		, m_spTextureFactory(null_ptr)
+		, m_spTexture(null_ptr)
 	{
 		LOG_VERBOSE << "BaseApp constructor";
 		init();
@@ -69,9 +72,11 @@ namespace baselib {
 		m_spRenderer->clear();
 
 		m_spShader->bind();
+		m_spTexture->bind();
 		m_spStaticGeom->bind();
 		m_spRenderer->drawIndexed(m_spStaticGeom->getPrimitiveType(), m_spStaticGeom->getVertexList()->getNumIndices(), 0);
 		m_spStaticGeom->unbind();
+		m_spTexture->unbind();
 		m_spShader->unbind();
 	}
 
@@ -126,9 +131,13 @@ namespace baselib {
 		// Create test static geometry
 		m_spStaticGeom = m_spRenderer->createStaticGeometry(spVertexList, Geometry::TRIANGLES);
 
-		// Load test texture
+		// Load test image 
 		m_spImageLoader = boost::shared_ptr<ImageLoader>(new ImageLoader());
 		m_spImage = m_spImageLoader->loadImage("../Data/Textures/test.tga");
+
+		// Create test texture
+		m_spTextureFactory = boost::shared_ptr<TextureFactory>(new TextureFactory());
+		m_spTexture = m_spTextureFactory->createTexture(m_spImage);
 	}
 
 	void BaseApp::destroy()

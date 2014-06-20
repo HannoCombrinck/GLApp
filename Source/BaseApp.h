@@ -13,6 +13,8 @@ namespace baselib
 		class StaticGeometry;
 		class ImageLoader;
 		class Image;
+		class TextureFactory;
+		class Texture;
 	}
 }
 
@@ -54,5 +56,7 @@ namespace baselib
 		boost::shared_ptr<graphics::StaticGeometry> m_spStaticGeom; //!< Test geometry
 		boost::shared_ptr<graphics::ImageLoader> m_spImageLoader; //!< Test image loader
 		boost::shared_ptr<graphics::Image> m_spImage; //!< Test image
+		boost::shared_ptr<graphics::TextureFactory> m_spTextureFactory; //!< Test texture factory
+		boost::shared_ptr<graphics::Texture> m_spTexture; //!< Test texture
 	};
 }
