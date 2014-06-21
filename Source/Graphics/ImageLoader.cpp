@@ -20,6 +20,26 @@ namespace baselib { namespace graphics {
 		LOG_VERBOSE << "ImageLoader destructor";
 	}
 
+	namespace
+	{
+		void flipY(unsigned char* pData, int iX, int iY, int iBytesPerPixel)
+		{
+			int iRowSize = iX * iBytesPerPixel;
+			unsigned char *pRowOne = 0;
+			unsigned char *pRowTwo = 0;
+			unsigned char *pRowTemp = new unsigned char[iRowSize];
+			for (int iRow = 0; iRow < iY/2; ++iRow)
+			{
+				pRowOne = pData + (iRow * iRowSize);
+				pRowTwo = pData + ((iY-iRow-1) * iRowSize);
+				memcpy(pRowTemp, pRowOne, iRowSize);
+				memcpy(pRowOne, pRowTwo, iRowSize);
+				memcpy(pRowTwo, pRowTemp, iRowSize);
+			}
+			delete []pRowTemp;
+		}
+	}
+
 	boost::shared_ptr<Image> ImageLoader::loadImage(const fs::path& fsPath)
 	{
 		// Check if image file exists
@@ -42,6 +62,7 @@ namespace baselib { namespace graphics {
 		int iChannels = 0;
 		unsigned char* pData = stbi_load(sCanonicalPath.c_str(), &iX, &iY, &iChannels, 0);
 		int iBPP = iChannels*8; // Assume 8 bits per pixel.
+		flipY(pData, iX, iY, iChannels);
 
 		return boost::shared_ptr<Image>(new Image(iX, iY, iBPP, pData));
 	}
