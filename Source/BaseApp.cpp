@@ -28,8 +28,6 @@ namespace baselib {
 	
 	BaseApp::BaseApp(int iWidth, int iHeight, bool bFullscreen, int iMajorVersion, int iMinorVersion, const std::string& sWindowTitle)
 		: GLFWApp(iWidth, iHeight, bFullscreen, iMajorVersion, iMinorVersion, sWindowTitle)
-		, m_dCurrentTime(0.0)
-		, m_dPreviousTime(0.0)
 		, m_spRenderer(null_ptr)
 		, m_spShaderPipeline(null_ptr)
 		, m_spStaticGeom(null_ptr)
@@ -52,31 +50,12 @@ namespace baselib {
 		destroy();
 	}
 
-	void BaseApp::start()
-	{
-		LOG_VERBOSE << "BaseApp starting main loop";
-		
-		m_dCurrentTime = GetTime();
-		while (isAppRunning())
-		{
-			m_dPreviousTime = m_dCurrentTime;
-			m_dCurrentTime = GetTime();
-
-			processEvents();
-			update(m_dCurrentTime - m_dPreviousTime);
-			render();
-			swapBuffers();
-		}
-
-		LOG_VERBOSE << "BaseApp main loop stopped";
-	}
-
-	void BaseApp::update(double dDeltaTime)
+	void BaseApp::onUpdate(double dDeltaTime)
 	{
 		m_spRootNode->update(Mat4());
 	}
 
-	void BaseApp::render()
+	void BaseApp::onRender()
 	{
 		assert(m_spRenderer);
 		m_spRenderer->clear();

@@ -22,6 +22,8 @@ namespace baselib
 		//! Destructor.
 		virtual ~GLFWApp();
 
+		//! Start and run the main update loop in this thread. This function returns when the app is stopped.
+		void start();
 		//! Process all application events. (i.e. key presses, mouse clicks, window resize etc.)
 		void processEvents();
 		//! Swap the front and back buffers.
@@ -96,6 +98,11 @@ namespace baselib
 		void windowClose();
 		boost::signals2::scoped_connection m_WindowCloseConnection;
 
+		//! Update called from main loop
+		virtual void onUpdate(double dDeltaTime) {}
+		//! Render called from main loop
+		virtual void onRender() {}
+
 		//! Called when a key is pressed.
 		virtual void onKeyPress(int iKey) {}
 		//! Called when a key is released.
@@ -140,5 +147,8 @@ namespace baselib
 		int m_iMouseY;				 //!< The current Y coordinate of the mouse in pixels relative to the top left corner of the window.
 		int m_iMouseXPrev;			 //!< The previous X coordinate of the mouse in pixels relative to the top left corner of the window.
 		int m_iMouseYPrev;			 //!< The previous Y coordinate of the mouse in pixels relative to the top left corner of the window.
+
+		double m_dCurrentTime;		 //!< Current time elapsed since application started.
+		double m_dPreviousTime;		 //!< Time elapsed up to previous update cycle. So time elapsed since previous update = m_dCurrentTime - m_dPreviousTime.
 	};
 }

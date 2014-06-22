@@ -18,6 +18,8 @@ namespace baselib {
 		, m_iMouseY(0)
 		, m_iMouseXPrev(0)
 		, m_iMouseYPrev(0)
+		, m_dCurrentTime(0.0)
+		, m_dPreviousTime(0.0)
 	{
 		LOG_VERBOSE << "GLFWApp constructor";
 		init(iWidth, iHeight, bFullscreen, iMajorVersion, iMinorVersion, sWindowTitle);
@@ -164,6 +166,25 @@ namespace baselib {
 		if (m_pWindow)
 			glfwDestroyWindow(m_pWindow);
 		glfwTerminate();
+	}
+
+	void GLFWApp::start()
+	{
+		LOG_VERBOSE << "GLFWApp starting main loop";
+
+		m_dCurrentTime = GetTime();
+		while (isAppRunning())
+		{
+			m_dPreviousTime = m_dCurrentTime;
+			m_dCurrentTime = GetTime();
+
+			processEvents();
+			onUpdate(m_dCurrentTime - m_dPreviousTime);
+			onRender();
+			swapBuffers();
+		}
+
+		LOG_VERBOSE << "GLFWApp main loop stopped";
 	}
 
 	void GLFWApp::processEvents()
