@@ -6,6 +6,7 @@ namespace baselib
 {
 	namespace graphics
 	{
+		class Renderer;
 		class Node;
 		class VisualCollector;
 		class FrameBuffer;
@@ -28,11 +29,18 @@ namespace baselib
 		{
 		public:
 			//! Constructor.
-			RenderJob();
+			RenderJob(const boost::shared_ptr<Renderer>& spRenderer);
 			//! Destructor.
 			virtual ~RenderJob();
 
+			//! Execute the job.
+			void execute(const boost::shared_ptr<Node>& spNode,
+						 const boost::shared_ptr<VisualCollector>& spVisualCollector,
+						 const boost::shared_ptr<FrameBuffer>& spFrameBuffer,
+						 const boost::shared_ptr<Camera>& spCamera);
+
 		private:
+			boost::shared_ptr<Renderer> m_spRenderer;
 
 		};
 	}
