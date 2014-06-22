@@ -100,6 +100,15 @@
     <ClCompile Include="..\..\Source\Graphics\RenderJob.cpp">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Graphics\VisualCollector.cpp">
+      <Filter>Header/Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Graphics\Camera.cpp">
+      <Filter>Header/Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Graphics\FrameBuffer.cpp">
+      <Filter>Header/Source Files\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\GLFWApp\GLFWApp.h">
@@ -175,6 +184,15 @@
       <Filter>Header/Source Files\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Graphics\RenderJob.h">
+      <Filter>Header/Source Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Graphics\VisualCollector.h">
+      <Filter>Header/Source Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Graphics\Camera.h">
+      <Filter>Header/Source Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Graphics\FrameBuffer.h">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
