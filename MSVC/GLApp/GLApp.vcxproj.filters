@@ -97,6 +97,9 @@
     <ClCompile Include="..\..\Source\Graphics\Image.cpp">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Graphics\RenderJob.cpp">
+      <Filter>Header/Source Files\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\GLFWApp\GLFWApp.h">
@@ -169,6 +172,9 @@
       <Filter>Header/Source Files\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Graphics\Image.h">
+      <Filter>Header/Source Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Graphics\RenderJob.h">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
