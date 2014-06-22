@@ -14,6 +14,10 @@ namespace baselib
 		class TextureFactory;
 		class Material;
 		class Node;
+		class Camera;
+		class VisualCollector;
+		class FrameBuffer;
+		class RenderJob;
 	}
 }
 
@@ -56,5 +60,9 @@ namespace baselib
 		boost::shared_ptr<graphics::TextureFactory> m_spTextureFactory; //!< Test texture factory
 		boost::shared_ptr<graphics::Material> m_spMaterial; //!< Test material
 		boost::shared_ptr<graphics::Node> m_spRootNode; //!< Test node
+		boost::shared_ptr<graphics::Camera> m_spCamera; //!< Test camera
+		boost::shared_ptr<graphics::VisualCollector> m_spVisualCollector; //!< Test visual collector
+		boost::shared_ptr<graphics::FrameBuffer> m_spFrameBuffer; //!< Test frame buffer
+		boost::shared_ptr<graphics::RenderJob> m_spRenderJob; //!< Test render job
 	};
 }

@@ -13,6 +13,10 @@
 #include <Graphics/Material.h>
 #include <Graphics/Node.h>
 #include <Graphics/Visual.h>
+#include <Graphics/Camera.h>
+#include <Graphics/VisualCollector.h>
+#include <Graphics/FrameBuffer.h>
+#include <Graphics/RenderJob.h>
 
 #include <Helpers/NullPtr.h>
 
@@ -33,6 +37,10 @@ namespace baselib {
 		, m_spTextureFactory(null_ptr)
 		, m_spMaterial(null_ptr)
 		, m_spRootNode(null_ptr)
+		, m_spCamera(null_ptr)
+		, m_spVisualCollector(null_ptr)
+		, m_spFrameBuffer(null_ptr)
+		, m_spRenderJob(null_ptr)
 	{
 		LOG_VERBOSE << "BaseApp constructor";
 		init();
@@ -72,11 +80,7 @@ namespace baselib {
 	{
 		assert(m_spRenderer);
 		m_spRenderer->clear();
-
-		m_spRenderer->bindMaterial(m_spMaterial);
-		m_spStaticGeom->bind();
-		m_spRenderer->drawIndexed(m_spStaticGeom->getPrimitiveType(), m_spStaticGeom->getVertexList()->getNumIndices(), 0);
-		m_spStaticGeom->unbind(); // not necessary
+		m_spRenderJob->execute(m_spRootNode, m_spVisualCollector, m_spFrameBuffer, m_spCamera);
 	}
 
 	// Test vertex
@@ -151,6 +155,17 @@ namespace baselib {
 		// Create test root node
 		m_spRootNode = boost::shared_ptr<Node>(new Node());
 		m_spRootNode->setVisual(spVisual);
+
+
+		// Create test camera
+		m_spCamera = boost::shared_ptr<Camera>(new Camera());
+		// Create test visual collector
+		m_spVisualCollector = boost::shared_ptr<VisualCollector>(new VisualCollector());
+		// Create test frame buffer
+		m_spFrameBuffer = boost::shared_ptr<FrameBuffer>(new FrameBuffer());
+
+		// Create test render job
+		m_spRenderJob = boost::shared_ptr<RenderJob>(new RenderJob(m_spRenderer));
 	}
 
 	void BaseApp::destroy()
