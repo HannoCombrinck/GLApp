@@ -11,6 +11,8 @@
 #include <Graphics/ImageLoader.h>
 #include <Graphics/TextureFactory.h>
 #include <Graphics/Material.h>
+#include <Graphics/Node.h>
+#include <Graphics/Visual.h>
 
 #include <Helpers/NullPtr.h>
 
@@ -30,6 +32,7 @@ namespace baselib {
 		, m_spImageLoader(null_ptr)
 		, m_spTextureFactory(null_ptr)
 		, m_spMaterial(null_ptr)
+		, m_spRootNode(null_ptr)
 	{
 		LOG_VERBOSE << "BaseApp constructor";
 		init();
@@ -62,7 +65,7 @@ namespace baselib {
 
 	void BaseApp::update(double dDeltaTime)
 	{
-
+		m_spRootNode->update(Mat4());
 	}
 
 	void BaseApp::render()
@@ -141,6 +144,13 @@ namespace baselib {
 
 		// Create test material
 		m_spMaterial = boost::shared_ptr<Material>(new Material(spShader, spTexture, null_ptr));
+
+		// Create test visual
+		auto spVisual = boost::shared_ptr<Visual>(new Visual(m_spStaticGeom, m_spMaterial));
+
+		// Create test root node
+		m_spRootNode = boost::shared_ptr<Node>(new Node());
+		m_spRootNode->setVisual(spVisual);
 	}
 
 	void BaseApp::destroy()

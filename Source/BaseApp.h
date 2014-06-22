@@ -13,6 +13,7 @@ namespace baselib
 		class ImageLoader;
 		class TextureFactory;
 		class Material;
+		class Node;
 	}
 }
 
@@ -54,5 +55,6 @@ namespace baselib
 		boost::shared_ptr<graphics::ImageLoader> m_spImageLoader; //!< Test image loader
 		boost::shared_ptr<graphics::TextureFactory> m_spTextureFactory; //!< Test texture factory
 		boost::shared_ptr<graphics::Material> m_spMaterial; //!< Test material
+		boost::shared_ptr<graphics::Node> m_spRootNode; //!< Test node
 	};
 }
