@@ -4,6 +4,7 @@
 #include <boost/shared_ptr.hpp>
 #include <boost/weak_ptr.hpp>
 #include <boost/enable_shared_from_this.hpp>
+#include <boost/function.hpp>
 #include <vector>
 
 namespace baselib 
@@ -47,6 +48,9 @@ namespace baselib
 			void setParent(const boost::shared_ptr<Node>& spNode) { m_wpParent = spNode; }
 			//! Get parent Node.
 			boost::shared_ptr<Node> getParent() const { return m_wpParent.lock(); }
+
+			//! Apply the given function to all descendant nodes (including this one).
+			void forEach(const boost::function<void(const boost::shared_ptr<Node>&)>& f);
 
 		private:
 			//! Recursively update children Nodes.

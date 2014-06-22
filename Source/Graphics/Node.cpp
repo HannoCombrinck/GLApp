@@ -46,6 +46,15 @@ namespace baselib { namespace graphics {
 		}
 	}
 
+	void Node::forEach(const boost::function<void(const boost::shared_ptr<Node>&)>& f)
+	{
+		f(shared_from_this());
+
+		boost::for_each(m_aChildren, [this, &f](const boost::shared_ptr<Node>& spNode) {
+			forEach(f);
+		});
+	}
+
 	void Node::onUpdate(const Mat4& mParent)
 	{
 		if (m_spVisual)
