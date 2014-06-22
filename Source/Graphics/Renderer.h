@@ -11,6 +11,7 @@ namespace baselib
 	{
 		class StaticGeometry;
 		class VertexListInterface;
+		class Material;
 	}
 }
 
@@ -113,6 +114,9 @@ namespace baselib
 			//! Draw indexed geometry defined by the buffers in the currently bound VAO.
 			void drawIndexed(Geometry::PrimitiveType ePrimitiveType, unsigned int uIndexCount, unsigned int uIndexOffset);
 
+			//! Bind material - ignores redundant changes.
+			void bindMaterial(const boost::shared_ptr<Material>& spMaterial);
+
 			//! Flush the pipeline.
 			void flush();
 
@@ -147,6 +151,9 @@ namespace baselib
 			
 			Vec4 m_vClearColour;					  //!< Current clear colour. Current render target will be cleared to this colour when calling clear().
 			RenderStateValue m_aeState[STATE_COUNT];  //!< Current render state values.
+			unsigned int m_uBoundShader;			  //!< Currently bound shader program.
+			unsigned int m_uBoundTexture;			  //!< Currently bound texture.
+			unsigned int m_uActiveTextureUnit;		  //!< The active texture unit.
 
 		};
 	}
