@@ -10,6 +10,7 @@
 #include <Graphics/VertexList.h>
 #include <Graphics/ImageLoader.h>
 #include <Graphics/TextureFactory.h>
+#include <Graphics/Material.h>
 
 #include <Helpers/NullPtr.h>
 
@@ -25,12 +26,10 @@ namespace baselib {
 		, m_dPreviousTime(0.0)
 		, m_spRenderer(null_ptr)
 		, m_spShaderPipeline(null_ptr)
-		, m_spShader(null_ptr)
 		, m_spStaticGeom(null_ptr)
 		, m_spImageLoader(null_ptr)
-		, m_spImage(null_ptr)
 		, m_spTextureFactory(null_ptr)
-		, m_spTexture(null_ptr)
+		, m_spMaterial(null_ptr)
 	{
 		LOG_VERBOSE << "BaseApp constructor";
 		init();
@@ -71,13 +70,10 @@ namespace baselib {
 		assert(m_spRenderer);
 		m_spRenderer->clear();
 
-		m_spShader->bind();
-		m_spTexture->bind();
-		glUniform1i(glGetUniformLocation(m_spShader->getID(), "sTestTexture"), 0);
+		m_spRenderer->bindMaterial(m_spMaterial);
 		m_spStaticGeom->bind();
 		m_spRenderer->drawIndexed(m_spStaticGeom->getPrimitiveType(), m_spStaticGeom->getVertexList()->getNumIndices(), 0);
-		m_spStaticGeom->unbind();
-		m_spShader->unbind();
+		m_spStaticGeom->unbind(); // not necessary
 	}
 
 	// Test vertex
@@ -111,7 +107,7 @@ namespace baselib {
 		aspShaders.push_back(spFragmentShader);
 
 		m_spShaderPipeline = spShaderFactory->createShaderPipeline("TestPipeline", aspShaders);
-		m_spShader = m_spShaderPipeline->createInstance();
+		auto spShader = m_spShaderPipeline->createInstance();
 
 
 		// Create test VertexList
@@ -137,11 +133,14 @@ namespace baselib {
 
 		// Load test image 
 		m_spImageLoader = boost::shared_ptr<ImageLoader>(new ImageLoader());
-		m_spImage = m_spImageLoader->loadImage("../Data/Textures/test.tga");
+		auto spImage = m_spImageLoader->loadImage("../Data/Textures/test.tga");
 
 		// Create test texture
 		m_spTextureFactory = boost::shared_ptr<TextureFactory>(new TextureFactory());
-		m_spTexture = m_spTextureFactory->createTexture(m_spImage);
+		auto spTexture = m_spTextureFactory->createTexture(spImage);
+
+		// Create test material
+		m_spMaterial = boost::shared_ptr<Material>(new Material(spShader, spTexture, null_ptr));
 	}
 
 	void BaseApp::destroy()
