@@ -10,6 +10,14 @@ namespace baselib
 {
 	namespace graphics
 	{
+		class Visual;
+	}
+}
+
+namespace baselib 
+{
+	namespace graphics
+	{
 		/*! @brief Defines a Spatial Node in a directed acyclic graph.
 		 *
 		 */
@@ -30,6 +38,11 @@ namespace baselib
 			//! Detach this node - i.e. remove this Node from its parent's children list.
 			void detachFromParent();
 
+			//! Set Visual.
+			void setVisual(const boost::shared_ptr<Visual>& spVisual) { m_spVisual = spVisual; }
+			//! Get Visual.
+			boost::shared_ptr<Visual> getVisual() const { return m_spVisual; }
+
 			//! Set parent Node.
 			void setParent(const boost::shared_ptr<Node>& spNode) { m_wpParent = spNode; }
 			//! Get parent Node.
@@ -40,6 +53,7 @@ namespace baselib
 			virtual void onUpdate(const Mat4& mParent);
 
 			std::vector<boost::shared_ptr<Node>> m_aChildren; //!< List of children Nodes.
+			boost::shared_ptr<Visual> m_spVisual;			  //!< Visual attached to this node.
 			boost::weak_ptr<Node> m_wpParent;				  //!< Weak reference to parent Node.
 		};
 	}

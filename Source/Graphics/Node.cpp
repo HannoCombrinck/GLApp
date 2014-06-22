@@ -1,6 +1,7 @@
 #include "Node.h"
 
 #include <Logging/Log.h>
+#include <Graphics/Visual.h>
 #include <boost/range/algorithm/for_each.hpp>
 #include <boost/range/algorithm/remove.hpp>
 
@@ -45,8 +46,11 @@ namespace baselib { namespace graphics {
 		}
 	}
 
-	void Node::onUpdate( const Mat4& mParent )
+	void Node::onUpdate(const Mat4& mParent)
 	{
+		if (m_spVisual)
+			m_spVisual->update(mParent);
+
 		boost::for_each(m_aChildren, [&mParent](const boost::shared_ptr<Node>& spNode) {
 			spNode->update(mParent);
 		});
