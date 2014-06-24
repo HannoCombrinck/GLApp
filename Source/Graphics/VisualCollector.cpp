@@ -23,8 +23,8 @@ namespace baselib { namespace graphics {
 
 		// Traverse Node hierarchy and selectively add visuals
 		std::vector<Visual*>& apVisuals = m_apVisuals;
-		spNode->forEach([&apVisuals](const boost::shared_ptr<Node>& spNode) {
-			if (auto spVisual = spNode->getVisual()) 
+		spNode->apply([&apVisuals](const boost::shared_ptr<Spatial>& spSpatial) {
+			if (auto spVisual = boost::dynamic_pointer_cast<Visual>(spSpatial))
 				apVisuals.push_back(spVisual.get()); // TODO: Only add visuals if they aren't culled/filtered
 		});
 

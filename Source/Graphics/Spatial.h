@@ -2,6 +2,8 @@
 
 #include <string>
 #include <Math/Math.h>
+#include <boost/function.hpp>
+#include <boost/enable_shared_from_this.hpp>
 
 namespace baselib 
 {
@@ -11,7 +13,7 @@ namespace baselib
 		 *
 		 *  Spatials have local and world transformations so they can be organized into a spatial hierarchy.
 		 */
-		class Spatial
+		class Spatial : public boost::enable_shared_from_this<Spatial>
 		{
 		public:
 			//! Constructor.
@@ -41,6 +43,9 @@ namespace baselib
 			void setUseLocalAsWorld(bool b) { m_bUseLocalAsWorld = b; }
 			//! Getter for setUseLocalAsWorld()
 			bool getUseLocalAsWorld() const { return m_bUseLocalAsWorld; }
+
+			//! Apply function f to this spatial.
+			virtual void apply(const boost::function<void(const boost::shared_ptr<Spatial>&)>& f);
 
 		private:
 			//! Called from update().

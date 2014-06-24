@@ -28,4 +28,9 @@ namespace baselib { namespace graphics {
 		onUpdate(mParent);
 	}
 
+	void Spatial::apply(const boost::function<void(const boost::shared_ptr<Spatial>&)>& f)
+	{
+		f(shared_from_this());
+	}
+
 } }

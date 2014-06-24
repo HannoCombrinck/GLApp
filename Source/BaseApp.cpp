@@ -133,7 +133,7 @@ namespace baselib {
 
 		// Create test root node
 		m_spRootNode = boost::shared_ptr<Node>(new Node());
-		m_spRootNode->setVisual(spVisual);
+		m_spRootNode->addChild(spVisual);
 
 
 		// Create test camera
