@@ -5,6 +5,8 @@
 namespace baselib { namespace graphics {
 
 	Camera::Camera()
+		: m_mView(Mat4())
+		, m_mProjection(Mat4())
 	{
 		LOG_VERBOSE << "Camera constructor";
 	}
