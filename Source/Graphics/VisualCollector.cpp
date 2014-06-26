@@ -29,7 +29,7 @@ namespace baselib { namespace graphics {
 		});
 
 		// Sort m_apVisuals
-		boost::sort(m_apVisuals, [](const Visual* pLHS, const Visual* pRHS) { return true; /*TODO: Write visual sorting predicate*/ });
+		//boost::sort(m_apVisuals, [](const Visual* pLHS, const Visual* pRHS) { return true; /*TODO: Write visual sorting predicate*/ });
 	}
 
 } }
