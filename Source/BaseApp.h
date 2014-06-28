@@ -19,6 +19,12 @@ namespace baselib
 		class FrameBuffer;
 		class RenderJob;
 	}
+
+	namespace font
+	{
+		class FontLoader;
+		class Font;
+	}
 }
 
 namespace baselib
@@ -58,5 +64,8 @@ namespace baselib
 		boost::shared_ptr<graphics::VisualCollector> m_spVisualCollector; //!< Test visual collector
 		boost::shared_ptr<graphics::FrameBuffer> m_spFrameBuffer; //!< Test frame buffer
 		boost::shared_ptr<graphics::RenderJob> m_spRenderJob; //!< Test render job
+
+		boost::shared_ptr<font::FontLoader> m_spFontLoader; //!< Test font loader
+		boost::shared_ptr<font::Font> m_spFont; //!< Test font
 	};
 }

@@ -18,11 +18,15 @@
 #include <Graphics/FrameBuffer.h>
 #include <Graphics/RenderJob.h>
 
+#include <Font/FontLoader.h>
+#include <Font/Font.h>
+
 #include <Helpers/NullPtr.h>
 
 #include <GL/glew.h> //Temp: remove this
 
 using namespace baselib::graphics;
+using namespace baselib::font;
 
 namespace baselib {
 	
@@ -39,6 +43,8 @@ namespace baselib {
 		, m_spVisualCollector(null_ptr)
 		, m_spFrameBuffer(null_ptr)
 		, m_spRenderJob(null_ptr)
+		, m_spFontLoader(null_ptr)
+		, m_spFont(null_ptr)
 	{
 		LOG_VERBOSE << "BaseApp constructor";
 		init();
@@ -147,6 +153,11 @@ namespace baselib {
 
 		// Create test render job
 		m_spRenderJob = boost::shared_ptr<RenderJob>(new RenderJob(m_spRenderer));
+		
+		// Create test font
+		m_spFontLoader = boost::shared_ptr<FontLoader>(new FontLoader());
+		m_spFont = m_spFontLoader->loadFont("C:/Windows/Fonts/times.ttf", Vec2(1024, 1024));
+		auto spGlyph = m_spFont->getGlyph('T');
 	}
 
 	void BaseApp::destroy()
