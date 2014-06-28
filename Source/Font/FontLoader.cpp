@@ -1,4 +1,4 @@
-#include "FontFactory.h"
+#include "FontLoader.h"
 
 #include <Helpers/NullPtr.h>
 #include <Logging/Log.h>
@@ -13,19 +13,19 @@ namespace baselib { namespace font {
 		FT_Library g_FTLib;
 	}
 
-	FontFactory::FontFactory()
+	FontLoader::FontLoader()
 	{
-		LOG_VERBOSE << "FontFactory constructor";
+		LOG_VERBOSE << "FontLoader constructor";
 		init();
 	}
 
-	FontFactory::~FontFactory()
+	FontLoader::~FontLoader()
 	{
-		LOG_VERBOSE << "FontFactory destructor";
+		LOG_VERBOSE << "FontLoader destructor";
 		destroy();
 	}
 
-	void FontFactory::init()
+	void FontLoader::init()
 	{
 		FT_Error ftError = FT_Init_FreeType(&g_FTLib);
 		if (ftError)
@@ -35,12 +35,12 @@ namespace baselib { namespace font {
 		}
 	}
 
-	void FontFactory::destroy()
+	void FontLoader::destroy()
 	{
 		
 	}
 
-	boost::shared_ptr<Font> FontFactory::createFont(const fs::path& fsPath, const Vec2& vAtlasSize)
+	boost::shared_ptr<Font> FontLoader::createFont(const fs::path& fsPath, const Vec2& vAtlasSize)
 	{
 		// Check if font file exists
 		if (!fs::exists(fsPath))

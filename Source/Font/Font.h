@@ -31,7 +31,7 @@ namespace baselib
 		class Font
 		{
 		public:
-			friend class FontFactory;
+			friend class FontLoader;
 
 			//! Destructor.
 			~Font();
@@ -43,7 +43,7 @@ namespace baselib
 			boost::shared_ptr<graphics::Texture> getAtlas() const { return m_Atlas; }
 
 		protected:
-			//! Protected constructor - must be created by FontFactory.
+			//! Protected constructor - must be created by FontLoader.
 			Font(FT_FaceRec_ *ftFace, const Vec2& vAtlasSize);
 
 		private:

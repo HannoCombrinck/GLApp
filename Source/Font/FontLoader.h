@@ -18,14 +18,14 @@ namespace baselib
 {
 	namespace font
 	{
-		/*! @brief Font factory wraps freetype library and creates fonts.
+		/*! @brief Loads and creates fonts from file.
 		 *
 		 */
-		class FontFactory
+		class FontLoader
 		{
 		public:
-			FontFactory();
-			~FontFactory();
+			FontLoader();
+			~FontLoader();
 		
 			//! Create a font.
 			boost::shared_ptr<Font> createFont(const fs::path& fsPath, const Vec2& vAtlasSize);
