@@ -9,7 +9,7 @@
 #include <Graphics/StaticGeometry.h>
 #include <Graphics/VertexList.h>
 #include <Graphics/ImageLoader.h>
-#include <Graphics/TextureFactory.h>
+#include <Graphics/TextureLoader.h>
 #include <Graphics/Material.h>
 #include <Graphics/Node.h>
 #include <Graphics/Visual.h>
@@ -32,7 +32,7 @@ namespace baselib {
 		, m_spShaderPipeline(null_ptr)
 		, m_spStaticGeom(null_ptr)
 		, m_spImageLoader(null_ptr)
-		, m_spTextureFactory(null_ptr)
+		, m_spTextureLoader(null_ptr)
 		, m_spMaterial(null_ptr)
 		, m_spRootNode(null_ptr)
 		, m_spCamera(null_ptr)
@@ -122,8 +122,8 @@ namespace baselib {
 		auto spImage = m_spImageLoader->loadImage("../Data/Textures/test.tga");
 
 		// Create test texture
-		m_spTextureFactory = boost::shared_ptr<TextureFactory>(new TextureFactory());
-		auto spTexture = m_spTextureFactory->createTexture(spImage);
+		m_spTextureLoader = boost::shared_ptr<TextureLoader>(new TextureLoader());
+		auto spTexture = m_spTextureLoader->createTexture(spImage);
 
 		// Create test material
 		m_spMaterial = boost::shared_ptr<Material>(new Material(spShader, spTexture, null_ptr));

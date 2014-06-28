@@ -1,4 +1,4 @@
-#include "TextureFactory.h"
+#include "TextureLoader.h"
 
 #include <GL/glew.h>
 #include <Helpers/NullPtr.h>
@@ -7,17 +7,17 @@
 
 namespace baselib { namespace graphics {
 
-	TextureFactory::TextureFactory()
+	TextureLoader::TextureLoader()
 	{
-		LOG_VERBOSE << "TextureFactory constructor";
+		LOG_VERBOSE << "TextureLoader constructor";
 	}
 
-	TextureFactory::~TextureFactory()
+	TextureLoader::~TextureLoader()
 	{
-		LOG_VERBOSE << "TextureFactory destructor";
+		LOG_VERBOSE << "TextureLoader destructor";
 	}
 
-	boost::shared_ptr<Texture> TextureFactory::createTexture(const fs::path& fsPath)
+	boost::shared_ptr<Texture> TextureLoader::loadTexture(const fs::path& fsPath)
 	{
 		// Check if image file exists
 		if (!fs::exists(fsPath))
@@ -43,7 +43,7 @@ namespace baselib { namespace graphics {
 		return null_ptr;
 	}
 
-	boost::shared_ptr<Texture> TextureFactory::createTexture(const boost::shared_ptr<Image>& spImage)
+	boost::shared_ptr<Texture> TextureLoader::createTexture(const boost::shared_ptr<Image>& spImage)
 	{
 		glActiveTexture(GL_TEXTURE0);
 

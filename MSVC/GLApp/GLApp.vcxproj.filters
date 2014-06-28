@@ -91,9 +91,6 @@
     <ClCompile Include="..\..\Source\Helpers\NullPtr.cpp">
       <Filter>Header/Source Files\Helpers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Graphics\TextureFactory.cpp">
-      <Filter>Header/Source Files\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Graphics\ImageLoader.cpp">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClCompile>
@@ -120,6 +117,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Font\Glyph.cpp">
       <Filter>Header/Source Files\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Graphics\TextureLoader.cpp">
+      <Filter>Header/Source Files\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -186,9 +186,6 @@
     <ClInclude Include="..\..\Source\Helpers\NullPtr.h">
       <Filter>Header/Source Files\Helpers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Graphics\TextureFactory.h">
-      <Filter>Header/Source Files\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Graphics\ImageLoader.h">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClInclude>
@@ -215,6 +212,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Font\Glyph.h">
       <Filter>Header/Source Files\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Graphics\TextureLoader.h">
+      <Filter>Header/Source Files\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

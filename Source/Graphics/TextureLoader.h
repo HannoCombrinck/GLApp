@@ -21,19 +21,19 @@ namespace baselib
 {
 	namespace graphics
 	{
-		/*! @brief TextureFactory creates and caches textures.
+		/*! @brief TextureLoader creates and caches textures.
 		 *
 		 */
-		class TextureFactory
+		class TextureLoader
 		{
 		public:
 			//! Constructor.
-			TextureFactory();
+			TextureLoader();
 			//! Destructor.
-			virtual ~TextureFactory();
+			virtual ~TextureLoader();
 
-			//! Creates and returns a texture object from file.
-			boost::shared_ptr<Texture> createTexture(const fs::path& fsPath);
+			//! Loads a texture object from file.
+			boost::shared_ptr<Texture> loadTexture(const fs::path& fsPath);
 
 			//! Creates and returns a texture from an image.
 			boost::shared_ptr<Texture> createTexture(const boost::shared_ptr<Image>& spImage);
