@@ -37,10 +37,10 @@ namespace baselib { namespace font {
 
 	void FontLoader::destroy()
 	{
-		
+		// TODO: Destroy freetype lib
 	}
 
-	boost::shared_ptr<Font> FontLoader::createFont(const fs::path& fsPath, const Vec2& vAtlasSize)
+	boost::shared_ptr<Font> FontLoader::loadFont(const fs::path& fsPath, const Vec2& vAtlasSize)
 	{
 		// Check if font file exists
 		if (!fs::exists(fsPath))

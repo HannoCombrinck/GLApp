@@ -27,8 +27,8 @@ namespace baselib
 			FontLoader();
 			~FontLoader();
 		
-			//! Create a font.
-			boost::shared_ptr<Font> createFont(const fs::path& fsPath, const Vec2& vAtlasSize);
+			//! Load and create a font.
+			boost::shared_ptr<Font> loadFont(const fs::path& fsPath, const Vec2& vAtlasSize);
 		
 		private:
 			//! Initialize freetype library.
