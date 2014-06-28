@@ -71,6 +71,8 @@ namespace baselib { namespace font {
 			assert(false);
 		}
 
+		FT_Set_Char_Size(ftFace, 50*64, 0, 100, 0);
+
 		return boost::shared_ptr<Font>(new Font(ftFace, vAtlasSize));
 	}
 

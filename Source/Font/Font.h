@@ -40,20 +40,26 @@ namespace baselib
 			boost::shared_ptr<Glyph> getGlyph(unsigned char uChar) const;
 
 			//! Get the texture atlas.
-			boost::shared_ptr<graphics::Texture> getAtlas() const { return m_Atlas; }
+			boost::shared_ptr<graphics::Texture> getAtlas() const { return m_spAtlas; }
+
+			//! Temp get test tex
+			boost::shared_ptr<graphics::Texture> getTestTex() const { return m_spTextTex; }
 
 		protected:
 			//! Protected constructor - must be created by FontLoader.
 			Font(FT_FaceRec_ *ftFace, const Vec2& vAtlasSize);
 
 		private:
-			FT_FaceRec_ *m_FTFace; //!< Freetype face pointer.
+			//! Initialize the Font and create texture atlas.
+			void init(const Vec2& vAtlasSize);
+
+			FT_FaceRec_ *m_FTFace;															  //!< Freetype face pointer.
 			mutable boost::unordered_map<unsigned char, boost::shared_ptr<Glyph>> m_GlyphMap; //!< Glyph cache.
+			boost::shared_ptr<graphics::Texture> m_spAtlas;									  //!< Texture atlas containing cached glyphs for this font.
+			mutable Vec2 m_vNextGlyphBottomLeft;											  //!< The next avaiable position in the texture atlas. The next requested glyph's bottom left corner will be placed here.
+			mutable float m_fMaxHeight;														  //!< The height at which to start the next row of glyphs in the atlas.
 
-			boost::shared_ptr<graphics::Texture> m_Atlas; //!< Texture atlas containing cached glyphs for this font.
-			Vec2 m_vNextGlyphBottomLeft;				  //!< The next avaiable position in the texture atlas. The next requested glyph's bottom left corner will be placed here.
-
-
+			mutable boost::shared_ptr<graphics::Texture> m_spTextTex;
 		};
 	}
 }

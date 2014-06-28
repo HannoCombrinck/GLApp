@@ -2,6 +2,7 @@
 
 #include <Helpers/NullPtr.h>
 #include <Graphics/Texture.h>
+#include <Graphics/Image.h>
 #include <Logging/Log.h>
 #include <Font/Glyph.h>
 #include <ft2build.h>
@@ -13,9 +14,13 @@ namespace baselib { namespace font {
 
 	Font::Font(FT_FaceRec_ *ftFace, const Vec2& vAtlasSize)
 		: m_FTFace(ftFace)
+		, m_vNextGlyphBottomLeft(Vec2(0.0f, 0.0f))
+		, m_fMaxHeight(0.0f)
 	{
 		LOG_VERBOSE << "Font constructor";
+		init(vAtlasSize);
 
+		/*
 		unsigned int uCharacter = 'A';
 		FT_UInt uIndex = FT_Get_Char_Index(m_FTFace, uCharacter);
 		if (uIndex == 0)
@@ -79,8 +84,7 @@ namespace baselib { namespace font {
 		unsigned int uIndexRight = 1;
 		// When uIndexLeft is 0 then the kerning is always 0
 		FT_Get_Kerning(m_FTFace, uIndexLeft, uIndexRight, FT_KERNING_DEFAULT, &ftKerning);  // FT_KERNING_DEFAULT - kerning is in units of 1/64th of a pixel width
-
-
+		*/
 	}
 
 	Font::~Font()
@@ -88,10 +92,16 @@ namespace baselib { namespace font {
 		LOG_VERBOSE << "Font destructor";
 	}
 
+	void Font::init(const Vec2& vAtlasSize)
+	{
+		auto spImage = Image::create(int(vAtlasSize.x), int(vAtlasSize.y), 8, 0);
+		m_spAtlas = Texture::create(spImage);
+	}
+
 	namespace
 	{
 		// Render the bitmap for uChar and store in FT_Face slot i.e. bitmap data for uChar is rendered to m_FTFace->glyph->bitmap
-		void createBitmap(FT_Face ftFace, unsigned char uChar)
+		void fillBitmap(FT_Face ftFace, unsigned char uChar)
 		{
 			FT_UInt uIndex = FT_Get_Char_Index(ftFace, uChar);
 			if (uIndex == 0)
@@ -100,7 +110,7 @@ namespace baselib { namespace font {
 				assert(false);
 			}
 
-			int iFlags = 0;
+			int iFlags = FT_LOAD_DEFAULT;
 			FT_Error ftError = FT_Load_Glyph(ftFace, uIndex, iFlags); // This loads the glyph into ftFace->glyph (i.e. only the last loaded glyph is stored)
 			if (ftError)
 			{
@@ -108,24 +118,57 @@ namespace baselib { namespace font {
 				assert(false);
 			}
 
-			FT_Glyph_Format ftGF = ftFace->glyph->format;
-			if (ftGF != FT_GLYPH_FORMAT_BITMAP) // Ok to convert to ftBitmap immediately
+			//FT_Glyph_Format ftGF = ftFace->glyph->format;
+
+			// Check FT_Render_Mode for available modes (anti-aliased, mono etc.)
+			ftError = FT_Render_Glyph(ftFace->glyph, FT_RENDER_MODE_NORMAL); // This renders the glyph into glyph->bitmap
+			if (ftError)
 			{
-				// Check FT_Render_Mode for available modes (anti-aliased, mono etc.)
-				FT_Error ftError = FT_Render_Glyph(ftFace->glyph, FT_RENDER_MODE_NORMAL); // This renders the glyph into glyph->bitmap
-				if (ftError)
-				{
-					LOG_ERROR << "Error rendering glyph bitmap";
-					assert(false);
-				}
+				LOG_ERROR << "Error rendering glyph bitmap";
+				assert(false);
 			}
-			LOG_ERROR << "Unsupported glyph format";
-			assert(false);
 		}
 
+		// Create a texture from a FT_Bitmap
 		boost::shared_ptr<Texture> createGlyphTexture(const FT_Bitmap& ftBitmap)
 		{
-			return null_ptr;
+			int iWidth = ftBitmap.width;
+			int iHeight = ftBitmap.rows;
+			unsigned char *pData = new unsigned char[iWidth * iHeight]; // 1 byte per pixel
+
+			for (int y = 0; y < iHeight; ++y)
+			{
+				for (int x = 0; x < iWidth; ++x)
+				{
+					pData[y*iWidth + x] = ftBitmap.buffer[(iHeight - y - 1)*iWidth + x];
+				}
+			}
+
+			auto spImage = Image::create(iWidth, iHeight, 8, pData);
+			return Texture::create(spImage);
+		}
+
+		// Add a texture to the atlas and calculate the UV coordinates
+		bool addToAtlas(Vec2& vNextGlyphBottomLeft, float& fMaxHeight, Vec2& vUVMin, Vec2& vUVMax, const boost::shared_ptr<Texture>& spTexture, const boost::shared_ptr<Texture>& spAtlas)
+		{
+			vNextGlyphBottomLeft.x += spTexture->getWidth();
+			if (vNextGlyphBottomLeft.x > spAtlas->getWidth())
+				vNextGlyphBottomLeft = Vec2(0.0f, fMaxHeight);
+
+			// Atlas is full
+			if (vNextGlyphBottomLeft.y + spTexture->getHeight() > spAtlas->getHeight())
+				return false;
+
+			if (vNextGlyphBottomLeft.y + spTexture->getHeight() > fMaxHeight)
+				fMaxHeight = vNextGlyphBottomLeft.y + spTexture->getHeight();
+			
+			vUVMin = Vec2(vNextGlyphBottomLeft.x / spAtlas->getWidth(), vNextGlyphBottomLeft.y / spAtlas->getHeight());
+			vUVMax = Vec2((vNextGlyphBottomLeft.x + spTexture->getWidth()) / spAtlas->getWidth(), (vNextGlyphBottomLeft.y + spTexture->getHeight()) / spAtlas->getHeight());
+
+			// Bind spTexture
+			// Render quad at (vNextGlyphBottomLeft, vNextGlyphBottomLeft + spTexture size) into spAtlas - use quad render target size of atlas to preserve resolution
+
+			return true;
 		}
 	}
 
@@ -140,13 +183,31 @@ namespace baselib { namespace font {
 
 		LOG_VERBOSE << "Creating new glyph: " << uChar;
 
-		createBitmap(m_FTFace, uChar);
-		// Create texture from m_FTFace->glyph->bitmap
-		// Render this texture into the atlas
-		// Create Glyph object 
+		// Render bitmap
+		fillBitmap(m_FTFace, uChar);
 
-		// ??? Create new glyph here and render it into the atlas
-		auto spGlyph = boost::shared_ptr<Glyph>(new Glyph(uChar, 0, 0, 0, 0, 0, Vec2(0.0f, 0.0f), Vec2(1.0, 1.0)));
+		// Create texture from bitmap
+		FT_Bitmap& ftBitmap = m_FTFace->glyph->bitmap;
+		auto spGlyphTexture = createGlyphTexture(ftBitmap);
+		m_spTextTex = spGlyphTexture;
+
+		// Render this texture into the atlas
+		Vec2 vUVMin(0.0f, 0.0f);
+		Vec2 vUVMax(1.0f, 1.0f);
+		if (!addToAtlas(m_vNextGlyphBottomLeft, m_fMaxHeight, vUVMin, vUVMax, spGlyphTexture, m_spAtlas))
+		{
+			LOG_ERROR << "Font atlas is full";
+			assert(false);
+		}
+		
+		// Create glyph
+		FT_Glyph_Metrics ftGM = m_FTFace->glyph->metrics;
+		unsigned int uWidth = unsigned int(ftGM.width) * 64;
+		unsigned int uHeight = unsigned int(ftGM.height) * 64;
+		unsigned int uAdvance = unsigned int(ftGM.horiAdvance) * 64;
+		unsigned int uBearingX = unsigned int(ftGM.horiBearingX) * 64;
+		unsigned int uBearingY = unsigned int(ftGM.horiBearingY) * 64;
+		auto spGlyph = boost::shared_ptr<Glyph>(new Glyph(uChar, uWidth, uHeight, uAdvance, uBearingX, uBearingY, vUVMin, vUVMax));
 
 		// Add to glyph cache
 		m_GlyphMap[uChar] = spGlyph;
