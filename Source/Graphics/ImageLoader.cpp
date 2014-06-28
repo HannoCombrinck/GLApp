@@ -64,7 +64,10 @@ namespace baselib { namespace graphics {
 		int iBPP = iChannels*8; // Assume 8 bits per pixel.
 		flipY(pData, iX, iY, iChannels);
 
-		return boost::shared_ptr<Image>(new Image(iX, iY, iBPP, pData));
+		// Create image object and add to cache
+		auto spImage = Image::create(iX, iY, iBPP, pData);
+		m_ImageCache.add(sCanonicalPath, spImage);
+		return spImage;
 	}
 
 } }

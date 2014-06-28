@@ -122,8 +122,10 @@ namespace baselib {
 		auto spImage = m_spImageLoader->loadImage("../Data/Textures/test.tga");
 
 		// Create test texture
-		m_spTextureLoader = boost::shared_ptr<TextureLoader>(new TextureLoader());
-		auto spTexture = m_spTextureLoader->createTexture(spImage);
+		// TODO: implement texture loader to use ImageLoader
+		// m_spTextureLoader = boost::shared_ptr<TextureLoader>(new TextureLoader());
+		// m_spTextureLoader->loadTexture("../Data/Textures/test.tga");
+		auto spTexture = Texture::create(spImage);
 
 		// Create test material
 		m_spMaterial = boost::shared_ptr<Material>(new Material(spShader, spTexture, null_ptr));

@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include <boost/shared_ptr.hpp>
+
 namespace baselib 
 {
 	namespace graphics
@@ -10,7 +12,8 @@ namespace baselib
 		class Image
 		{
 		public:
-			friend class ImageLoader;
+			//! Create an image object
+			static boost::shared_ptr<Image> create(int iWidth, int iHeight, int iBPP, unsigned char* pData);
 
 			//! Destructor.
 			virtual ~Image();
@@ -25,7 +28,7 @@ namespace baselib
 			unsigned char* getData() { return m_pData; }
 		
 		protected:
-			//! Protected constructor - must be constructed by ImageLoader.
+			//! Protected constructor - must be constructed by static Create().
 			Image(int iWidth, int iHeight, int iBPP, unsigned char* pData);
 
 		private:

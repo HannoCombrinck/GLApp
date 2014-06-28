@@ -4,6 +4,12 @@
 
 namespace baselib { namespace graphics {
 
+	boost::shared_ptr<Image> Image::create(int iWidth, int iHeight, int iBPP, unsigned char* pData )
+	{
+		auto spImage = boost::shared_ptr<Image>(new Image(iWidth, iHeight, iBPP, pData));
+		return spImage;
+	}
+
 	Image::Image(int iWidth, int iHeight, int iBPP, unsigned char* pData)
 		: m_iWidth(iWidth)
 		, m_iHeight(iHeight)

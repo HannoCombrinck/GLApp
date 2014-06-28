@@ -1,5 +1,15 @@
 ﻿#pragma once
 
+#include <boost/shared_ptr.hpp>
+
+namespace baselib 
+{
+	namespace graphics
+	{
+		class Image;
+	}
+}
+
 namespace baselib 
 {
 	namespace graphics
@@ -25,6 +35,9 @@ namespace baselib
 				TEXTURE_CUBE_MAP_ARRAY,
 				TEXTURE_2D_MULTISAMPLE
 			};
+
+			//! Creates and returns a texture from an image.
+			static boost::shared_ptr<Texture> create(const boost::shared_ptr<Image>& spImage);
 			
 			//! Destructor.
 			virtual ~Texture();
@@ -39,7 +52,7 @@ namespace baselib
 			virtual TextureType getType() const { return TEXTURE_2D; }
 
 		protected:
-			//! Protected constructor - must be constructed by TextureLoader.
+			//! Protected constructor - must be constructed by static Create().
 			Texture(unsigned int uID, TextureType eType);
 
 		private:
