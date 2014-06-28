@@ -29,6 +29,9 @@
     <Filter Include="Data\Textures">
       <UniqueIdentifier>{fe6f2c9e-275a-4c50-a54b-4de2c3e32329}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header/Source Files\Font">
+      <UniqueIdentifier>{fef9e143-458d-4833-ab81-0c584fac3bd3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\main.cpp">
@@ -108,6 +111,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Graphics\FrameBuffer.cpp">
       <Filter>Header/Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Font\Font.cpp">
+      <Filter>Header/Source Files\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Font\FontFactory.cpp">
+      <Filter>Header/Source Files\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Font\Glyph.cpp">
+      <Filter>Header/Source Files\Font</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -194,6 +206,15 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Graphics\FrameBuffer.h">
       <Filter>Header/Source Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Font\Font.h">
+      <Filter>Header/Source Files\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Font\FontFactory.h">
+      <Filter>Header/Source Files\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Font\Glyph.h">
+      <Filter>Header/Source Files\Font</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
