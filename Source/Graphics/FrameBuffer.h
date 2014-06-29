@@ -38,11 +38,13 @@ namespace baselib
 
 		protected:
 			//! Protected constructor - must be constructed with static create().
-			FrameBuffer(unsigned int uID, int iNumTargets);
+			FrameBuffer(unsigned int uID, int iNumTargets, const std::vector<boost::shared_ptr<Texture>>& aspColourTargets, const boost::shared_ptr<Texture>& spDepthTarget);
 
 		private:
 			unsigned int m_uID; //!< Framebuffer object ID. 0 indicates back buffer.
 			int m_iNumTargets;  //!< The number of colour targets attached to the framebuffer. 0 indicates back buffer.
+			std::vector<boost::shared_ptr<Texture>> m_aspColourTargets; //!< List of colour target textures.
+			boost::shared_ptr<Texture> m_spDepthTarget; //!< Depth texture.
 		};
 	}
 }

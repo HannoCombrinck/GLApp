@@ -134,7 +134,11 @@ namespace baselib { namespace graphics {
 
 	void Renderer::setViewportSize(const Vec4& vViewport)
 	{
+		if (glm::length(m_vViewportSize - vViewport) <= EPSILON)
+			return; 
+
 		glViewport(int(vViewport.x), int(vViewport.y), int(vViewport.z), int(vViewport.w));
+		m_vViewportSize = vViewport;
 	}
 
 	void Renderer::setClearColour(const Vec4& v)

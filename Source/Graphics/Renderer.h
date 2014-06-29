@@ -129,8 +129,10 @@ namespace baselib
 			//! Clear buffers specified by mask for current render target.
 			void clear(ClearMask eMask);
 
-			//! Set the active view port.
+			//! Set the active view port size.
 			void setViewportSize(const Vec4& vViewport);
+			//! Get the active view port size.
+			Vec4 getViewportSize() const { return m_vViewportSize; }
 
 			//! Set the clear colour.
 			void setClearColour(const Vec4& v);
@@ -154,6 +156,7 @@ namespace baselib
 			void applyRenderState(RenderState eState, RenderStateValue eValue);
 			
 			Vec4 m_vClearColour;					  //!< Current clear colour. Current render target will be cleared to this colour when calling clear().
+			Vec4 m_vViewportSize;					  //!< Current viewport size.
 			RenderStateValue m_aeState[STATE_COUNT];  //!< Current render state values.
 			unsigned int m_uBoundShader;			  //!< Currently bound shader program.
 			unsigned int m_uBoundTexture;			  //!< Currently bound texture.
