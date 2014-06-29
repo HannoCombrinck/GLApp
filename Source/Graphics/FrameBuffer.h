@@ -1,6 +1,16 @@
 #pragma once
 
 #include <boost/shared_ptr.hpp>
+#include <vector>
+#include <Helpers/NullPtr.h>
+
+namespace baselib 
+{
+	namespace graphics
+	{
+		class Texture;
+	}
+}
 
 namespace baselib 
 {
@@ -12,8 +22,10 @@ namespace baselib
 		class FrameBuffer
 		{
 		public:
-			//! Creates and returns a frame buffer object.
+			//! Creates and returns a frame buffer object that binds the default back buffer.
 			static boost::shared_ptr<FrameBuffer> create();
+			//! Creates and returns a frame buffer object with the given colour targets and depth target.
+			static boost::shared_ptr<FrameBuffer> create(const std::vector<boost::shared_ptr<Texture>>& aspColourTargets, const boost::shared_ptr<Texture>& spDepthTarget);
 			
 			//! Destructor.
 			virtual ~FrameBuffer();
@@ -26,10 +38,11 @@ namespace baselib
 
 		protected:
 			//! Protected constructor - must be constructed with static create().
-			FrameBuffer(unsigned int uID);
+			FrameBuffer(unsigned int uID, int iNumTargets);
 
 		private:
-			unsigned int m_uID; //!< Framebuffer object ID.
+			unsigned int m_uID; //!< Framebuffer object ID. 0 indicates back buffer.
+			int m_iNumTargets;  //!< The number of colour targets attached to the framebuffer. 0 indicates back buffer.
 		};
 	}
 }

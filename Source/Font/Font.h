@@ -25,7 +25,7 @@ namespace baselib
 	{
 		/*! @brief Font encapsulates a font face i.e. contains information about every glyph/symbol/character in the font.
 		 *
-		 *  Font has a atlas texture which is updated on demand. When a new glyph is requested it is rendered into
+		 *  Font has an atlas texture which is updated on demand. When a new glyph is requested it is rendered into
 		 *  the font atlas and its texture coordinates are stored.
 		 */
 		class Font
@@ -41,9 +41,6 @@ namespace baselib
 
 			//! Get the texture atlas.
 			boost::shared_ptr<graphics::Texture> getAtlas() const { return m_spAtlas; }
-
-			//! Temp get test tex
-			boost::shared_ptr<graphics::Texture> getTestTex() const { return m_spTextTex; }
 
 		protected:
 			//! Protected constructor - must be created by FontLoader.

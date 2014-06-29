@@ -20,7 +20,7 @@ namespace baselib
 	{
 		/*! @brief A RenderJob encapsulates the process of rendering a scene (Node hierarchy) from a given point of view (Camera) into a specified frame buffer (FrameBuffer).
 		 *
-		 *  A RenderJob renders the visuals contained a Node hierarchy to any given frame buffer. 
+		 *  A RenderJob renders the visuals contained in a Node hierarchy to the given frame buffer. 
 		 *  A VisualCollector is used to cull visuals in this hierarchy and determine their rendering order.
 		 *  A Camera is used to determine where the scene is rendered from (i.e. Camera provides view and projection matrices).
 		 *  The scene is rendered into a FrameBuffer which can be the default back buffer or a set of textures setup as render targets.

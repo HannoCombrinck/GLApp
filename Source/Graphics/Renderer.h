@@ -12,6 +12,7 @@ namespace baselib
 		class StaticGeometry;
 		class VertexListInterface;
 		class Material;
+		class FrameBuffer;
 	}
 }
 
@@ -117,6 +118,9 @@ namespace baselib
 			//! Bind material - ignores redundant changes.
 			void bindMaterial(const boost::shared_ptr<Material>& spMaterial);
 
+			//! Bind frame buffer - ignores redundant changes.
+			void bindFrameBuffer(const boost::shared_ptr<FrameBuffer>& spFrameBuffer);
+
 			//! Flush the pipeline.
 			void flush();
 
@@ -154,6 +158,7 @@ namespace baselib
 			unsigned int m_uBoundShader;			  //!< Currently bound shader program.
 			unsigned int m_uBoundTexture;			  //!< Currently bound texture.
 			unsigned int m_uActiveTextureUnit;		  //!< The active texture unit.
+			unsigned int m_uBoundFramebuffer;		  //!< Currently bound frame buffer object.
 
 		};
 	}

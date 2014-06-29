@@ -4,6 +4,7 @@
 #include <Helpers/NullPtr.h>
 #include <Graphics/VisualCollector.h>
 #include <Graphics/Visual.h>
+#include <Graphics/FrameBuffer.h>
 #include <Graphics/VertexList.h>
 #include <Graphics/Renderer.h>
 #include <boost/range/algorithm/for_each.hpp>
@@ -31,6 +32,7 @@ namespace baselib { namespace graphics {
 		const auto& apVisuals = spVisualCollector->getVisuals();
 
 		// Bind FrameBuffer
+		m_spRenderer->bindFrameBuffer(spFrameBuffer);
 
 		// Render visible, sorted list of visuals
 		boost::shared_ptr<Geometry> spGeometry = null_ptr;

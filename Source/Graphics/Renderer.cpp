@@ -5,6 +5,7 @@
 #include <Graphics/VertexList.h>
 #include <Graphics/StaticGeometry.h>
 #include <Graphics/Material.h>
+#include <Graphics/FrameBuffer.h>
 #include <Graphics/Shader.h>
 #include <Graphics/Texture.h>
 
@@ -17,6 +18,7 @@ namespace baselib { namespace graphics {
 		, m_uBoundShader(~0)
 		, m_uBoundTexture(~0)
 		, m_uActiveTextureUnit(GL_TEXTURE0)
+		, m_uBoundFramebuffer(0)
 	{
 		LOG_VERBOSE << "Renderer constructor";
 		init();
@@ -98,6 +100,15 @@ namespace baselib { namespace graphics {
 
 				spTexture->bind();
 			}
+		}
+	}
+
+	void Renderer::bindFrameBuffer( const boost::shared_ptr<FrameBuffer>& spFrameBuffer )
+	{
+		if (m_uBoundFramebuffer != spFrameBuffer->getID())
+		{
+			m_uBoundFramebuffer = spFrameBuffer->getID();
+			spFrameBuffer->bind();
 		}
 	}
 
