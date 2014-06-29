@@ -86,10 +86,10 @@ namespace baselib {
 		LOG_VERBOSE << "BaseApp init";
 
 		// Create test renderer
-		m_spRenderer = boost::shared_ptr<Renderer>(new Renderer());
+		m_spRenderer = Renderer::create();
 
 		// Create test shader manager and test shader
-		auto spShaderLoader = boost::shared_ptr<ShaderLoader>(new ShaderLoader());
+		auto spShaderLoader = ShaderLoader::create();
 
 		auto spVertexShader = spShaderLoader->loadShaderObject("../Data/Shaders/test.vert");
 		auto spFragmentShader = spShaderLoader->loadShaderObject("../Data/Shaders/test.frag");
@@ -103,7 +103,7 @@ namespace baselib {
 
 
 		// Create test VertexList
-		auto spVL = boost::shared_ptr<VertexLayout>(new VertexLayout());
+		auto spVL = VertexLayout::create();
 		spVL->add(VertexAttribute("position", 0, 3, TYPE_FLOAT, 0));
 		spVL->add(VertexAttribute("normal", 1, 3, TYPE_FLOAT, 3*sizeof(float)));
 		spVL->add(VertexAttribute("texcoord", 2, 2, TYPE_FLOAT, 6*sizeof(float), true));
@@ -124,30 +124,30 @@ namespace baselib {
 		m_spStaticGeom = m_spRenderer->createStaticGeometry(spVertexList, Geometry::TRIANGLES);
 
 		// Load test image 
-		m_spImageLoader = boost::shared_ptr<ImageLoader>(new ImageLoader());
+		m_spImageLoader = ImageLoader::create();
 		auto spImage = m_spImageLoader->loadImage("../Data/Textures/test.tga");
 
 		// Create test texture
 		// TODO: implement texture loader to use ImageLoader
-		// m_spTextureLoader = boost::shared_ptr<TextureLoader>(new TextureLoader());
+		// m_spTextureLoader = TextureLoader::create();
 		// m_spTextureLoader->loadTexture("../Data/Textures/test.tga");
 		auto spTexture = Texture::create(spImage);
 
 		// Create test material
-		m_spMaterial = boost::shared_ptr<Material>(new Material(spShader, spTexture, null_ptr));
+		m_spMaterial = Material::create(spShader, spTexture, null_ptr);
 
 		// Create test visual
-		auto spVisual = boost::shared_ptr<Visual>(new Visual(m_spStaticGeom, m_spMaterial));
+		auto spVisual = Visual::create(m_spStaticGeom, m_spMaterial);
 
 		// Create test root node
-		m_spRootNode = boost::shared_ptr<Node>(new Node());
+		m_spRootNode = Node::create();
 		m_spRootNode->addChild(spVisual);
 
 
 		// Create test camera
-		m_spCamera = boost::shared_ptr<Camera>(new Camera());
+		m_spCamera = Camera::create();
 		// Create test visual collector
-		m_spVisualCollector = boost::shared_ptr<VisualCollector>(new VisualCollector());
+		m_spVisualCollector = VisualCollector::create();
 		// Create test frame buffer
 		auto spTargetImage = Image::create(512, 512, 32, 0);
 		auto spTargetTexture = Texture::create(spTargetImage);
@@ -157,10 +157,10 @@ namespace baselib {
 		//m_spFrameBuffer = FrameBuffer::create();
 
 		// Create test render job
-		m_spRenderJob = boost::shared_ptr<RenderJob>(new RenderJob(m_spRenderer));
+		m_spRenderJob = RenderJob::create(m_spRenderer);
 		
 		// Create test font
-		m_spFontLoader = boost::shared_ptr<FontLoader>(new FontLoader());
+		m_spFontLoader = FontLoader::create();
 		m_spFont = m_spFontLoader->loadFont("C:/Windows/Fonts/times.ttf", Vec2(1024, 1024));
 		auto spGlyph = m_spFont->getGlyph('T');
 	}

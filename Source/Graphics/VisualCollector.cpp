@@ -7,6 +7,11 @@
 
 namespace baselib { namespace graphics {
 
+	boost::shared_ptr<VisualCollector> VisualCollector::create()
+	{
+		return boost::shared_ptr<VisualCollector>(new VisualCollector());
+	}
+
 	VisualCollector::VisualCollector()
 	{
 		LOG_VERBOSE << "VisualCollector constructor";

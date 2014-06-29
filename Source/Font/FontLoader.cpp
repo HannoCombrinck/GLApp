@@ -13,6 +13,11 @@ namespace baselib { namespace font {
 		FT_Library g_FTLib;
 	}
 
+	boost::shared_ptr<FontLoader> FontLoader::create()
+	{
+		return boost::shared_ptr<FontLoader>(new FontLoader());
+	}
+
 	FontLoader::FontLoader()
 	{
 		LOG_VERBOSE << "FontLoader constructor";

@@ -44,10 +44,17 @@ namespace baselib
 		class VertexLayout
 		{
 		public:
+			//! Creates a VertexLayout.
+			static boost::shared_ptr<VertexLayout> create() { return boost::shared_ptr<VertexLayout>(new VertexLayout()); }
+
 			//! Add a vertex attribute to the layout.
 			void add(const VertexAttribute& va) { m_Attributes.push_back(va); }
 			//! Get a reference to the vertex attribute list.
 			const std::vector<VertexAttribute>& getAttributes() const { return m_Attributes; }
+
+		protected:
+			//! Protected constructor - must be created by static create().
+			VertexLayout() {}
 
 		private:
 			std::vector<VertexAttribute> m_Attributes;  //!< The list of vertex list attributes that define the vertex attribute layout.

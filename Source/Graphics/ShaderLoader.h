@@ -19,13 +19,19 @@ namespace baselib
 		class ShaderLoader
 		{
 		public:
-			//! Constructor.
-			ShaderLoader();
+			//! Creates a ShaderLoader.
+			static boost::shared_ptr<ShaderLoader> create();
+
 			//! Destructor.
 			virtual ~ShaderLoader();
 
 			//! Load and creates a shader object from file. File extension determines shader type.
 			boost::shared_ptr<ShaderObject> loadShaderObject(const fs::path& fsPath);
+
+		protected:
+			//! Protected constructor - must be created by static create().
+			ShaderLoader();
+
 
 		private:
 			ResourceCache<ShaderObject> m_ShaderCache; //!< Shader object cache.

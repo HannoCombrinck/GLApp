@@ -13,6 +13,11 @@
 
 namespace baselib { namespace graphics {
 
+	boost::shared_ptr<Renderer> Renderer::create()
+	{
+		return boost::shared_ptr<Renderer>(new Renderer());
+	}
+
 	Renderer::Renderer()
 		: m_vClearColour(Vec4(0.0, 0.0, 0.0, 0.0))
 		, m_uBoundShader(~0)

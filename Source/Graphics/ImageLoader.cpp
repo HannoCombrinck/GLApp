@@ -10,6 +10,11 @@ namespace
 
 namespace baselib { namespace graphics {
 
+	boost::shared_ptr<ImageLoader> ImageLoader::create()
+	{
+		return boost::shared_ptr<ImageLoader>(new ImageLoader());
+	}
+
 	ImageLoader::ImageLoader()
 	{
 		LOG_VERBOSE << "ImageLoader constructor";

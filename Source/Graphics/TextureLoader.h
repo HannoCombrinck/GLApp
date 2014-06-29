@@ -18,13 +18,18 @@ namespace baselib
 		class TextureLoader
 		{
 		public:
-			//! Constructor.
-			TextureLoader();
+			//! Creates a TextureLoader.
+			static boost::shared_ptr<TextureLoader> create();
+
 			//! Destructor.
 			virtual ~TextureLoader();
 
 			//! Loads a texture object from file.
 			boost::shared_ptr<Texture> loadTexture(const fs::path& fsPath);
+
+		protected:
+			//! Protected constructor - must be created by static create().
+			TextureLoader();
 
 		private:
 			ResourceCache<Texture> m_TextureCache; //!< Texture object cache.

@@ -23,8 +23,9 @@ namespace baselib
 		class Visual : public Spatial
 		{
 		public:
-			//! Constructor.
-			Visual(const boost::shared_ptr<Geometry>& spGeometry, const boost::shared_ptr<Material>& spMaterial);
+			//! Creates a Visual.
+			static boost::shared_ptr<Visual> create(const boost::shared_ptr<Geometry>& spGeometry, const boost::shared_ptr<Material>& spMaterial);
+
 			//! Destructor.
 			virtual ~Visual();
 
@@ -32,6 +33,10 @@ namespace baselib
 			boost::shared_ptr<Material> getMaterial() const { return m_spMaterial; }
 			//! Getter for setGeometry().
 			boost::shared_ptr<Geometry> getGeometry() const { return m_spGeometry; }
+
+		protected:
+			//! Protected constructor - must be created by static create().
+			Visual(const boost::shared_ptr<Geometry>& spGeometry, const boost::shared_ptr<Material>& spMaterial);
 
 		private:
 			//! Update the visual - material parameters, dynamic geometry etc.

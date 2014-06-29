@@ -7,6 +7,11 @@
 
 namespace baselib { namespace graphics {
 
+	boost::shared_ptr<TextureLoader> TextureLoader::create()
+	{
+		return boost::shared_ptr<TextureLoader>(new TextureLoader());
+	}
+
 	TextureLoader::TextureLoader()
 	{
 		LOG_VERBOSE << "TextureLoader constructor";

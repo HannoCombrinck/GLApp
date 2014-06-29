@@ -11,6 +11,11 @@
 
 namespace baselib { namespace graphics {
 
+	boost::shared_ptr<RenderJob> RenderJob::create(const boost::shared_ptr<Renderer>& spRenderer)
+	{
+		return boost::shared_ptr<RenderJob>(new RenderJob(spRenderer));
+	}
+
 	RenderJob::RenderJob(const boost::shared_ptr<Renderer>& spRenderer)
 		: m_spRenderer(spRenderer)
 	{

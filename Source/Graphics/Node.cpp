@@ -7,6 +7,11 @@
 
 namespace baselib { namespace graphics {
 
+	boost::shared_ptr<Node> Node::create()
+	{
+		return boost::shared_ptr<Node>(new Node());
+	}
+
 	Node::Node()
 	{
 		LOG_VERBOSE << "Node constructor";

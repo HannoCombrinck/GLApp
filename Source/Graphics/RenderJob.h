@@ -28,8 +28,9 @@ namespace baselib
 		class RenderJob
 		{
 		public:
-			//! Constructor.
-			RenderJob(const boost::shared_ptr<Renderer>& spRenderer);
+			//! Creates a RenderJob.
+			static boost::shared_ptr<RenderJob> create(const boost::shared_ptr<Renderer>& spRenderer);
+
 			//! Destructor.
 			virtual ~RenderJob();
 
@@ -38,6 +39,9 @@ namespace baselib
 						 const boost::shared_ptr<VisualCollector>& spVisualCollector,
 						 const boost::shared_ptr<FrameBuffer>& spFrameBuffer,
 						 const boost::shared_ptr<Camera>& spCamera);
+		protected:
+			//! Protected constructor - must be created by static create().
+			RenderJob(const boost::shared_ptr<Renderer>& spRenderer);
 
 		private:
 			boost::shared_ptr<Renderer> m_spRenderer;

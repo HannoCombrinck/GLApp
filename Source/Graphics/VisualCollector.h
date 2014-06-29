@@ -22,8 +22,9 @@ namespace baselib
 		class VisualCollector
 		{
 		public:
-			//! Constructor.
-			VisualCollector();
+			//! Creates a VisualCollector.
+			static boost::shared_ptr<VisualCollector> create();
+
 			//! Destructor.
 			virtual ~VisualCollector();
 
@@ -32,6 +33,10 @@ namespace baselib
 
 			//! Get the sorted list of visuals.
 			const std::vector<Visual*>& getVisuals() const { return m_apVisuals; }
+
+		protected:
+			//! Protected constructor - must be created by static create().
+			VisualCollector();
 
 		private:
 			//! List of Visuals sorted according to rendering order

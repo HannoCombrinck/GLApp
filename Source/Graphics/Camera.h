@@ -23,8 +23,9 @@ namespace baselib
 		class Camera : public Spatial
 		{
 		public:
-			//! Constructor.
-			Camera();
+			//! Creates a Camera.
+			static boost::shared_ptr<Camera> create();
+
 			//! Destructor.
 			virtual ~Camera();
 
@@ -34,6 +35,10 @@ namespace baselib
 			const Mat4& getProjectionMatrix() const { return m_mProjection; }
 			//! Get the camera frustum.
 			const Frustum& getFrustum() const { return m_Frustum; }
+
+		protected:
+			//! Protected constructor - must be created by static create().
+			Camera();
 
 		private:
 			Mat4 m_mView;

@@ -23,8 +23,9 @@ namespace baselib
 		class Node : public Spatial
 		{
 		public:
-			//! Constructor.
-			Node();
+			//! Creates a Node.
+			static boost::shared_ptr<Node> create();
+
 			//! Destructor.
 			virtual ~Node();
 
@@ -37,6 +38,10 @@ namespace baselib
 
 			//! Apply f to this node and all its children.
 			virtual void apply(const boost::function<void(const boost::shared_ptr<Spatial>&)>& f);
+
+		protected:
+			//! Protected constructor - must be created by static create().
+			Node();
 
 		private:
 			//! Recursively update children Nodes.

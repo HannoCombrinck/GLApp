@@ -22,8 +22,9 @@ namespace baselib
 		class Material
 		{
 		public:
-			//! Constructor.
-			Material(const boost::shared_ptr<Shader>& spShader, const boost::shared_ptr<Texture>& spTexture, const boost::shared_ptr<RenderState>& spRenderState);
+			//! Creates a Material.
+			static boost::shared_ptr<Material> create(const boost::shared_ptr<Shader>& spShader, const boost::shared_ptr<Texture>& spTexture, const boost::shared_ptr<RenderState>& spRenderState);
+
 			//! Destructor.
 			virtual ~Material();
 
@@ -33,7 +34,11 @@ namespace baselib
 			boost::shared_ptr<Texture> getTexture() const { return m_spTexture; }
 			//! Getter for setRenderState().
 			boost::shared_ptr<RenderState> getRenderState() const { return m_spRenderState; }
-		
+
+		protected:
+			//! Protected constructor - must be created by static create().
+			Material(const boost::shared_ptr<Shader>& spShader, const boost::shared_ptr<Texture>& spTexture, const boost::shared_ptr<RenderState>& spRenderState);
+
 		private:
 			boost::shared_ptr<Shader> m_spShader;			//!< Shader used by this material.
 			boost::shared_ptr<Texture> m_spTexture;			//!< Texture used by this material.

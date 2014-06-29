@@ -107,8 +107,9 @@ namespace baselib
 				STENCIL_BUFFER = 4
 			};
 
-			//! Constructor.
-			Renderer();
+			//! Creates a Renderer.
+			static boost::shared_ptr<Renderer> create();
+
 			//! Destructor.
 			virtual ~Renderer();
 		
@@ -146,6 +147,10 @@ namespace baselib
 
 			//! Create a static geometry.
 			boost::shared_ptr<StaticGeometry> createStaticGeometry(const boost::shared_ptr<VertexListInterface>& spVertexList, Geometry::PrimitiveType ePrimitiveType);
+
+		protected:
+			//! Protected constructor - must be created by static create().
+			Renderer();
 
 		private:
 			//! Initialize renderer.

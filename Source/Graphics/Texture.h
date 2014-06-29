@@ -20,8 +20,7 @@ namespace baselib
 		class Texture
 		{
 		public:
-			friend class TextureLoader;
-
+			//! All possible texture types.
 			enum TextureType
 			{
 				TEXTURE_1D,

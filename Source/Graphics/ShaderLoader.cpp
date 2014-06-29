@@ -8,6 +8,11 @@
 
 namespace baselib { namespace graphics {
 
+	boost::shared_ptr<ShaderLoader> ShaderLoader::create()
+	{
+		return boost::shared_ptr<ShaderLoader>(new ShaderLoader());
+	}
+
 	ShaderLoader::ShaderLoader()
 	{
 		LOG_VERBOSE << "ShaderLoader constructor";

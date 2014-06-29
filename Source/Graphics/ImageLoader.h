@@ -18,13 +18,18 @@ namespace baselib
 		class ImageLoader
 		{
 		public:
-			//! Constructor.
-			ImageLoader();
+			//! Creates an ImageLoader.
+			static boost::shared_ptr<ImageLoader> create();
+
 			//! Destructor.
 			virtual ~ImageLoader();
 
 			//! Load an image from file
 			boost::shared_ptr<Image> loadImage(const fs::path& fsPath);
+
+		protected:
+			//! Protected constructor - must be created by static create().
+			ImageLoader();
 
 		private:
 			ResourceCache<Image> m_ImageCache;

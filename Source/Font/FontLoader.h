@@ -24,12 +24,19 @@ namespace baselib
 		class FontLoader
 		{
 		public:
-			FontLoader();
+			//! Creates a FontLoader.
+			static boost::shared_ptr<FontLoader> create();
+			
+			//! Destructor.
 			~FontLoader();
 		
 			//! Load and create a font.
 			boost::shared_ptr<Font> loadFont(const fs::path& fsPath, const Vec2& vAtlasSize);
-		
+
+		protected:
+			//! Protected constructor - must be created by static create().
+			FontLoader();
+
 		private:
 			//! Initialize freetype library.
 			void init();
