@@ -25,7 +25,8 @@ namespace baselib
 		class ShaderPipeline
 		{
 		public:
-			friend class ShaderLoader;
+			//! Creates and links a shader pipeline with the given shader objects.
+			static boost::shared_ptr<ShaderPipeline> create(const std::string& sName, const std::vector<boost::shared_ptr<ShaderObject>>& aspShaderObjects);
 
 			//! Destructor.
 			virtual ~ShaderPipeline();
@@ -39,7 +40,7 @@ namespace baselib
 			unsigned int getID() const { return m_uID; }
 
 		protected:
-			//! Protected constructor - must be created by ShaderLoader.
+			//! Protected constructors - must be created by static create().
 			ShaderPipeline(const std::string& sName, unsigned int uID);
 
 			/*! @brief Alternative constructor that takes list of of ShaderObjects and keeps them alive along with the pipeline.

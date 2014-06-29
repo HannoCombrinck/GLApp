@@ -13,15 +13,7 @@ namespace baselib
 {
 	namespace graphics
 	{
-		class ShaderPipeline;
-	}
-}
-
-namespace baselib 
-{
-	namespace graphics
-	{
-		/*! @brief ShaderLoader creates and caches ShaderObjects and ShaderPipelines.
+		/*! @brief ShaderLoader loads ShaderObjects.
 		 *
 		 */
 		class ShaderLoader
@@ -32,12 +24,8 @@ namespace baselib
 			//! Destructor.
 			virtual ~ShaderLoader();
 
-			//! Creates and links a shader pipeline with the given shader objects.
-			boost::shared_ptr<ShaderPipeline> createShaderPipeline(const std::string& sName, const std::vector<boost::shared_ptr<ShaderObject>>& aspShaderObjects);
-			//! Creates, compiles and returns a shader object from file. File extension determines shader type.
-			boost::shared_ptr<ShaderObject> createShaderObject(const fs::path& fsPath);
-			//! Creates, compiles and returns a shader object from source.
-			boost::shared_ptr<ShaderObject> createShaderObject(const std::string& sShaderSource, ShaderObject::ShaderType eType);
+			//! Load and creates a shader object from file. File extension determines shader type.
+			boost::shared_ptr<ShaderObject> loadShaderObject(const fs::path& fsPath);
 
 		private:
 			ResourceCache<ShaderObject> m_ShaderCache; //!< Shader object cache.

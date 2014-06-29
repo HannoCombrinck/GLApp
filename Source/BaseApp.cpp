@@ -91,14 +91,14 @@ namespace baselib {
 		// Create test shader manager and test shader
 		auto spShaderLoader = boost::shared_ptr<ShaderLoader>(new ShaderLoader());
 
-		auto spVertexShader = spShaderLoader->createShaderObject("../Data/Shaders/test.vert");
-		auto spFragmentShader = spShaderLoader->createShaderObject("../Data/Shaders/test.frag");
+		auto spVertexShader = spShaderLoader->loadShaderObject("../Data/Shaders/test.vert");
+		auto spFragmentShader = spShaderLoader->loadShaderObject("../Data/Shaders/test.frag");
 
 		std::vector<boost::shared_ptr<ShaderObject>> aspShaders;
 		aspShaders.push_back(spVertexShader);
 		aspShaders.push_back(spFragmentShader);
 
-		m_spShaderPipeline = spShaderLoader->createShaderPipeline("TestPipeline", aspShaders);
+		m_spShaderPipeline = ShaderPipeline::create("TestPipeline", aspShaders); //spShaderLoader->createShaderPipeline("TestPipeline", aspShaders);
 		auto spShader = m_spShaderPipeline->createInstance();
 
 

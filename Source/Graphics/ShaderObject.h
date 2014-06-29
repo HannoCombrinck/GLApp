@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <boost/shared_ptr.hpp>
 
 namespace baselib 
 {
@@ -12,8 +13,6 @@ namespace baselib
 		class ShaderObject
 		{
 		public:
-			friend class ShaderLoader;
-
 			//! All possible types of shader objects
 			enum ShaderType
 			{
@@ -26,6 +25,9 @@ namespace baselib
 				COMPUTE_SHADER,
 				NUM_SHADER_TYPES
 			};
+
+			//! Creates, compiles and returns a shader object from source.
+			static boost::shared_ptr<ShaderObject> create(const std::string& sShaderSource, ShaderType eType);
 
 			//! Destructor.
 			virtual ~ShaderObject();
@@ -42,7 +44,7 @@ namespace baselib
 			unsigned int getID() const { return m_uID; }
 
 		protected:
-			//! Protected constructor - must be created by ShaderLoader.
+			//! Protected constructor - must be created by static create().
 			ShaderObject(const std::string& sName, ShaderType eType, unsigned int iID, const std::string& sSource);
 
 		private:
