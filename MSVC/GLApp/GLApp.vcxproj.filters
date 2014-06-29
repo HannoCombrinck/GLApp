@@ -85,9 +85,6 @@
     <ClCompile Include="..\..\Source\Graphics\StaticGeometry.cpp">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Graphics\ShaderFactory.cpp">
-      <Filter>Header/Source Files\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Helpers\NullPtr.cpp">
       <Filter>Header/Source Files\Helpers</Filter>
     </ClCompile>
@@ -120,6 +117,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Font\FontLoader.cpp">
       <Filter>Header/Source Files\Font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Graphics\ShaderLoader.cpp">
+      <Filter>Header/Source Files\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -177,9 +177,6 @@
     <ClInclude Include="..\..\Source\Graphics\StaticGeometry.h">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Graphics\ShaderFactory.h">
-      <Filter>Header/Source Files\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Helpers\ResourceCache.h">
       <Filter>Header/Source Files\Helpers</Filter>
     </ClInclude>
@@ -215,6 +212,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Font\FontLoader.h">
       <Filter>Header/Source Files\Font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Graphics\ShaderLoader.h">
+      <Filter>Header/Source Files\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

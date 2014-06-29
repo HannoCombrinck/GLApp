@@ -1,4 +1,4 @@
-#include "ShaderFactory.h"
+#include "ShaderLoader.h"
 
 #include <GL/glew.h>
 
@@ -26,9 +26,9 @@ namespace baselib { namespace graphics {
 		std::string getShaderTypeString(ShaderObject::ShaderType eType) { return aShaderTypeMap[eType].first; }
 	}
 
-	ShaderFactory::ShaderFactory()
+	ShaderLoader::ShaderLoader()
 	{
-		LOG_VERBOSE << "ShaderFactory constructor";
+		LOG_VERBOSE << "ShaderLoader constructor";
 
 		registerShader(ShaderObject::VERTEX_SHADER,		     "vertex",				    ".vert", GL_VERTEX_SHADER);
 		registerShader(ShaderObject::TESS_CONTROL_SHADER,    "tessellation control",    ".tesc", GL_TESS_CONTROL_SHADER);
@@ -38,9 +38,9 @@ namespace baselib { namespace graphics {
 		registerShader(ShaderObject::COMPUTE_SHADER,		 "compute",					".comp", GL_COMPUTE_SHADER);
 	}
 
-	ShaderFactory::~ShaderFactory()
+	ShaderLoader::~ShaderLoader()
 	{
-		LOG_VERBOSE << "ShaderFactory destructor";
+		LOG_VERBOSE << "ShaderLoader destructor";
 	}
 
 	namespace
@@ -99,7 +99,7 @@ namespace baselib { namespace graphics {
 		}
 	}
 
-	boost::shared_ptr<ShaderPipeline> ShaderFactory::createShaderPipeline(const std::string& sName, const std::vector<boost::shared_ptr<ShaderObject>>& aspShaderObjects)
+	boost::shared_ptr<ShaderPipeline> ShaderLoader::createShaderPipeline(const std::string& sName, const std::vector<boost::shared_ptr<ShaderObject>>& aspShaderObjects)
 	{
 		if (!isValidPipeline(aspShaderObjects))
 		{
@@ -164,7 +164,7 @@ namespace baselib { namespace graphics {
 		#endif
 	}
 
-	boost::shared_ptr<ShaderObject> ShaderFactory::createShaderObject(const fs::path& fsPath)
+	boost::shared_ptr<ShaderObject> ShaderLoader::createShaderObject(const fs::path& fsPath)
 	{
 		// Check if file exists
 		if (!fs::exists(fsPath))
@@ -210,7 +210,7 @@ namespace baselib { namespace graphics {
 		return spShaderObject;
 	}
 
-	boost::shared_ptr<ShaderObject> ShaderFactory::createShaderObject(const std::string& sShaderSource, ShaderObject::ShaderType eType)
+	boost::shared_ptr<ShaderObject> ShaderLoader::createShaderObject(const std::string& sShaderSource, ShaderObject::ShaderType eType)
 	{
 		// Get GL shader type
 		unsigned int uGLShaderType = getGLShaderType(eType);

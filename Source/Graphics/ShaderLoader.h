@@ -21,16 +21,16 @@ namespace baselib
 {
 	namespace graphics
 	{
-		/*! @brief ShaderFactory creates and caches ShaderObjects and ShaderPipelines.
+		/*! @brief ShaderLoader creates and caches ShaderObjects and ShaderPipelines.
 		 *
 		 */
-		class ShaderFactory
+		class ShaderLoader
 		{
 		public:
 			//! Constructor.
-			ShaderFactory();
+			ShaderLoader();
 			//! Destructor.
-			virtual ~ShaderFactory();
+			virtual ~ShaderLoader();
 
 			//! Creates and links a shader pipeline with the given shader objects.
 			boost::shared_ptr<ShaderPipeline> createShaderPipeline(const std::string& sName, const std::vector<boost::shared_ptr<ShaderObject>>& aspShaderObjects);
