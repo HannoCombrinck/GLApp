@@ -26,7 +26,7 @@ namespace baselib
 		/*! @brief Font encapsulates a font face i.e. contains information about every glyph/symbol/character in the font.
 		 *
 		 *  Font has a atlas texture which is updated on demand. When a new glyph is requested it is rendered into
-		 *  the font atlas and its texture coordinates are stored in the glyph.
+		 *  the font atlas and its texture coordinates are stored.
 		 */
 		class Font
 		{

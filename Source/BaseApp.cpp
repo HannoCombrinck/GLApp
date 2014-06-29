@@ -149,7 +149,7 @@ namespace baselib {
 		// Create test visual collector
 		m_spVisualCollector = boost::shared_ptr<VisualCollector>(new VisualCollector());
 		// Create test frame buffer
-		m_spFrameBuffer = boost::shared_ptr<FrameBuffer>(new FrameBuffer());
+		m_spFrameBuffer = FrameBuffer::create();
 
 		// Create test render job
 		m_spRenderJob = boost::shared_ptr<RenderJob>(new RenderJob(m_spRenderer));

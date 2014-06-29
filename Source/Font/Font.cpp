@@ -21,59 +21,6 @@ namespace baselib { namespace font {
 		init(vAtlasSize);
 
 		/*
-		unsigned int uCharacter = 'A';
-		FT_UInt uIndex = FT_Get_Char_Index(m_FTFace, uCharacter);
-		if (uIndex == 0)
-		{
-			LOG_ERROR << "Glyph not found for character: " << uCharacter;
-			assert(false);
-		}
-
-		int iFlags = 0;
-		FT_Error ftError = FT_Load_Glyph(m_FTFace, uIndex, iFlags); // This loads the glyph into m_FTFace->glyph (i.e. only the last loaded glyph is stored)
-		if (ftError)
-		{
-			LOG_ERROR << "Error loading Glyph with index: " << uIndex;
-			assert(false);
-		}
-
-		FT_Glyph_Format ftGF = m_FTFace->glyph->format;
-		if (ftGF != FT_GLYPH_FORMAT_BITMAP) // Ok to convert to ftBitmap immediately
-		{
-			// Check FT_Render_Mode for available modes (anti-aliased, mono etc.)
-			FT_GlyphSlot ftSlot = m_FTFace->glyph;
-			FT_Error ftError = FT_Render_Glyph(ftSlot, FT_RENDER_MODE_NORMAL); // This renders the glyph into glyph->bitmap and positions are in glyph->bitmap_left and glyph->bitmap_top
-			if (ftError)
-			{
-				LOG_ERROR << "Error rendering glyph bitmap";
-				assert(false);
-			}
-
-			// glyph->bitmap now contains the rendered glyph
-
-			//ftSlot->bitmap
-			//ftSlot->bitmap_left
-			//ftSlot->bitmap_top
-			//ftSlot->advance.x
-			//ftSlot->advance.y
-
-			FT_Glyph_Metrics ftGM = ftSlot->metrics;
-			unsigned int uWidth = unsigned int(ftGM.width) * 64;	// width of bitmap to be rendered into atlas
-			unsigned int uHeight = unsigned int(ftGM.height) * 64; // height of bitmap to be rendered into atlas
-			unsigned int uAdvance = unsigned int(ftGM.horiAdvance) * 64; // width of character when rendered in string - difference between cursor left of character and right of char
-			unsigned int uBearingX = unsigned int(ftGM.horiBearingX) * 64; // distance from cursor to left border of character
-			unsigned int uBearingY = unsigned int(ftGM.horiBearingY) * 64; // distance from baseline to top of border of character
-
-			// All metrics measured in 1/64th of a pixel i.e. iWidth * 64 = width in pixels - unless FT_LOAD_NO_SCALE is used (check freetype docs)
-
-			// Current cursor position is a position on the baseline
-			// Glyph should be rendered at position (iBearingX, iBearingY) relative to current cursor position
-
-			FT_Bitmap ftBitmap = ftSlot->bitmap;
-
-			auto spGlyph = boost::shared_ptr<Glyph>(new Glyph('A', uWidth, uHeight, uAdvance, uBearingX, uBearingY, Vec2(0.0f, 0.0f), Vec2(1.0, 1.0)));
-		}
-
 		// Kerning
 		bool bHasKerning = false;
 		if (FT_HAS_KERNING(m_FTFace))
@@ -202,6 +149,7 @@ namespace baselib { namespace font {
 		
 		// Create glyph
 		FT_Glyph_Metrics ftGM = m_FTFace->glyph->metrics;
+		// All metrics measured in 1/64th of a pixel i.e. iWidth * 64 = width in pixels - unless FT_LOAD_NO_SCALE is used (check freetype docs)
 		unsigned int uWidth = unsigned int(ftGM.width) * 64;
 		unsigned int uHeight = unsigned int(ftGM.height) * 64;
 		unsigned int uAdvance = unsigned int(ftGM.horiAdvance) * 64;
