@@ -3,6 +3,7 @@
 #include <Helpers/NullPtr.h>
 #include <Graphics/Texture.h>
 #include <Graphics/Image.h>
+#include <Graphics/Helpers/TextureUpdateHelper.h>
 #include <Logging/Log.h>
 #include <Font/Glyph.h>
 #include <ft2build.h>
@@ -112,8 +113,7 @@ namespace baselib { namespace font {
 			vUVMin = Vec2(vNextGlyphBottomLeft.x / spAtlas->getWidth(), vNextGlyphBottomLeft.y / spAtlas->getHeight());
 			vUVMax = Vec2((vNextGlyphBottomLeft.x + spTexture->getWidth()) / spAtlas->getWidth(), (vNextGlyphBottomLeft.y + spTexture->getHeight()) / spAtlas->getHeight());
 
-			// Bind spTexture
-			// Render quad at (vNextGlyphBottomLeft, vNextGlyphBottomLeft + spTexture size) into spAtlas - use quad render target size of atlas to preserve resolution
+			//m_spTextureUpdateHelper->updateRegion(vUVMinFrom, vUVMaxFrom, spTexture, vUVMinTo, vUVMaxTo, spAtlas, spDistanceFieldShader);
 
 			return true;
 		}

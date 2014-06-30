@@ -32,6 +32,9 @@
     <Filter Include="Header/Source Files\Font">
       <UniqueIdentifier>{fef9e143-458d-4833-ab81-0c584fac3bd3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header/Source Files\Graphics\Helpers">
+      <UniqueIdentifier>{c2b53554-9174-408f-af35-dc711267b03a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\main.cpp">
@@ -120,6 +123,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Graphics\ShaderLoader.cpp">
       <Filter>Header/Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Graphics\Helpers\TextureUpdateHelper.cpp">
+      <Filter>Header/Source Files\Graphics\Helpers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -215,6 +221,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Graphics\ShaderLoader.h">
       <Filter>Header/Source Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Graphics\Helpers\TextureUpdateHelper.h">
+      <Filter>Header/Source Files\Graphics\Helpers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

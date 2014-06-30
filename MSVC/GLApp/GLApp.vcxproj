@@ -83,6 +83,7 @@
     <ClCompile Include="..\..\Source\Graphics\Camera.cpp" />
     <ClCompile Include="..\..\Source\Graphics\FrameBuffer.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Geometry.cpp" />
+    <ClCompile Include="..\..\Source\Graphics\Helpers\TextureUpdateHelper.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Image.cpp" />
     <ClCompile Include="..\..\Source\Graphics\ImageLoader.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Material.cpp" />
@@ -114,6 +115,7 @@
     <ClInclude Include="..\..\Source\Graphics\Camera.h" />
     <ClInclude Include="..\..\Source\Graphics\FrameBuffer.h" />
     <ClInclude Include="..\..\Source\Graphics\Geometry.h" />
+    <ClInclude Include="..\..\Source\Graphics\Helpers\TextureUpdateHelper.h" />
     <ClInclude Include="..\..\Source\Graphics\Image.h" />
     <ClInclude Include="..\..\Source\Graphics\ImageLoader.h" />
     <ClInclude Include="..\..\Source\Graphics\Material.h" />
