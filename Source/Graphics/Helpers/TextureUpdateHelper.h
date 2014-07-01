@@ -54,10 +54,9 @@ namespace baselib
 		
 		private:
 			//! Initialize.
-			void init(const boost::shared_ptr<Renderer> spRenderer);
+			void init();
 
-			boost::shared_ptr<RenderJob> m_spRenderJob;				//!< RenderJob used internally for render to texture.
-			boost::shared_ptr<VisualCollector> m_spVisualCollector; //!< VisualCollector used internally for render to texture.
+			boost::shared_ptr<Renderer> m_spRenderer;				//!< Renderer used internally for render to texture.
 			boost::shared_ptr<FrameBuffer> m_spFrameBuffer;			//!< FrameBuffer used internally to setup texture as render target.
 			boost::shared_ptr<StaticGeometry> m_spQuadGeometry;		//!< Quad geometry that is rendered to target texture.
 		};
