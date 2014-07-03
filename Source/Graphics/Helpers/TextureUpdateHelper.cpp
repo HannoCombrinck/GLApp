@@ -51,11 +51,42 @@ namespace baselib { namespace graphics {
 		m_spRenderer->drawIndexed(m_spQuadGeometry->getPrimitiveType(), m_spQuadGeometry->getVertexList()->getNumIndices(), 0);
 	}
 
+	namespace
+	{
+		struct VertexPosUV
+		{
+			VertexPosUV(const Vec3& _vPos, const Vec2& _vUV)
+				: vPos(_vPos)
+				, vUV(_vUV) {}
+
+			Vec3 vPos;
+			Vec2 vUV;
+		};
+	}
+
 	void TextureUpdateHelper::init()
 	{
+		// Init frame buffer
 		m_spFrameBuffer = FrameBuffer::createEmpty();
-		// TODO:
-		// Create quad geometry
+
+		// Init quad geometry
+		auto spVL = VertexLayout::create();
+		spVL->add(VertexAttribute("position", 0, 3, TYPE_FLOAT, 0));
+		spVL->add(VertexAttribute("texcoord", 2, 2, TYPE_FLOAT, 3*sizeof(float), true));
+
+		auto spVertexList = boost::shared_ptr<VertexList<VertexPosUV>>(new VertexList<VertexPosUV>(spVL));
+		spVertexList->addVertex(VertexPosUV(Vec3(0.0f, 0.0f, 0.0f), Vec2(0.0, 0.0)));
+		spVertexList->addVertex(VertexPosUV(Vec3(1.0f, 0.0f, 0.0f), Vec2(1.0, 0.0)));
+		spVertexList->addVertex(VertexPosUV(Vec3(1.0f, 1.0f, 0.0f), Vec2(1.0, 1.0)));
+		spVertexList->addVertex(VertexPosUV(Vec3(0.0f, 1.0f, 0.0f), Vec2(0.0, 1.0)));
+		spVertexList->addIndex(0);
+		spVertexList->addIndex(1);
+		spVertexList->addIndex(2);
+		spVertexList->addIndex(0);
+		spVertexList->addIndex(2);
+		spVertexList->addIndex(3);
+
+		m_spQuadGeometry = m_spRenderer->createStaticGeometry(spVertexList, Geometry::TRIANGLES);
 	}
 
 } }
