@@ -89,14 +89,21 @@ namespace baselib { namespace graphics {
 		GLenum eReturn = glCheckFramebufferStatus(GL_FRAMEBUFFER);
 		if (eReturn != GL_FRAMEBUFFER_COMPLETE)
 		{
-			// TODO: Add more detaild status check
+			// TODO: Add more detailed status check
 			LOG_ERROR << "Frame buffer object incomplete";
 			assert(false);
 		}
 
 		// Create frame buffer
-		auto spFrameBuffer = boost::shared_ptr<FrameBuffer>(new FrameBuffer(uID, aspColourTargets.size(), aspColourTargets, spDepthTarget));
-		return spFrameBuffer;
+		return boost::shared_ptr<FrameBuffer>(new FrameBuffer(uID, aspColourTargets.size(), aspColourTargets, spDepthTarget));
+	}
+
+	boost::shared_ptr<FrameBuffer> FrameBuffer::createEmpty()
+	{
+		// Create empty frame buffer object
+		unsigned int uID;
+		glGenFramebuffers(1, &uID);
+		return boost::shared_ptr<FrameBuffer>(new FrameBuffer(uID));
 	}
 
 	FrameBuffer::FrameBuffer(unsigned int uID, int iNumTargets, const std::vector<boost::shared_ptr<Texture>>& aspColourTargets, const boost::shared_ptr<Texture>& spDepthTarget)
@@ -104,6 +111,13 @@ namespace baselib { namespace graphics {
 		, m_iNumTargets(iNumTargets)
 		, m_aspColourTargets(aspColourTargets)
 		, m_spDepthTarget(spDepthTarget)
+	{
+		LOG_VERBOSE << "FrameBuffer constructor";
+	}
+
+	FrameBuffer::FrameBuffer(unsigned int uID)
+		: m_uID(uID)
+		, m_iNumTargets(0)
 	{
 		LOG_VERBOSE << "FrameBuffer constructor";
 	}
@@ -120,6 +134,19 @@ namespace baselib { namespace graphics {
 		glBindFramebuffer(GL_FRAMEBUFFER, m_uID);
 		if (m_iNumTargets > 0)
 			glDrawBuffers(m_iNumTargets, aColourAttachmentBuffers);
+	}
+
+	void FrameBuffer::bind(const boost::shared_ptr<Texture>& spColourTarget)
+	{
+		if (m_uID == 0)
+		{
+			LOG_ERROR << "Can't attach a colour target to the default frame buffer";
+			assert(false);
+		}
+		m_iNumTargets = 1;
+		bind();
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, spColourTarget->getID(), 0);
+
 	}
 
 } }

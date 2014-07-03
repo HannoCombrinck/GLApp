@@ -42,8 +42,7 @@ namespace baselib { namespace graphics {
 	void TextureUpdateHelper::updateRegion(const Vec2& vMinFrom, const Vec2& vMaxFrom, const boost::shared_ptr<Texture> spInputTexture, const Vec2& vMinTo, const Vec2& vMaxTo, const boost::shared_ptr<Texture> spTargetTexture, const boost::shared_ptr<Shader> spShader)
 	{
 		// TODO:
-		m_spFrameBuffer->bind();
-		//m_spFrameBuffer->setAttachment(spTargetTexture);
+		m_spFrameBuffer->bind(spTargetTexture);
 		spShader->bind();
 		// set vMin's and vMax's in spShader
 		// set spInputTexture in spShader
@@ -54,8 +53,8 @@ namespace baselib { namespace graphics {
 
 	void TextureUpdateHelper::init()
 	{
+		m_spFrameBuffer = FrameBuffer::createEmpty();
 		// TODO:
-		// Create frame buffer
 		// Create quad geometry
 	}
 

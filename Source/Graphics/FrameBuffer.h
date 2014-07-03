@@ -26,19 +26,24 @@ namespace baselib
 			static boost::shared_ptr<FrameBuffer> create();
 			//! Creates and returns a frame buffer object with the given colour targets and depth target.
 			static boost::shared_ptr<FrameBuffer> create(const std::vector<boost::shared_ptr<Texture>>& aspColourTargets, const boost::shared_ptr<Texture>& spDepthTarget);
+			//! Creates and returns an empty frame buffer object. 
+			static boost::shared_ptr<FrameBuffer> createEmpty();
 			
 			//! Destructor.
 			virtual ~FrameBuffer();
 
 			//! Bind frame buffer.
 			void bind();
+			//! Bind frame buffer and set colour target.
+			void bind(const boost::shared_ptr<Texture>& spColourTarget);
 
 			//! Get frame buffer ID.
 			unsigned int getID() const { return m_uID; }
 
 		protected:
-			//! Protected constructor - must be constructed with static create().
+			//! Protected constructors - must be constructed with static create().
 			FrameBuffer(unsigned int uID, int iNumTargets, const std::vector<boost::shared_ptr<Texture>>& aspColourTargets, const boost::shared_ptr<Texture>& spDepthTarget);
+			FrameBuffer(unsigned int uID);
 
 		private:
 			unsigned int m_uID; //!< Framebuffer object ID. 0 indicates back buffer.
