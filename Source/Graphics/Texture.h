@@ -61,6 +61,9 @@ namespace baselib
 			Texture(unsigned int uID, TextureType eType, int iWidth, int iHeight, int iBPP);
 
 		private:
+			static unsigned int m_uCurrentlyBound; //!< Currently bound texture.
+			static unsigned int m_uActiveUnit;	   //!< Active texture unit.
+
 			unsigned int m_uID;  //!< Texture object ID.
 			TextureType m_eType; //!< Texture type.
 			int m_iWidth;		 //!< Texture width.

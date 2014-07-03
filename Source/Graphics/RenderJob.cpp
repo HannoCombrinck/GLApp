@@ -7,6 +7,7 @@
 #include <Graphics/FrameBuffer.h>
 #include <Graphics/VertexList.h>
 #include <Graphics/Renderer.h>
+#include <Graphics/Material.h>
 #include <boost/range/algorithm/for_each.hpp>
 
 namespace baselib { namespace graphics {
@@ -37,12 +38,12 @@ namespace baselib { namespace graphics {
 		const auto& apVisuals = spVisualCollector->getVisuals();
 
 		// Bind FrameBuffer
-		m_spRenderer->bindFrameBuffer(spFrameBuffer);
+		spFrameBuffer->bind();
 
 		// Render visible, sorted list of visuals
 		boost::shared_ptr<Geometry> spGeometry = null_ptr;
 		boost::for_each(apVisuals, [this, &spGeometry](const Visual* pVisual) {
-			m_spRenderer->bindMaterial(pVisual->getMaterial());
+			pVisual->getMaterial()->bind();
 			spGeometry = pVisual->getGeometry();
 			spGeometry->bind();
 			m_spRenderer->drawIndexed(spGeometry->getPrimitiveType(), spGeometry->getVertexList()->getNumIndices(), 0);

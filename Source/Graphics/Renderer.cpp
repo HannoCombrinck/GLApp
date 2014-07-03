@@ -20,10 +20,6 @@ namespace baselib { namespace graphics {
 
 	Renderer::Renderer()
 		: m_vClearColour(Vec4(0.0, 0.0, 0.0, 0.0))
-		, m_uBoundShader(~0)
-		, m_uBoundTexture(~0)
-		, m_uActiveTextureUnit(GL_TEXTURE0)
-		, m_uBoundFramebuffer(0)
 	{
 		LOG_VERBOSE << "Renderer constructor";
 		init();
@@ -82,39 +78,6 @@ namespace baselib { namespace graphics {
 	void Renderer::drawIndexed(Geometry::PrimitiveType ePrimitiveType, unsigned int uIndexCount, unsigned int uIndexOffset)
 	{
 		glDrawElements(getGLPrimitive(ePrimitiveType), uIndexCount, GL_UNSIGNED_INT, (const GLvoid*) uIndexOffset);
-	}
-
-	void Renderer::bindMaterial(const boost::shared_ptr<Material>& spMaterial)
-	{
-		if (auto spShader = spMaterial->getShader())
-		{
-			if (m_uBoundShader != spShader->getID())
-			{
-				m_uBoundShader = spShader->getID();
-				spShader->bind();
-				glUniform1i(glGetUniformLocation(m_uBoundShader, "sTestTexture"), 0);
-			}
-		}
-		if (auto spTexture = spMaterial->getTexture())
-		{
-			if (m_uBoundTexture != spTexture->getID())
-			{
-				m_uBoundTexture = spTexture->getID();
-				if (m_uActiveTextureUnit != GL_TEXTURE0)
-					glActiveTexture(GL_TEXTURE0);
-
-				spTexture->bind();
-			}
-		}
-	}
-
-	void Renderer::bindFrameBuffer( const boost::shared_ptr<FrameBuffer>& spFrameBuffer )
-	{
-		if (m_uBoundFramebuffer != spFrameBuffer->getID())
-		{
-			m_uBoundFramebuffer = spFrameBuffer->getID();
-			spFrameBuffer->bind();
-		}
 	}
 
 	void Renderer::flush()

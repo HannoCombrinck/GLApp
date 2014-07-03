@@ -21,8 +21,6 @@ namespace baselib
 
 			//! Bind shader.
 			void bind();
-			//! Unbind shader.
-			void unbind();
 
 			//! Get shader ID.
 			unsigned int getID() const { return m_uID; }
@@ -39,6 +37,8 @@ namespace baselib
 			Shader(unsigned int uID);
 
 		private:
+			static unsigned int m_uCurrentlyBound; //!< Currently bound shader.
+
 			unsigned int m_uID; //!< Shader program ID.
 			
 		};

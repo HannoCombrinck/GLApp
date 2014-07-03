@@ -8,6 +8,9 @@
 
 namespace baselib { namespace graphics {
 
+	unsigned int Texture::m_uCurrentlyBound = ~0;
+	unsigned int Texture::m_uActiveUnit = ~0;
+
 	boost::shared_ptr<Texture> Texture::create(const boost::shared_ptr<Image>& spImage)
 	{
 		glActiveTexture(GL_TEXTURE0);
@@ -65,7 +68,17 @@ namespace baselib { namespace graphics {
 
 	void Texture::bind()
 	{
+		if (m_uID == m_uCurrentlyBound)
+			return;
+
+		if (m_uActiveUnit != GL_TEXTURE0)
+		{
+			glActiveTexture(GL_TEXTURE0);
+			m_uActiveUnit = GL_TEXTURE0;
+		}
+
 		glBindTexture(GL_TEXTURE_2D, m_uID);
+		m_uCurrentlyBound = m_uID;
 	}
 
 } }

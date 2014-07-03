@@ -46,6 +46,9 @@ namespace baselib
 			FrameBuffer(unsigned int uID);
 
 		private:
+			static unsigned int m_uCurrentlyBound;			   //!< Currently bound frame buffer.
+			static unsigned int m_uCurrentlyBoundColourTarget; //!< Currently bound colour target.
+
 			unsigned int m_uID; //!< Framebuffer object ID. 0 indicates back buffer.
 			int m_iNumTargets;  //!< The number of colour targets attached to the framebuffer. 0 indicates back buffer.
 			std::vector<boost::shared_ptr<Texture>> m_aspColourTargets; //!< List of colour target textures.

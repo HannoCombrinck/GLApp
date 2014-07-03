@@ -116,12 +116,6 @@ namespace baselib
 			//! Draw indexed geometry defined by the buffers in the currently bound VAO.
 			void drawIndexed(Geometry::PrimitiveType ePrimitiveType, unsigned int uIndexCount, unsigned int uIndexOffset);
 
-			//! Bind material - ignores redundant changes.
-			void bindMaterial(const boost::shared_ptr<Material>& spMaterial);
-
-			//! Bind frame buffer - ignores redundant changes.
-			void bindFrameBuffer(const boost::shared_ptr<FrameBuffer>& spFrameBuffer);
-
 			//! Flush the pipeline.
 			void flush();
 
@@ -163,11 +157,6 @@ namespace baselib
 			Vec4 m_vClearColour;					  //!< Current clear colour. Current render target will be cleared to this colour when calling clear().
 			Vec4 m_vViewportSize;					  //!< Current viewport size.
 			RenderStateValue m_aeState[STATE_COUNT];  //!< Current render state values.
-			unsigned int m_uBoundShader;			  //!< Currently bound shader program.
-			unsigned int m_uBoundTexture;			  //!< Currently bound texture.
-			unsigned int m_uActiveTextureUnit;		  //!< The active texture unit.
-			unsigned int m_uBoundFramebuffer;		  //!< Currently bound frame buffer object.
-
 		};
 	}
 }

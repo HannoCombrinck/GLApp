@@ -7,6 +7,9 @@
 
 namespace baselib { namespace graphics {
 
+	unsigned int FrameBuffer::m_uCurrentlyBound = ~0;
+	unsigned int FrameBuffer::m_uCurrentlyBoundColourTarget = ~0;
+
 	namespace
 	{
 		void checkValidTargets(const std::vector<boost::shared_ptr<Texture>>& aColourAttachments)
@@ -131,7 +134,11 @@ namespace baselib { namespace graphics {
 
 	void FrameBuffer::bind()
 	{
+		if (m_uID == m_uCurrentlyBound)
+			return;
+
 		glBindFramebuffer(GL_FRAMEBUFFER, m_uID);
+		m_uCurrentlyBound = m_uID;
 		if (m_iNumTargets > 0)
 			glDrawBuffers(m_iNumTargets, aColourAttachmentBuffers);
 	}
@@ -145,8 +152,12 @@ namespace baselib { namespace graphics {
 		}
 		m_iNumTargets = 1;
 		bind();
-		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, spColourTarget->getID(), 0);
 
+		if (spColourTarget->getID() == m_uCurrentlyBoundColourTarget)
+			return; 
+
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, spColourTarget->getID(), 0);
+		m_uCurrentlyBoundColourTarget = spColourTarget->getID();
 	}
 
 } }

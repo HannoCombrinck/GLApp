@@ -5,6 +5,8 @@
 
 namespace baselib { namespace graphics {
 
+	unsigned int Shader::m_uCurrentlyBound = ~0;
+
 	Shader::Shader(unsigned int uID)
 		: m_uID(uID)
 	{
@@ -18,12 +20,11 @@ namespace baselib { namespace graphics {
 
 	void Shader::bind()
 	{
-		glUseProgram(m_uID);
-	}
+		if (m_uID == m_uCurrentlyBound)
+			return;
 
-	void Shader::unbind()
-	{
-		glUseProgram(0);
+		glUseProgram(m_uID);
+		m_uCurrentlyBound = m_uID;
 	}
 
 	int Shader::getAttribute(const std::string& sName) const

@@ -28,6 +28,9 @@ namespace baselib
 			//! Destructor.
 			virtual ~Material();
 
+			//! Bind the material.
+			void bind();
+
 			//! Getter for setShader().
 			boost::shared_ptr<Shader> getShader() const { return m_spShader; }
 			//! Getter for setTexture().
