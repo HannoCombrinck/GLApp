@@ -23,8 +23,6 @@
 
 #include <Helpers/NullPtr.h>
 
-#include <GL/glew.h> //Temp: remove this
-
 using namespace baselib::graphics;
 using namespace baselib::font;
 
@@ -32,19 +30,6 @@ namespace baselib {
 	
 	BaseApp::BaseApp(int iWidth, int iHeight, bool bFullscreen, int iMajorVersion, int iMinorVersion, const std::string& sWindowTitle)
 		: GLFWApp(iWidth, iHeight, bFullscreen, iMajorVersion, iMinorVersion, sWindowTitle)
-		, m_spRenderer(null_ptr)
-		, m_spShaderPipeline(null_ptr)
-		, m_spStaticGeom(null_ptr)
-		, m_spImageLoader(null_ptr)
-		, m_spTextureLoader(null_ptr)
-		, m_spMaterial(null_ptr)
-		, m_spRootNode(null_ptr)
-		, m_spCamera(null_ptr)
-		, m_spVisualCollector(null_ptr)
-		, m_spFrameBuffer(null_ptr)
-		, m_spRenderJob(null_ptr)
-		, m_spFontLoader(null_ptr)
-		, m_spFont(null_ptr)
 	{
 		LOG_VERBOSE << "BaseApp constructor";
 		init();
