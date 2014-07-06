@@ -4,6 +4,9 @@
 #include <Graphics/Renderer.h>
 #include <Graphics/Texture.h>
 #include <Graphics/Image.h>
+#include <Graphics/ShaderObject.h>
+#include <Graphics/ShaderPipeline.h>
+#include <Graphics/Shader.h>
 #include <Graphics/Helpers/TextureUpdateHelper.h>
 #include <Logging/Log.h>
 #include <Font/Glyph.h>
@@ -47,7 +50,12 @@ namespace baselib { namespace font {
 		auto spImage = Image::create(int(vAtlasSize.x), int(vAtlasSize.y), 8, 0);
 		m_spAtlas = Texture::create(spImage);
 		m_spTextureUpdateHelper = TextureUpdateHelper::create(m_spRenderer);
-		//m_spShader 
+
+		std::vector<boost::shared_ptr<ShaderObject>> aShaderObjects;
+		aShaderObjects.push_back(ShaderObject::load("../Data/Shaders/TextureCopy.vert"));
+		aShaderObjects.push_back(ShaderObject::load("../Data/Shaders/TextureCopy.frag"));
+		m_spTextureCopyPipeline = ShaderPipeline::create("TextureCopy", aShaderObjects);
+		m_spTextureCopyShader = m_spTextureCopyPipeline->createInstance();
 	}
 
 	namespace
@@ -147,21 +155,25 @@ namespace baselib { namespace font {
 
 	bool Font::addToAtlas(Vec2& vNextGlyphBottomLeft, float& fMaxHeight, Vec2& vUVMin, Vec2& vUVMax, const boost::shared_ptr<Texture>& spTexture, const boost::shared_ptr<Texture>& spAtlas) const
 	{
+		// Get UV coordinates of next open spot in the atlas
+		vUVMin = Vec2(vNextGlyphBottomLeft.x / spAtlas->getWidth(), vNextGlyphBottomLeft.y / spAtlas->getHeight());
+		vUVMax = Vec2((vNextGlyphBottomLeft.x + spTexture->getWidth()) / spAtlas->getWidth(), (vNextGlyphBottomLeft.y + spTexture->getHeight()) / spAtlas->getHeight());
+
+		// Check if glyph will fit in atlas
+		if (vUVMax.x > 1.0 || vUVMax.y > 1.0)
+			return false;
+
+		// Render glyph into atlas
+		m_spTextureUpdateHelper->updateRegion(spTexture, vUVMin, vUVMax, spAtlas, m_spTextureCopyShader);
+
+		// Set next available position in atlas
 		vNextGlyphBottomLeft.x += spTexture->getWidth();
 		if (vNextGlyphBottomLeft.x > spAtlas->getWidth())
 			vNextGlyphBottomLeft = Vec2(0.0f, fMaxHeight);
 
-		// Atlas is full
-		if (vNextGlyphBottomLeft.y + spTexture->getHeight() > spAtlas->getHeight())
-			return false;
-
 		if (vNextGlyphBottomLeft.y + spTexture->getHeight() > fMaxHeight)
 			fMaxHeight = vNextGlyphBottomLeft.y + spTexture->getHeight();
-
-		vUVMin = Vec2(vNextGlyphBottomLeft.x / spAtlas->getWidth(), vNextGlyphBottomLeft.y / spAtlas->getHeight());
-		vUVMax = Vec2((vNextGlyphBottomLeft.x + spTexture->getWidth()) / spAtlas->getWidth(), (vNextGlyphBottomLeft.y + spTexture->getHeight()) / spAtlas->getHeight());
-
-		//m_spTextureUpdateHelper->updateRegion(spTexture, vUVMin, vUVMax, spAtlas, null_ptr);
+		
 		return true;
 	}
 

@@ -12,6 +12,6 @@ out vec2 vTexCoordFrag;
 
 void main() 
 {
-	vTexCoordFrag = vTexCoord*vUVScale + vUVOffset;
+	vTexCoordFrag = vec2(vTexCoord.x*vUVScale.x + vUVOffset.x, vTexCoord.y*vUVScale.y + vUVOffset.y);
     gl_Position = vec4(vPosition.x*vPosScale.x + vPosOffset.x, vPosition.y*vPosScale.y + vPosOffset.y, 0, 1);
 }

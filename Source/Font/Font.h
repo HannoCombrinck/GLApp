@@ -17,6 +17,7 @@ namespace baselib
 	{
 		class Renderer;
 		class Shader;
+		class ShaderPipeline;
 		class Texture;
 		class TextureUpdateHelper;
 	}
@@ -58,7 +59,8 @@ namespace baselib
 			FT_FaceRec_ *m_FTFace;															  //!< Freetype face pointer.
 			boost::shared_ptr<graphics::Renderer> m_spRenderer;								  //!< Renderer used to render into font atlas.
 			boost::shared_ptr<graphics::TextureUpdateHelper> m_spTextureUpdateHelper;		  //!< Helper to render glyphs into atlas.
-			boost::shared_ptr<graphics::Shader> m_spCopyShader;								  //!< Shader used to copy glyph texture into atlas.
+			boost::shared_ptr<graphics::ShaderPipeline> m_spTextureCopyPipeline;			  //!< Shader pipeline used to copy glyp texture into atlas.
+			boost::shared_ptr<graphics::Shader> m_spTextureCopyShader;						  //!< Shader instance used to copy glyph texture into atlas.
 			boost::shared_ptr<graphics::Texture> m_spAtlas;									  //!< Texture atlas containing cached glyphs for this font.
 			mutable boost::unordered_map<unsigned char, boost::shared_ptr<Glyph>> m_GlyphMap; //!< Glyph cache.
 			mutable Vec2 m_vNextGlyphBottomLeft;											  //!< The next avaiable position in the texture atlas. The next requested glyph's bottom left corner will be placed here.

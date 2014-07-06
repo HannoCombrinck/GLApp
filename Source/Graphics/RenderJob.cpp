@@ -40,6 +40,9 @@ namespace baselib { namespace graphics {
 		// Bind FrameBuffer
 		spFrameBuffer->bind();
 
+		// TODO: Check if frame buffer should be cleared
+		m_spRenderer->clear();
+
 		// Render visible, sorted list of visuals
 		boost::shared_ptr<Geometry> spGeometry = null_ptr;
 		boost::for_each(apVisuals, [this, &spGeometry](const Visual* pVisual) {

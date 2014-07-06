@@ -49,7 +49,6 @@ namespace baselib {
 	void BaseApp::onRender()
 	{
 		assert(m_spRenderer);
-		m_spRenderer->clear();
 		m_spRenderJob->execute(m_spRootNode, m_spVisualCollector, m_spFrameBuffer, m_spCamera);
 	}
 
@@ -110,9 +109,6 @@ namespace baselib {
 		auto spImage = Image::load("../Data/Textures/test.tga");
 
 		// Create test texture
-		// TODO: implement texture loader to use ImageLoader
-		// m_spTextureLoader = TextureLoader::create();
-		// m_spTextureLoader->loadTexture("../Data/Textures/test.tga");
 		auto spTexture = Texture::create(spImage);
 
 		// Create test material

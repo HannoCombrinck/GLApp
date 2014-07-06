@@ -3,7 +3,6 @@
 #include <Logging/Log.h>
 #include <Graphics/Shader.h>
 #include <Graphics/Texture.h>
-#include <GL/glew.h>
 
 namespace baselib { namespace graphics {
 
@@ -30,7 +29,7 @@ namespace baselib { namespace graphics {
 		if (m_spShader)
 		{
 			m_spShader->bind();
-			glUniform1i(glGetUniformLocation(m_spShader->getID(), "sTestTexture"), 0);
+			m_spShader->setUniform(m_spShader->getUniform("sTestTexture"), 0);
 		}
 
 		if (m_spTexture)

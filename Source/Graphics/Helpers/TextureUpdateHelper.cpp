@@ -9,6 +9,8 @@
 #include <Graphics/VertexList.h>
 #include <Graphics/FrameBuffer.h>
 
+#include <GL/glew.h>
+
 namespace baselib { namespace graphics {
 
 	boost::shared_ptr<TextureUpdateHelper> TextureUpdateHelper::create(const boost::shared_ptr<Renderer> spRenderer)
@@ -41,11 +43,15 @@ namespace baselib { namespace graphics {
 
 	void TextureUpdateHelper::updateRegion(const Vec2& vMinFrom, const Vec2& vMaxFrom, const boost::shared_ptr<Texture> spInputTexture, const Vec2& vMinTo, const Vec2& vMaxTo, const boost::shared_ptr<Texture> spTargetTexture, const boost::shared_ptr<Shader> spShader)
 	{
-		// TODO:
-		m_spFrameBuffer->bind(spTargetTexture);
+		m_spFrameBuffer->bind(spTargetTexture); // TODO: View port size needs to be set
+		m_spRenderer->setViewportSize(Vec4(0, 0, spTargetTexture->getWidth(), spTargetTexture->getHeight()));
+		m_spRenderer->clear();
 		spShader->bind();
-		// set vMin's and vMax's in spShader
-		// set spInputTexture in spShader
+		spShader->setUniform(spShader->getUniform("vUVOffset"), vMinFrom);
+		spShader->setUniform(spShader->getUniform("vUVScale"), vMaxFrom - vMinFrom);
+		spShader->setUniform(spShader->getUniform("vPosOffset"), vMinTo);
+		spShader->setUniform(spShader->getUniform("vPosScale"), vMaxTo - vMinTo);
+		spShader->setUniform(spShader->getUniform("sTexture"), 0); // TODO: Get active unit from texture - just using 0 for everything at the moment.
 		spInputTexture->bind();
 		m_spQuadGeometry->bind();
 		m_spRenderer->drawIndexed(m_spQuadGeometry->getPrimitiveType(), m_spQuadGeometry->getVertexList()->getNumIndices(), 0);
