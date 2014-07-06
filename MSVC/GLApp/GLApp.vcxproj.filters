@@ -91,9 +91,6 @@
     <ClCompile Include="..\..\Source\Helpers\NullPtr.cpp">
       <Filter>Header/Source Files\Helpers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Graphics\ImageLoader.cpp">
-      <Filter>Header/Source Files\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Graphics\Image.cpp">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClCompile>
@@ -182,9 +179,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Helpers\NullPtr.h">
       <Filter>Header/Source Files\Helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Graphics\ImageLoader.h">
-      <Filter>Header/Source Files\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Graphics\Image.h">
       <Filter>Header/Source Files\Graphics</Filter>

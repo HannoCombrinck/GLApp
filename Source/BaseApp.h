@@ -10,8 +10,6 @@ namespace baselib
 		class Renderer;
 		class ShaderPipeline;
 		class StaticGeometry;
-		class ImageLoader;
-		class TextureLoader;
 		class Material;
 		class Node;
 		class Camera;
@@ -56,8 +54,6 @@ namespace baselib
 		boost::shared_ptr<graphics::Renderer> m_spRenderer; //!< Main renderer
 		boost::shared_ptr<graphics::ShaderPipeline> m_spShaderPipeline; //!< Test shader pipeline
 		boost::shared_ptr<graphics::StaticGeometry> m_spStaticGeom; //!< Test geometry
-		boost::shared_ptr<graphics::ImageLoader> m_spImageLoader; //!< Test image loader
-		boost::shared_ptr<graphics::TextureLoader> m_spTextureLoader; //!< Test texture loader
 		boost::shared_ptr<graphics::Material> m_spMaterial; //!< Test material
 		boost::shared_ptr<graphics::Node> m_spRootNode; //!< Test node
 		boost::shared_ptr<graphics::Camera> m_spCamera; //!< Test camera

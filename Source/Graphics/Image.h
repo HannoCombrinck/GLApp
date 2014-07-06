@@ -1,6 +1,9 @@
 ﻿#pragma once
 
 #include <boost/shared_ptr.hpp>
+#include <boost/filesystem.hpp>
+
+namespace fs = boost::filesystem;
 
 namespace baselib 
 {
@@ -12,6 +15,9 @@ namespace baselib
 		class Image
 		{
 		public:
+			//! Load an image from file
+			static boost::shared_ptr<Image> load(const fs::path& fsPath);
+
 			//! Create an image object
 			static boost::shared_ptr<Image> create(int iWidth, int iHeight, int iBPP, unsigned char* pData);
 

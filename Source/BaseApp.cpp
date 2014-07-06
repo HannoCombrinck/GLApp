@@ -8,7 +8,7 @@
 #include <Graphics/Shader.h>
 #include <Graphics/StaticGeometry.h>
 #include <Graphics/VertexList.h>
-#include <Graphics/ImageLoader.h>
+#include <Graphics/Image.h>
 #include <Graphics/Texture.h>
 #include <Graphics/Material.h>
 #include <Graphics/Node.h>
@@ -107,8 +107,7 @@ namespace baselib {
 		m_spStaticGeom = m_spRenderer->createStaticGeometry(spVertexList, Geometry::TRIANGLES);
 
 		// Load test image 
-		m_spImageLoader = ImageLoader::create();
-		auto spImage = m_spImageLoader->loadImage("../Data/Textures/test.tga");
+		auto spImage = Image::load("../Data/Textures/test.tga");
 
 		// Create test texture
 		// TODO: implement texture loader to use ImageLoader
