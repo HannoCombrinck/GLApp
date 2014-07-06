@@ -38,9 +38,35 @@ namespace baselib { namespace graphics {
 	int Shader::getUniform(const std::string& sName) const
 	{
 		assert(!sName.empty());
-		int iUniform = glGetUniformLocation(m_uID, sName.c_str());
+		const GLchar* szName = sName.c_str();
+		int iUniform = glGetUniformLocation(m_uID, szName);
 		assert(iUniform != -1);
 		return iUniform;
+	}
+
+	void Shader::setUniform(int iIndex, float f)
+	{
+		glUniform1f(iIndex, f);
+	}
+
+	void Shader::setUniform(int iIndex, Vec2 v)
+	{
+		glUniform2f(iIndex, v.x, v.y);
+	}
+
+	void Shader::setUniform(int iIndex, Vec3 v)
+	{
+		glUniform3f(iIndex, v.x, v.y, v.z);
+	}
+
+	void Shader::setUniform(int iIndex, Vec4 v)
+	{
+		glUniform4f(iIndex, v.x, v.y, v.z, v.w);
+	}
+
+	void Shader::setUniform( int iIndex, int i )
+	{
+		glUniform1i(iIndex, i);
 	}
 
 } }

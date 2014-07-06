@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <Math/Math.h>
 
 namespace baselib 
 {
@@ -30,7 +31,17 @@ namespace baselib
 			//! Get uniform index from name.
 			int getUniform(const std::string& sName) const;
 		
-			// TODO: Add all setUniform* and setAttribute* functions
+			//! Set float uniform variable.
+			void setUniform(int iIndex, float f);
+			//! Set vec2f uniform variable.
+			void setUniform(int iIndex, Vec2 v);
+			//! Set vec3f uniform variable.
+			void setUniform(int iIndex, Vec3 v);
+			//! Set vec4f uniform variable.
+			void setUniform(int iIndex, Vec4 v);
+
+			//! Set int uniform variable.
+			void setUniform(int iIndex, int i);
 
 		protected:
 			//! Protected constructor - must be created by ShaderPipeline.
