@@ -40,6 +40,8 @@ namespace baselib { namespace graphics {
 		// Bind FrameBuffer
 		spFrameBuffer->bind();
 
+		m_spRenderer->setViewportSize(Vec4(0, 0, 640, 480));
+
 		// TODO: Check if frame buffer should be cleared
 		m_spRenderer->clear();
 

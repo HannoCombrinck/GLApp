@@ -83,6 +83,12 @@ namespace baselib {
 		m_spShaderPipeline = ShaderPipeline::create("TestPipeline", aspShaders);
 		auto spShader = m_spShaderPipeline->createInstance();
 
+		// Create test font
+		m_spFontLoader = FontLoader::create();
+		m_spFont = m_spFontLoader->loadFont("C:/Windows/Fonts/times.ttf", m_spRenderer, Vec2(512, 512));
+		std::string sString = "abdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789,.!?;+-*";
+		for (unsigned int i = 0; i < sString.length(); ++i)
+			m_spFont->getGlyph(sString[i]);
 
 		// Create test VertexList
 		auto spVL = VertexLayout::create();
@@ -91,10 +97,10 @@ namespace baselib {
 		spVL->add(VertexAttribute("texcoord", 2, 2, TYPE_FLOAT, 6*sizeof(float), true));
 
 		auto spVertexList = boost::shared_ptr<VertexList<MyVert>>(new VertexList<MyVert>(spVL));
-		spVertexList->addVertex(MyVert(Vec3(-0.5f, -0.5f, 0.0f), Vec3(0.0f, 0.0f, 1.0f), Vec2(0.0, 0.0)));
-		spVertexList->addVertex(MyVert(Vec3(0.5f, -0.5f, 0.0f),  Vec3(0.0f, 0.0f, 1.0f), Vec2(1.0, 0.0)));
-		spVertexList->addVertex(MyVert(Vec3(0.5f, 0.5f, 0.0f),   Vec3(0.0f, 0.0f, 1.0f), Vec2(1.0, 1.0)));
-		spVertexList->addVertex(MyVert(Vec3(-0.5f, 0.5f, 0.0f),  Vec3(0.0f, 0.0f, 1.0f), Vec2(0.0, 1.0)));
+		spVertexList->addVertex(MyVert(Vec3(-1.0f, -1.0f, 0.0f), Vec3(0.0f, 0.0f, 1.0f), Vec2(0.0, 0.0)));
+		spVertexList->addVertex(MyVert(Vec3(1.0f, -1.0f, 0.0f),  Vec3(0.0f, 0.0f, 1.0f), Vec2(1.0, 0.0)));
+		spVertexList->addVertex(MyVert(Vec3(1.0f, 1.0f, 0.0f),   Vec3(0.0f, 0.0f, 1.0f), Vec2(1.0, 1.0)));
+		spVertexList->addVertex(MyVert(Vec3(-1.0f, 1.0f, 0.0f),  Vec3(0.0f, 0.0f, 1.0f), Vec2(0.0, 1.0)));
 		spVertexList->addIndex(0);
 		spVertexList->addIndex(1);
 		spVertexList->addIndex(2);
@@ -112,7 +118,8 @@ namespace baselib {
 		auto spTexture = Texture::create(spImage);
 
 		// Create test material
-		m_spMaterial = Material::create(spShader, spTexture, null_ptr);
+		//m_spMaterial = Material::create(spShader, spTexture, null_ptr);
+		m_spMaterial = Material::create(spShader, m_spFont->getAtlas(), null_ptr);
 
 		// Create test visual
 		auto spVisual = Visual::create(m_spStaticGeom, m_spMaterial);
@@ -131,16 +138,11 @@ namespace baselib {
 		auto spTargetTexture = Texture::create(spTargetImage);
 		std::vector<boost::shared_ptr<Texture>> aTargets;
 		aTargets.push_back(spTargetTexture);
-		m_spFrameBuffer = FrameBuffer::create(aTargets, null_ptr);
-		//m_spFrameBuffer = FrameBuffer::create();
+		//m_spFrameBuffer = FrameBuffer::create(aTargets, null_ptr);
+		m_spFrameBuffer = FrameBuffer::create();
 
 		// Create test render job
 		m_spRenderJob = RenderJob::create(m_spRenderer);
-		
-		// Create test font
-		m_spFontLoader = FontLoader::create();
-		m_spFont = m_spFontLoader->loadFont("C:/Windows/Fonts/times.ttf", m_spRenderer, Vec2(1024, 1024));
-		auto spGlyph = m_spFont->getGlyph('T');
 	}
 
 	void BaseApp::destroy()

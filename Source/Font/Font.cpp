@@ -155,9 +155,20 @@ namespace baselib { namespace font {
 
 	bool Font::addToAtlas(Vec2& vNextGlyphBottomLeft, float& fMaxHeight, Vec2& vUVMin, Vec2& vUVMax, const boost::shared_ptr<Texture>& spTexture, const boost::shared_ptr<Texture>& spAtlas) const
 	{
+		// Check if glyph will fit horizontally
+		if (vNextGlyphBottomLeft.x + spTexture->getWidth() > spAtlas->getWidth())
+			vNextGlyphBottomLeft = Vec2(0.0f, fMaxHeight);
+
+		// Check max height for this row of glyphs 
+		if (vNextGlyphBottomLeft.y + spTexture->getHeight() > fMaxHeight)
+			fMaxHeight = vNextGlyphBottomLeft.y + spTexture->getHeight();
+
 		// Get UV coordinates of next open spot in the atlas
 		vUVMin = Vec2(vNextGlyphBottomLeft.x / spAtlas->getWidth(), vNextGlyphBottomLeft.y / spAtlas->getHeight());
 		vUVMax = Vec2((vNextGlyphBottomLeft.x + spTexture->getWidth()) / spAtlas->getWidth(), (vNextGlyphBottomLeft.y + spTexture->getHeight()) / spAtlas->getHeight());
+
+		// Set next horizontal available position
+		vNextGlyphBottomLeft.x += spTexture->getWidth();
 
 		// Check if glyph will fit in atlas
 		if (vUVMax.x > 1.0 || vUVMax.y > 1.0)
@@ -166,14 +177,6 @@ namespace baselib { namespace font {
 		// Render glyph into atlas
 		m_spTextureUpdateHelper->updateRegion(spTexture, vUVMin, vUVMax, spAtlas, m_spTextureCopyShader);
 
-		// Set next available position in atlas
-		vNextGlyphBottomLeft.x += spTexture->getWidth();
-		if (vNextGlyphBottomLeft.x > spAtlas->getWidth())
-			vNextGlyphBottomLeft = Vec2(0.0f, fMaxHeight);
-
-		if (vNextGlyphBottomLeft.y + spTexture->getHeight() > fMaxHeight)
-			fMaxHeight = vNextGlyphBottomLeft.y + spTexture->getHeight();
-		
 		return true;
 	}
 

@@ -38,14 +38,13 @@ namespace baselib { namespace graphics {
 
 	void TextureUpdateHelper::updateRegion(const boost::shared_ptr<Texture> spInputTexture, const Vec2& vMinTo, const Vec2& vMaxTo, const boost::shared_ptr<Texture> spTargetTexture, const boost::shared_ptr<Shader> spShader)
 	{
-		updateRegion(Vec2(0.0f, 0.0f), Vec2(1.0f, 1.0f), spInputTexture, Vec2(0.0f, 0.0f), Vec2(1.0f, 1.0f), spTargetTexture, spShader);
+		updateRegion(Vec2(0.0f, 0.0f), Vec2(1.0f, 1.0f), spInputTexture, vMinTo, vMaxTo, spTargetTexture, spShader);
 	}
 
 	void TextureUpdateHelper::updateRegion(const Vec2& vMinFrom, const Vec2& vMaxFrom, const boost::shared_ptr<Texture> spInputTexture, const Vec2& vMinTo, const Vec2& vMaxTo, const boost::shared_ptr<Texture> spTargetTexture, const boost::shared_ptr<Shader> spShader)
 	{
 		m_spFrameBuffer->bind(spTargetTexture); // TODO: View port size needs to be set
 		m_spRenderer->setViewportSize(Vec4(0, 0, spTargetTexture->getWidth(), spTargetTexture->getHeight()));
-		m_spRenderer->clear();
 		spShader->bind();
 		spShader->setUniform(spShader->getUniform("vUVOffset"), vMinFrom);
 		spShader->setUniform(spShader->getUniform("vUVScale"), vMaxFrom - vMinFrom);
@@ -74,11 +73,13 @@ namespace baselib { namespace graphics {
 	{
 		// Init frame buffer
 		m_spFrameBuffer = FrameBuffer::createEmpty();
+		m_spFrameBuffer->bind();
+		m_spRenderer->clear();
 
 		// Init quad geometry
 		auto spVL = VertexLayout::create();
 		spVL->add(VertexAttribute("position", 0, 3, TYPE_FLOAT, 0));
-		spVL->add(VertexAttribute("texcoord", 2, 2, TYPE_FLOAT, 3*sizeof(float), true));
+		spVL->add(VertexAttribute("texcoord", 1, 2, TYPE_FLOAT, 3*sizeof(float), true));
 
 		auto spVertexList = boost::shared_ptr<VertexList<VertexPosUV>>(new VertexList<VertexPosUV>(spVL));
 		spVertexList->addVertex(VertexPosUV(Vec3(0.0f, 0.0f, 0.0f), Vec2(0.0, 0.0)));
