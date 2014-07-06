@@ -1,6 +1,9 @@
 ﻿#pragma once
 
 #include <boost/shared_ptr.hpp>
+#include <boost/filesystem.hpp>
+
+namespace fs = boost::filesystem;
 
 namespace baselib 
 {
@@ -34,6 +37,9 @@ namespace baselib
 				TEXTURE_CUBE_MAP_ARRAY,
 				TEXTURE_2D_MULTISAMPLE
 			};
+
+			//! Loads a texture object from file.
+			static boost::shared_ptr<Texture> load(const fs::path& fsPath);
 
 			//! Creates and returns a texture from an image.
 			static boost::shared_ptr<Texture> create(const boost::shared_ptr<Image>& spImage);

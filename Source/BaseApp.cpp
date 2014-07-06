@@ -9,7 +9,7 @@
 #include <Graphics/StaticGeometry.h>
 #include <Graphics/VertexList.h>
 #include <Graphics/ImageLoader.h>
-#include <Graphics/TextureLoader.h>
+#include <Graphics/Texture.h>
 #include <Graphics/Material.h>
 #include <Graphics/Node.h>
 #include <Graphics/Visual.h>

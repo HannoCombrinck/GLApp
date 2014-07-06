@@ -18,9 +18,9 @@ namespace baselib
 	{
 	public:
 		//! Constructor.
-		ResourceCache() { LOG_VERBOSE << "ResourceCache constructor"; }
+		ResourceCache() {}
 		//! Destructor.
-		virtual ~ResourceCache() { LOG_VERBOSE << "ResourceCache destructor"; }
+		virtual ~ResourceCache() {}
 
 		//! Add a resource to the cache.
 		void add(const std::string& sName, const boost::weak_ptr<Resource>& wpResource)

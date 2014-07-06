@@ -2,6 +2,7 @@
 
 #include <Graphics/Image.h>
 #include <Logging/Log.h>
+#include <Helpers/ResourceCache.h>
 #include <GL/glew.h>
 
 // GL_MAX_TEXTURE_SIZE
@@ -10,6 +11,36 @@ namespace baselib { namespace graphics {
 
 	unsigned int Texture::m_uCurrentlyBound = ~0;
 	unsigned int Texture::m_uActiveUnit = ~0;
+
+	namespace
+	{
+		ResourceCache<Texture> m_TextureCache;
+	}
+
+	boost::shared_ptr<Texture> Texture::load(const fs::path& fsPath)
+	{
+		// Check if image file exists
+		if (!fs::exists(fsPath))
+		{
+			LOG_ERROR << "Cannot find image " << fsPath;
+			assert(false);
+		}
+
+		// Get canonical path
+		std::string sCanonicalPath = fs::canonical(fsPath).string();
+
+		// Check texture cache
+		if (auto sp = m_TextureCache.get(sCanonicalPath))
+			return sp;
+
+		// Load image from file
+		// Create texture from image
+		// Return texture
+
+		LOG_INFO << "TODO";
+		assert(false);
+		return null_ptr;
+	}
 
 	boost::shared_ptr<Texture> Texture::create(const boost::shared_ptr<Image>& spImage)
 	{

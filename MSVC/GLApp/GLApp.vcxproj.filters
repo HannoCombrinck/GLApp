@@ -115,9 +115,6 @@
     <ClCompile Include="..\..\Source\Font\Glyph.cpp">
       <Filter>Header/Source Files\Font</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Graphics\TextureLoader.cpp">
-      <Filter>Header/Source Files\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Font\FontLoader.cpp">
       <Filter>Header/Source Files\Font</Filter>
     </ClCompile>
@@ -209,9 +206,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Font\Glyph.h">
       <Filter>Header/Source Files\Font</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Graphics\TextureLoader.h">
-      <Filter>Header/Source Files\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Font\FontLoader.h">
       <Filter>Header/Source Files\Font</Filter>
