@@ -45,7 +45,7 @@ namespace baselib { namespace font {
 		// TODO: Destroy freetype lib
 	}
 
-	boost::shared_ptr<Font> FontLoader::loadFont(const fs::path& fsPath, const Vec2& vAtlasSize)
+	boost::shared_ptr<Font> FontLoader::loadFont(const fs::path& fsPath, const boost::shared_ptr<graphics::Renderer>& spRenderer, const Vec2& vAtlasSize)
 	{
 		// Check if font file exists
 		if (!fs::exists(fsPath))
@@ -78,7 +78,7 @@ namespace baselib { namespace font {
 
 		FT_Set_Char_Size(ftFace, 50*64, 0, 100, 0);
 
-		return boost::shared_ptr<Font>(new Font(ftFace, vAtlasSize));
+		return boost::shared_ptr<Font>(new Font(ftFace, spRenderer, vAtlasSize));
 	}
 
 } }

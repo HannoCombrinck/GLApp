@@ -236,5 +236,11 @@
     <None Include="..\..\Data\Textures\test.tga">
       <Filter>Data\Textures</Filter>
     </None>
+    <None Include="..\..\Data\Shaders\TextureCopy.vert">
+      <Filter>Data\Shaders</Filter>
+    </None>
+    <None Include="..\..\Data\Shaders\TextureCopy.frag">
+      <Filter>Data\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

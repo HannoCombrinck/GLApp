@@ -12,6 +12,10 @@ namespace baselib
 	{
 		class Font;
 	}
+	namespace graphics
+	{
+		class Renderer;
+	}
 }
 
 namespace baselib
@@ -31,7 +35,7 @@ namespace baselib
 			~FontLoader();
 		
 			//! Load and create a font.
-			boost::shared_ptr<Font> loadFont(const fs::path& fsPath, const Vec2& vAtlasSize);
+			boost::shared_ptr<Font> loadFont(const fs::path& fsPath, const boost::shared_ptr<graphics::Renderer>& spRenderer, const Vec2& vAtlasSize);
 
 		protected:
 			//! Protected constructor - must be created by static create().

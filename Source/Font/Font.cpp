@@ -1,6 +1,7 @@
 #include "Font.h"
 
 #include <Helpers/NullPtr.h>
+#include <Graphics/Renderer.h>
 #include <Graphics/Texture.h>
 #include <Graphics/Image.h>
 #include <Graphics/Helpers/TextureUpdateHelper.h>
@@ -13,8 +14,9 @@ using namespace baselib::graphics;
 
 namespace baselib { namespace font {
 
-	Font::Font(FT_FaceRec_ *ftFace, const Vec2& vAtlasSize)
+	Font::Font(FT_FaceRec_ *ftFace, const boost::shared_ptr<Renderer>& spRenderer, const Vec2& vAtlasSize)
 		: m_FTFace(ftFace)
+		, m_spRenderer(spRenderer)
 		, m_vNextGlyphBottomLeft(Vec2(0.0f, 0.0f))
 		, m_fMaxHeight(0.0f)
 	{
@@ -44,6 +46,8 @@ namespace baselib { namespace font {
 	{
 		auto spImage = Image::create(int(vAtlasSize.x), int(vAtlasSize.y), 8, 0);
 		m_spAtlas = Texture::create(spImage);
+		m_spTextureUpdateHelper = TextureUpdateHelper::create(m_spRenderer);
+		//m_spShader 
 	}
 
 	namespace
@@ -96,27 +100,6 @@ namespace baselib { namespace font {
 			return Texture::create(spImage);
 		}
 
-		// Add a texture to the atlas and calculate the UV coordinates
-		bool addToAtlas(Vec2& vNextGlyphBottomLeft, float& fMaxHeight, Vec2& vUVMin, Vec2& vUVMax, const boost::shared_ptr<Texture>& spTexture, const boost::shared_ptr<Texture>& spAtlas)
-		{
-			vNextGlyphBottomLeft.x += spTexture->getWidth();
-			if (vNextGlyphBottomLeft.x > spAtlas->getWidth())
-				vNextGlyphBottomLeft = Vec2(0.0f, fMaxHeight);
-
-			// Atlas is full
-			if (vNextGlyphBottomLeft.y + spTexture->getHeight() > spAtlas->getHeight())
-				return false;
-
-			if (vNextGlyphBottomLeft.y + spTexture->getHeight() > fMaxHeight)
-				fMaxHeight = vNextGlyphBottomLeft.y + spTexture->getHeight();
-			
-			vUVMin = Vec2(vNextGlyphBottomLeft.x / spAtlas->getWidth(), vNextGlyphBottomLeft.y / spAtlas->getHeight());
-			vUVMax = Vec2((vNextGlyphBottomLeft.x + spTexture->getWidth()) / spAtlas->getWidth(), (vNextGlyphBottomLeft.y + spTexture->getHeight()) / spAtlas->getHeight());
-
-			//m_spTextureUpdateHelper->updateRegion(vUVMinFrom, vUVMaxFrom, spTexture, vUVMinTo, vUVMaxTo, spAtlas, spDistanceFieldShader);
-
-			return true;
-		}
 	}
 
 	boost::shared_ptr<Glyph> Font::getGlyph(unsigned char uChar) const
@@ -160,6 +143,26 @@ namespace baselib { namespace font {
 		// Add to glyph cache
 		m_GlyphMap[uChar] = spGlyph;
 		return spGlyph;
+	}
+
+	bool Font::addToAtlas(Vec2& vNextGlyphBottomLeft, float& fMaxHeight, Vec2& vUVMin, Vec2& vUVMax, const boost::shared_ptr<Texture>& spTexture, const boost::shared_ptr<Texture>& spAtlas) const
+	{
+		vNextGlyphBottomLeft.x += spTexture->getWidth();
+		if (vNextGlyphBottomLeft.x > spAtlas->getWidth())
+			vNextGlyphBottomLeft = Vec2(0.0f, fMaxHeight);
+
+		// Atlas is full
+		if (vNextGlyphBottomLeft.y + spTexture->getHeight() > spAtlas->getHeight())
+			return false;
+
+		if (vNextGlyphBottomLeft.y + spTexture->getHeight() > fMaxHeight)
+			fMaxHeight = vNextGlyphBottomLeft.y + spTexture->getHeight();
+
+		vUVMin = Vec2(vNextGlyphBottomLeft.x / spAtlas->getWidth(), vNextGlyphBottomLeft.y / spAtlas->getHeight());
+		vUVMax = Vec2((vNextGlyphBottomLeft.x + spTexture->getWidth()) / spAtlas->getWidth(), (vNextGlyphBottomLeft.y + spTexture->getHeight()) / spAtlas->getHeight());
+
+		//m_spTextureUpdateHelper->updateRegion(spTexture, vUVMin, vUVMax, spAtlas, null_ptr);
+		return true;
 	}
 
 } }

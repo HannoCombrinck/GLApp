@@ -146,7 +146,7 @@ namespace baselib {
 		
 		// Create test font
 		m_spFontLoader = FontLoader::create();
-		m_spFont = m_spFontLoader->loadFont("C:/Windows/Fonts/times.ttf", Vec2(1024, 1024));
+		m_spFont = m_spFontLoader->loadFont("C:/Windows/Fonts/times.ttf", m_spRenderer, Vec2(1024, 1024));
 		auto spGlyph = m_spFont->getGlyph('T');
 	}
 
