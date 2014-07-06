@@ -2,6 +2,9 @@
 
 #include <string>
 #include <boost/shared_ptr.hpp>
+#include <boost/filesystem.hpp>
+
+namespace fs = boost::filesystem;
 
 namespace baselib 
 {
@@ -25,6 +28,9 @@ namespace baselib
 				COMPUTE_SHADER,
 				NUM_SHADER_TYPES
 			};
+
+			//! Load and creates a shader object from file. File extension determines shader type.
+			static boost::shared_ptr<ShaderObject> load(const fs::path& fsPath);
 
 			//! Creates, compiles and returns a shader object from source.
 			static boost::shared_ptr<ShaderObject> create(const std::string& sShaderSource, ShaderType eType);

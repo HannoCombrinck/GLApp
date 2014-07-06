@@ -3,7 +3,7 @@
 #include <Logging/Log.h>
 
 #include <Graphics/Renderer.h>
-#include <Graphics/ShaderLoader.h>
+#include <Graphics/ShaderObject.h>
 #include <Graphics/ShaderPipeline.h>
 #include <Graphics/Shader.h>
 #include <Graphics/StaticGeometry.h>
@@ -73,17 +73,15 @@ namespace baselib {
 		// Create test renderer
 		m_spRenderer = Renderer::create();
 
-		// Create test shader manager and test shader
-		auto spShaderLoader = ShaderLoader::create();
-
-		auto spVertexShader = spShaderLoader->loadShaderObject("../Data/Shaders/test.vert");
-		auto spFragmentShader = spShaderLoader->loadShaderObject("../Data/Shaders/test.frag");
+		// Create shader objects
+		auto spVertexShader = ShaderObject::load("../Data/Shaders/test.vert");
+		auto spFragmentShader = ShaderObject::load("../Data/Shaders/test.frag");
 
 		std::vector<boost::shared_ptr<ShaderObject>> aspShaders;
 		aspShaders.push_back(spVertexShader);
 		aspShaders.push_back(spFragmentShader);
 
-		m_spShaderPipeline = ShaderPipeline::create("TestPipeline", aspShaders); //spShaderLoader->createShaderPipeline("TestPipeline", aspShaders);
+		m_spShaderPipeline = ShaderPipeline::create("TestPipeline", aspShaders);
 		auto spShader = m_spShaderPipeline->createInstance();
 
 

@@ -121,9 +121,6 @@
     <ClCompile Include="..\..\Source\Font\FontLoader.cpp">
       <Filter>Header/Source Files\Font</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Graphics\ShaderLoader.cpp">
-      <Filter>Header/Source Files\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Graphics\Helpers\TextureUpdateHelper.cpp">
       <Filter>Header/Source Files\Graphics\Helpers</Filter>
     </ClCompile>
@@ -218,9 +215,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Font\FontLoader.h">
       <Filter>Header/Source Files\Font</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Graphics\ShaderLoader.h">
-      <Filter>Header/Source Files\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Graphics\Helpers\TextureUpdateHelper.h">
       <Filter>Header/Source Files\Graphics\Helpers</Filter>
