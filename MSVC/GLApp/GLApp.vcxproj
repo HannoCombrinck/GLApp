@@ -99,6 +99,7 @@
     <ClCompile Include="..\..\Source\Graphics\Visual.cpp" />
     <ClCompile Include="..\..\Source\Graphics\VisualCollector.cpp" />
     <ClCompile Include="..\..\Source\Helpers\NullPtr.cpp" />
+    <ClCompile Include="..\..\Source\Helpers\Timer.cpp" />
     <ClCompile Include="..\..\Source\Logging\Log.cpp" />
     <ClCompile Include="..\..\Source\main.cpp" />
     <ClCompile Include="..\..\Source\Math\MathHelpers.cpp" />
@@ -130,6 +131,7 @@
     <ClInclude Include="..\..\Source\Graphics\VisualCollector.h" />
     <ClInclude Include="..\..\Source\Helpers\NullPtr.h" />
     <ClInclude Include="..\..\Source\Helpers\ResourceCache.h" />
+    <ClInclude Include="..\..\Source\Helpers\Timer.h" />
     <ClInclude Include="..\..\Source\Logging\Log.h" />
     <ClInclude Include="..\..\Source\Math\Math.h" />
     <ClInclude Include="..\..\Source\Math\MathHelpers.h" />

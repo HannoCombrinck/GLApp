@@ -118,6 +118,9 @@
     <ClCompile Include="..\..\Source\Graphics\Helpers\TextureUpdateHelper.cpp">
       <Filter>Header/Source Files\Graphics\Helpers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Helpers\Timer.cpp">
+      <Filter>Header/Source Files\Helpers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\GLFWApp\GLFWApp.h">
@@ -206,6 +209,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Graphics\Helpers\TextureUpdateHelper.h">
       <Filter>Header/Source Files\Graphics\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Helpers\Timer.h">
+      <Filter>Header/Source Files\Helpers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
