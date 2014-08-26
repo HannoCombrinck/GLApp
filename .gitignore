@@ -8,3 +8,5 @@ ipch
 *.suo
 *.vcxproj.user
 *.nvuser
+Site/Source/.cabal-sandbox/
+Site/Source/cabal.sandbox.config

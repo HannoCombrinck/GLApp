@@ -1,0 +1,24 @@
+name:                Site
+version:             0
+synopsis:            Hakyll site for the GLApp repository
+license:             PublicDomain
+build-type:          Simple
+cabal-version:       >=1.10
+
+
+executable Site
+  default-language:    Haskell2010
+  main-is: Site.hs
+  ghc-options: -threaded
+  build-depends:    base >=4.7 && <4.8, 
+                    hakyll == 4.5.*, 
+                    pandoc == 1.12.4.2,
+                    pandoc-types == 1.12.*,
+                    pandoc-citeproc == 0.3.1,
+                    Elm == 0.12.*,
+                    aeson == 0.7.*,
+                    attoparsec == 0.11.3.1,
+                    text >= 1.1.0.0 && < 1.2,
+                    scientific == 0.2.0.2,
+                    containers
+  
