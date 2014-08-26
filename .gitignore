@@ -10,3 +10,6 @@ ipch
 *.nvuser
 Site/Source/.cabal-sandbox/
 Site/Source/cabal.sandbox.config
+Site/Source/_cache
+Site/Source/_site
+Site/Source/dist

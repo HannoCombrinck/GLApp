@@ -32,6 +32,14 @@ main = hakyll $ do
             >>= loadAndApplyTemplate "templates/default.html" defaultContext
             >>= relativizeUrls
 
+    match pages $ do
+        route $ setExtension "html"
+        compile $ _pandocReader
+            >>= _pandocWriterPages
+            >>= loadAndApplyTemplate "templates/page.html"    postCtx
+            >>= loadAndApplyTemplate "templates/default.html" postCtx
+            >>= relativizeUrls
+
     match posts $ do
         route $ setExtension "html"
         compile $ _pandocReader
@@ -62,19 +70,20 @@ main = hakyll $ do
                 >>= relativizeUrls
 
 
-    match "index.html" $ do
-        route idRoute
-        compile $ do
+    match "index.md" $ do
+        route $ setExtension "html"
+        compile $ do 
             slides' <- recentFirst =<< loadAll slides
             posts' <- recentFirst =<< loadAll posts
             let indexCtx    = listField "slides" postCtx (return slides')
                             <> listField "posts" postCtx (return posts')
                             <> constField "title" "Home"
                             <> defaultContext
-            getResourceBody
-                >>= applyAsTemplate indexCtx
-                >>= loadAndApplyTemplate "templates/default.html" indexCtx
-                >>= relativizeUrls
+            _pandocReader 
+                    >>= _pandocWriterPages 
+                    >>= loadAndApplyTemplate "templates/index.html" indexCtx 
+                    >>= loadAndApplyTemplate "templates/default.html" indexCtx
+                    >>= relativizeUrls
 
     match "templates/*" $ compile templateCompiler
 
@@ -83,9 +92,10 @@ main = hakyll $ do
 postCtx :: Context String
 postCtx = metadataField <> dateField "date" "%B %e, %Y" <> defaultContext
 
-slides, posts :: Pattern
+slides, posts, pages :: Pattern
 slides = "slides/*.md" .||. "slides/*.lhs"
 posts =  "posts/*.md" .||. "posts/*.lhs"
+pages =  "pages/*.md" .||. "pages/*.lhs"
 
 
 _pandocReader :: Compiler (Item Pandoc)
@@ -104,6 +114,11 @@ _pandocWriterSlides  =  _pandocWriterWith $ def { writerSlideVariant = SlidySlid
                                                } 
 _pandocWriterPosts :: Item Pandoc ->  Compiler (Item String)
 _pandocWriterPosts  =  _pandocWriterWith $ def { writerHighlight = True
+                                               , writerExtensions = S.fromList [Ext_literate_haskell]
+                                               } 
+
+_pandocWriterPages :: Item Pandoc ->  Compiler (Item String)
+_pandocWriterPages  =  _pandocWriterWith $ def { writerHighlight = True
                                                , writerExtensions = S.fromList [Ext_literate_haskell]
                                                } 
 
