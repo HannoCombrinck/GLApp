@@ -1,24 +1,26 @@
-
 <div>
-<img src="/media/logo.png" style="float: right; margin: 10px;" />
+	<div style="float: right;">
+		 <img src="/media/logo.png"/>
+	</div>
 
-$body$
+	<div>
+		$body$
+
+		<h2>Posts</h2>
+		<ul>
+			$for(posts)$
+				<li>
+					<a href="$url$">$title$</a> - $date$
+				</li>
+			$endfor$
+		</ul>
+		<h2>Slides</h2>
+		<ul>
+			$for(slides)$
+				<li>
+					<a href="$url$">$title$</a> - $date$
+				</li>
+			$endfor$
+		</ul>
+	</div>
 </div>
-
-<h2>Posts</h2>
-<ul>
-    $for(posts)$
-        <li>
-            <a href="$url$">$title$</a> - $date$
-        </li>
-    $endfor$
-</ul>
-<h2>Slides</h2>
-<ul>
-    $for(slides)$
-        <li>
-            <a href="$url$">$title$</a> - $date$
-        </li>
-    $endfor$
-</ul>
-

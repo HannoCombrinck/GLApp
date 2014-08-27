@@ -5,6 +5,8 @@ import           Text.Pandoc.Options
 import           Text.Pandoc.Definition
 import           Text.Read
 import           Control.Applicative
+import           Control.Arrow
+import           Control.Monad
 import           Data.Monoid
 import           Data.Maybe
 import           Data.Char
@@ -16,8 +18,15 @@ import qualified Data.Set as S
 logMsg :: String -> Compiler ()
 logMsg s = debugCompiler $ "_logged_ " ++ s
 
+cfg :: Configuration
+cfg = def {ignoreFile  = uncurry (||) . (ignore &&& ignoreFile def) }
+    where
+        ignore "[fuf]" = True
+        ignore "fuf" = True
+        ignore _ = False
+
 main :: IO ()
-main = hakyll $ do
+main = hakyllWith cfg $ do
     match "media/*" $ do
         route   idRoute
         compile copyFileCompiler
@@ -28,25 +37,19 @@ main = hakyll $ do
 
     match (fromList ["about.md"]) $ do
         route   $ setExtension "html"
-        compile $ pandocCompiler
-            >>= loadAndApplyTemplate "templates/default.html" defaultContext
-            >>= relativizeUrls
+        compile $ pandocCompiler >>= _defTemplate postCtx
 
     match pages $ do
         route $ setExtension "html"
         compile $ _pandocReader
-            >>= _pandocWriterPages
-            >>= loadAndApplyTemplate "templates/page.html"    postCtx
-            >>= loadAndApplyTemplate "templates/default.html" postCtx
-            >>= relativizeUrls
+            >>= _pandocWriterPages 
+            >>= _defTemplate postCtx
 
     match posts $ do
         route $ setExtension "html"
         compile $ _pandocReader
-            >>= _pandocWriterPosts
-            >>= loadAndApplyTemplate "templates/post.html"    postCtx
-            >>= loadAndApplyTemplate "templates/default.html" postCtx
-            >>= relativizeUrls
+            >>= _pandocWriterPosts 
+            >>= _defTemplate postCtx
 
     match slides $ do
         route $ setExtension "html"
@@ -64,10 +67,9 @@ main = hakyll $ do
                             <> listField "posts" postCtx (return posts')
                             <> constField "title" "Archives"
                             <> defaultContext
-            makeItem ""
-                >>= loadAndApplyTemplate "templates/archive.html" archiveCtx
-                >>= loadAndApplyTemplate "templates/default.html" archiveCtx
-                >>= relativizeUrls
+            makeItem "" 
+                >>= loadAndApplyTemplate "templates/archive.html" archiveCtx 
+                >>= _defTemplate archiveCtx
 
 
     match "index.md" $ do
@@ -80,15 +82,23 @@ main = hakyll $ do
                             <> constField "title" "Home"
                             <> defaultContext
             _pandocReader 
-                    >>= _pandocWriterPages 
-                    >>= loadAndApplyTemplate "templates/index.html" indexCtx 
-                    >>= loadAndApplyTemplate "templates/default.html" indexCtx
-                    >>= relativizeUrls
+                >>= _pandocWriterPages 
+                >>= loadAndApplyTemplate "templates/index.html" indexCtx 
+                >>= _defTemplateNoContent indexCtx
 
-    match "templates/*" $ compile templateCompiler
+    match "templates/*.html"  $ compile templateCompiler
 
 
 --------------------------------------------------------------------------------
+
+_defTemplate :: Context String -> Item String -> Compiler (Item String)
+_defTemplate ctx = loadAndApplyTemplate "templates/default.html" ctx
+                 >=> loadAndApplyTemplate "templates/default_no_content.html" ctx
+                 >=> relativizeUrls
+
+_defTemplateNoContent :: Context String -> Item String -> Compiler (Item String)
+_defTemplateNoContent ctx = loadAndApplyTemplate "templates/default_no_content.html" ctx >=> relativizeUrls
+
 postCtx :: Context String
 postCtx = metadataField <> dateField "date" "%B %e, %Y" <> defaultContext
 
