@@ -8,3 +8,11 @@ ipch
 *.suo
 *.vcxproj.user
 *.nvuser
+*.swp
+Site/Source/.cabal-sandbox/
+Site/Source/cabal.sandbox.config
+Site/Source/_cache
+Site/Source/_site
+Site/Source/dist
+Site/gh-pages
+Site/Source/upx.exe
