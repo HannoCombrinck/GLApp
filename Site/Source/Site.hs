@@ -142,7 +142,7 @@ _pandocWriterWith wOpts i = do
     pure wOpts 
         >>= setOp "slideLevel"   (\o v-> o {writerSlideLevel = readMaybe v})
         >>= setOp "incremental"  (\o v-> o {writerIncremental = map toLower v == "true"})
-        >>= setOp "highlight"    (\o v-> o {writerIncremental = map toLower v == "true"})
+        >>= setOp "highlight"    (\o v-> o {writerHighlight = map toLower v == "true"})
         >>= setOp "slideVariant" (\o v-> o {writerSlideVariant = NoSlides `fromMaybe` readMaybe v})
         >>= \ o -> return $ writePandocWith o i
 

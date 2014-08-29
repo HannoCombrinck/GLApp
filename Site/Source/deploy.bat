@@ -1,2 +1,2 @@
-robocopy .\_site ..\github-pages /S /MIR /XD .git
+robocopy .\_site ..\gh-pages /S /MIR /XD .git
 
