@@ -85,14 +85,14 @@ easy to generate the site. The batch files are:
 Building the Site Generator from Source
 =======================================
 To build the site generator from source you will need to do the following:
-# Install the [Haskell Platform 2014](https://www.haskell.org/platform) (for Windows install the 32 bit version not the 64 bit)
-# Update your cabal-install by running the following on the command line
-    # cabal update
-    # cabal install cabal-install
-# Make sure the new cabal-install takes precedence on the command line. On windows make sure that **C:\Users\UserName\AppData\Roaming\cabal\bin**
+1. Install the [Haskell Platform 2014](https://www.haskell.org/platform) (for Windows install the 32 bit version not the 64 bit)
+1. Update your cabal-install by running the following on the command line
+    1. cabal update
+     cabal install cabal-install
+1. Make sure the new cabal-install takes precedence on the command line. On windows make sure that **C:\Users\UserName\AppData\Roaming\cabal\bin**
   is prepended to your path.
-# CD to the folder **GLAppRepo/Site/Source**
-# Create a sandox by typing **cabal sandbox init**
-# Build and then copy executable to **GLAppRepo/Site/Source** by either
-  # On windows running batch file **buildSiteExec.bat**
-  # Or manually running **cabal install** then copying **GLAppRepo/Site/Source/.cabal-sandbox/bin/Site.exe** to **GLAppRepo/Site/Source**
+1. CD to the folder **GLAppRepo/Site/Source**
+1. Create a sandox by typing **cabal sandbox init**
+1. Build and then copy executable to **GLAppRepo/Site/Source** by either
+  1. On windows running batch file **buildSiteExec.bat**
+  1. Or manually running **cabal install** then copying **GLAppRepo/Site/Source/.cabal-sandbox/bin/Site.exe** to **GLAppRepo/Site/Source**
