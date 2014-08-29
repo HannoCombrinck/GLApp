@@ -85,6 +85,7 @@ easy to generate the site. The batch files are:
 Building the Site Generator from Source
 =======================================
 To build the site generator from source you will need to do the following:
+
 1. Install the [Haskell Platform 2014](https://www.haskell.org/platform) (for Windows install the 32 bit version not the 64 bit)
 1. Update your cabal-install by running the following on the command line
     1. cabal update
