@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"> 
+<head> 
+  <title>Slide Shows in XHTML</title> 
+  <link rel="stylesheet" type="text/css" media="screen, projection, print" href="http://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" /> 
+  <link rel="stylesheet" type="text/css" href="../css/highlighting.css" />
+  <script src="http://www.w3.org/Talks/Tools/Slidy2/scripts/slidy.js" charset="utf-8" type="text/javascript">
+  </script> 
+</head>
+<body>
+	<div id="debugging-opengl-applications" class="slide section level2">
+<h1>Debugging OpenGL Applications</h1>
+<ul>
+<li>Novice graphics programming experiences</li>
+<li>Common problems</li>
+<li>How these problems are solved</li>
+<li>Available graphics debugging tools</li>
+<li>How the tools work</li>
+<li>What you need to know to use the tools properly</li>
+<li>Examples</li>
+</ul>
+</div>
+<div id="first-graphics-programming-experiences" class="slide section level2">
+<h1>First graphics programming experiences</h1>
+<p>Getting started with writing grahics applications can be painful…</p>
+<ul>
+<li>I did everything exactly like the tutorial said and there’s nothing on the screen</li>
+<li>I completely rewrote the shaders and the rendered image still looks the same</li>
+<li>I did the math a hundred times and the result is exactly the opposite of what I expected</li>
+</ul>
+</div>
+<div id="why-this-happens" class="slide section level2">
+<h1>Why this happens</h1>
+<ul>
+<li>The graphics pipeline can be seen as one big state machine</li>
+<li>Large number of bugs result from:
+<ul>
+<li>State not being set</li>
+<li>State not being set correctly</li>
+<li>State changes not being tracked properly</li>
+</ul></li>
+</ul>
+</div>
+<div id="how-these-problems-are-solved" class="slide section level2">
+<h1>How these problems are solved</h1>
+<ul>
+<li>Trial and error</li>
+<li>Shooting in the dark</li>
+<li>Plain guessing</li>
+</ul>
+</div>
+<div id="how-to-solve-these-problems-without-pulling-your-hair-out" class="slide section level2">
+<h1>How to solve these problems without pulling your hair out</h1>
+<ul>
+<li>Check ALL API errors and warnings</li>
+<li>Use the right tools</li>
+</ul>
+</div>
+<div id="opengl-debugging-tools" class="slide section level2">
+<h1>OpenGL debugging tools</h1>
+<ul>
+<li><a href="http://www.gremedy.com">GDEBugger</a></li>
+<li><a href="http://www.nvidia.com/object/nsight.html">NVidia NSight</a></li>
+<li><a href="https://github.com/ValveSoftware/vogl">VOGL</a></li>
+<li><a href="http://www.vis.uni-stuttgart.de/glsldevil">GLSLDevil</a></li>
+<li><a href="http://www.opengl.org/sdk/tools/BuGLe">BuGLe</a></li>
+<li><a href="https://github.com/apitrace/apitrace">APITrace</a></li>
+<li><a href="https://code.google.com/p/glintercept">GLIntercept</a></li>
+</ul>
+</div>
+<div id="opengl-debugging-tools-1" class="slide section level2">
+<h1>OpenGL debugging tools</h1>
+<p>Tools let you:</p>
+<ul>
+<li>Keep track of and record API interaction</li>
+<li>Take pipeline state snapshots
+<ul>
+<li>Inspect state</li>
+<li>Inspect graphics memory</li>
+</ul></li>
+</ul>
+</div>
+<div id="what-you-need-to-know" class="slide section level2">
+<h1>What you need to know</h1>
+<p>For these debugging tools to be usefull it’s important to understand all the phases of the graphics pipeline</p>
+<ul>
+<li>High level understanding of what each phase does</li>
+<li>What are the inputs and outputs of each phase</li>
+<li>Which states affect which phases of the pipeline</li>
+</ul>
+</div>
+<div id="opengl-pipeline" class="slide section level2">
+<h1>OpenGL Pipeline</h1>
+<div class="figure">
+<img src="../media/RenderingPipeline.png" />
+</div>
+</div>
+<div id="opengl-pipeline-1" class="slide section level2">
+<h1>OpenGL Pipeline</h1>
+<ul>
+<li>Pipeline input
+<ul>
+<li>VBO - Vertex Buffer Object
+<ul>
+<li>Actual vertex data</li>
+</ul></li>
+<li>VAO - Vertex Array Object
+<ul>
+<li>Vertex attributes that defines structure of vertex data</li>
+</ul></li>
+</ul></li>
+</ul>
+<div class="figure">
+<img src="../media/VAOVBO.png" />
+</div>
+</div>
+<div id="opengl-pipeline-2" class="slide section level2">
+<h1>OpenGL Pipeline</h1>
+<div class="figure">
+<img src="../media/RenderingPipeline1.png" />
+</div>
+</div>
+<div id="opengl-pipeline-3" class="slide section level2">
+<h1>OpenGL Pipeline</h1>
+<ul>
+<li>Vertex processing
+<ul>
+<li>Programmable via Vertex shader</li>
+<li>Receives vertices as input and outputs transformed vertices</li>
+<li>Typically applies world, view and projection matrices to transform vertices into clip-space</li>
+</ul></li>
+</ul>
+<div class="figure">
+<img src="../media/heightmap.gif" />
+</div>
+</div>
+<div id="opengl-pipeline-4" class="slide section level2">
+<h1>OpenGL Pipeline</h1>
+<ul>
+<li>Primitive assembly
+<ul>
+<li>Collects output of vertex shaders and compose into primitive shapes</li>
+</ul></li>
+</ul>
+<div class="figure">
+<img src="../media/Primitives.png" />
+</div>
+</div>
+<div id="opengl-pipeline-5" class="slide section level2">
+<h1>OpenGL Pipeline</h1>
+<div class="figure">
+<img src="../media/RenderingPipeline2.png" />
+</div>
+</div>
+<div id="opengl-pipeline-6" class="slide section level2">
+<h1>OpenGL Pipeline</h1>
+<ul>
+<li>Tessellation (Optional phase)
+<ul>
+<li>Programmable via Tessellation Control and Evaluation shaders</li>
+<li>Tessellation Control defines how much new geometry is injected</li>
+<li>Tessellation Evaluation transforms newly injected geometry</li>
+</ul></li>
+</ul>
+<p><img src="../media/Geodesic.gif" /> (Gif from <a href="http://prideout.net/blog/?p=48">The Little Grasshopper blog</a>)</p>
+</div>
+<div id="opengl-pipeline-7" class="slide section level2">
+<h1>OpenGL Pipeline</h1>
+<div class="figure">
+<img src="../media/RenderingPipeline3.png" />
+</div>
+</div>
+<div id="opengl-pipeline-8" class="slide section level2">
+<h1>OpenGL Pipeline</h1>
+<ul>
+<li>Primitive processing (Optional phase)
+<ul>
+<li>Programmable via Geometry shader</li>
+<li>Receives input from primitive assembly as input and outputs primitive</li>
+<li>Can output zero or more primitives</li>
+<li>Can ouput completely different type of primitives</li>
+</ul></li>
+</ul>
+<div class="figure">
+<img src="../media/GeometryShader.png" />
+</div>
+</div>
+<div id="opengl-pipeline-9" class="slide section level2">
+<h1>OpenGL Pipeline</h1>
+<div class="figure">
+<img src="../media/RenderingPipeline4.png" />
+</div>
+</div>
+<div id="opengl-pipeline-10" class="slide section level2">
+<h1>OpenGL Pipeline</h1>
+<ul>
+<li>Transform Feedback (Optional opt-out)
+<ul>
+<li>Skips rest of the pipeline and returns output of geometry shader</li>
+<li>Useful for GPU particle systems</li>
+</ul></li>
+</ul>
+</div>
+<div id="opengl-pipeline-11" class="slide section level2">
+<h1>OpenGL Pipeline</h1>
+<div class="figure">
+<img src="../media/RenderingPipeline5.png" />
+</div>
+</div>
+<div id="opengl-pipeline-12" class="slide section level2">
+<h1>OpenGL Pipeline</h1>
+<ul>
+<li>Clipping and Culling
+<ul>
+<li>Primitives outside fixed viewing volume are discarded</li>
+<li>Custom clipping planes can be provided for additional clipping</li>
+<li>Face culling (e.g. back facing primitives are discarded)</li>
+<li>Viewport transform - primitive vertices are transformed from clip-space to window space</li>
+</ul></li>
+</ul>
+</div>
+<div id="opengl-pipeline-13" class="slide section level2">
+<h1>OpenGL Pipeline</h1>
+<div class="figure">
+<img src="../media/RenderingPipeline6.png" />
+</div>
+</div>
+<div id="opengl-pipeline-14" class="slide section level2">
+<h1>OpenGL Pipeline</h1>
+<ul>
+<li>Rasterization
+<ul>
+<li>Receives primitives as input and outputs sequence of fragments</li>
+<li>Fragment data is interpolated from vertex data</li>
+</ul></li>
+</ul>
+<div class="figure">
+<img src="../media/Rasterization.png" />
+</div>
+</div>
+<div id="opengl-pipeline-15" class="slide section level2">
+<h1>OpenGL Pipeline</h1>
+<div class="figure">
+<img src="../media/RenderingPipeline7.png" />
+</div>
+</div>
+<div id="opengl-pipeline-16" class="slide section level2">
+<h1>OpenGL Pipeline</h1>
+<ul>
+<li>Fragment processing
+<ul>
+<li>Programmable via Fragment shader</li>
+<li>Receives input from rasterizer and outputs colours, depth values and stencil values</li>
+<li>Only colour and depth output is programmable</li>
+<li>Different colours can be output to different buffers simultaneously</li>
+<li>Depth and stencil values can only be written to a single depth buffer at a time</li>
+</ul></li>
+</ul>
+</div>
+<div id="opengl-pipeline-17" class="slide section level2">
+<h1>OpenGL Pipeline</h1>
+<div class="figure">
+<img src="../media/RenderingPipeline8.png" />
+</div>
+</div>
+<div id="opengl-pipeline-18" class="slide section level2">
+<h1>OpenGL Pipeline</h1>
+<ul>
+<li>Per-Sample Operations
+<ul>
+<li>Receives input from fragment shaders and outputs final, if any, pixel to framebuffer</li>
+<li>Performs stencil test</li>
+<li>Performs depth test</li>
+<li>Performs blending operation</li>
+<li>Performs masking operations - colour, depth and stencil values can be masked</li>
+<li>Blended fragments that pass all tests and aren’t masked are written to the framebuffer</li>
+</ul></li>
+</ul>
+</div>
+<div id="opengl-pipeline-19" class="slide section level2">
+<h1>OpenGL Pipeline</h1>
+<div class="figure">
+<img src="../media/RenderingPipeline9.png" />
+</div>
+</div>
+<div id="demo-time" class="slide section level2">
+<h1>Demo time!</h1>
+</div>
+</body>
+</html>
