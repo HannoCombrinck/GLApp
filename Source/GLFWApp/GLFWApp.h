@@ -18,55 +18,49 @@ namespace baselib
 	{
 	public:
 		//! Constructor.
-		GLFWApp(int iWidth = 800, int iHeight = 600, bool bFullscreen = false, int iMajorVersion = 3, int iMinorVersion = 2, const std::string& sWindowTitle = "GLFW Window");
+		GLFWApp();
 		//! Destructor.
 		virtual ~GLFWApp();
 
-		//! Start and run the main update loop in this thread. This function returns when the app is stopped.
+		//! Create a window and start the main update loop in this thread. This function returns when the app is stopped.
 		void start();
+		//! Return time elapsed from application start.
+		double GetTime() const;
+
+		//! Set window title text.
+		void setWindowTitle(const std::string& s);
+		//! Getter for setWindowTitle().
+		std::string getWindowTitle() const { return m_sWindowTitle; }
+
+		//! Set window size.
+		void setSize(int iWidth, int iHeight);
+		//! Get window size.
+		void getSize(int& iWidth, int& iHeight) const { iWidth = m_iWidth; iHeight = m_iHeight; }
+		
+		//! Set to full screen or windowed mode.
+		void setFullScreen(bool b);
+		//! Getter for setFullScreen().
+		bool getFullScreen() const { return m_bFullscreen; }
+
+		//! Set the OpenGL context version. Has to be set before start() is called.
+		void setGLVersion(int iMajor, int iMinor) { m_iMajorVersion = iMajor; m_iMinorVersion = iMinor; }
+		//! Getter for setGLVersion().
+		void getGLVersion(int& iMajor, int& iMinor) { iMajor = m_iMajorVersion; iMinor = m_iMinorVersion; }
+		
+	private:
+		//! Create the main GLFW window, OpenGL context and associate the context with the window.
+		void init();
+		//! Destroy the window and terminate GLFW.
+		void destroy();
 		//! Process all application events. (i.e. key presses, mouse clicks, window resize etc.)
 		void processEvents();
 		//! Swap the front and back buffers.
 		void swapBuffers();
 
-		//! Returns false if the app should be terminated.
-		bool isAppRunning() const { return m_bAppRunning; }
-		//! Return time elapsed from application start.
-		double GetTime() const;
-
-		//! Set window title text.
-		//void setWindowTitle(const std::string& s) { }
-		//! Getter for setWindowTitle().
-		//std::string getWindowTitle() const { }
-
-		//! Set window size.
-		//void setSize(const Vec2& vSize);
-		//! Get window size.
-		//Vec2 getSize() const;
-		
-		//! Set to full screen or windowed mode.
-		//void setFullScreen(bool b) { m_bFullscreen = b; }
-		//! Getter for setFullScreen().
-		//bool getFullScreen() const { return m_bFullscreen; }
-
-		//! Set the major OpenGL context version. Has to be set before start() is called.
-		//void setMajorVersion(int i) { m_iMajorVersion = i; }
-		//! Getter for setMajorVersion().
-		//int getMajorVersion() const { return m_iMajorVersion; }
-
-		//! Set the minor OpenGL context version. Has to be set before start() is called.
-		//void setMinorVersion(int i) { m_iMinorVersion = i; }
-		//! Getter for setMinorVersion().
-		//int getMinorVersion() const { return m_iMinorVersion; }
-		
-	private:
-		//! Create the main GLFW window, OpenGL context and associate the context with the window.
-		void init(int m_iWidth, int m_iHeight, bool m_bFullscreen, int m_iMajorVersion, int m_iMinorVersion, const std::string& sWindowTitle);
-		//! Destroy the window and terminate GLFW.
-		void destroy();
-
 		//! Set the app "running" state. When set to false the main update loop will terminate.
 		void setAppRunning(bool b) { m_bAppRunning = b; }
+		//! Returns false if the app should be terminated.
+		bool isAppRunning() const { return m_bAppRunning; }
 
 		//! Key event callback.
 		void keyEvent(int iKey, int iAction);
@@ -98,6 +92,10 @@ namespace baselib
 		void windowClose();
 		boost::signals2::scoped_connection m_WindowCloseConnection;
 
+		//! Called after window and OpenGL context creation to allow for derived app resrouce creation
+		virtual void onInit() {}
+		//! Called before window destruction to allow for derived app resource cleanup
+		virtual void onDestroy() {}
 		//! Update called from main loop
 		virtual void onUpdate(double dDeltaTime) {}
 		//! Render called from main loop
@@ -150,5 +148,12 @@ namespace baselib
 
 		double m_dCurrentTime;		 //!< Current time elapsed since application started.
 		double m_dPreviousTime;		 //!< Time elapsed up to previous update cycle. So time elapsed since previous update = m_dCurrentTime - m_dPreviousTime.
+
+		int m_iWidth;				 //!< Current window width
+		int m_iHeight;				 //!< Current window height
+		bool m_bFullscreen;			 //!< True if in fullscreen mode, false for windowed mode
+		int m_iMajorVersion;		 //!< OpenGL major version
+		int m_iMinorVersion;		 //!< OpenGL minor version
+		std::string m_sWindowTitle;  //!< Window title string
 	};
 }

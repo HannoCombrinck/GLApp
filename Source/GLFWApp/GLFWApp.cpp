@@ -11,7 +11,7 @@
 
 namespace baselib {
 
-	GLFWApp::GLFWApp(int iWidth /*= 800*/, int iHeight /*= 600*/, bool bFullscreen /*= false*/, int iMajorVersion /*= 3*/, int iMinorVersion /*= 2*/, const std::string& sWindowTitle /*= "GLFW Window"*/)
+	GLFWApp::GLFWApp()
 		: m_bAppRunning(false)
 		, m_pWindow(NULL)
 		, m_iMouseX(0)
@@ -20,9 +20,14 @@ namespace baselib {
 		, m_iMouseYPrev(0)
 		, m_dCurrentTime(0.0)
 		, m_dPreviousTime(0.0)
+		, m_iWidth(800)
+		, m_iHeight(600)
+		, m_bFullscreen(false)
+		, m_iMajorVersion(3)
+		, m_iMinorVersion(2)
+		, m_sWindowTitle("GLFW Window")
 	{
 		LOG_VERBOSE << "GLFWApp constructor";
-		init(iWidth, iHeight, bFullscreen, iMajorVersion, iMinorVersion, sWindowTitle);
 	}
 
 	GLFWApp::~GLFWApp()
@@ -98,7 +103,7 @@ namespace baselib {
 		}
 	}
 
-	void GLFWApp::init(int iWidth, int iHeight, bool bFullscreen, int iMajorVersion, int iMinorVersion, const std::string& sWindowTitle)
+	void GLFWApp::init()
 	{
 		// Set error callback
 		glfwSetErrorCallback(errorCallback);
@@ -112,14 +117,14 @@ namespace baselib {
 
 		// Create window and set context
 		GLFWmonitor *pMonitor = NULL;
-		if (bFullscreen)
+		if (m_bFullscreen)
 			pMonitor = glfwGetPrimaryMonitor();
 
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, iMajorVersion);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, iMinorVersion);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, m_iMajorVersion);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, m_iMinorVersion);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // TODO: Test forward compatible vs not forward compatible
-		m_pWindow = glfwCreateWindow(iWidth, iHeight, sWindowTitle.c_str(), pMonitor, NULL);
+		m_pWindow = glfwCreateWindow(m_iWidth, m_iHeight, m_sWindowTitle.c_str(), pMonitor, NULL);
 		if (!m_pWindow)
 		{
 			glfwTerminate();
@@ -159,6 +164,7 @@ namespace baselib {
 
 		// Successfully created window and context
 		setAppRunning(true);
+		onInit();
 	}
 
 	void GLFWApp::destroy()
@@ -170,6 +176,9 @@ namespace baselib {
 
 	void GLFWApp::start()
 	{
+		LOG_VERBOSE << "Creating window with OpenGL context";
+		init();
+
 		LOG_VERBOSE << "GLFWApp starting main loop";
 
 		m_dCurrentTime = GetTime();
@@ -185,6 +194,7 @@ namespace baselib {
 		}
 
 		LOG_VERBOSE << "GLFWApp main loop stopped";
+		onDestroy();
 	}
 
 	void GLFWApp::processEvents()
@@ -301,6 +311,25 @@ namespace baselib {
 	double GLFWApp::GetTime() const
 	{
 		return glfwGetTime();
+	}
+
+	void GLFWApp::setWindowTitle(const std::string& s)
+	{
+		m_sWindowTitle = s;
+		glfwSetWindowTitle(m_pWindow, s.c_str());
+	}
+
+	void GLFWApp::setSize(int iWidth, int iHeight)
+	{
+		m_iWidth = iWidth;
+		m_iHeight = iHeight;
+		glfwSetWindowSize(m_pWindow, m_iWidth, m_iHeight);
+	}
+
+	void GLFWApp::setFullScreen(bool b)
+	{
+		m_bFullscreen = b;
+		// TODO: Toggle fullscreen mode
 	}
 
 }

@@ -76,6 +76,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\Apps\BaseApp.cpp" />
+    <ClCompile Include="..\..\Source\Apps\DeferredRenderingApp.cpp" />
     <ClCompile Include="..\..\Source\Font\Font.cpp" />
     <ClCompile Include="..\..\Source\Font\FontLoader.cpp" />
     <ClCompile Include="..\..\Source\Font\Glyph.cpp" />
@@ -106,6 +107,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\Apps\BaseApp.h" />
+    <ClInclude Include="..\..\Source\Apps\DeferredRenderingApp.h" />
     <ClInclude Include="..\..\Source\Font\Font.h" />
     <ClInclude Include="..\..\Source\Font\FontLoader.h" />
     <ClInclude Include="..\..\Source\Font\Glyph.h" />

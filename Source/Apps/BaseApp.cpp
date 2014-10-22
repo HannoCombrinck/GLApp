@@ -28,31 +28,16 @@ using namespace baselib::font;
 
 namespace baselib {
 	
-	BaseApp::BaseApp(int iWidth, int iHeight, bool bFullscreen, int iMajorVersion, int iMinorVersion, const std::string& sWindowTitle)
-		: GLFWApp(iWidth, iHeight, bFullscreen, iMajorVersion, iMinorVersion, sWindowTitle)
+	BaseApp::BaseApp()
 	{
 		LOG_VERBOSE << "BaseApp constructor";
-		init();
 	}
 
 	BaseApp::~BaseApp()
 	{
 		LOG_VERBOSE << "BaseApp destructor";
-		destroy();
 	}
 
-	void BaseApp::onUpdate(double dDeltaTime)
-	{
-		m_spRootNode->update(Mat4());
-	}
-
-	void BaseApp::onRender()
-	{
-		assert(m_spRenderer);
-		m_spRenderJob->execute(m_spRootNode, m_spVisualCollector, m_spFrameBuffer, m_spCamera);
-	}
-
-	// Test vertex
 	struct MyVert
 	{
 		MyVert(Vec3 vP, Vec3 vN, Vec2 _vUV)
@@ -65,7 +50,7 @@ namespace baselib {
 		Vec2 vUV;
 	};
 
-	void BaseApp::init()
+	void BaseApp::onInit()
 	{
 		LOG_VERBOSE << "BaseApp init";
 
@@ -144,9 +129,20 @@ namespace baselib {
 		m_spRenderJob = RenderJob::create(m_spRenderer);
 	}
 
-	void BaseApp::destroy()
+	void BaseApp::onDestroy()
 	{
 		LOG_VERBOSE << "BaseApp onDestroy";
+	}
+
+	void BaseApp::onUpdate(double dDeltaTime)
+	{
+		m_spRootNode->update(Mat4());
+	}
+
+	void BaseApp::onRender()
+	{
+		assert(m_spRenderer);
+		m_spRenderJob->execute(m_spRootNode, m_spVisualCollector, m_spFrameBuffer, m_spCamera);
 	}
 
 	void BaseApp::onWindowResize(int iWidth, int iHeight)

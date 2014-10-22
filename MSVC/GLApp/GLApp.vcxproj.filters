@@ -124,6 +124,9 @@
     <ClCompile Include="..\..\Source\Apps\BaseApp.cpp">
       <Filter>Header/Source Files\Apps</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Apps\DeferredRenderingApp.cpp">
+      <Filter>Header/Source Files\Apps</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\GLFWApp\GLFWApp.h">
@@ -214,6 +217,9 @@
       <Filter>Header/Source Files\Helpers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Apps\BaseApp.h">
+      <Filter>Header/Source Files\Apps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Apps\DeferredRenderingApp.h">
       <Filter>Header/Source Files\Apps</Filter>
     </ClInclude>
   </ItemGroup>

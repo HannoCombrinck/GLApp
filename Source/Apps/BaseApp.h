@@ -34,22 +34,16 @@ namespace baselib
 	{
 	public:
 		//! Constructor.
-		BaseApp(int iWidth, int iHeight, bool bFullscreen, int iMajorVersion, int iMinorVersion, const std::string& sWindowTitle);
+		BaseApp();
 		//! Destructor.
 		virtual ~BaseApp();
 
 	private:
-		//! Main update function. Called from main loop.
-		virtual void onUpdate(double dDeltaTime);
-		//! Main render function. Called from main loop.
-		virtual void onRender();
-
-		//! Initialization happens here.
-		void init();
-		//! Cleanup happens here.
-		void destroy();
-
-		virtual void onWindowResize(int iWidth, int iHeight);
+		void onInit();
+		void onDestroy();
+		void onUpdate(double dDeltaTime);
+		void onRender();
+		void onWindowResize(int iWidth, int iHeight);
 
 		boost::shared_ptr<graphics::Renderer> m_spRenderer; //!< Main renderer
 		boost::shared_ptr<graphics::ShaderPipeline> m_spShaderPipeline; //!< Test shader pipeline
