@@ -35,6 +35,9 @@
     <Filter Include="Header/Source Files\Graphics\Helpers">
       <UniqueIdentifier>{c2b53554-9174-408f-af35-dc711267b03a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header/Source Files\Apps">
+      <UniqueIdentifier>{716eddca-b7e2-4d49-a4a3-d128a47529e0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\main.cpp">
@@ -45,9 +48,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Logging\Log.cpp">
       <Filter>Header/Source Files\Logging</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\BaseApp.cpp">
-      <Filter>Header/Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Graphics\ShaderObject.cpp">
       <Filter>Header/Source Files\Graphics</Filter>
@@ -121,6 +121,9 @@
     <ClCompile Include="..\..\Source\Helpers\Timer.cpp">
       <Filter>Header/Source Files\Helpers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Apps\BaseApp.cpp">
+      <Filter>Header/Source Files\Apps</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\GLFWApp\GLFWApp.h">
@@ -128,9 +131,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Logging\Log.h">
       <Filter>Header/Source Files\Logging</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\BaseApp.h">
-      <Filter>Header/Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Math\Math.h">
       <Filter>Header/Source Files\Math</Filter>
@@ -212,6 +212,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Helpers\Timer.h">
       <Filter>Header/Source Files\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Apps\BaseApp.h">
+      <Filter>Header/Source Files\Apps</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

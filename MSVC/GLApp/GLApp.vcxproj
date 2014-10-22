@@ -75,7 +75,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\BaseApp.cpp" />
+    <ClCompile Include="..\..\Source\Apps\BaseApp.cpp" />
     <ClCompile Include="..\..\Source\Font\Font.cpp" />
     <ClCompile Include="..\..\Source\Font\FontLoader.cpp" />
     <ClCompile Include="..\..\Source\Font\Glyph.cpp" />
@@ -105,7 +105,7 @@
     <ClCompile Include="..\..\Source\Math\MathHelpers.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\BaseApp.h" />
+    <ClInclude Include="..\..\Source\Apps\BaseApp.h" />
     <ClInclude Include="..\..\Source\Font\Font.h" />
     <ClInclude Include="..\..\Source\Font\FontLoader.h" />
     <ClInclude Include="..\..\Source\Font\Glyph.h" />
