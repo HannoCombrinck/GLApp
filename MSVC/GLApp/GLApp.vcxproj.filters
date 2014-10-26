@@ -127,6 +127,9 @@
     <ClCompile Include="..\..\Source\Apps\DeferredRenderingApp.cpp">
       <Filter>Header/Source Files\Apps</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Graphics\ModelLoader.cpp">
+      <Filter>Header/Source Files\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\GLFWApp\GLFWApp.h">
@@ -221,6 +224,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Apps\DeferredRenderingApp.h">
       <Filter>Header/Source Files\Apps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Graphics\ModelLoader.h">
+      <Filter>Header/Source Files\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

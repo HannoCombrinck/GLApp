@@ -52,7 +52,7 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>..\..\Libraries\Lib\;$(BOOST_ROOT)stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3dll_d.lib;glew32.lib;opengl32.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3dll_d.lib;glew32.lib;opengl32.lib;freetype.lib;assimpd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <SubSystem>
       </SubSystem>
     </Link>
@@ -71,7 +71,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>..\..\Libraries\Lib\;$(BOOST_ROOT)stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glfw3dll.lib;glew32.lib;opengl32.lib;freetype.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glfw3dll.lib;glew32.lib;opengl32.lib;freetype.lib;assimp.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -87,6 +87,7 @@
     <ClCompile Include="..\..\Source\Graphics\Helpers\TextureUpdateHelper.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Image.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Material.cpp" />
+    <ClCompile Include="..\..\Source\Graphics\ModelLoader.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Node.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Renderer.cpp" />
     <ClCompile Include="..\..\Source\Graphics\RenderJob.cpp" />
@@ -118,6 +119,7 @@
     <ClInclude Include="..\..\Source\Graphics\Helpers\TextureUpdateHelper.h" />
     <ClInclude Include="..\..\Source\Graphics\Image.h" />
     <ClInclude Include="..\..\Source\Graphics\Material.h" />
+    <ClInclude Include="..\..\Source\Graphics\ModelLoader.h" />
     <ClInclude Include="..\..\Source\Graphics\Node.h" />
     <ClInclude Include="..\..\Source\Graphics\Renderer.h" />
     <ClInclude Include="..\..\Source\Graphics\RenderJob.h" />

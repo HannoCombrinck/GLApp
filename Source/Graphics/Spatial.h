@@ -30,14 +30,14 @@ namespace baselib
 			std::string getName() const { return m_sName; }
 
 			//! Modify the world transform
-			Mat4& modifyWorld() { return m_mWorld; }
+			Mat4& modifyWorldTransform() { return m_mWorld; }
 			//! Get the world transform
-			const Mat4& getWorld() const { return m_mWorld; }
+			const Mat4& getWorldTransform() const { return m_mWorld; }
 			
 			//! Modify the local transform
-			Mat4& modifyLocal() { return m_mLocal; }
+			Mat4& modifyLocalTransform() { return m_mLocal; }
 			//! Get the local transform
-			const Mat4& getLocal() const { return m_mWorld; }
+			const Mat4& getLocalTransform() const { return m_mWorld; }
 
 			//! Set spatial to ignore parent and use local transform as world transform.
 			void setUseLocalAsWorld(bool b) { m_bUseLocalAsWorld = b; }
