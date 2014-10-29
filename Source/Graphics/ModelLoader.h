@@ -36,8 +36,6 @@ namespace baselib
 			//! Protected constructor - must be created by static create().
 			ModelLoader();
 
-		private:
-
 		};
 	}
 }

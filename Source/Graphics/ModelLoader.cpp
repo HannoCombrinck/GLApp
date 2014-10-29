@@ -143,7 +143,7 @@ namespace baselib { namespace graphics {
 			//spVertexList->addVertex();
 			//spVertexList->addIndex(0);
 			
-			//m_spStaticGeom = m_spRenderer->createStaticGeometry(spVertexList, Geometry::TRIANGLES);
+			//m_spStaticGeom = StaticGeometry::create(spVertexList, Geometry::TRIANGLES);
 			//auto spShader = 
 			//auto spMaterial = Material::create(spShader, spTexture, spRenderState);
 			//Visual::create(spStaticGeometry, spMaterial);

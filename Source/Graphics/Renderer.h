@@ -2,19 +2,9 @@
 
 #include <assert.h>
 #include <Math/Math.h>
-
 #include <Graphics/Geometry.h>
 
-namespace baselib 
-{
-	namespace graphics
-	{
-		class StaticGeometry;
-		class VertexListInterface;
-		class Material;
-		class FrameBuffer;
-	}
-}
+#include <boost/shared_ptr.hpp>
 
 namespace baselib 
 {
@@ -138,9 +128,6 @@ namespace baselib
 			void setRenderState(RenderState eState, RenderStateValue eValue);
 			//! Get the current value of a render state.
 			RenderStateValue getRenderState(RenderState eState) const { assert(eState < STATE_COUNT); return m_aeState[eState]; }
-
-			//! Create a static geometry.
-			boost::shared_ptr<StaticGeometry> createStaticGeometry(const boost::shared_ptr<VertexListInterface>& spVertexList, Geometry::PrimitiveType ePrimitiveType);
 
 		protected:
 			//! Protected constructor - must be created by static create().

@@ -93,7 +93,7 @@ namespace baselib { namespace graphics {
 		spVertexList->addIndex(2);
 		spVertexList->addIndex(3);
 
-		m_spQuadGeometry = m_spRenderer->createStaticGeometry(spVertexList, Geometry::TRIANGLES);
+		m_spQuadGeometry = StaticGeometry::create(spVertexList, Geometry::TRIANGLES);
 	}
 
 } }

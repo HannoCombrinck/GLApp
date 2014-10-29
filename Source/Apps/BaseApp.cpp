@@ -94,7 +94,7 @@ namespace baselib {
 		spVertexList->addIndex(3);
 
 		// Create test static geometry
-		m_spStaticGeom = m_spRenderer->createStaticGeometry(spVertexList, Geometry::TRIANGLES);
+		m_spStaticGeom = StaticGeometry::create(spVertexList, Geometry::TRIANGLES);
 
 		// Load test image 
 		auto spImage = Image::load("../Data/Textures/test.tga");

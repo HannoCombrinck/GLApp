@@ -6,13 +6,22 @@ namespace baselib
 {
 	namespace graphics
 	{
+		class VertexListInterface;
+	}
+}
+
+namespace baselib 
+{
+	namespace graphics
+	{
 		/*! @brief Contains the hardware buffers for a static piece of geometry (i.e. Geometry that is created once and doesn't change).
 		 *
 		 */
 		class StaticGeometry : public Geometry
 		{
 		public:
-			friend class Renderer;
+			//! Creates and returns a static geometry from an image.
+			static boost::shared_ptr<StaticGeometry> create(const boost::shared_ptr<VertexListInterface>& spVertexList, PrimitiveType ePrimitiveType);
 
 			//! Destructor.
 			virtual ~StaticGeometry();
