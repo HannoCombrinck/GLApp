@@ -1,8 +1,13 @@
 #include "DeferredRenderingApp.h"
 
 #include <Logging/Log.h>
-
 #include <Helpers/NullPtr.h>
+#include <Graphics/ModelLoader.h>
+#include <Graphics/Node.h>
+
+#include <boost/shared_ptr.hpp>
+
+using namespace baselib::graphics;
 
 namespace baselib {
 	
@@ -19,6 +24,9 @@ namespace baselib {
 	void DeferredRenderingApp::onInit()
 	{
 		LOG_VERBOSE << "DeferredRenderingApp init";
+
+		auto spModelLoader = ModelLoader::create();
+		m_spTestModel = spModelLoader->load("../Data/Models/FbxTest.fbx");
 	}
 
 	void DeferredRenderingApp::onDestroy()

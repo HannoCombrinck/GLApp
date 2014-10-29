@@ -1,7 +1,14 @@
 #pragma once
 
 #include <GLFWApp/GLFWApp.h>
-#include <boost/shared_ptr.hpp>
+
+namespace baselib
+{
+	namespace graphics
+	{
+		class Node;
+	}
+}
 
 namespace baselib
 {
@@ -18,5 +25,7 @@ namespace baselib
 		void onUpdate(double dDeltaTime);
 		void onRender();
 		void onWindowResize(int iWidth, int iHeight);
+
+		boost::shared_ptr<graphics::Node> m_spTestModel;
 	};
 }
