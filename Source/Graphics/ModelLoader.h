@@ -10,8 +10,14 @@ namespace baselib
 	namespace graphics
 	{
 		class Node;
+		class Visual;
+		class ShaderPipeline;
 	}
 }
+
+struct aiScene;
+struct aiMesh;
+struct aiNode;
 
 namespace baselib 
 {
@@ -36,6 +42,11 @@ namespace baselib
 			//! Protected constructor - must be created by static create().
 			ModelLoader();
 
+		private:
+			boost::shared_ptr<Visual> buildVisual(const aiScene* pScene, aiMesh* pMesh);
+			void buildModel(const aiScene* pScene, aiNode* pNode, const boost::shared_ptr<Node> spParentNode);
+
+			boost::shared_ptr<ShaderPipeline> m_spShaderPipeline;
 		};
 	}
 }
