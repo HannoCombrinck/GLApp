@@ -245,5 +245,11 @@
     <None Include="..\..\Data\Shaders\TextureCopy.frag">
       <Filter>Data\Shaders</Filter>
     </None>
+    <None Include="..\..\Data\Shaders\Default.vert">
+      <Filter>Data\Shaders</Filter>
+    </None>
+    <None Include="..\..\Data\Shaders\ColourSimple.frag">
+      <Filter>Data\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
