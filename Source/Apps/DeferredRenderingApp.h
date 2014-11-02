@@ -7,6 +7,8 @@ namespace baselib
 	namespace graphics
 	{
 		class Node;
+		class Camera;
+		class CameraController;
 	}
 }
 
@@ -26,6 +28,12 @@ namespace baselib
 		void onRender();
 		void onWindowResize(int iWidth, int iHeight);
 
+		void onKeyPress(int iKey);
+		void onKeyRelease(int iKey);
+		void onMouseMoveRel(int iDX, int iDY);
+
 		boost::shared_ptr<graphics::Node> m_spTestModel;
+		boost::shared_ptr<graphics::Camera> m_spMainCamera;
+		boost::shared_ptr<graphics::CameraController> m_spCameraController;
 	};
 }
