@@ -29,16 +29,6 @@ namespace baselib { namespace graphics {
 	ModelLoader::ModelLoader()
 	{
 		LOG_VERBOSE << "ModelLoader constructor";
-
-		// Load defaul shader pipeline for all models
-		auto spVertexShader = ShaderObject::load("../Data/Shaders/Default.vert");
-		auto spFragmentShader = ShaderObject::load("../Data/Shaders/ColourSimple.frag");
-
-		std::vector<boost::shared_ptr<ShaderObject>> aspShaders;
-		aspShaders.push_back(spVertexShader);
-		aspShaders.push_back(spFragmentShader);
-
-		m_spShaderPipeline = ShaderPipeline::create("DefaultPipeline", aspShaders);
 	}
 
 	ModelLoader::~ModelLoader()
@@ -114,72 +104,82 @@ namespace baselib { namespace graphics {
 
 			return Vert(vPos, vNormal, vTangent, vBitangent, vTexCoord0, vTexCoord1);
 		}
-	}
 
-	boost::shared_ptr<Visual> ModelLoader::buildVisual(const aiScene* pScene, aiMesh* pMesh)
-	{
-		// Create vertex list that always uses following 6 attributes - will be partially filled in depending on what's available in aiMesh
-		auto spVL = VertexLayout::create();
-		spVL->add(VertexAttribute("position", 0, 3, TYPE_FLOAT, 0));
-		spVL->add(VertexAttribute("normal", 1, 3, TYPE_FLOAT, 3*sizeof(float)));
-		spVL->add(VertexAttribute("tangent", 2, 3, TYPE_FLOAT, 6*sizeof(float)));
-		spVL->add(VertexAttribute("bitangent", 3, 3, TYPE_FLOAT, 9*sizeof(float)));
-		spVL->add(VertexAttribute("texcoord0", 4, 2, TYPE_FLOAT, 12*sizeof(float), true));
-		spVL->add(VertexAttribute("texcoord1", 5, 2, TYPE_FLOAT, 14*sizeof(float), true));
-		auto spVertexList = boost::shared_ptr<VertexList<Vert>>(new VertexList<Vert>(spVL));
-
-		// Get vertices from aiMesh
-		for (unsigned int i = 0; i < pMesh->mNumVertices; ++i)
-			spVertexList->addVertex( buildVertex(pMesh, i) );
-
-		// Get indices from aiMesh
-		for (unsigned int i = 0; i < pMesh->mNumFaces; ++i)
+		boost::shared_ptr<Visual> buildVisual(const aiScene* pScene, aiMesh* pMesh)
 		{
-			if (pMesh->mFaces[i].mNumIndices != 3)
-				LOG_ERROR << __FUNCTION__": Adding non-triangle poly!" << std::endl;
+			// Create vertex list that always uses following 6 attributes - will be partially filled in depending on what's available in aiMesh
+			auto spVL = VertexLayout::create();
+			spVL->add(VertexAttribute("position", 0, 3, TYPE_FLOAT, 0));
+			spVL->add(VertexAttribute("normal", 1, 3, TYPE_FLOAT, 3*sizeof(float)));
+			spVL->add(VertexAttribute("tangent", 2, 3, TYPE_FLOAT, 6*sizeof(float)));
+			spVL->add(VertexAttribute("bitangent", 3, 3, TYPE_FLOAT, 9*sizeof(float)));
+			spVL->add(VertexAttribute("texcoord0", 4, 2, TYPE_FLOAT, 12*sizeof(float), true));
+			spVL->add(VertexAttribute("texcoord1", 5, 2, TYPE_FLOAT, 14*sizeof(float), true));
+			auto spVertexList = boost::shared_ptr<VertexList<Vert>>(new VertexList<Vert>(spVL));
 
-			for (unsigned int j = 0; j < pMesh->mFaces[i].mNumIndices; ++j)
+			// Get vertices from aiMesh
+			for (unsigned int i = 0; i < pMesh->mNumVertices; ++i)
+				spVertexList->addVertex( buildVertex(pMesh, i) );
+
+			// Get indices from aiMesh
+			for (unsigned int i = 0; i < pMesh->mNumFaces; ++i)
 			{
-				spVertexList->addIndex(pMesh->mFaces[i].mIndices[j]);
+				if (pMesh->mFaces[i].mNumIndices != 3)
+					LOG_ERROR << __FUNCTION__": Adding non-triangle poly!" << std::endl;
+
+				for (unsigned int j = 0; j < pMesh->mFaces[i].mNumIndices; ++j)
+				{
+					spVertexList->addIndex(pMesh->mFaces[i].mIndices[j]);
+				}
 			}
+
+			// Get material properties and textures from aiMesh
+			if (pScene->HasMaterials())
+			{
+				// Get diffuse texture
+				aiString diffuseTexturePath;
+				pScene->mMaterials[pMesh->mMaterialIndex]->GetTexture(aiTextureType_DIFFUSE, 0, &diffuseTexturePath);
+
+				fs::path fsDiffuseTex(diffuseTexturePath.C_Str());
+				if (fs::exists(fsDiffuseTex))
+					LOG_INFO << "Found diffuse tex!" << std::endl;
+			}
+
+			auto spVertexShader = ShaderObject::load("../Data/Shaders/Default.vert");
+			auto spFragmentShader = ShaderObject::load("../Data/Shaders/ColourSimple.frag");
+
+			std::vector<boost::shared_ptr<ShaderObject>> aspShaders;
+			aspShaders.push_back(spVertexShader);
+			aspShaders.push_back(spFragmentShader);
+
+			auto spShaderPipeline = ShaderPipeline::create("DefaultPipeline", aspShaders);
+
+			auto spShader = spShaderPipeline->createInstance();
+			auto spMaterial = Material::create(spShader, null_ptr, null_ptr); // Skip texture for now
+			auto spStaticGeometry = StaticGeometry::create(spVertexList, Geometry::TRIANGLES);
+
+			return Visual::create(spStaticGeometry, spMaterial);
 		}
 
-		// Get material properties and textures from aiMesh
-		if (pScene->HasMaterials())
+		void buildModel(const aiScene* pScene, aiNode* pNode, const boost::shared_ptr<Node> spParentNode)
 		{
-			// Get diffuse texture
-			aiString diffuseTexturePath;
-			pScene->mMaterials[pMesh->mMaterialIndex]->GetTexture(aiTextureType_DIFFUSE, 0, &diffuseTexturePath);
+			auto spNode = Node::create();
+			spNode->setName(pNode->mName.C_Str());
+			spNode->modifyLocalTransform() = convertMatrix(pNode->mTransformation);
 
-			fs::path fsDiffuseTex(diffuseTexturePath.C_Str());
-			if (fs::exists(fsDiffuseTex))
-				LOG_INFO << "Found diffuse tex!" << std::endl;
+			for (unsigned int i = 0; i < pNode->mNumMeshes; ++i)
+			{
+				auto spVisual = buildVisual(pScene, pScene->mMeshes[pNode->mMeshes[i]]);
+				spVisual->setName(spNode->getName() + "Visual");
+				spNode->addChild(spVisual);
+			}
+
+			spParentNode->addChild(spNode);
+
+			for (unsigned int i = 0; i < pNode->mNumChildren; ++i)
+				buildModel(pScene, pNode->mChildren[i], spNode);
 		}
 
-		auto spShader = m_spShaderPipeline->createInstance();
-		auto spMaterial = Material::create(spShader, null_ptr, null_ptr); // Skip texture for now
-		auto spStaticGeometry = StaticGeometry::create(spVertexList, Geometry::TRIANGLES);
-
-		return Visual::create(spStaticGeometry, spMaterial);
-	}
-
-	void ModelLoader::buildModel(const aiScene* pScene, aiNode* pNode, const boost::shared_ptr<Node> spParentNode)
-	{
-		auto spNode = Node::create();
-		spNode->setName(pNode->mName.C_Str());
-		spNode->modifyLocalTransform() = convertMatrix(pNode->mTransformation);
-
-		for (unsigned int i = 0; i < pNode->mNumMeshes; ++i)
-		{
-			auto spVisual = buildVisual(pScene, pScene->mMeshes[pNode->mMeshes[i]]);
-			spVisual->setName(spNode->getName() + "Visual");
-			spNode->addChild(spVisual);
-		}
-
-		spParentNode->addChild(spNode);
-
-		for (unsigned int i = 0; i < pNode->mNumChildren; ++i)
-			buildModel(pScene, pNode->mChildren[i], spNode);
 	}
 
 	boost::shared_ptr<Node> ModelLoader::load(const fs::path& fsPath)
