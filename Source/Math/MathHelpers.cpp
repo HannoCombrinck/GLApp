@@ -52,12 +52,12 @@ namespace baselib {
 		return result;
 	}
 
-	float toRad(float deg)
+	float toRadians(float deg)
 	{
 		return deg*PI/180.0f;
 	}
 
-	float toDeg(float rad)
+	float toDegrees(float rad)
 	{
 		return rad*180.0f/PI;
 	}

@@ -11,9 +11,9 @@ namespace baselib
 	//! Calculates spherical linear interpolation between quaternions q1 and q2.
 	glm::quat slerpQuat(const glm::quat &q1, const glm::quat &q2, float u);
 	//! Converts degrees to radians.
-	float toRad(float deg);
+	float toRadians(float deg);
 	//! Converts radians to degrees
-	float toDeg(float rad);
+	float toDegrees(float rad);
 
 	//! Clamps val between minVal and maxVal.
 	template <class T>
