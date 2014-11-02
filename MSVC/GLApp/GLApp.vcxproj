@@ -47,7 +47,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <AdditionalIncludeDirectories>..\..\Source\;..\..\Libraries\Include\;$(BOOST_ROOT);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>BOOST_FILESYSTEM_NO_DEPRECATED;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BOOST_FILESYSTEM_NO_DEPRECATED;GLM_FORCE_RADIANS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -64,7 +64,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>..\..\Source\;..\..\Libraries\Include\;$(BOOST_ROOT);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>BOOST_FILESYSTEM_NO_DEPRECATED;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>BOOST_FILESYSTEM_NO_DEPRECATED;GLM_FORCE_RADIANS;_SCL_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -82,6 +82,7 @@
     <ClCompile Include="..\..\Source\Font\Glyph.cpp" />
     <ClCompile Include="..\..\Source\GLFWApp\GLFWApp.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Camera.cpp" />
+    <ClCompile Include="..\..\Source\Graphics\CameraController.cpp" />
     <ClCompile Include="..\..\Source\Graphics\FrameBuffer.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Geometry.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Helpers\TextureUpdateHelper.cpp" />
@@ -114,6 +115,7 @@
     <ClInclude Include="..\..\Source\Font\Glyph.h" />
     <ClInclude Include="..\..\Source\GLFWApp\GLFWApp.h" />
     <ClInclude Include="..\..\Source\Graphics\Camera.h" />
+    <ClInclude Include="..\..\Source\Graphics\CameraController.h" />
     <ClInclude Include="..\..\Source\Graphics\FrameBuffer.h" />
     <ClInclude Include="..\..\Source\Graphics\Geometry.h" />
     <ClInclude Include="..\..\Source\Graphics\Helpers\TextureUpdateHelper.h" />

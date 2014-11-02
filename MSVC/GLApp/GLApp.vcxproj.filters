@@ -130,6 +130,9 @@
     <ClCompile Include="..\..\Source\Graphics\ModelLoader.cpp">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Graphics\CameraController.cpp">
+      <Filter>Header/Source Files\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\GLFWApp\GLFWApp.h">
@@ -226,6 +229,9 @@
       <Filter>Header/Source Files\Apps</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Graphics\ModelLoader.h">
+      <Filter>Header/Source Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Graphics\CameraController.h">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
