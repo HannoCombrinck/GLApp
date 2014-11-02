@@ -27,6 +27,11 @@ namespace baselib
 		//! Return time elapsed from application start.
 		double GetTime() const;
 
+		//! Lock mouse position to the center of the window and track relative movements.
+		void setLockMousePosition(bool b);
+		//! Getter for setLockMousePosition().
+		bool getLockMousePosition() const { return m_bLockMousePos; }
+
 		//! Set window title text.
 		void setWindowTitle(const std::string& s);
 		//! Getter for setWindowTitle().
@@ -145,6 +150,7 @@ namespace baselib
 		int m_iMouseY;				 //!< The current Y coordinate of the mouse in pixels relative to the top left corner of the window.
 		int m_iMouseXPrev;			 //!< The previous X coordinate of the mouse in pixels relative to the top left corner of the window.
 		int m_iMouseYPrev;			 //!< The previous Y coordinate of the mouse in pixels relative to the top left corner of the window.
+		bool m_bLockMousePos;		 //!< Lock mouse position to the center of the window and track relative movements.
 
 		double m_dCurrentTime;		 //!< Current time elapsed since application started.
 		double m_dPreviousTime;		 //!< Time elapsed up to previous update cycle. So time elapsed since previous update = m_dCurrentTime - m_dPreviousTime.

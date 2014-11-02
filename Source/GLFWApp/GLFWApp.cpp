@@ -18,6 +18,7 @@ namespace baselib {
 		, m_iMouseY(0)
 		, m_iMouseXPrev(0)
 		, m_iMouseYPrev(0)
+		, m_bLockMousePos(false)
 		, m_dCurrentTime(0.0)
 		, m_dPreviousTime(0.0)
 		, m_iWidth(800)
@@ -276,6 +277,9 @@ namespace baselib {
 			onMouseMove(m_iMouseX, m_iMouseY);
 			onMouseMoveRel(m_iMouseX - m_iMouseXPrev, m_iMouseY - m_iMouseYPrev);
 		}
+
+		if (m_bLockMousePos)
+			glfwSetCursorPos(m_pWindow, m_iWidth/2, m_iHeight/2);
 	}
 
 	void GLFWApp::windowMove(int iX, int iY)
@@ -285,6 +289,8 @@ namespace baselib {
 
 	void GLFWApp::windowResize(int iWidth, int iHeight)
 	{
+		m_iWidth = iWidth;
+		m_iHeight = iHeight;
 		onWindowResize(iWidth, iHeight);
 	}
 
@@ -311,6 +317,14 @@ namespace baselib {
 	double GLFWApp::GetTime() const
 	{
 		return glfwGetTime();
+	}
+
+	void GLFWApp::setLockMousePosition(bool b)
+	{
+		m_bLockMousePos = b;
+		m_iMouseX = m_iWidth/2;
+		m_iMouseY = m_iHeight/2;
+		glfwSetCursorPos(m_pWindow, m_iMouseX, m_iMouseY);
 	}
 
 	void GLFWApp::setWindowTitle(const std::string& s)
