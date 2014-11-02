@@ -35,6 +35,12 @@ namespace baselib
 			//! Getter for setCamera()
 			boost::shared_ptr<Camera> getCamera() const { return m_spCamera; }
 
+			//! Camera controls
+			void setMovingForward(bool b) { m_bMovingForward = b; }
+			void setMovingBack(bool b) { m_bMovingBack = b; }
+			void setMovingLeft(bool b) { m_bMovingLeft = b; }
+			void setMovingRight(bool b) { m_bMovingRight = b; }
+
 			//! Move the camera fDistance meters forward.
 			void moveForward(float fDistance);
 			//! Move the camera fDistance meters sideways.
@@ -68,6 +74,11 @@ namespace baselib
 			float m_fYaw;				//!< Camera yaw in degrees.
 			Mat4 m_mTransform;			//!< Camera transform calculated from position, yaw and pitch.
 			bool m_bRecalcTransform;	//!< Set to true if the camera transform should be recalculated.
+
+			bool m_bMovingForward;
+			bool m_bMovingBack;
+			bool m_bMovingLeft;
+			bool m_bMovingRight;
 		};
 	}
 }

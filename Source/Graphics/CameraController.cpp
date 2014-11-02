@@ -18,6 +18,10 @@ namespace baselib { namespace graphics {
 		, m_fYaw(0.0f)
 		, m_mTransform(Mat4())
 		, m_bRecalcTransform(true)
+		, m_bMovingForward(false)
+		, m_bMovingBack(false)
+		, m_bMovingLeft(false)
+		, m_bMovingRight(false)
 	{
 		LOG_VERBOSE << "CameraController constructor";
 	}
@@ -31,6 +35,15 @@ namespace baselib { namespace graphics {
 	{
 		if (!m_spCamera)
 			return;
+
+		if (m_bMovingForward)
+			moveForward(0.3f);
+		if (m_bMovingBack)
+			moveForward(-0.3f);
+		if (m_bMovingLeft)
+			moveSideways(-0.3f);
+		if (m_bMovingRight)
+			moveSideways(0.3f);
 
 		if (m_bRecalcTransform)
 		{
