@@ -6,6 +6,8 @@ namespace baselib
 {
 	namespace graphics
 	{
+		class Renderer;
+		class RenderJob;
 		class Node;
 		class Camera;
 		class CameraController;
@@ -32,7 +34,9 @@ namespace baselib
 		void onKeyRelease(int iKey);
 		void onMouseMoveRel(int iDX, int iDY);
 
-		boost::shared_ptr<graphics::Node> m_spTestModel;
+		boost::shared_ptr<graphics::Renderer> m_spRenderer;
+		boost::shared_ptr<graphics::RenderJob> m_spMainRenderJob;
+		boost::shared_ptr<graphics::Node> m_spRootNode;
 		boost::shared_ptr<graphics::Camera> m_spMainCamera;
 		boost::shared_ptr<graphics::CameraController> m_spCameraController;
 	};
