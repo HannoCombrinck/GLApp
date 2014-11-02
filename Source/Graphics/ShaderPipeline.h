@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <boost/shared_ptr.hpp>
+#include <boost/enable_shared_from_this.hpp>
 
 namespace baselib 
 {
@@ -22,7 +23,7 @@ namespace baselib
 		 *  Shader instances created from the same pipeline share the same ID
 		 *  but have different uniforms, textures etc.
 		 */
-		class ShaderPipeline
+		class ShaderPipeline : public boost::enable_shared_from_this<ShaderPipeline>
 		{
 		public:
 			//! Creates and links a shader pipeline with the given shader objects.
@@ -47,8 +48,7 @@ namespace baselib
 			 *
 			 *  It is not necessary to keep the shader objects alive to have a working pipeline
 			 *  but it's useful for debugging purposes. This constructor should, therefore, only 
-			 *  be used in debug configurations. See ShaderLoader::createShaderPipeline() 
-			 *  for additional info.
+			 *  be used in debug configurations. See create() for additional info.
 			 */
 			ShaderPipeline(const std::string& sName, unsigned int uID, const std::vector<boost::shared_ptr<ShaderObject>>& aspShaderObjects);
 

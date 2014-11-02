@@ -135,7 +135,7 @@ namespace baselib { namespace graphics {
 
 	boost::shared_ptr<Shader> ShaderPipeline::createInstance()
 	{
-		return boost::shared_ptr<Shader>(new Shader(m_uID));
+		return boost::shared_ptr<Shader>(new Shader(shared_from_this()));
 	}
 
 } }

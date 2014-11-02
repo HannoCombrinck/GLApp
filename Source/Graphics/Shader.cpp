@@ -1,14 +1,16 @@
 #include "Shader.h"
 
 #include <Logging/Log.h>
+#include <Graphics/ShaderPipeline.h>
 #include <GL/glew.h>
 
 namespace baselib { namespace graphics {
 
 	unsigned int Shader::m_uCurrentlyBound = ~0;
 
-	Shader::Shader(unsigned int uID)
-		: m_uID(uID)
+	Shader::Shader(const boost::shared_ptr<ShaderPipeline>& spShaderPipeline)
+		: m_spShaderPipeline(spShaderPipeline)
+		, m_uID(spShaderPipeline->getID())
 	{
 		LOG_VERBOSE << "Shader constructor";
 	}
