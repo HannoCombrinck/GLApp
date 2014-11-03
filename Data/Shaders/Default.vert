@@ -13,16 +13,17 @@ out vec3 vBitangentFrag;
 out vec2 vTexCoord1Frag;
 out vec2 vTexCoord2Frag;
 
-uniform mat4 mPVW;
-uniform mat4 mNormal; // mView * mWorld
+uniform mat4 mProjection;
+uniform mat4 mView;
+uniform mat4 mWorld;
 
 void main() 
 {
+	mat4 mNormal = mView * mWorld;
 	vNormalFrag = normalize( vec3(mNormal * vec4(vNormalVert, 0)) );
 	vTangentFrag = normalize( vec3(mNormal * vec4(vTangentVert, 0)) );
 	vBitangentFrag = normalize( vec3(mNormal * vec4(vBitangentVert, 0)) );
 	vTexCoord1Frag = vTexCoord1Vert;
 	vTexCoord2Frag = vTexCoord2Vert;
-
-    gl_Position = mPVW * vec4(vPositionVert, 1);
+    gl_Position = mProjection * mView * mWorld * vec4(vPositionVert, 1);
 }
