@@ -8,6 +8,9 @@
 #include <Graphics/VertexList.h>
 #include <Graphics/Renderer.h>
 #include <Graphics/Material.h>
+#include <Graphics/Shader.h>
+#include <Graphics/Texture.h>
+#include <Graphics/Camera.h>
 #include <boost/range/algorithm/for_each.hpp>
 
 namespace baselib { namespace graphics {
@@ -37,22 +40,30 @@ namespace baselib { namespace graphics {
 		spVisualCollector->collect(spNode);
 		const auto& apVisuals = spVisualCollector->getVisuals();
 
-		// Bind FrameBuffer
+		// Setup FrameBuffer
 		spFrameBuffer->bind();
-
-		m_spRenderer->setViewportSize(Vec4(0, 0, 800, 600));
-
-		// TODO: Check if frame buffer should be cleared
+		m_spRenderer->setViewportSize(Vec4(0, 0, spFrameBuffer->getWidth(), spFrameBuffer->getHeight()));
 		m_spRenderer->clear();
 
 		// Render visible, sorted list of visuals
 		boost::shared_ptr<Geometry> spGeometry = null_ptr;
-		boost::for_each(apVisuals, [this, &spGeometry](const Visual* pVisual) {
-			pVisual->getMaterial()->bind();
+		boost::for_each(apVisuals, [this, &spCamera, &spGeometry](const Visual* pVisual) {
+
+			auto spShader = pVisual->getMaterial()->getShader();
+			spShader->bind();
+			spShader->setUniform(spShader->getUniform("mProjection"), spCamera->getProjectionMatrix());
+			spShader->setUniform(spShader->getUniform("mView"), spCamera->getViewMatrix());
+			spShader->setUniform(spShader->getUniform("mWorld"), pVisual->getWorldTransform());
+
+			spShader->setUniform(spShader->getUniform("vInputColour"), Vec3(0.0, 1.0, 0.0));
+
+			if (auto spTexture = pVisual->getMaterial()->getTexture())
+				spTexture->bind();
+
 			spGeometry = pVisual->getGeometry();
 			spGeometry->bind();
+
 			m_spRenderer->drawIndexed(spGeometry->getPrimitiveType(), spGeometry->getVertexList()->getNumIndices(), 0);
-			spGeometry->unbind();
 		});
 	}
 
