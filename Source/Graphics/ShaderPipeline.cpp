@@ -2,6 +2,7 @@
 
 #include <GL/glew.h>
 #include <Logging/Log.h>
+#include <Helpers/ResourceCache.h>
 #include <Graphics/Shader.h>
 #include <Graphics/ShaderObject.h>
 #include <boost/range/algorithm/for_each.hpp>
@@ -10,6 +11,8 @@ namespace baselib { namespace graphics {
 
 	namespace
 	{
+		ResourceCache<ShaderPipeline> m_ShaderPipelineCache;
+
 		// Check for valid shader object combinations.
 		bool isValidPipeline(const std::vector<boost::shared_ptr<ShaderObject>>& aspShaderObjects)
 		{
@@ -49,6 +52,14 @@ namespace baselib { namespace graphics {
 
 	boost::shared_ptr<ShaderPipeline> ShaderPipeline::create(const std::string& sName, const std::vector<boost::shared_ptr<ShaderObject>>& aspShaderObjects)
 	{
+		std::string sShaderObjectString;
+		boost::for_each(aspShaderObjects, [&sShaderObjectString](const boost::shared_ptr<ShaderObject>& sp) {
+			sShaderObjectString += sp->getName();
+		});
+
+		if (auto sp = m_ShaderPipelineCache.get(sShaderObjectString))
+			return sp;
+
 		if (!isValidPipeline(aspShaderObjects))
 		{
 			LOG_ERROR << "Trying to create shader pipeline with invalid combination of shader objects";
@@ -105,11 +116,17 @@ namespace baselib { namespace graphics {
 
 		// Let the ShaderPipeline keep the shader objects alive for debug configurations. For release
 		// configurations let them go out of scope and destroy the hardware buffers which are no longer required.
+		boost::shared_ptr<ShaderPipeline> spShaderPipeline;
 		#ifdef _DEBUG
-		return boost::shared_ptr<ShaderPipeline>(new ShaderPipeline(sName, uShaderProgramID, aspShaderObjects));
+		spShaderPipeline = boost::shared_ptr<ShaderPipeline>(new ShaderPipeline(sName, uShaderProgramID, aspShaderObjects));
 		#else
-		return boost::shared_ptr<ShaderPipeline>(new ShaderPipeline(sName, uShaderProgramID));
+		spShaderPipeline = boost::shared_ptr<ShaderPipeline>(new ShaderPipeline(sName, uShaderProgramID));
 		#endif
+
+		// Cache the shader pipeline
+		m_ShaderPipelineCache.add(sShaderObjectString, spShaderPipeline);
+
+		return spShaderPipeline;
 	}
 
 	ShaderPipeline::ShaderPipeline(const std::string& sName, unsigned int uID)
