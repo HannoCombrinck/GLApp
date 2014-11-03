@@ -40,6 +40,8 @@ namespace baselib
 			void setUniform(int iIndex, Vec3 v);
 			//! Set vec4f uniform variable.
 			void setUniform(int iIndex, Vec4 v);
+			//! Set mat4f uniform variable
+			void setUniform(int iIndex, Mat4 m);
 
 			//! Set int uniform variable.
 			void setUniform(int iIndex, int i);

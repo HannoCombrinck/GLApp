@@ -66,6 +66,11 @@ namespace baselib { namespace graphics {
 		glUniform4f(iIndex, v.x, v.y, v.z, v.w);
 	}
 
+	void Shader::setUniform(int iIndex, Mat4 m)	
+	{
+		glUniformMatrix4fv(iIndex, 1, GL_FALSE, glm::value_ptr(m));
+	}
+
 	void Shader::setUniform( int iIndex, int i )
 	{
 		glUniform1i(iIndex, i);
