@@ -49,8 +49,8 @@ namespace baselib { namespace graphics {
 
 	void Node::onUpdate(const Mat4& mParent)
 	{
-		boost::for_each(m_aChildren, [&mParent](const boost::shared_ptr<Spatial>& spSpatial) {
-			spSpatial->update(mParent);
+		boost::for_each(m_aChildren, [this, &mParent](const boost::shared_ptr<Spatial>& spSpatial) {
+			spSpatial->update(getWorldTransform());
 		});
 	}
 
