@@ -8,8 +8,11 @@
 #include <Graphics/CameraController.h>
 #include <Graphics/Renderer.h>
 #include <Graphics/RenderJob.h>
+#include <Graphics/VisualCollector.h>
 
 #include <boost/shared_ptr.hpp>
+
+#include <boost/range/algorithm/for_each.hpp>
 
 using namespace baselib::graphics;
 
@@ -25,12 +28,13 @@ namespace baselib {
 		LOG_VERBOSE << "DeferredRenderingApp destructor";
 	}
 
-	void DeferredRenderingApp::onInit()
+	void DeferredRenderingApp::onInit(int iWidth, int iHeight)
 	{
 		LOG_VERBOSE << "DeferredRenderingApp init";
 
-		m_spRenderer = Renderer::create();
+		m_spRenderer = Renderer::create(iWidth, iHeight);
 		m_spMainRenderJob = RenderJob::create(m_spRenderer);
+		m_spVisualCollector = VisualCollector::create();
 		m_spMainCamera = Camera::create();
 		m_spCameraController = CameraController::create(m_spMainCamera);
 		m_spCameraController->setPosition(Vec3(0.0f, 0.1f, 10.0f));
@@ -38,13 +42,8 @@ namespace baselib {
 		auto spModelLoader = ModelLoader::create();
 		auto spTestModel = spModelLoader->load("../Data/Models/FbxTest.fbx");
 
-		// Log names of all nodes in model
-		spTestModel->apply([](const boost::shared_ptr<Spatial>& sp) {
-			LOG_INFO << "Model Spatial: " << sp->getName();
-		});
-
 		m_spRootNode = Node::create();
-		m_spRootNode->setName("Root");
+		m_spRootNode->setName("SceneRoot");
 		m_spRootNode->addChild(spTestModel);
 	}
 
@@ -55,15 +54,20 @@ namespace baselib {
 
 	void DeferredRenderingApp::onUpdate(double dDeltaTime)
 	{
+		m_spCameraController->update(dDeltaTime);
 		m_spRootNode->update(Mat4());
 	}
 
 	void DeferredRenderingApp::onRender()
 	{
+		if (m_spMainRenderJob)
+			m_spMainRenderJob->execute(m_spRootNode, m_spVisualCollector, m_spRenderer->getBackBuffer(), m_spMainCamera);
 	}
 
 	void DeferredRenderingApp::onWindowResize(int iWidth, int iHeight)
 	{
+		if (m_spRenderer)
+			m_spRenderer->resizeBackBuffer(iWidth, iHeight);
 	}
 
 	void DeferredRenderingApp::onKeyPress(int iKey)
@@ -77,9 +81,9 @@ namespace baselib {
 		if (iKey == 'D')
 			m_spCameraController->setMovingRight(true);
 
-		if (iKey == 'M')
+		if (iKey == 'Q')
 			setLockMousePosition(true);
-		if (iKey == 'N')
+		if (iKey == 'E')
 			setLockMousePosition(false);
 	}
 
@@ -99,8 +103,8 @@ namespace baselib {
 	{
 		if (getLockMousePosition())
 		{
-			m_spCameraController->rotateX(iDY * 0.25f);
-			m_spCameraController->rotateY(iDX * 0.25f);
+			m_spCameraController->rotateX(iDY * -0.25f);
+			m_spCameraController->rotateY(iDX * -0.25f);
 		}
 	}
 

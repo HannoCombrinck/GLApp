@@ -50,12 +50,12 @@ namespace baselib {
 		Vec2 vUV;
 	};
 
-	void BaseApp::onInit()
+	void BaseApp::onInit(int iWidth, int iHeight)
 	{
 		LOG_VERBOSE << "BaseApp init";
 
 		// Create test renderer
-		m_spRenderer = Renderer::create();
+		m_spRenderer = Renderer::create(iWidth, iHeight);
 
 		// Create shader objects
 		auto spVertexShader = ShaderObject::load("../Data/Shaders/test.vert");
@@ -123,7 +123,7 @@ namespace baselib {
 		std::vector<boost::shared_ptr<Texture>> aTargets;
 		aTargets.push_back(spTargetTexture);
 		//m_spFrameBuffer = FrameBuffer::create(aTargets, null_ptr);
-		m_spFrameBuffer = FrameBuffer::create();
+		m_spFrameBuffer = m_spRenderer->getBackBuffer();
 
 		// Create test render job
 		m_spRenderJob = RenderJob::create(m_spRenderer);
@@ -148,7 +148,7 @@ namespace baselib {
 	void BaseApp::onWindowResize(int iWidth, int iHeight)
 	{
 		if (m_spRenderer)
-			m_spRenderer->setViewportSize(Vec4(0, 0, iWidth, iHeight));
+			m_spRenderer->resizeBackBuffer(iWidth, iHeight);
 	}
 
 }

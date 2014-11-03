@@ -98,7 +98,7 @@ namespace baselib
 		boost::signals2::scoped_connection m_WindowCloseConnection;
 
 		//! Called after window and OpenGL context creation to allow for derived app resrouce creation
-		virtual void onInit() {}
+		virtual void onInit(int iWidth, int iHeight) {}
 		//! Called before window destruction to allow for derived app resource cleanup
 		virtual void onDestroy() {}
 		//! Update called from main loop

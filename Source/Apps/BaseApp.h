@@ -39,7 +39,7 @@ namespace baselib
 		virtual ~BaseApp();
 
 	private:
-		void onInit();
+		void onInit(int iWidth, int iHeight);
 		void onDestroy();
 		void onUpdate(double dDeltaTime);
 		void onRender();

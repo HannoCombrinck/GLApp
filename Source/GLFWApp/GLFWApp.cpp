@@ -165,7 +165,7 @@ namespace baselib {
 
 		// Successfully created window and context
 		setAppRunning(true);
-		onInit();
+		onInit(m_iWidth, m_iHeight);
 	}
 
 	void GLFWApp::destroy()
@@ -279,7 +279,11 @@ namespace baselib {
 		}
 
 		if (m_bLockMousePos)
-			glfwSetCursorPos(m_pWindow, m_iWidth/2, m_iHeight/2);
+		{
+			m_iMouseX = m_iWidth/2;
+			m_iMouseY = m_iHeight/2;
+			glfwSetCursorPos(m_pWindow, m_iMouseX, m_iMouseY);
+		}
 	}
 
 	void GLFWApp::windowMove(int iX, int iY)
@@ -325,6 +329,12 @@ namespace baselib {
 		m_iMouseX = m_iWidth/2;
 		m_iMouseY = m_iHeight/2;
 		glfwSetCursorPos(m_pWindow, m_iMouseX, m_iMouseY);
+
+		int iCursorFlag = GLFW_CURSOR_NORMAL;
+		if (m_bLockMousePos)
+			iCursorFlag = GLFW_CURSOR_HIDDEN;
+
+		glfwSetInputMode(m_pWindow, GLFW_CURSOR, iCursorFlag);
 	}
 
 	void GLFWApp::setWindowTitle(const std::string& s)

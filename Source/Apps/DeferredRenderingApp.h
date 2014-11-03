@@ -9,6 +9,7 @@ namespace baselib
 		class Renderer;
 		class RenderJob;
 		class Node;
+		class VisualCollector;
 		class Camera;
 		class CameraController;
 	}
@@ -24,7 +25,7 @@ namespace baselib
 		virtual ~DeferredRenderingApp();
 
 	private:
-		void onInit();
+		void onInit(int iWidth, int iHeight);
 		void onDestroy();
 		void onUpdate(double dDeltaTime);
 		void onRender();
@@ -37,6 +38,7 @@ namespace baselib
 		boost::shared_ptr<graphics::Renderer> m_spRenderer;
 		boost::shared_ptr<graphics::RenderJob> m_spMainRenderJob;
 		boost::shared_ptr<graphics::Node> m_spRootNode;
+		boost::shared_ptr<graphics::VisualCollector> m_spVisualCollector;
 		boost::shared_ptr<graphics::Camera> m_spMainCamera;
 		boost::shared_ptr<graphics::CameraController> m_spCameraController;
 	};
