@@ -60,8 +60,8 @@ namespace baselib { namespace graphics {
 
 	void CameraController::moveForward(float fDistance)
 	{
-		m_vPosition.x += fDistance * sin(toRadians(m_fYaw)) * cos(toRadians(m_fPitch));
-		m_vPosition.y -= fDistance * sin(toRadians(m_fPitch));
+		m_vPosition.x -= fDistance * sin(toRadians(m_fYaw)) * cos(toRadians(m_fPitch));
+		m_vPosition.y += fDistance * sin(toRadians(m_fPitch));
 		m_vPosition.z -= fDistance * cos(toRadians(m_fYaw)) * cos(toRadians(m_fPitch));
 
 		m_bRecalcTransform = true;
@@ -70,7 +70,7 @@ namespace baselib { namespace graphics {
 	void CameraController::moveSideways(float fDistance)
 	{
 		m_vPosition.x += fDistance * cos(toRadians(m_fYaw));
-		m_vPosition.z += fDistance * sin(toRadians(m_fYaw));
+		m_vPosition.z -= fDistance * sin(toRadians(m_fYaw));
 
 		m_bRecalcTransform = true;
 	}
