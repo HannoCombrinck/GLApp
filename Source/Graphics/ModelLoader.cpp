@@ -190,6 +190,8 @@ namespace baselib { namespace graphics {
 			assert(false);
 		}
 
+		LOG_INFO << "Loading: " << fs::canonical(fsPath).string();
+
 		Assimp::Importer i;
 		const aiScene* scene = i.ReadFile(fsPath.string(),
 										  aiProcess_CalcTangentSpace	  |
@@ -204,6 +206,7 @@ namespace baselib { namespace graphics {
 		}
 
 		auto spNode = Node::create();
+		spNode->setName(fsPath.filename().string());
 		buildModel(scene, scene->mRootNode, spNode);
 
 		return spNode;
