@@ -10,6 +10,14 @@ namespace baselib
 {
 	namespace graphics
 	{
+		class FrameBuffer;
+	}
+}
+
+namespace baselib 
+{
+	namespace graphics
+	{
 		/*! @brief Renderer interface. Wrapper for OpenGL API.
 		 *
 		 */
@@ -98,7 +106,7 @@ namespace baselib
 			};
 
 			//! Creates a Renderer.
-			static boost::shared_ptr<Renderer> create();
+			static boost::shared_ptr<Renderer> create(int iWidth, int iHeight);
 
 			//! Destructor.
 			virtual ~Renderer();
@@ -108,6 +116,9 @@ namespace baselib
 
 			//! Flush the pipeline.
 			void flush();
+
+			//! Resize back buffer
+			void resizeBackBuffer(int iWidth, int iHeight);
 
 			//! Clear all buffers for current render target.
 			void clear();
@@ -129,18 +140,23 @@ namespace baselib
 			//! Get the current value of a render state.
 			RenderStateValue getRenderState(RenderState eState) const { assert(eState < STATE_COUNT); return m_aeState[eState]; }
 
+			//! Get the back buffer.
+			boost::shared_ptr<FrameBuffer> getBackBuffer() const { return m_spBackBuffer; }
+
 		protected:
 			//! Protected constructor - must be created by static create().
-			Renderer();
+			Renderer(int iWidth, int iHeight);
 
 		private:
 			//! Initialize renderer.
-			void init();
+			void init(int iWidth, int iHeight);
 			//! Destroy renderer.
 			void destroy();
 			//! Apply a render state.
 			void applyRenderState(RenderState eState, RenderStateValue eValue);
-			
+
+			boost::shared_ptr<FrameBuffer> m_spBackBuffer; //!< FrameBuffer object that represents the back buffer.
+
 			Vec4 m_vClearColour;					  //!< Current clear colour. Current render target will be cleared to this colour when calling clear().
 			Vec4 m_vViewportSize;					  //!< Current viewport size.
 			RenderStateValue m_aeState[STATE_COUNT];  //!< Current render state values.

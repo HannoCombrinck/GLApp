@@ -2,19 +2,22 @@
 
 #include <GL/glew.h>
 #include <Logging/Log.h>
+#include <Graphics/FrameBuffer.h>
 
 namespace baselib { namespace graphics {
 
-	boost::shared_ptr<Renderer> Renderer::create()
+	boost::shared_ptr<Renderer> Renderer::create(int iWidth, int iHeight)
 	{
-		return boost::shared_ptr<Renderer>(new Renderer());
+		return boost::shared_ptr<Renderer>(new Renderer(iWidth, iHeight));
 	}
 
-	Renderer::Renderer()
-		: m_vClearColour(Vec4(0.0, 0.0, 0.0, 0.0))
+	Renderer::Renderer(int iWidth, int iHeight)
+		: m_vClearColour(Vec4(0.0))
+		, m_vViewportSize(Vec4(0.0))
+		, m_spBackBuffer()
 	{
 		LOG_VERBOSE << "Renderer constructor";
-		init();
+		init(iWidth, iHeight);
 	}
 
 	Renderer::~Renderer()
@@ -23,8 +26,13 @@ namespace baselib { namespace graphics {
 		destroy();
 	}
 
-	void Renderer::init()
+	void Renderer::init(int iWidth, int iHeight)
 	{
+		// Create back buffer
+		m_spBackBuffer = FrameBuffer::create();
+		m_spBackBuffer->setWidth(iWidth);
+		m_spBackBuffer->setHeight(iHeight);
+
 		// Temp Should set to default OpenGL states.
 		memset(m_aeState, 0, sizeof(unsigned int)*STATE_COUNT);
 		m_aeState[STATE_BLEND_DST] = ONE;
@@ -75,6 +83,15 @@ namespace baselib { namespace graphics {
 	void Renderer::flush()
 	{
 		// glFlush() and glFinish() are legacy functions and don't behave as expected. Find a different way to flush the pipeline for profiling purposes.
+	}
+
+	void Renderer::resizeBackBuffer( int iWidth, int iHeight )
+	{
+		if (!m_spBackBuffer)
+			return;
+		
+		m_spBackBuffer->setWidth(iWidth);
+		m_spBackBuffer->setHeight(iHeight);
 	}
 
 	void Renderer::clear()
