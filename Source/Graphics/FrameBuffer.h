@@ -40,6 +40,19 @@ namespace baselib
 			//! Get frame buffer ID.
 			unsigned int getID() const { return m_uID; }
 
+			//! Set the width.
+			void setWidth(int iWidth) { m_iWidth = iWidth; }
+			//! Get the width.
+			int getWidth() const { return m_iWidth; }
+			//! Set the height.
+			void setHeight(int iHeight) { m_iHeight = iHeight; }
+			//! Get the height.
+			int getHeight() const { return m_iHeight; }
+			//! Set the bits per pixel.
+			void setBPP(int iBPP) { m_iBPP = iBPP; }
+			//! Get the bits per pixel.
+			int getBPP() const { return m_iBPP; }
+
 		protected:
 			//! Protected constructors - must be constructed with static create().
 			FrameBuffer(unsigned int uID, int iNumTargets, const std::vector<boost::shared_ptr<Texture>>& aspColourTargets, const boost::shared_ptr<Texture>& spDepthTarget);
@@ -53,6 +66,10 @@ namespace baselib
 			int m_iNumTargets;  //!< The number of colour targets attached to the framebuffer. 0 indicates back buffer.
 			std::vector<boost::shared_ptr<Texture>> m_aspColourTargets; //!< List of colour target textures.
 			boost::shared_ptr<Texture> m_spDepthTarget; //!< Depth texture.
+
+			int m_iWidth;  //!< Width of frame buffer.
+			int m_iHeight; //!< Height of frame buffer.
+			int m_iBPP;	   //!< Bits per pixel of frame buffer.
 		};
 	}
 }

@@ -14,6 +14,12 @@ namespace baselib { namespace graphics {
 	{
 		void checkValidTargets(const std::vector<boost::shared_ptr<Texture>>& aColourAttachments)
 		{
+			if (aColourAttachments.empty())
+			{
+				LOG_ERROR << "Attempting to create FrameBuffer with 0 colour attachments.";
+				assert(false);
+			}
+
 			int iWidth = aColourAttachments[0]->getWidth();
 			int iHeight = aColourAttachments[0]->getHeight();
 			int iBPP = aColourAttachments[0]->getBPP();
@@ -52,7 +58,7 @@ namespace baselib { namespace graphics {
 
 	boost::shared_ptr<FrameBuffer> FrameBuffer::create()
 	{
-		return boost::shared_ptr<FrameBuffer>(new FrameBuffer(0, 0, std::vector<boost::shared_ptr<Texture>>(), null_ptr));
+		return boost::shared_ptr<FrameBuffer>(new FrameBuffer(0));
 	}
 
 	boost::shared_ptr<FrameBuffer> FrameBuffer::create(const std::vector<boost::shared_ptr<Texture>>& aspColourTargets, const boost::shared_ptr<Texture>& spDepthTarget)
@@ -116,11 +122,17 @@ namespace baselib { namespace graphics {
 		, m_spDepthTarget(spDepthTarget)
 	{
 		LOG_VERBOSE << "FrameBuffer constructor";
+		m_iWidth = aspColourTargets[0]->getWidth();
+		m_iHeight = aspColourTargets[0]->getHeight();
+		m_iBPP = aspColourTargets[0]->getBPP();
 	}
 
 	FrameBuffer::FrameBuffer(unsigned int uID)
 		: m_uID(uID)
 		, m_iNumTargets(0)
+		, m_iWidth(0)
+		, m_iHeight(0)
+		, m_iBPP(0)
 	{
 		LOG_VERBOSE << "FrameBuffer constructor";
 	}
