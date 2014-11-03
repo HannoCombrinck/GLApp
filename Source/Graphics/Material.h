@@ -31,11 +31,11 @@ namespace baselib
 			//! Bind the material.
 			void bind();
 
-			//! Getter for setShader().
+			//! Get the material shader.
 			boost::shared_ptr<Shader> getShader() const { return m_spShader; }
-			//! Getter for setTexture().
+			//! Get the material texture.
 			boost::shared_ptr<Texture> getTexture() const { return m_spTexture; }
-			//! Getter for setRenderState().
+			//! Get the material render state.
 			boost::shared_ptr<RenderState> getRenderState() const { return m_spRenderState; }
 
 		protected:
