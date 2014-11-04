@@ -19,11 +19,11 @@ uniform mat4 mWorld;
 
 void main() 
 {
-	mat4 mNormal = mView * mWorld;
-	vNormalFrag = normalize( vec3(mNormal * vec4(vNormalVert, 0)) );
-	vTangentFrag = normalize( vec3(mNormal * vec4(vTangentVert, 0)) );
-	vBitangentFrag = normalize( vec3(mNormal * vec4(vBitangentVert, 0)) );
+	vNormalFrag = normalize(mat3(mWorld) * vNormalVert);
+	vTangentFrag = normalize(mat3(mWorld) * vTangentVert);
+	vBitangentFrag = normalize(mat3(mWorld) * vBitangentVert);
 	vTexCoord1Frag = vTexCoord1Vert;
 	vTexCoord2Frag = vTexCoord2Vert;
+	
     gl_Position = mProjection * mView * mWorld * vec4(vPositionVert, 1);
 }

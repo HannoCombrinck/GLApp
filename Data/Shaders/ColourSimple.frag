@@ -12,5 +12,5 @@ uniform vec3 vInputColour;
 
 void main() 
 {
-    vColour = vec4(vInputColour.xyz, 1.0);
+    vColour = vec4(vNormalFrag.xyz, 1.0);
 }

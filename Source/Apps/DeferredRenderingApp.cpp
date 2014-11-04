@@ -10,6 +10,8 @@
 #include <Graphics/RenderJob.h>
 #include <Graphics/VisualCollector.h>
 
+#include <Math/MathHelpers.h>
+
 #include <boost/shared_ptr.hpp>
 
 #include <boost/range/algorithm/for_each.hpp>
@@ -55,6 +57,8 @@ namespace baselib {
 	void DeferredRenderingApp::onUpdate(double dDeltaTime)
 	{
 		m_spCameraController->update(dDeltaTime);
+
+		m_spRootNode->modifyLocalTransform() = glm::rotate(m_spRootNode->getLocalTransform(), toRadians(1.0f), Vec3(0.0, 1.0, 0.0));
 		m_spRootNode->update(Mat4());
 	}
 

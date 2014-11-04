@@ -55,7 +55,7 @@ namespace baselib { namespace graphics {
 			spShader->setUniform(spShader->getUniform("mView"), spCamera->getViewMatrix());
 			spShader->setUniform(spShader->getUniform("mWorld"), pVisual->getWorldTransform());
 
-			spShader->setUniform(spShader->getUniform("vInputColour"), Vec3(0.0, 1.0, 0.0));
+			//spShader->setUniform(spShader->getUniform("vInputColour"), Vec3(0.0, 1.0, 0.0));
 
 			if (auto spTexture = pVisual->getMaterial()->getTexture())
 				spTexture->bind();
