@@ -68,6 +68,9 @@ namespace baselib {
 	{
 		if (m_spRenderer)
 			m_spRenderer->resizeBackBuffer(iWidth, iHeight);
+		if (m_spMainCamera)
+			m_spMainCamera->setAspectRatio(float(iWidth)/float(iHeight));
+
 	}
 
 	void DeferredRenderingApp::onKeyPress(int iKey)
