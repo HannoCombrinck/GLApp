@@ -38,6 +38,7 @@ namespace baselib {
 		m_spMainRenderJob = RenderJob::create(m_spRenderer);
 		m_spVisualCollector = VisualCollector::create();
 		m_spMainCamera = Camera::create();
+		m_spMainCamera->setAspectRatio(float(iWidth)/float(iHeight));
 		m_spCameraController = CameraController::create(m_spMainCamera);
 		m_spCameraController->setPosition(Vec3(0.0f, 0.1f, 10.0f));
 
