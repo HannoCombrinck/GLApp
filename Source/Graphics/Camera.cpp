@@ -21,8 +21,8 @@ namespace baselib { namespace graphics {
 		, m_fAspectRatio(4.0f/3.0f)
 		, m_fOrthoWidth(1.0f)
 		, m_fOrthoHeight(1.0f)
-		, m_fNearClipDistance(0.01f)
-		, m_fFarClipDistance(100.0f)
+		, m_fNearClipDistance(0.1f)
+		, m_fFarClipDistance(10000.0f)
 	{
 		LOG_VERBOSE << "Camera constructor";
 	}
