@@ -43,7 +43,8 @@ namespace baselib {
 		m_spCameraController->setPosition(Vec3(0.0f, 0.1f, 10.0f));
 
 		auto spModelLoader = ModelLoader::create();
-		auto spTestModel = spModelLoader->load("../Data/Models/FbxTest.fbx");
+		//auto spTestModel = spModelLoader->load("../Data/Models/FbxTest.fbx");
+		auto spTestModel = spModelLoader->load("../Data/Models/sponza/sponza.fbx");
 
 		m_spRootNode = Node::create();
 		m_spRootNode->setName("SceneRoot");
@@ -58,8 +59,7 @@ namespace baselib {
 	void DeferredRenderingApp::onUpdate(double dDeltaTime)
 	{
 		m_spCameraController->update(dDeltaTime);
-
-		m_spRootNode->modifyLocalTransform() = glm::rotate(m_spRootNode->getLocalTransform(), toRadians(1.0f), Vec3(0.0, 1.0, 0.0));
+		//m_spRootNode->modifyLocalTransform() = glm::rotate(m_spRootNode->getLocalTransform(), toRadians(1.0f), Vec3(0.0, 1.0, 0.0));
 		m_spRootNode->update(Mat4());
 	}
 
