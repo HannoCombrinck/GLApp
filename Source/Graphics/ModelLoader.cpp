@@ -10,6 +10,8 @@
 #include <Graphics/ShaderObject.h>
 #include <Graphics/ShaderPipeline.h>
 #include <Graphics/Shader.h>
+#include <Graphics/Image.h>
+#include <Graphics/Texture.h>
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
@@ -38,6 +40,8 @@ namespace baselib { namespace graphics {
 
 	namespace
 	{
+		fs::path fsModelPath;
+
 		struct Vert
 		{
 			Vert(const Vec3& vP, const Vec3& vN, const Vec3& vT, const Vec3& vBT, const Vec2& vUV0, const Vec2& vUV1)
@@ -133,6 +137,8 @@ namespace baselib { namespace graphics {
 				}
 			}
 
+			boost::shared_ptr<Texture> spDiffuseTexture = null_ptr;
+
 			// Get material properties and textures from aiMesh
 			if (pScene->HasMaterials())
 			{
@@ -140,9 +146,13 @@ namespace baselib { namespace graphics {
 				aiString diffuseTexturePath;
 				pScene->mMaterials[pMesh->mMaterialIndex]->GetTexture(aiTextureType_DIFFUSE, 0, &diffuseTexturePath);
 
-				fs::path fsDiffuseTex(diffuseTexturePath.C_Str());
-				if (fs::exists(fsDiffuseTex))
-					LOG_INFO << "Found diffuse tex!" << std::endl;
+				if (diffuseTexturePath.length > 0)
+				{
+					fs::path fsDiffuseTexName(diffuseTexturePath.C_Str());
+					fs::path fsDiffuseTexPath = fsModelPath/fsDiffuseTexName;
+					if (fs::exists(fsDiffuseTexPath))
+						spDiffuseTexture = Texture::load(fsDiffuseTexPath);
+				}
 			}
 
 			auto spVertexShader = ShaderObject::load("../Data/Shaders/Default.vert");
@@ -155,7 +165,7 @@ namespace baselib { namespace graphics {
 			auto spShaderPipeline = ShaderPipeline::create("DefaultPipeline", aspShaders);
 
 			auto spShader = spShaderPipeline->createInstance();
-			auto spMaterial = Material::create(spShader, null_ptr, null_ptr); // Skip texture for now
+			auto spMaterial = Material::create(spShader, spDiffuseTexture, null_ptr); // Skip texture for now
 			auto spStaticGeometry = StaticGeometry::create(spVertexList, Geometry::TRIANGLES);
 
 			return Visual::create(spStaticGeometry, spMaterial);
@@ -205,6 +215,8 @@ namespace baselib { namespace graphics {
 			assert(false);
 		}
 
+		fsModelPath = fsPath.parent_path();
+		
 		auto spNode = Node::create();
 		spNode->setName(fsPath.filename().string());
 		buildModel(scene, scene->mRootNode, spNode);
