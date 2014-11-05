@@ -9,11 +9,12 @@ using namespace baselib;
 int main(int arc, char** argv)
 {
 	Logger::setAddTimeStamp(false);
-	Logger::setLogLevel(LOGLEVEL_VERBOSE);
+	Logger::setLogLevel(LOGLEVEL_INFO);
 
 	//BaseApp app; 
 	DeferredRenderingApp app;
-	app.setSize(800, 600);
+	//app.setSize(1920, 1080);
+	app.setSize(1280, 960);
 	app.setFullScreen(false);
 	app.setGLVersion(3, 2);
 	app.setWindowTitle("Basic Deferred Rendering Test");
