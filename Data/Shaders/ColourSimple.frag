@@ -8,9 +8,10 @@ in vec2 vTexCoord2Frag;
 
 out vec4 vColour;
 
-uniform vec3 vInputColour;
+uniform sampler2D sDiffuse;
 
 void main() 
 {
-    vColour = vec4(vNormalFrag.xyz, 1.0);
+	vec4 vDiffuse = texture(sDiffuse, vTexCoord1Frag);
+    vColour = vec4(vDiffuse.xyz, 1.0);
 }
