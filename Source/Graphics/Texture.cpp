@@ -33,13 +33,13 @@ namespace baselib { namespace graphics {
 		if (auto sp = m_TextureCache.get(sCanonicalPath))
 			return sp;
 
-		// Load image from file
-		// Create texture from image
-		// Return texture
+		auto spImage = Image::load(fsPath);
+		auto spTexture = Texture::create(spImage);
 
-		LOG_INFO << "TODO";
-		assert(false);
-		return null_ptr;
+		// Add to texture cache
+		m_TextureCache.add(sCanonicalPath, spTexture);
+
+		return spTexture;
 	}
 
 	boost::shared_ptr<Texture> Texture::create(const boost::shared_ptr<Image>& spImage)
@@ -72,10 +72,16 @@ namespace baselib { namespace graphics {
 			assert(false);
 		}
 
+		glGenerateMipmap(GL_TEXTURE_2D);
+
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+
+		float fAnisotropicMax = 0.0f;
+		glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &fAnisotropicMax);
+		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, fAnisotropicMax);
 
 		return boost::shared_ptr<Texture>(new Texture(uID, Texture::TEXTURE_2D, spImage->getWidth(), spImage->getHeight(), spImage->getBPP()));
 	}

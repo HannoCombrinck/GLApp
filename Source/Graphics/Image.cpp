@@ -41,6 +41,8 @@ namespace baselib { namespace graphics {
 			assert(false);
 		}
 
+		LOG_INFO << "Loading: " << fs::canonical(fsPath);
+
 		// Get canonical path
 		std::string sCanonicalPath = fs::canonical(fsPath).string();
 
