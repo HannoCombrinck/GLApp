@@ -61,6 +61,10 @@ namespace baselib
 			void setYaw(float f) { m_fYaw = f; m_bRecalcTransform = true; }
 			//! Getter for setYaw().
 			float getYaw() const { return m_fYaw; }
+			//! Set the camera movement speed.
+			void setMoveSpeed(float f) { m_fMoveSpeed = f; }
+			//! Getter for setMoveSpeed().
+			float getMoveSpeed() const { return m_fMoveSpeed; }
 
 		protected:
 			//! Protected constructor - must be created by static create().
@@ -72,6 +76,7 @@ namespace baselib
 			Vec3 m_vPosition;			//!< Camera position in world space.
 			float m_fPitch;				//!< Camera pitch in degrees.
 			float m_fYaw;				//!< Camera yaw in degrees.
+			float m_fMoveSpeed;			//!< Speed at which camera moves.
 			Mat4 m_mTransform;			//!< Camera transform calculated from position, yaw and pitch.
 			bool m_bRecalcTransform;	//!< Set to true if the camera transform should be recalculated.
 

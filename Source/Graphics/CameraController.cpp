@@ -22,6 +22,7 @@ namespace baselib { namespace graphics {
 		, m_bMovingBack(false)
 		, m_bMovingLeft(false)
 		, m_bMovingRight(false)
+		, m_fMoveSpeed(5.0f)
 	{
 		LOG_VERBOSE << "CameraController constructor";
 	}
@@ -37,13 +38,13 @@ namespace baselib { namespace graphics {
 			return;
 
 		if (m_bMovingForward)
-			moveForward(0.3f);
+			moveForward(m_fMoveSpeed);
 		if (m_bMovingBack)
-			moveForward(-0.3f);
+			moveForward(-m_fMoveSpeed);
 		if (m_bMovingLeft)
-			moveSideways(-0.3f);
+			moveSideways(-m_fMoveSpeed);
 		if (m_bMovingRight)
-			moveSideways(0.3f);
+			moveSideways(m_fMoveSpeed);
 
 		if (m_bRecalcTransform)
 		{
