@@ -119,7 +119,7 @@ namespace baselib {
 		m_spVisualCollector = VisualCollector::create();
 		// Create test frame buffer
 		auto spTargetImage = Image::create(512, 512, 32, 0);
-		auto spTargetTexture = Texture::create(spTargetImage);
+		auto spTargetTexture = Texture::createRenderTarget(spTargetImage);
 		std::vector<boost::shared_ptr<Texture>> aTargets;
 		aTargets.push_back(spTargetTexture);
 		//m_spFrameBuffer = FrameBuffer::create(aTargets, null_ptr);
