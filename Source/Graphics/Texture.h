@@ -43,12 +43,14 @@ namespace baselib
 
 			//! Creates and returns a texture from an image.
 			static boost::shared_ptr<Texture> create(const boost::shared_ptr<Image>& spImage);
+			//! Creates and returns a render target texture from an image.
+			static boost::shared_ptr<Texture> createRenderTarget(const boost::shared_ptr<Image>& spImage);
 			
 			//! Destructor.
 			virtual ~Texture();
 		
 			//! Bind texture.
-			void bind();
+			void bind(unsigned int uUnit = 0);
 
 			//! Get the texture object ID.
 			unsigned int getID() { return m_uID; }

@@ -52,6 +52,11 @@ namespace baselib { namespace graphics {
 
 		// Using hard coded defaults to get things up and running.
 		// TODO: Wrap texture parameters, types, formats etc. 
+		if (spImage->getBPP() == 128)
+		{
+			glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, spImage->getWidth(), spImage->getHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, (const GLvoid*)spImage->getData());
+		}
 		if (spImage->getBPP() == 32)
 		{
 			glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
@@ -86,6 +91,43 @@ namespace baselib { namespace graphics {
 		return boost::shared_ptr<Texture>(new Texture(uID, Texture::TEXTURE_2D, spImage->getWidth(), spImage->getHeight(), spImage->getBPP()));
 	}
 
+	boost::shared_ptr<Texture> Texture::createRenderTarget(const boost::shared_ptr<Image>& spImage)
+	{
+		glActiveTexture(GL_TEXTURE0);
+
+		unsigned int uID;
+		glGenTextures(1, &uID);
+		glBindTexture(GL_TEXTURE_2D, uID);
+
+		// Hard code defaults for now
+		if (spImage->getBPP() == 128) // For GBuffer colour targets
+		{
+			glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA32F, spImage->getWidth(), spImage->getHeight(), 0, GL_RGBA, GL_FLOAT, (const GLvoid*)spImage->getData());
+		}
+		else if (spImage->getBPP() == 32)
+		{
+			glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, spImage->getWidth(), spImage->getHeight(), 0, GL_RGBA, GL_UNSIGNED_BYTE, (const GLvoid*)spImage->getData());
+		}
+		else if (spImage->getBPP() == 24) // For GBuffer depth target
+		{
+			glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, spImage->getWidth(), spImage->getHeight(), 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, (const GLvoid*)spImage->getData());
+		}
+		else
+		{
+			assert(false);
+		}
+
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_POINT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_POINT);
+
+		return boost::shared_ptr<Texture>(new Texture(uID, Texture::TEXTURE_2D, spImage->getWidth(), spImage->getHeight(), spImage->getBPP()));
+	}
+
 	Texture::Texture(unsigned int uID, TextureType eType, int iWidth, int iHeight, int iBPP)
 		: m_uID(uID)
 		, m_eType(eType)
@@ -103,15 +145,16 @@ namespace baselib { namespace graphics {
 		m_uID = ~0;
 	}
 
-	void Texture::bind()
+	void Texture::bind(unsigned int uUnit /*= 0*/)
 	{
 		if (m_uID == m_uCurrentlyBound)
 			return;
 
-		if (m_uActiveUnit != GL_TEXTURE0)
+		unsigned int uGLUnit = GL_TEXTURE0 + uUnit;
+		if (m_uActiveUnit != uGLUnit)
 		{
-			glActiveTexture(GL_TEXTURE0);
-			m_uActiveUnit = GL_TEXTURE0;
+			glActiveTexture(uGLUnit);
+			m_uActiveUnit = uGLUnit;
 		}
 
 		glBindTexture(GL_TEXTURE_2D, m_uID);
