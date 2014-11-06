@@ -142,7 +142,9 @@ namespace baselib {
 	void BaseApp::onRender()
 	{
 		assert(m_spRenderer);
-		m_spRenderJob->execute(m_spRootNode, m_spVisualCollector, m_spFrameBuffer, m_spCamera);
+		m_spVisualCollector->clear();
+		m_spVisualCollector->collect(m_spRootNode);
+		m_spRenderJob->execute(m_spVisualCollector->getVisuals(), m_spFrameBuffer, m_spCamera);
 	}
 
 	void BaseApp::onWindowResize(int iWidth, int iHeight)
