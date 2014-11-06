@@ -30,6 +30,8 @@ namespace baselib
 
 			//! Collect visuals from Node hierarchy 
 			void collect(const boost::shared_ptr<Node>& spNode);
+			//! Clear the list of collected visuals
+			void clear();
 
 			//! Get the sorted list of visuals.
 			const std::vector<Visual*>& getVisuals() const { return m_apVisuals; }

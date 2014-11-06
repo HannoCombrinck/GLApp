@@ -24,8 +24,6 @@ namespace baselib { namespace graphics {
 
 	void VisualCollector::collect(const boost::shared_ptr<Node>& spNode)
 	{
-		m_apVisuals.clear();
-
 		// Traverse Node hierarchy and selectively add visuals
 		std::vector<Visual*>& apVisuals = m_apVisuals;
 		spNode->apply([&apVisuals](const boost::shared_ptr<Spatial>& spSpatial) {
@@ -35,6 +33,11 @@ namespace baselib { namespace graphics {
 
 		// Sort m_apVisuals
 		//boost::sort(m_apVisuals, [](const Visual* pLHS, const Visual* pRHS) { return true; /*TODO: Write visual sorting predicate*/ });
+	}
+
+	void VisualCollector::clear()
+	{
+		m_apVisuals.clear();
 	}
 
 } }
