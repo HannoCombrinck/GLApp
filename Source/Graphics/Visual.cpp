@@ -9,6 +9,12 @@ namespace baselib { namespace graphics {
 		return boost::shared_ptr<Visual>(new Visual(spGeometry, spMaterial));
 	}
 
+	boost::shared_ptr<Visual> Visual::shallowCopy()
+	{
+		auto spVisual = Visual::create(m_spGeometry, m_spMaterial);
+		return spVisual;
+	}
+
 	Visual::Visual(const boost::shared_ptr<Geometry>& spGeometry, const boost::shared_ptr<Material>& spMaterial)
 		: m_spGeometry(spGeometry)
 		, m_spMaterial(spMaterial)

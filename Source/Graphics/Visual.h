@@ -26,6 +26,9 @@ namespace baselib
 			//! Creates a Visual.
 			static boost::shared_ptr<Visual> create(const boost::shared_ptr<Geometry>& spGeometry, const boost::shared_ptr<Material>& spMaterial);
 
+			//! Creates a new Visual that references the same geometry and material as this one.
+			boost::shared_ptr<Visual> shallowCopy();
+
 			//! Destructor.
 			virtual ~Visual();
 
