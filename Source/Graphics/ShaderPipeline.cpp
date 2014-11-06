@@ -114,26 +114,11 @@ namespace baselib { namespace graphics {
 			assert(false);
 		}
 
-		// Let the ShaderPipeline keep the shader objects alive for debug configurations. For release
-		// configurations let them go out of scope and destroy the hardware buffers which are no longer required.
-		boost::shared_ptr<ShaderPipeline> spShaderPipeline;
-		#ifdef _DEBUG
-		spShaderPipeline = boost::shared_ptr<ShaderPipeline>(new ShaderPipeline(sName, uShaderProgramID, aspShaderObjects));
-		#else
-		spShaderPipeline = boost::shared_ptr<ShaderPipeline>(new ShaderPipeline(sName, uShaderProgramID));
-		#endif
-
+		auto spShaderPipeline = boost::shared_ptr<ShaderPipeline>(new ShaderPipeline(sName, uShaderProgramID, aspShaderObjects));
 		// Cache the shader pipeline
 		m_ShaderPipelineCache.add(sShaderObjectString, spShaderPipeline);
 
 		return spShaderPipeline;
-	}
-
-	ShaderPipeline::ShaderPipeline(const std::string& sName, unsigned int uID)
-		: m_sName(sName)
-		, m_uID(uID)
-	{
-		LOG_VERBOSE << "ShaderPipeline constructor";
 	}
 
 	ShaderPipeline::ShaderPipeline(const std::string& sName, unsigned int uID, const std::vector<boost::shared_ptr<ShaderObject>>& aspShaderObjects)
@@ -141,7 +126,7 @@ namespace baselib { namespace graphics {
 		, m_uID(uID)
 		, m_aspShaderObjects(aspShaderObjects)
 	{
-		LOG_VERBOSE << "ShaderPipeline debug constructor";
+		LOG_VERBOSE << "ShaderPipeline constructor";
 	}
 
 	ShaderPipeline::~ShaderPipeline()

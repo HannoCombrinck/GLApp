@@ -42,14 +42,6 @@ namespace baselib
 
 		protected:
 			//! Protected constructors - must be created by static create().
-			ShaderPipeline(const std::string& sName, unsigned int uID);
-
-			/*! @brief Alternative constructor that takes list of of ShaderObjects and keeps them alive along with the pipeline.
-			 *
-			 *  It is not necessary to keep the shader objects alive to have a working pipeline
-			 *  but it's useful for debugging purposes. This constructor should, therefore, only 
-			 *  be used in debug configurations. See create() for additional info.
-			 */
 			ShaderPipeline(const std::string& sName, unsigned int uID, const std::vector<boost::shared_ptr<ShaderObject>>& aspShaderObjects);
 
 		private:
