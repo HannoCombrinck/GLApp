@@ -31,21 +31,26 @@ namespace baselib
 			int getAttribute(const std::string& sName) const;
 			//! Get uniform index from name.
 			int getUniform(const std::string& sName) const;
+			//! Get uniform index from name and return true if the uniform exists.
+			bool getUniform(int& iIndex, const std::string& sName) const;
 		
 			//! Set float uniform variable.
 			void setUniform(int iIndex, float f);
 			//! Set vec2f uniform variable.
-			void setUniform(int iIndex, Vec2 v);
+			void setUniform(int iIndex, const Vec2& v);
 			//! Set vec3f uniform variable.
-			void setUniform(int iIndex, Vec3 v);
+			void setUniform(int iIndex, const Vec3& v);
 			//! Set vec4f uniform variable.
-			void setUniform(int iIndex, Vec4 v);
-			//! Set mat4f uniform variable
-			void setUniform(int iIndex, Mat4 m);
-
+			void setUniform(int iIndex, const Vec4& v);
+			//! Set mat4f uniform variable.
+			void setUniform(int iIndex, const Mat4& m);
+			//! Set mat4f uniform if it exists.
+			void setUniform(const std::string& sName, const Mat4& m);
 			//! Set int uniform variable.
 			void setUniform(int iIndex, int i);
-
+			//! Set int uniform if it exists.
+			void setUniform(const std::string& sName, int i);
+			
 		protected:
 			//! Protected constructor - must be created by ShaderPipeline.
 			Shader(const boost::shared_ptr<ShaderPipeline>& spShaderPipeline);
