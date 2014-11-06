@@ -257,5 +257,8 @@
     <None Include="..\..\Data\Shaders\ColourSimple.frag">
       <Filter>Data\Shaders</Filter>
     </None>
+    <None Include="..\..\Data\Shaders\LightVolume.frag">
+      <Filter>Data\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
