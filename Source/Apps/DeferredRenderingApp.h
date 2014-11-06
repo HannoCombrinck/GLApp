@@ -10,8 +10,12 @@ namespace baselib
 		class RenderJob;
 		class Node;
 		class VisualCollector;
+		class Visual;
+		class Shader;
 		class Camera;
 		class CameraController;
+		class FrameBuffer;
+		class Texture;
 	}
 }
 
@@ -37,9 +41,18 @@ namespace baselib
 
 		boost::shared_ptr<graphics::Renderer> m_spRenderer;
 		boost::shared_ptr<graphics::RenderJob> m_spMainRenderJob;
-		boost::shared_ptr<graphics::Node> m_spRootNode;
+		boost::shared_ptr<graphics::Node> m_spMainScene;
+		boost::shared_ptr<graphics::Node> m_spLightScene;
+		boost::shared_ptr<graphics::Shader> m_spLightVolumeShader;
 		boost::shared_ptr<graphics::VisualCollector> m_spVisualCollector;
 		boost::shared_ptr<graphics::Camera> m_spMainCamera;
 		boost::shared_ptr<graphics::CameraController> m_spCameraController;
+		boost::shared_ptr<graphics::FrameBuffer> m_spGBuffer;
+		boost::shared_ptr<graphics::Shader> m_spGBufferShader;
+		boost::shared_ptr<graphics::Texture> m_spColourTarget1;
+		boost::shared_ptr<graphics::Texture> m_spColourTarget2;
+		boost::shared_ptr<graphics::Texture> m_spColourTarget3;
+		boost::shared_ptr<graphics::Texture> m_spColourTarget4;
+		boost::shared_ptr<graphics::Texture> m_spDepthTarget;
 	};
 }
