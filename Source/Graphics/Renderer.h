@@ -95,6 +95,16 @@ namespace baselib
 				LINE,
 				POINT,
 
+				// Depth function values
+				NEVER,
+				LESS,
+				EQUAL,
+				LEQUAL,
+				GREATER,
+				NOTEQUAL,
+				GEQUAL,
+				ALWAYS,
+
 				STATE_VALUE_COUNT
 			};
 

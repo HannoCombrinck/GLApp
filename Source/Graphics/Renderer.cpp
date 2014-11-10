@@ -204,6 +204,22 @@ namespace baselib { namespace graphics {
 			default: LOG_ERROR << "Invalid render state value - expected cull mode"; assert(false); return 0; break;
 			}
 		}
+
+		unsigned int getGLDepthFunc(Renderer::RenderStateValue eDepthFunc)
+		{
+			switch (eDepthFunc)
+			{
+			case Renderer::NEVER: return GL_NEVER; break;
+			case Renderer::LESS: return GL_LESS; break;
+			case Renderer::EQUAL: return GL_EQUAL; break;
+			case Renderer::LEQUAL: return GL_LEQUAL; break;
+			case Renderer::GREATER: return GL_GREATER; break;
+			case Renderer::NOTEQUAL: return GL_NOTEQUAL; break;
+			case Renderer::GEQUAL: return GL_GEQUAL; break;
+			case Renderer::ALWAYS: return GL_ALWAYS; break;
+			default: LOG_ERROR << "Invalid render state value - expected depth func"; assert(false); return 0; break;
+			}
+		}
 	}
 
 	void Renderer::applyRenderState(RenderState eState, RenderStateValue eValue)
@@ -224,12 +240,18 @@ namespace baselib { namespace graphics {
 			glBlendFunc(getGLBlendFactor(m_aeState[STATE_BLEND_SRC]), getGLBlendFactor(eValue)); break;
 		case STATE_BLEND_OP:
 			glBlendEquation(getGLBlendOp(eValue)); break;
-		case STATE_DEPTH_WRITE:			
-			assert(false); break;
+		case STATE_DEPTH_WRITE:
+			if (eValue == TRUE)
+				glDepthMask(GL_TRUE);
+			else if (eValue == FALSE)
+				glDepthMask(GL_FALSE);
+			break;
 		case STATE_DEPTH_TEST:			
-			enableGLState(GL_DEPTH_TEST, eValue); break;
-		case STATE_DEPTH_FUNC:			
-			assert(false); break;
+			enableGLState(GL_DEPTH_TEST, eValue); 
+			break;
+		case STATE_DEPTH_FUNC:
+			glDepthFunc(getGLDepthFunc(eValue));
+			break;
 		case STATE_DEPTH_CLEAR_VALUE:	
 			assert(false); break;
 		case STATE_FILL_MODE:
