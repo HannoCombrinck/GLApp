@@ -17,5 +17,12 @@ void main()
 	vec3 vDiffuse = texture(sDiffuse, vTexCoord).xyz;
 	vec3 vNormal = texture(sNormal, vTexCoord).xyz;
 
-    vColour = vec4(vDiffuse + vec3(0.2, 0.2, 0.2), 1.0);
+	vec3 vLightVec = vLightPosition - vWorldPos;
+	float fLength = length(vLightVec);
+	float fAttenuation = 1.0/(fLength*fLength) * 250;
+
+	vec3 vLightVecNorm = normalize(vLightVec);
+
+    vec3 vLit = max(vec3(0.0), dot(vLightVecNorm, vNormal)) * vDiffuse * fAttenuation;
+    vColour = vec4(vLit, 1.0);
 }

@@ -17,8 +17,7 @@ uniform mat4 mWorld;
 
 void main() 
 {
-	//vec4 v = mProjection * mView * mWorld * vec4(vPositionVert * fLightSize, 1);
-	vec4 v = mProjection * mView * mWorld * vec4(vPositionVert * 15.0, 1);
+	vec4 v = mProjection * mView * mWorld * vec4(vPositionVert * fLightSize, 1);
 	vClipSpacePosition = v;
     gl_Position = v;
 }
