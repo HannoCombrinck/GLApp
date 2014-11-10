@@ -153,14 +153,7 @@ namespace baselib { namespace graphics {
 		glBindFramebuffer(GL_FRAMEBUFFER, m_uID);
 		m_uCurrentlyBound = m_uID;
 		if (m_iNumTargets > 0)
-		{
 			glDrawBuffers(m_iNumTargets, aColourAttachmentBuffers);
-			auto eStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER);
-			if (eStatus != GL_FRAMEBUFFER_COMPLETE)
-			{
-				LOG_ERROR << "Incomplete framebuffer being bound.";
-			}
-		}
 	}
 
 	void FrameBuffer::bind(const boost::shared_ptr<Texture>& spColourTarget)
