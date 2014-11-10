@@ -54,5 +54,7 @@ namespace baselib
 		boost::shared_ptr<graphics::Texture> m_spColourTarget3;
 		boost::shared_ptr<graphics::Texture> m_spColourTarget4;
 		boost::shared_ptr<graphics::Texture> m_spDepthTarget;
+
+		bool m_bAnimateLights;
 	};
 }

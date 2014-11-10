@@ -10,6 +10,8 @@
 #include <Graphics/RenderJob.h>
 #include <Graphics/VisualCollector.h>
 #include <Graphics/Visual.h>
+#include <Graphics/Geometry.h>
+#include <Graphics/VertexList.h>
 #include <Graphics/Spatial.h>
 #include <Graphics/ShaderPipeline.h>
 #include <Graphics/ShaderObject.h>
@@ -30,6 +32,7 @@ using namespace baselib::graphics;
 namespace baselib {
 	
 	DeferredRenderingApp::DeferredRenderingApp()
+		: m_bAnimateLights(false)
 	{
 		LOG_VERBOSE << "DeferredRenderingApp constructor";
 	}
@@ -102,11 +105,12 @@ namespace baselib {
 		// Populate light scene
 		m_spLightScene = Node::create();
 		m_spLightScene->setName("LightScene");
-		for (int i = 0; i < 1000;  ++i)
+		for (int i = 0; i < 300;  ++i)
 		{
 			auto fRandX = (rand()/float(RAND_MAX) * 2575.0f) - 1386.0f;
-			auto fRandY = (rand()/float(RAND_MAX) * 700.0f) + 100.0f;
-			auto fRandZ = (rand()/float(RAND_MAX) * 1090.0f) - 560.0f;
+			auto fRandY = (rand()/float(RAND_MAX) * 800.0f);
+			auto fRandZ = (rand()/float(RAND_MAX) * 2575.0f) - 1386.0f;
+			//auto fRandZ = (rand()/float(RAND_MAX) * 1090.0f) - 560.0f;
 			auto vPos = Vec3(fRandX, fRandY, fRandZ);
 			auto spSphereCopy = spSphereVisual->shallowCopy();
 			spSphereCopy->modifyLocalTransform() = glm::translate(spSphereCopy->getLocalTransform(), vPos);
@@ -127,7 +131,8 @@ namespace baselib {
 	{
 		m_spCameraController->update(dDeltaTime);
 
-		//m_spLightScene->modifyLocalTransform() = glm::rotate(m_spLightScene->getLocalTransform(), toRadians(1.0f), Vec3(0.0, 1.0, 0.0));
+		if (m_bAnimateLights)
+			m_spLightScene->modifyLocalTransform() = glm::rotate(m_spLightScene->getLocalTransform(), toRadians(1.0f), Vec3(0.0, 1.0, 0.0));
 
 		m_spMainScene->update(Mat4());
 		m_spLightScene->update(Mat4());
@@ -135,15 +140,73 @@ namespace baselib {
 
 	void DeferredRenderingApp::onRender()
 	{
-		// Collect visual from main scene and render them to back buffer
+		// Setup GBuffer as render target
+		m_spGBuffer->bind();
+		m_spRenderer->setViewportSize(Vec4(0, 0, m_spGBuffer->getWidth(), m_spGBuffer->getHeight()));
+		m_spRenderer->setRenderState(Renderer::STATE_CULL_MODE, Renderer::CULL_BACK);
+		m_spRenderer->setRenderState(Renderer::STATE_BLEND, Renderer::FALSE);
+		m_spRenderer->setRenderState(Renderer::STATE_DEPTH_TEST, Renderer::TRUE);
+		m_spRenderer->setRenderState(Renderer::STATE_DEPTH_WRITE, Renderer::TRUE);
+		m_spRenderer->clear();
+
+
+		// Bind GBuffer shader and upload common uniform data
+		m_spGBufferShader->bind();
+		m_spGBufferShader->setUniform("mProjection", m_spMainCamera->getProjectionMatrix());
+		m_spGBufferShader->setUniform("mView", m_spMainCamera->getViewMatrix());
+		m_spGBufferShader->setUniform("sDiffuse", 0);
+
+		// Render all visuals in main scene
 		m_spVisualCollector->clear();
 		m_spVisualCollector->collect(m_spMainScene);
-		m_spMainRenderJob->execute(m_spVisualCollector->getVisuals(), m_spGBuffer, m_spMainCamera, m_spGBufferShader);
+		auto& spGBufferShader = m_spGBufferShader;
+		boost::for_each(m_spVisualCollector->getVisuals(), [this, &spGBufferShader](const Visual* pVisual) {
+			spGBufferShader->setUniform("mWorld", pVisual->getWorldTransform());
+			if (auto spTexture = pVisual->getMaterial()->getTexture())
+				spTexture->bind();
+			auto spGeometry = pVisual->getGeometry();
+			spGeometry->bind();
+			m_spRenderer->drawIndexed(spGeometry->getPrimitiveType(), spGeometry->getVertexList()->getNumIndices(), 0);
+		});
 
-		// Collect light volume visuals from light scene and render to back buffer
+		// Setup back buffer as render target
+		auto spBackBuffer = m_spRenderer->getBackBuffer();
+		spBackBuffer->bind();
+		m_spRenderer->setViewportSize(Vec4(0, 0, spBackBuffer->getWidth(), spBackBuffer->getHeight()));
+		m_spRenderer->setRenderState(Renderer::STATE_CULL_MODE, Renderer::CULL_FRONT);
+		m_spRenderer->setRenderState(Renderer::STATE_BLEND, Renderer::TRUE);
+		m_spRenderer->setRenderState(Renderer::STATE_BLEND_SRC, Renderer::ONE);
+		m_spRenderer->setRenderState(Renderer::STATE_BLEND_DST, Renderer::ONE);
+		m_spRenderer->setRenderState(Renderer::STATE_DEPTH_TEST, Renderer::FALSE);
+		m_spRenderer->setRenderState(Renderer::STATE_DEPTH_WRITE, Renderer::FALSE);
+		m_spRenderer->clear();
+
+		// Bind light volume shader and upload common uniform data
+		m_spLightVolumeShader->bind();
+		m_spLightVolumeShader->setUniform("mProjection", m_spMainCamera->getProjectionMatrix());
+		m_spLightVolumeShader->setUniform("mView", m_spMainCamera->getViewMatrix());
+		m_spLightVolumeShader->setUniform("sWorldPos", 0);
+		m_spLightVolumeShader->setUniform("sDiffuse", 1);
+		m_spLightVolumeShader->setUniform("sNormal", 2);
+
+		// Bind GBuffer target textures
+		m_spColourTarget1->bind(0);
+		m_spColourTarget2->bind(1);
+		m_spColourTarget3->bind(2);
+
+		// Render all light volume visuals in light scene
 		m_spVisualCollector->clear();
 		m_spVisualCollector->collect(m_spLightScene);
-		m_spMainRenderJob->execute(m_spVisualCollector->getVisuals(), m_spRenderer->getBackBuffer(), m_spMainCamera, m_spLightVolumeShader);
+		auto& spLightVolumeShader = m_spLightVolumeShader;
+		boost::for_each(m_spVisualCollector->getVisuals(), [this, &spLightVolumeShader](const Visual* pVisual) {
+			spLightVolumeShader->setUniform("mWorld", pVisual->getWorldTransform());
+			spLightVolumeShader->setUniform("fLightSize", 200.0f);
+			auto vPos = Vec3(pVisual->getWorldTransform()[3]);
+			spLightVolumeShader->setUniform("vLightPosition", vPos);
+			auto spGeometry = pVisual->getGeometry();
+			spGeometry->bind();
+			m_spRenderer->drawIndexed(spGeometry->getPrimitiveType(), spGeometry->getVertexList()->getNumIndices(), 0);
+		});
 	}
 
 	void DeferredRenderingApp::onWindowResize(int iWidth, int iHeight)
@@ -182,6 +245,9 @@ namespace baselib {
 			m_spCameraController->setMovingLeft(false);
 		if (iKey == 'D')
 			m_spCameraController->setMovingRight(false);
+
+		if (iKey == 'F')
+			m_bAnimateLights = !m_bAnimateLights;
 	}
 	
 	void DeferredRenderingApp::onMouseMoveRel(int iDX, int iDY)
