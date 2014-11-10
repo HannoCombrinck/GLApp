@@ -33,6 +33,8 @@ namespace baselib
 
 			//! Get the material shader.
 			boost::shared_ptr<Shader> getShader() const { return m_spShader; }
+			//! Set the material texture.
+			void setTexture(const boost::shared_ptr<Texture>& spTexture) { m_spTexture = spTexture; }
 			//! Get the material texture.
 			boost::shared_ptr<Texture> getTexture() const { return m_spTexture; }
 			//! Get the material render state.

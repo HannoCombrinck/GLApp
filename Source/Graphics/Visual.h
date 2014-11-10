@@ -32,6 +32,7 @@ namespace baselib
 			//! Destructor.
 			virtual ~Visual();
 
+
 			//! Getter for setMaterial().
 			boost::shared_ptr<Material> getMaterial() const { return m_spMaterial; }
 			//! Getter for setGeometry().

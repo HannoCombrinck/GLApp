@@ -82,6 +82,7 @@ namespace baselib { namespace graphics {
 				}
 				
 				glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0 + iCount, GL_TEXTURE_2D, spTarget->getID(), 0); // For now always use mip level 0
+				iCount++;
 			}
 			else
 			{
@@ -152,7 +153,14 @@ namespace baselib { namespace graphics {
 		glBindFramebuffer(GL_FRAMEBUFFER, m_uID);
 		m_uCurrentlyBound = m_uID;
 		if (m_iNumTargets > 0)
+		{
 			glDrawBuffers(m_iNumTargets, aColourAttachmentBuffers);
+			auto eStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+			if (eStatus != GL_FRAMEBUFFER_COMPLETE)
+			{
+				LOG_ERROR << "Incomplete framebuffer being bound.";
+			}
+		}
 	}
 
 	void FrameBuffer::bind(const boost::shared_ptr<Texture>& spColourTarget)

@@ -113,7 +113,7 @@ namespace baselib { namespace graphics {
 		else if (spImage->getBPP() == 24) // For GBuffer depth target
 		{
 			glPixelStorei(GL_UNPACK_ALIGNMENT, 4);
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT24, spImage->getWidth(), spImage->getHeight(), 0, GL_DEPTH_COMPONENT, GL_UNSIGNED_BYTE, (const GLvoid*)spImage->getData());
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT32F, spImage->getWidth(), spImage->getHeight(), 0, GL_DEPTH_COMPONENT, GL_FLOAT, (const GLvoid*)spImage->getData());
 		}
 		else
 		{
@@ -122,8 +122,8 @@ namespace baselib { namespace graphics {
 
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_POINT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_POINT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
 		return boost::shared_ptr<Texture>(new Texture(uID, Texture::TEXTURE_2D, spImage->getWidth(), spImage->getHeight(), spImage->getBPP()));
 	}

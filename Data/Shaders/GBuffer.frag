@@ -17,8 +17,8 @@ uniform sampler2D sDiffuse;
 void main() 
 {
 	vec4 vDiffuse = texture(sDiffuse, vTexCoord1Frag);
-	vWorldPosOut = vec4(vWorldPosFrag.xyz, 0.0);
-    vDiffuseOut = vec4(vDiffuse.xyz, 0.0);
-    vNormalOut = vec4(vNormalFrag.xyz, 0.0);
-    vOutExtra = vec4(0.0, 0.0, 0.0, 0.0);
+	vWorldPosOut = vec4(vWorldPosFrag.xyz, 1.0);
+    vDiffuseOut = vec4(vDiffuse.xyz, 1.0);
+    vNormalOut = vec4(vNormalFrag.xyz, 1.0);
+    vOutExtra = vec4(0.0, 0.0, 0.0, 1.0);
 }

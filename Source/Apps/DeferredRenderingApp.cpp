@@ -43,11 +43,9 @@ namespace baselib {
 	{
 		boost::shared_ptr<Shader> createSimpleShader(const std::string& sPipelineName, const std::string& sVertexShader, const std::string& sFragmentShader)
 		{
-			auto spVertexShader = ShaderObject::load(sVertexShader);
-			auto spFragmentShader = ShaderObject::load(sFragmentShader);
 			std::vector<boost::shared_ptr<ShaderObject>> aspShaders;
-			aspShaders.push_back(spVertexShader);
-			aspShaders.push_back(spFragmentShader);
+			aspShaders.push_back(ShaderObject::load(sVertexShader));
+			aspShaders.push_back(ShaderObject::load(sFragmentShader));
 			auto spShaderPipeline = ShaderPipeline::create(sPipelineName, aspShaders);
 			return spShaderPipeline->createInstance();
 		}
@@ -66,17 +64,11 @@ namespace baselib {
 		m_spCameraController->setPosition(Vec3(0.0f, 0.1f, 10.0f));
 
 		// Create GBuffer
-		auto spTargetImage1 = Image::create(iWidth, iHeight, 128, 0);
-		auto spTargetImage2 = Image::create(iWidth, iHeight, 128, 0);
-		auto spTargetImage3 = Image::create(iWidth, iHeight, 128, 0);
-		auto spTargetImage4 = Image::create(iWidth, iHeight, 128, 0);
-		auto spDepthTargetImage = Image::create(iWidth, iHeight, 24, 0);
-
-		m_spColourTarget1 = Texture::createRenderTarget(spTargetImage1);
-		m_spColourTarget2 = Texture::createRenderTarget(spTargetImage2);
-		m_spColourTarget3 = Texture::createRenderTarget(spTargetImage3);
-		m_spColourTarget4 = Texture::createRenderTarget(spTargetImage4);
-		m_spDepthTarget = Texture::createRenderTarget(spDepthTargetImage);
+		m_spColourTarget1 = Texture::createRenderTarget( Image::create(iWidth, iHeight, 128, 0) );
+		m_spColourTarget2 = Texture::createRenderTarget( Image::create(iWidth, iHeight, 128, 0) );
+		m_spColourTarget3 = Texture::createRenderTarget( Image::create(iWidth, iHeight, 128, 0) );
+		m_spColourTarget4 = Texture::createRenderTarget( Image::create(iWidth, iHeight, 128, 0) );
+		m_spDepthTarget = Texture::createRenderTarget( Image::create(iWidth, iHeight, 24, 0) );
 
 		std::vector<boost::shared_ptr<Texture>> aTargets;
 		aTargets.push_back(m_spColourTarget1);
