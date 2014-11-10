@@ -266,5 +266,8 @@
     <None Include="..\..\Data\Shaders\GBuffer.frag">
       <Filter>Data\Shaders</Filter>
     </None>
+    <None Include="..\..\Data\Shaders\LightVolume.vert">
+      <Filter>Data\Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

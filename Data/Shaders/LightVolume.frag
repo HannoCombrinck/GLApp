@@ -1,14 +1,21 @@
 #version 400
 
-in vec3 vNormalFrag;
-in vec3 vTangentFrag;
-in vec3 vBitangentFrag;
-in vec2 vTexCoord1Frag;
-in vec2 vTexCoord2Frag;
+in vec4 vClipSpacePosition;
 
 out vec4 vColour;
 
+uniform vec3 vLightPosition;
+
+uniform sampler2D sWorldPos;
+uniform sampler2D sDiffuse;
+uniform sampler2D sNormal;
+
 void main() 
 {
-    vColour = vec4(vNormalFrag.xyz, 1.0);
+	vec2 vTexCoord = (vClipSpacePosition.xy/vClipSpacePosition.w * 0.5) + 0.5;
+	vec3 vWorldPos = texture(sWorldPos, vTexCoord).xyz;	
+	vec3 vDiffuse = texture(sDiffuse, vTexCoord).xyz;
+	vec3 vNormal = texture(sNormal, vTexCoord).xyz;
+
+    vColour = vec4(vDiffuse + vec3(0.2, 0.2, 0.2), 1.0);
 }

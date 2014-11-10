@@ -16,6 +16,7 @@
 #include <Graphics/Shader.h>
 #include <Graphics/FrameBuffer.h>
 #include <Graphics/Texture.h>
+#include <Graphics/Material.h>
 #include <Graphics/Image.h>
 
 #include <Math/MathHelpers.h>
@@ -89,7 +90,7 @@ namespace baselib {
 		m_spGBufferShader = createSimpleShader("GBufferPipeline", "../Data/Shaders/GBuffer.vert", "../Data/Shaders/GBuffer.frag");
 
 		// Create light volume shader
-		m_spLightVolumeShader = createSimpleShader("LightVolumePipeline", "../Data/Shaders/Default.vert", "../Data/Shaders/LightVolume.frag");
+		m_spLightVolumeShader = createSimpleShader("LightVolumePipeline", "../Data/Shaders/LightVolume.vert", "../Data/Shaders/LightVolume.frag");
 
 		// Create model loader
 		auto spModelLoader = ModelLoader::create();
@@ -104,6 +105,7 @@ namespace baselib {
 			if (auto spVisual = boost::dynamic_pointer_cast<Visual>(sp))
 				spSphereVisual = spVisual;
 		});
+		spSphereVisual->getMaterial()->setTexture(m_spColourTarget2);
 
 		// Populate light scene
 		m_spLightScene = Node::create();
@@ -133,7 +135,7 @@ namespace baselib {
 	{
 		m_spCameraController->update(dDeltaTime);
 
-		m_spLightScene->modifyLocalTransform() = glm::rotate(m_spLightScene->getLocalTransform(), toRadians(1.0f), Vec3(0.0, 1.0, 0.0));
+		//m_spLightScene->modifyLocalTransform() = glm::rotate(m_spLightScene->getLocalTransform(), toRadians(1.0f), Vec3(0.0, 1.0, 0.0));
 
 		m_spMainScene->update(Mat4());
 		m_spLightScene->update(Mat4());
