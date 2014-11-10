@@ -36,10 +36,14 @@ namespace baselib
 		
 			//! Set float uniform variable.
 			void setUniform(int iIndex, float f);
+			//! Set float uniform if it exists.
+			void setUniform(const std::string& sName, float f);
 			//! Set vec2f uniform variable.
 			void setUniform(int iIndex, const Vec2& v);
 			//! Set vec3f uniform variable.
 			void setUniform(int iIndex, const Vec3& v);
+			//! Set vec3f uniform if it exists.
+			void setUniform(const std::string& sName, const Vec3& v);
 			//! Set vec4f uniform variable.
 			void setUniform(int iIndex, const Vec4& v);
 			//! Set mat4f uniform variable.

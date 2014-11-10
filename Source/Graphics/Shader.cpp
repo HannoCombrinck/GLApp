@@ -60,6 +60,13 @@ namespace baselib { namespace graphics {
 		glUniform1f(iIndex, f);
 	}
 
+	void Shader::setUniform(const std::string& sName, float f)
+	{
+		int iIndex = -1;
+		if (getUniform(iIndex, sName))
+			setUniform(iIndex, f);
+	}
+
 	void Shader::setUniform(int iIndex, const Vec2& v)
 	{
 		glUniform2f(iIndex, v.x, v.y);
@@ -73,6 +80,13 @@ namespace baselib { namespace graphics {
 	void Shader::setUniform(int iIndex, const Vec4& v)
 	{
 		glUniform4f(iIndex, v.x, v.y, v.z, v.w);
+	}
+
+	void Shader::setUniform(const std::string& sName, const Vec3& v)
+	{
+		int iIndex = -1;
+		if (getUniform(iIndex, sName))
+			setUniform(iIndex, v);
 	}
 
 	void Shader::setUniform(int iIndex, const Mat4& m)	
