@@ -5,6 +5,8 @@ in vec4 vClipSpacePosition;
 out vec4 vColour;
 
 uniform vec3 vLightPosition;
+uniform vec3 vLightColour;
+uniform float fAttenuationFactor;
 
 uniform sampler2D sWorldPos;
 uniform sampler2D sDiffuse;
@@ -19,10 +21,10 @@ void main()
 
 	vec3 vLightVec = vLightPosition - vWorldPos;
 	float fLength = length(vLightVec);
-	float fAttenuation = 1.0/(fLength*fLength) * 250;
+	float fAttenuation = 1.0/(fLength*fLength) * fAttenuationFactor;
 
 	vec3 vLightVecNorm = normalize(vLightVec);
 
-    vec3 vLit = max(vec3(0.0), dot(vLightVecNorm, vNormal)) * vDiffuse * fAttenuation;
+    vec3 vLit = max(vec3(0.0), dot(vLightVecNorm, vNormal)) * vDiffuse * vLightColour * fAttenuation;
     vColour = vec4(vLit, 1.0);
 }
