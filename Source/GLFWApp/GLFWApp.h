@@ -1,6 +1,7 @@
 #pragma once
 
 #include <Math/Math.h>
+#include <GLFWApp/GLFWKeyCodes.h>
 
 #include <string>
 
