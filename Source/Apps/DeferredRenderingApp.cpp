@@ -32,9 +32,12 @@ using namespace baselib::graphics;
 
 namespace baselib {
 	
+	static const int MAX_NUM_LIGHTS = 1000;
+
 	DeferredRenderingApp::DeferredRenderingApp()
 		: m_fAnimSpeed(0.0f)
-		, m_fAmbient(0.0f)
+		, m_fAmbient(1.0f)
+		, m_iPointLightCount(0)
 	{
 		LOG_VERBOSE << "DeferredRenderingApp constructor";
 	}
@@ -66,7 +69,8 @@ namespace baselib {
 		m_spMainCamera = Camera::create();
 		m_spMainCamera->setAspectRatio(float(iWidth)/float(iHeight));
 		m_spCameraController = CameraController::create(m_spMainCamera);
-		m_spCameraController->setPosition(Vec3(0.0f, 0.1f, 10.0f));
+		m_spCameraController->setPosition(Vec3(-913.0f, 506.0f, -33.0f));
+		m_spCameraController->setYaw(275.0f);
 
 		// Create GBuffer
 		m_spColourTarget1 = Texture::createRenderTarget( Image::create(iWidth, iHeight, 128, 0) );
@@ -109,7 +113,7 @@ namespace baselib {
 		// Populate light scene
 		m_spLightScene = Node::create();
 		m_spLightScene->setName("LightScene");
-		for (int i = 0; i < 300;  ++i)
+		for (int i = 0; i < MAX_NUM_LIGHTS;  ++i)
 		{
 			auto fRandX = (rand()/float(RAND_MAX) * 2575.0f) - 1386.0f;
 			auto fRandY = (rand()/float(RAND_MAX) * 800.0f);
@@ -212,19 +216,19 @@ namespace baselib {
 		m_spLightVolumeShader->setUniform("sNormal", 2);
 
 		// Render all light volume visuals in light scene
-		auto& spLightVolumeShader = m_spLightVolumeShader;
-		boost::for_each(m_aLights, [this, &spLightVolumeShader](const LightInfo& rLight) {
-			auto spVisual = rLight.spVisual;
-			spLightVolumeShader->setUniform("mWorld", spVisual->getWorldTransform());
-			spLightVolumeShader->setUniform("fLightSize", rLight.fSize);
-			spLightVolumeShader->setUniform("vLightColour", rLight.vColour);
-			spLightVolumeShader->setUniform("fAttenuationFactor", 250.0f);
+		for (int i = 0; i < m_iPointLightCount; i++)
+		{
+			auto spVisual = m_aLights[i].spVisual;
+			m_spLightVolumeShader->setUniform("mWorld", spVisual->getWorldTransform());
+			m_spLightVolumeShader->setUniform("fLightSize", m_aLights[i].fSize);
+			m_spLightVolumeShader->setUniform("vLightColour", m_aLights[i].vColour);
+			m_spLightVolumeShader->setUniform("fAttenuationFactor", 250.0f);
 			auto vPos = Vec3(spVisual->getWorldTransform()[3]);
-			spLightVolumeShader->setUniform("vLightPosition", vPos);
+			m_spLightVolumeShader->setUniform("vLightPosition", vPos);
 			auto spGeometry = spVisual->getGeometry();
 			spGeometry->bind();
 			m_spRenderer->drawIndexed(spGeometry->getPrimitiveType(), spGeometry->getVertexList()->getNumIndices(), 0);
-		});
+		}
 	}
 
 	void DeferredRenderingApp::onWindowResize(int iWidth, int iHeight)
@@ -268,12 +272,40 @@ namespace baselib {
 			if (m_fAmbient >= 1.0f)
 				m_fAmbient = 1.0f;
 		}
-
 		if (iKey == KEY_DOWN)
 		{
 			m_fAmbient -= 0.01f;
 			if (m_fAmbient <= 0.0f)
 				m_fAmbient = 0.0f;
+		}
+		if (iKey == KEY_HOME)
+			m_fAmbient = 1.0f;
+		if (iKey == KEY_END)
+			m_fAmbient = 0.0f;
+
+		if (iKey == KEY_EQUAL)
+		{
+			m_iPointLightCount += 10;
+			if (m_iPointLightCount >= MAX_NUM_LIGHTS)
+				m_iPointLightCount = MAX_NUM_LIGHTS;
+		}
+		if (iKey == KEY_MINUS)
+		{
+			m_iPointLightCount -= 10;
+			if (m_iPointLightCount <= 0)
+				m_iPointLightCount = 0;
+		}
+		if (iKey == KEY_PAGE_UP)
+		{
+			m_iPointLightCount += 100;
+			if (m_iPointLightCount >= MAX_NUM_LIGHTS)
+				m_iPointLightCount = MAX_NUM_LIGHTS;
+		}
+		if (iKey == KEY_PAGE_DOWN)
+		{
+			m_iPointLightCount -= 100;
+			if (m_iPointLightCount <= 0)
+				m_iPointLightCount = 0;
 		}
 	}
 

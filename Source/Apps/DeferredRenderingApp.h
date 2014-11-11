@@ -74,5 +74,6 @@ namespace baselib
 
 		float m_fAnimSpeed;
 		float m_fAmbient;
+		int m_iPointLightCount;
 	};
 }
