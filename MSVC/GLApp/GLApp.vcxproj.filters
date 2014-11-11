@@ -133,6 +133,9 @@
     <ClCompile Include="..\..\Source\Graphics\CameraController.cpp">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Graphics\Helpers\GeometryHelpers.cpp">
+      <Filter>Header/Source Files\Graphics\Helpers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\GLFWApp\GLFWApp.h">
@@ -234,6 +237,12 @@
     <ClInclude Include="..\..\Source\Graphics\CameraController.h">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\GLFWApp\GLFWKeyCodes.h">
+      <Filter>Header/Source Files\GLFWApp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Graphics\Helpers\GeometryHelpers.h">
+      <Filter>Header/Source Files\Graphics\Helpers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Data\Shaders\test.frag">
@@ -267,6 +276,12 @@
       <Filter>Data\Shaders</Filter>
     </None>
     <None Include="..\..\Data\Shaders\LightVolume.vert">
+      <Filter>Data\Shaders</Filter>
+    </None>
+    <None Include="..\..\Data\Shaders\LightAmbient.vert">
+      <Filter>Data\Shaders</Filter>
+    </None>
+    <None Include="..\..\Data\Shaders\LightAmbient.frag">
       <Filter>Data\Shaders</Filter>
     </None>
   </ItemGroup>

@@ -85,6 +85,7 @@
     <ClCompile Include="..\..\Source\Graphics\CameraController.cpp" />
     <ClCompile Include="..\..\Source\Graphics\FrameBuffer.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Geometry.cpp" />
+    <ClCompile Include="..\..\Source\Graphics\Helpers\GeometryHelpers.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Helpers\TextureUpdateHelper.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Image.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Material.cpp" />
@@ -114,10 +115,12 @@
     <ClInclude Include="..\..\Source\Font\FontLoader.h" />
     <ClInclude Include="..\..\Source\Font\Glyph.h" />
     <ClInclude Include="..\..\Source\GLFWApp\GLFWApp.h" />
+    <ClInclude Include="..\..\Source\GLFWApp\GLFWKeyCodes.h" />
     <ClInclude Include="..\..\Source\Graphics\Camera.h" />
     <ClInclude Include="..\..\Source\Graphics\CameraController.h" />
     <ClInclude Include="..\..\Source\Graphics\FrameBuffer.h" />
     <ClInclude Include="..\..\Source\Graphics\Geometry.h" />
+    <ClInclude Include="..\..\Source\Graphics\Helpers\GeometryHelpers.h" />
     <ClInclude Include="..\..\Source\Graphics\Helpers\TextureUpdateHelper.h" />
     <ClInclude Include="..\..\Source\Graphics\Image.h" />
     <ClInclude Include="..\..\Source\Graphics\Material.h" />
@@ -156,6 +159,14 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </None>
     <None Include="..\..\Data\Shaders\GBuffer.vert">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </None>
+    <None Include="..\..\Data\Shaders\LightAmbient.frag">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </None>
+    <None Include="..\..\Data\Shaders\LightAmbient.vert">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </None>
