@@ -16,6 +16,7 @@ namespace baselib
 		class CameraController;
 		class FrameBuffer;
 		class Texture;
+		class StaticGeometry;
 	}
 }
 
@@ -44,6 +45,7 @@ namespace baselib
 		boost::shared_ptr<graphics::Node> m_spMainScene;
 		boost::shared_ptr<graphics::Node> m_spLightScene;
 		boost::shared_ptr<graphics::Shader> m_spLightVolumeShader;
+		boost::shared_ptr<graphics::Shader> m_spLightAmbientShader;
 		boost::shared_ptr<graphics::VisualCollector> m_spVisualCollector;
 		boost::shared_ptr<graphics::Camera> m_spMainCamera;
 		boost::shared_ptr<graphics::CameraController> m_spCameraController;
@@ -54,7 +56,23 @@ namespace baselib
 		boost::shared_ptr<graphics::Texture> m_spColourTarget3;
 		boost::shared_ptr<graphics::Texture> m_spColourTarget4;
 		boost::shared_ptr<graphics::Texture> m_spDepthTarget;
+		boost::shared_ptr<graphics::StaticGeometry> m_spQuadGeometry;
 
-		bool m_bAnimateLights;
+		struct LightInfo
+		{
+			LightInfo(const Vec3& _vColour, float _fSize, const boost::shared_ptr<graphics::Visual>& _spVisual)
+				: vColour(_vColour)
+				, fSize(_fSize)
+				, spVisual(_spVisual) {}
+
+			Vec3 vColour;
+			float fSize;
+			boost::shared_ptr<graphics::Visual> spVisual;
+		};
+
+		std::vector<LightInfo> m_aLights;
+
+		float m_fAnimSpeed;
+		float m_fAmbient;
 	};
 }

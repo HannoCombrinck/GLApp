@@ -10,7 +10,7 @@
 #include <Graphics/RenderJob.h>
 #include <Graphics/VisualCollector.h>
 #include <Graphics/Visual.h>
-#include <Graphics/Geometry.h>
+#include <Graphics/StaticGeometry.h>
 #include <Graphics/VertexList.h>
 #include <Graphics/Spatial.h>
 #include <Graphics/ShaderPipeline.h>
@@ -20,6 +20,7 @@
 #include <Graphics/Texture.h>
 #include <Graphics/Material.h>
 #include <Graphics/Image.h>
+#include <Graphics/Helpers/GeometryHelpers.h>
 
 #include <Math/MathHelpers.h>
 
@@ -32,7 +33,8 @@ using namespace baselib::graphics;
 namespace baselib {
 	
 	DeferredRenderingApp::DeferredRenderingApp()
-		: m_bAnimateLights(false)
+		: m_fAnimSpeed(0.0f)
+		, m_fAmbient(0.0f)
 	{
 		LOG_VERBOSE << "DeferredRenderingApp constructor";
 	}
@@ -81,16 +83,18 @@ namespace baselib {
 
 		m_spGBuffer = FrameBuffer::create(aTargets, m_spDepthTarget);
 		
-		// Create GBuffer shader
+		// Create shaders
 		m_spGBufferShader = createSimpleShader("GBufferPipeline", "../Data/Shaders/GBuffer.vert", "../Data/Shaders/GBuffer.frag");
-
-		// Create light volume shader
 		m_spLightVolumeShader = createSimpleShader("LightVolumePipeline", "../Data/Shaders/LightVolume.vert", "../Data/Shaders/LightVolume.frag");
+		m_spLightAmbientShader = createSimpleShader("LightAmbientPipeline", "../Data/Shaders/LightAmbient.vert", "../Data/Shaders/LightAmbient.frag");
 
 		// Create model loader
 		auto spModelLoader = ModelLoader::create();
 		// Load test scene
 		auto spTestModel = spModelLoader->load("../Data/Models/sponza/sponza.fbx");
+
+		// Create quad geometry
+		m_spQuadGeometry = createQuadGeometry();
 
 		// Load scene with sphere
 		auto spUnitSphere = spModelLoader->load("../Data/Models/UnitSphere.fbx");
@@ -110,10 +114,14 @@ namespace baselib {
 			auto fRandX = (rand()/float(RAND_MAX) * 2575.0f) - 1386.0f;
 			auto fRandY = (rand()/float(RAND_MAX) * 800.0f);
 			auto fRandZ = (rand()/float(RAND_MAX) * 2575.0f) - 1386.0f;
-			//auto fRandZ = (rand()/float(RAND_MAX) * 1090.0f) - 560.0f;
 			auto vPos = Vec3(fRandX, fRandY, fRandZ);
 			auto spSphereCopy = spSphereVisual->shallowCopy();
 			spSphereCopy->modifyLocalTransform() = glm::translate(spSphereCopy->getLocalTransform(), vPos);
+			auto vColour = Vec3(rand()/float(RAND_MAX), rand()/float(RAND_MAX), rand()/float(RAND_MAX));
+			vColour *= 3.0f;
+			auto fSize = rand()/float(RAND_MAX) * 300.0f + 100.0f;
+
+			m_aLights.push_back(LightInfo(vColour, fSize, spSphereCopy));
 			m_spLightScene->addChild(spSphereCopy);
 		}
 
@@ -131,8 +139,7 @@ namespace baselib {
 	{
 		m_spCameraController->update(dDeltaTime);
 
-		if (m_bAnimateLights)
-			m_spLightScene->modifyLocalTransform() = glm::rotate(m_spLightScene->getLocalTransform(), toRadians(1.0f), Vec3(0.0, 1.0, 0.0));
+		m_spLightScene->modifyLocalTransform() = glm::rotate(m_spLightScene->getLocalTransform(), toRadians(m_fAnimSpeed), Vec3(0.0, 1.0, 0.0));
 
 		m_spMainScene->update(Mat4());
 		m_spLightScene->update(Mat4());
@@ -148,7 +155,6 @@ namespace baselib {
 		m_spRenderer->setRenderState(Renderer::STATE_DEPTH_TEST, Renderer::TRUE);
 		m_spRenderer->setRenderState(Renderer::STATE_DEPTH_WRITE, Renderer::TRUE);
 		m_spRenderer->clear();
-
 
 		// Bind GBuffer shader and upload common uniform data
 		m_spGBufferShader->bind();
@@ -172,14 +178,30 @@ namespace baselib {
 		// Setup back buffer as render target
 		auto spBackBuffer = m_spRenderer->getBackBuffer();
 		spBackBuffer->bind();
+		m_spRenderer->clear();
 		m_spRenderer->setViewportSize(Vec4(0, 0, spBackBuffer->getWidth(), spBackBuffer->getHeight()));
-		m_spRenderer->setRenderState(Renderer::STATE_CULL_MODE, Renderer::CULL_FRONT);
+		m_spRenderer->setRenderState(Renderer::STATE_CULL_MODE, Renderer::CULL_NONE);
 		m_spRenderer->setRenderState(Renderer::STATE_BLEND, Renderer::TRUE);
 		m_spRenderer->setRenderState(Renderer::STATE_BLEND_SRC, Renderer::ONE);
 		m_spRenderer->setRenderState(Renderer::STATE_BLEND_DST, Renderer::ONE);
 		m_spRenderer->setRenderState(Renderer::STATE_DEPTH_TEST, Renderer::FALSE);
 		m_spRenderer->setRenderState(Renderer::STATE_DEPTH_WRITE, Renderer::FALSE);
-		m_spRenderer->clear();
+
+		// Bind GBuffer target textures
+		m_spColourTarget1->bind(0);
+		m_spColourTarget2->bind(1);
+		m_spColourTarget3->bind(2);
+
+		// Bind light ambient shader and upload uniform data
+		m_spLightAmbientShader->bind();
+		m_spLightAmbientShader->setUniform("sWorldPos", 0);
+		m_spLightAmbientShader->setUniform("sDiffuse", 1);
+		m_spLightAmbientShader->setUniform("sNormal", 2);
+		m_spLightAmbientShader->setUniform("fAmbient", m_fAmbient);
+		m_spQuadGeometry->bind();
+		m_spRenderer->drawIndexed(m_spQuadGeometry->getPrimitiveType(), m_spQuadGeometry->getVertexList()->getNumIndices(), 0);
+		
+		m_spRenderer->setRenderState(Renderer::STATE_CULL_MODE, Renderer::CULL_FRONT);
 
 		// Bind light volume shader and upload common uniform data
 		m_spLightVolumeShader->bind();
@@ -189,21 +211,17 @@ namespace baselib {
 		m_spLightVolumeShader->setUniform("sDiffuse", 1);
 		m_spLightVolumeShader->setUniform("sNormal", 2);
 
-		// Bind GBuffer target textures
-		m_spColourTarget1->bind(0);
-		m_spColourTarget2->bind(1);
-		m_spColourTarget3->bind(2);
-
 		// Render all light volume visuals in light scene
-		m_spVisualCollector->clear();
-		m_spVisualCollector->collect(m_spLightScene);
 		auto& spLightVolumeShader = m_spLightVolumeShader;
-		boost::for_each(m_spVisualCollector->getVisuals(), [this, &spLightVolumeShader](const Visual* pVisual) {
-			spLightVolumeShader->setUniform("mWorld", pVisual->getWorldTransform());
-			spLightVolumeShader->setUniform("fLightSize", 200.0f);
-			auto vPos = Vec3(pVisual->getWorldTransform()[3]);
+		boost::for_each(m_aLights, [this, &spLightVolumeShader](const LightInfo& rLight) {
+			auto spVisual = rLight.spVisual;
+			spLightVolumeShader->setUniform("mWorld", spVisual->getWorldTransform());
+			spLightVolumeShader->setUniform("fLightSize", rLight.fSize);
+			spLightVolumeShader->setUniform("vLightColour", rLight.vColour);
+			spLightVolumeShader->setUniform("fAttenuationFactor", 250.0f);
+			auto vPos = Vec3(spVisual->getWorldTransform()[3]);
 			spLightVolumeShader->setUniform("vLightPosition", vPos);
-			auto spGeometry = pVisual->getGeometry();
+			auto spGeometry = spVisual->getGeometry();
 			spGeometry->bind();
 			m_spRenderer->drawIndexed(spGeometry->getPrimitiveType(), spGeometry->getVertexList()->getNumIndices(), 0);
 		});
@@ -233,6 +251,30 @@ namespace baselib {
 			setLockMousePosition(true);
 		if (iKey == 'E')
 			setLockMousePosition(false);
+
+		if (iKey == KEY_RIGHT)
+			m_fAnimSpeed += 0.05f;
+
+		if (iKey == KEY_LEFT)
+		{
+			m_fAnimSpeed -= 0.05f;
+			if (m_fAnimSpeed <= 0.0f)
+				m_fAnimSpeed = 0.0f;
+		}
+
+		if (iKey == KEY_UP)
+		{
+			m_fAmbient += 0.01f;
+			if (m_fAmbient >= 1.0f)
+				m_fAmbient = 1.0f;
+		}
+
+		if (iKey == KEY_DOWN)
+		{
+			m_fAmbient -= 0.01f;
+			if (m_fAmbient <= 0.0f)
+				m_fAmbient = 0.0f;
+		}
 	}
 
 	void DeferredRenderingApp::onKeyRelease(int iKey)
@@ -245,9 +287,6 @@ namespace baselib {
 			m_spCameraController->setMovingLeft(false);
 		if (iKey == 'D')
 			m_spCameraController->setMovingRight(false);
-
-		if (iKey == 'F')
-			m_bAnimateLights = !m_bAnimateLights;
 	}
 	
 	void DeferredRenderingApp::onMouseMoveRel(int iDX, int iDY)
