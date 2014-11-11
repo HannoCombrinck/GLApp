@@ -57,7 +57,7 @@ namespace baselib
 			boost::shared_ptr<VertexListInterface> getVertexList() const { return m_spVertexList; }
 
 		protected:
-			//! Protected constructor - derived classes must be created by Renderer.
+			//! Protected constructor - derived classes must be created by static create.
 			Geometry(unsigned int uVAO, PrimitiveType ePrimitiveType, const boost::shared_ptr<VertexListInterface>& spVertexList);
 
 		private:

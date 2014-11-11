@@ -20,7 +20,7 @@ namespace baselib
 		class StaticGeometry : public Geometry
 		{
 		public:
-			//! Creates and returns a static geometry from an image.
+			//! Creates and returns a static geometry from a vertex list.
 			static boost::shared_ptr<StaticGeometry> create(const boost::shared_ptr<VertexListInterface>& spVertexList, PrimitiveType ePrimitiveType);
 
 			//! Destructor.
@@ -32,7 +32,7 @@ namespace baselib
 			unsigned int getIB() const { return m_uIB; }
 
 		protected:
-			//! Protected constructor - must be created by Renderer.
+			//! Protected constructor - must be created by static create().
 			StaticGeometry(unsigned int uVAO, unsigned int uVBO, unsigned int uIB, PrimitiveType ePrimitiveType, const boost::shared_ptr<VertexListInterface>& spVertexList);
 
 		private:
