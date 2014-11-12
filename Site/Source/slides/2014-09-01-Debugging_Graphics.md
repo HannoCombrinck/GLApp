@@ -88,7 +88,7 @@ For these debugging tools to be usefull it's important to understand all the pha
 OpenGL Pipeline
 ---------------
 
-![](/media/RenderingPipeline.png)
+![](/media/DebuggingGraphics/RenderingPipeline.png)
 
 OpenGL Pipeline
 ---------------
@@ -99,13 +99,13 @@ OpenGL Pipeline
 	* VAO - Vertex Array Object
 		* Vertex attributes that defines structure of vertex data
 
-![](/media/VAOVBO.png)
+![](/media/DebuggingGraphics/VAOVBO.png)
 
 
 OpenGL Pipeline
 ---------------
 
-![](/media/RenderingPipeline1.png)
+![](/media/DebuggingGraphics/RenderingPipeline1.png)
 
 OpenGL Pipeline
 ---------------
@@ -115,7 +115,7 @@ OpenGL Pipeline
 	* Receives vertices as input and outputs transformed vertices
 	* Typically applies world, view and projection matrices to transform vertices into clip-space
 
-![](/media/heightmap.gif)
+![](/media/DebuggingGraphics/heightmap.gif)
 
 OpenGL Pipeline
 ---------------
@@ -123,12 +123,12 @@ OpenGL Pipeline
 * Primitive assembly
 	* Collects output of vertex shaders and compose into primitive shapes
 
-![](/media/Primitives.png)
+![](/media/DebuggingGraphics/Primitives.png)
 
 OpenGL Pipeline
 ---------------
 
-![](/media/RenderingPipeline2.png)
+![](/media/DebuggingGraphics/RenderingPipeline2.png)
 
 
 OpenGL Pipeline
@@ -139,13 +139,13 @@ OpenGL Pipeline
 	* Tessellation Control defines how much new geometry is injected
 	* Tessellation Evaluation transforms newly injected geometry
 
-![](/media/Geodesic.gif)
+![](/media/DebuggingGraphics/Geodesic.gif)
 (Gif from [The Little Grasshopper blog](http://prideout.net/blog/?p=48))
 
 OpenGL Pipeline
 ---------------
 
-![](/media/RenderingPipeline3.png)
+![](/media/DebuggingGraphics/RenderingPipeline3.png)
 
 OpenGL Pipeline
 ---------------
@@ -156,12 +156,12 @@ OpenGL Pipeline
 	* Can output zero or more primitives 
 	* Can ouput completely different type of primitives
 
-![](/media/GeometryShader.png)
+![](/media/DebuggingGraphics/GeometryShader.png)
 
 OpenGL Pipeline
 ---------------
 
-![](/media/RenderingPipeline4.png)
+![](/media/DebuggingGraphics/RenderingPipeline4.png)
 
 OpenGL Pipeline
 ---------------
@@ -174,7 +174,7 @@ OpenGL Pipeline
 OpenGL Pipeline
 ---------------
 
-![](/media/RenderingPipeline5.png)
+![](/media/DebuggingGraphics/RenderingPipeline5.png)
 
 
 OpenGL Pipeline
@@ -190,7 +190,7 @@ OpenGL Pipeline
 OpenGL Pipeline
 ---------------
 
-![](/media/RenderingPipeline6.png)
+![](/media/DebuggingGraphics/RenderingPipeline6.png)
 
 OpenGL Pipeline
 ---------------
@@ -199,12 +199,12 @@ OpenGL Pipeline
 	* Receives primitives as input and outputs sequence of fragments
 	* Fragment data is interpolated from vertex data
 
-![](/media/Rasterization.png)
+![](/media/DebuggingGraphics/Rasterization.png)
 
 OpenGL Pipeline
 ---------------
 
-![](/media/RenderingPipeline7.png)
+![](/media/DebuggingGraphics/RenderingPipeline7.png)
 
 OpenGL Pipeline
 ---------------
@@ -219,7 +219,7 @@ OpenGL Pipeline
 OpenGL Pipeline
 ---------------
 
-![](/media/RenderingPipeline8.png)
+![](/media/DebuggingGraphics/RenderingPipeline8.png)
 
 OpenGL Pipeline
 ---------------
@@ -235,7 +235,7 @@ OpenGL Pipeline
 OpenGL Pipeline
 ---------------
 
-![](/media/RenderingPipeline9.png)
+![](/media/DebuggingGraphics/RenderingPipeline9.png)
 
 Demo time!
 ----------
