@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"> 
+<head> 
+  <title>Slide Shows in XHTML</title> 
+  <link rel="stylesheet" type="text/css" media="screen, projection, print" href="http://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" /> 
+  <link rel="stylesheet" type="text/css" href="../css/highlighting.css" />
+  <script src="http://www.w3.org/Talks/Tools/Slidy2/scripts/slidy.js" charset="utf-8" type="text/javascript">
+  </script> 
+</head>
+<body>
+	<div id="introduction-to-deferred-rendering" class="slide section level2">
+<h1>Introduction To Deferred Rendering</h1>
+<ul>
+<li>High level overview of forward rendering pipeline</li>
+<li>High level overview of deferred rendering pipeline</li>
+<li>Deferred “Lighting” vs Deferred “Shading”</li>
+<li>Why bother with deferred rendering at all?</li>
+<li>Basic deferred pipeline in detail plus a demo :)</li>
+<li>Considerations for production ready deferred renderer</li>
+</ul>
+</div>
+<div id="forward-rendering-pipeline" class="slide section level2">
+<h1>Forward rendering pipeline</h1>
+<ul>
+<li>Set back buffer as target</li>
+<li>For each object in scene
+<ul>
+<li>Bind shaders for object</li>
+<li>Bind textures and upload uniform data</li>
+<li>Upload info for all lights in scene that affect this object</li>
+<li>Draw object e.g. glDrawElements()</li>
+</ul></li>
+</ul>
+</div>
+<div id="deferred-rendering-pipeline" class="slide section level2">
+<h1>Deferred rendering pipeline</h1>
+<ul>
+<li>Set GBuffer as target - multiple render targets</li>
+<li>Bind GBuffer shaders</li>
+<li>For each visible object in scene
+<ul>
+<li>Bind textures and upload uniform data</li>
+<li>Draw object e.g. glDrawElements()</li>
+</ul></li>
+<li>Set back buffer as target</li>
+<li>Bind GBuffer targets as input textures</li>
+<li>Bind light volume shaders</li>
+<li>For each visible light in scene
+<ul>
+<li>Draw light volume e.g. glDrawElements()</li>
+</ul></li>
+</ul>
+</div>
+<div id="deferred-lighting-vs-deferred-shading" class="slide section level2">
+<h1>Deferred Lighting vs Deferred Shading</h1>
+<ul>
+<li>Both techniques defer lighting to later stage of pipeline</li>
+<li>Deferred lighting reduces size of GBuffer by adding a 3rd render pass</li>
+<li>Deferred Shading has 2 passes:
+<ul>
+<li>Render geometry to GBuffer</li>
+<li>Read data from GBuffer, calculate shading and output fully lit pixels</li>
+</ul></li>
+<li>Deferred Lighting has 3 passes:
+<ul>
+<li>Render geometry to GBuffer</li>
+<li>Read data from GBuffer and output only diffuse and specular lighting data</li>
+<li>Read diffuse and specular data to calculate shading and output fully lit pixels</li>
+</ul></li>
+</ul>
+</div>
+<div id="why-bother-with-deferred-rendering-at-all" class="slide section level2">
+<h1>Why bother with deferred rendering at all?</h1>
+<ul>
+<li>Decouples lighting from geomtery</li>
+<li>Allows for more dynamic lights</li>
+<li>Like, orders of magnitude more dynamic lights!</li>
+<li>Other bonuses
+<ul>
+<li>Lights can be managed and culled like any other visual object in scene graph</li>
+<li>Possibly simpler management of shaders (This is debatable - depends on complexity of lighting/materials)</li>
+</ul></li>
+</ul>
+</div>
+<div id="basic-deferred-pipeline" class="slide section level2">
+<h1>Basic deferred pipeline</h1>
+<div class="figure">
+<img src="../media/DeferredRendering/DeferredPipeline.png" />
+</div>
+</div>
+<div id="basic-deferred-pipeline-1" class="slide section level2">
+<h1>Basic deferred pipeline</h1>
+<div class="figure">
+<img src="../media/DeferredRendering/SceneWireframe.png" />
+</div>
+<p>Scene geometry wireframe</p>
+</div>
+<div id="basic-deferred-pipeline-2" class="slide section level2">
+<h1>Basic deferred pipeline</h1>
+<div class="figure">
+<img src="../media/DeferredRendering/GBuffer_WorldPos.png" />
+</div>
+<p>GBuffer - World Space Positions</p>
+</div>
+<div id="basic-deferred-pipeline-3" class="slide section level2">
+<h1>Basic deferred pipeline</h1>
+<div class="figure">
+<img src="../media/DeferredRendering/GBuffer_Diffuse.png" />
+</div>
+<p>GBuffer - Diffuse Component</p>
+</div>
+<div id="basic-deferred-pipeline-4" class="slide section level2">
+<h1>Basic deferred pipeline</h1>
+<div class="figure">
+<img src="../media/DeferredRendering/GBuffer_Normal.png" />
+</div>
+<p>GBuffer - Normals</p>
+</div>
+<div id="basic-deferred-pipeline-5" class="slide section level2">
+<h1>Basic deferred pipeline</h1>
+<div class="figure">
+<img src="../media/DeferredRendering/WireOnly.png" />
+</div>
+<p>Point Light Spheres Wireframe</p>
+</div>
+<div id="basic-deferred-pipeline-6" class="slide section level2">
+<h1>Basic deferred pipeline</h1>
+<div class="figure">
+<img src="../media/DeferredRendering/WireOnlyMany.png" />
+</div>
+<p>Point Light Spheres Wireframe (1000 lights)</p>
+</div>
+<div id="basic-deferred-pipeline-7" class="slide section level2">
+<h1>Basic deferred pipeline</h1>
+<div class="figure">
+<img src="../media/DeferredRendering/WireWithAmbient.png" />
+</div>
+<p>Point Light Spheres Wireframe with Ambient Light</p>
+</div>
+<div id="basic-deferred-pipeline-8" class="slide section level2">
+<h1>Basic deferred pipeline</h1>
+<div class="figure">
+<img src="../media/DeferredRendering/LightsOnly.png" />
+</div>
+<p>Final Image - Point Lights Only</p>
+</div>
+<div id="basic-deferred-pipeline-9" class="slide section level2">
+<h1>Basic deferred pipeline</h1>
+<div class="figure">
+<img src="../media/DeferredRendering/Final.png" />
+</div>
+<p>Final Image - Point Lights and Ambient Light</p>
+</div>
+<div id="production-ready-deferred-rendering" class="slide section level2">
+<h1>Production ready deferred rendering</h1>
+<ul>
+<li>Benefits
+<ul>
+<li>Loooots of dynamic lights</li>
+</ul></li>
+<li>Problems
+<ul>
+<li>High overdraw (Tile based deferred hybrid approach solves this)</li>
+<li>Order dependent transparency doesn’t fit well into pipeline (Do order independent or render forward separately - more solutions)</li>
+<li>Anti-aliasing - no more free MSAA (Solutions require extra work - edge detection and blurring etc.)</li>
+<li>Many different kinds of materials can increase GBuffer size significantly - not necessarily an issue on modern PC graphics hardware</li>
+</ul></li>
+<li>Seems like a lot of obstacles but there are effective solutions for all of them</li>
+</ul>
+</div>
+<div id="demo-time" class="slide section level2">
+<h1>Demo time!</h1>
+</div>
+</body>
+</html>
