@@ -104,7 +104,7 @@ namespace baselib {
 		auto spUnitSphere = spModelLoader->load("../Data/Models/UnitSphere.fbx");
 		// Get sphere Visual from scene
 		boost::shared_ptr<Visual> spSphereVisual = null_ptr;
-		spUnitSphere->apply([&spSphereVisual] (const boost::shared_ptr<Spatial>& sp) {
+		spUnitSphere->traverse([&spSphereVisual] (const boost::shared_ptr<Spatial>& sp) {
 			if (auto spVisual = boost::dynamic_pointer_cast<Visual>(sp))
 				spSphereVisual = spVisual;
 		});

@@ -45,7 +45,7 @@ namespace baselib
 			bool getUseLocalAsWorld() const { return m_bUseLocalAsWorld; }
 
 			//! Apply function f to this spatial.
-			virtual void apply(const boost::function<void(const boost::shared_ptr<Spatial>&)>& f);
+			virtual void traverse(const boost::function<void(const boost::shared_ptr<Spatial>&)>& f);
 
 		private:
 			//! Called from update().

@@ -37,7 +37,7 @@ namespace baselib
 			void removeAllChildren();
 
 			//! Apply f to this node and all its children.
-			virtual void apply(const boost::function<void(const boost::shared_ptr<Spatial>&)>& f);
+			virtual void traverse(const boost::function<void(const boost::shared_ptr<Spatial>&)>& f);
 
 		protected:
 			//! Protected constructor - must be created by static create().

@@ -39,11 +39,11 @@ namespace baselib { namespace graphics {
 		m_aChildren.clear();
 	}
 
-	void Node::apply(const boost::function<void(const boost::shared_ptr<Spatial>&)>& f)
+	void Node::traverse(const boost::function<void(const boost::shared_ptr<Spatial>&)>& f)
 	{
-		Spatial::apply(f);
+		Spatial::traverse(f);
 		boost::for_each(m_aChildren, [this, &f](const boost::shared_ptr<Spatial>& spSpatial) {
-			spSpatial->apply(f);
+			spSpatial->traverse(f);
 		});
 	}
 
