@@ -136,6 +136,9 @@
     <ClCompile Include="..\..\Source\Graphics\Helpers\GeometryHelpers.cpp">
       <Filter>Header/Source Files\Graphics\Helpers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Graphics\Helpers\ShaderHelpers.cpp">
+      <Filter>Header/Source Files\Graphics\Helpers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\GLFWApp\GLFWApp.h">
@@ -241,6 +244,9 @@
       <Filter>Header/Source Files\GLFWApp</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Graphics\Helpers\GeometryHelpers.h">
+      <Filter>Header/Source Files\Graphics\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Graphics\Helpers\ShaderHelpers.h">
       <Filter>Header/Source Files\Graphics\Helpers</Filter>
     </ClInclude>
   </ItemGroup>
