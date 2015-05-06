@@ -47,7 +47,7 @@ namespace baselib { namespace graphics {
 		// Set vertex attribute layouts
 		auto spVertexLayout = spVertexList->getVertexLayout();
 		int iVertexSize = spVertexList->getVertexSize();
-		auto aAttributes = spVertexLayout->getAttributes();
+		const auto& aAttributes = spVertexLayout->getAttributes();
 		boost::for_each(aAttributes, [iVertexSize](const VertexAttribute& va) {
 			glVertexAttribPointer(va.iIndex, va.iNumElements, getGLType(va.eType), getGLBool(va.bNormalized), iVertexSize, (const GLvoid*)va.iOffset);
 			glEnableVertexAttribArray(va.iIndex);

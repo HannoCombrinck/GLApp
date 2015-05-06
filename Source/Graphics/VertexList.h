@@ -30,6 +30,17 @@ namespace baselib
 				, iOffset(_iOffset)
 				, bNormalized(_bNormalized) {}
 
+			static unsigned int SizeOfType(VertexAttributeType _eType)
+			{
+				switch (_eType)
+				{
+					case TYPE_FLOAT : return sizeof(float); break;
+					case TYPE_INT : return sizeof(int);	break;
+					case TYPE_BOOL : return sizeof(bool); break; // TODO: Check if sizeof(bool) is correct size
+					default: LOG_ERROR << __FUNCTION__": Invalid vertex attribute type"; assert(false); return 0; break;
+				}
+			}
+
 			std::string sName;			//!< Vertex attribute name.
 			int iIndex;					//!< Index of the vertex attribute (as defined in shader via layout qualifier.
 			int iNumElements;			//!< The number of elements that make up the vertex attribute
@@ -49,15 +60,24 @@ namespace baselib
 
 			//! Add a vertex attribute to the layout.
 			void add(const VertexAttribute& va) { m_Attributes.push_back(va); }
+			//! Add a vertex attribute to the layout using the current attribute offset and increment automatically.
+			void add(const std::string& _sName, int _iNumElements, VertexAttributeType _eType, bool _bNormalized = false)
+			{
+				m_Attributes.push_back( VertexAttribute(_sName, m_iPrevAttributeIndex, _iNumElements, _eType, m_iPrevAttributeOffset, _bNormalized) );
+				m_iPrevAttributeOffset += _iNumElements * VertexAttribute::SizeOfType(_eType);
+				m_iPrevAttributeIndex++;
+			}
 			//! Get a reference to the vertex attribute list.
 			const std::vector<VertexAttribute>& getAttributes() const { return m_Attributes; }
 
 		protected:
 			//! Protected constructor - must be created by static create().
-			VertexLayout() {}
+			VertexLayout() : m_iPrevAttributeOffset(0), m_iPrevAttributeIndex(0) {}
 
 		private:
 			std::vector<VertexAttribute> m_Attributes;  //!< The list of vertex list attributes that define the vertex attribute layout.
+			int m_iPrevAttributeOffset;
+			int m_iPrevAttributeIndex;
 		};
  
 		/*! @brief The VertexListInterface provides an interface to get everything required to create a vertex array object (VAO).

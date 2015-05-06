@@ -113,12 +113,12 @@ namespace baselib { namespace graphics {
 		{
 			// Create vertex list that always uses following 6 attributes - will be partially filled in depending on what's available in aiMesh
 			auto spVL = VertexLayout::create();
-			spVL->add(VertexAttribute("position", 0, 3, TYPE_FLOAT, 0));
-			spVL->add(VertexAttribute("normal", 1, 3, TYPE_FLOAT, 3*sizeof(float)));
-			spVL->add(VertexAttribute("tangent", 2, 3, TYPE_FLOAT, 6*sizeof(float)));
-			spVL->add(VertexAttribute("bitangent", 3, 3, TYPE_FLOAT, 9*sizeof(float)));
-			spVL->add(VertexAttribute("texcoord0", 4, 2, TYPE_FLOAT, 12*sizeof(float), true));
-			spVL->add(VertexAttribute("texcoord1", 5, 2, TYPE_FLOAT, 14*sizeof(float), true));
+			spVL->add("position", 3, TYPE_FLOAT);
+			spVL->add("normal", 3, TYPE_FLOAT);
+			spVL->add("tangent", 3, TYPE_FLOAT);
+			spVL->add("bitangent", 3, TYPE_FLOAT);
+			spVL->add("texcoord0", 2, TYPE_FLOAT, true);
+			spVL->add("texcoord1", 2, TYPE_FLOAT, true);
 			auto spVertexList = boost::shared_ptr<VertexList<Vert>>(new VertexList<Vert>(spVL));
 
 			// Get vertices from aiMesh

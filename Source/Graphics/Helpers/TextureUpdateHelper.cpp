@@ -78,8 +78,8 @@ namespace baselib { namespace graphics {
 
 		// Init quad geometry
 		auto spVL = VertexLayout::create();
-		spVL->add(VertexAttribute("position", 0, 3, TYPE_FLOAT, 0));
-		spVL->add(VertexAttribute("texcoord", 1, 2, TYPE_FLOAT, 3*sizeof(float), true));
+		spVL->add("position", 3, TYPE_FLOAT);
+		spVL->add("texcoord", 2, TYPE_FLOAT, true);
 
 		auto spVertexList = boost::shared_ptr<VertexList<VertexPosUV>>(new VertexList<VertexPosUV>(spVL));
 		spVertexList->addVertex(VertexPosUV(Vec3(0.0f, 0.0f, 0.0f), Vec2(0.0, 0.0)));
