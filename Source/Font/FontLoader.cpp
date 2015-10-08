@@ -42,7 +42,12 @@ namespace baselib { namespace font {
 
 	void FontLoader::destroy()
 	{
-		// TODO: Destroy freetype lib
+		FT_Error ftError = FT_Done_FreeType(g_FTLib);
+		if (ftError)
+		{
+			LOG_ERROR << "Failed to destroy freetype";
+			assert(false);
+		}
 	}
 
 	boost::shared_ptr<Font> FontLoader::loadFont(const fs::path& fsPath, const boost::shared_ptr<graphics::Renderer>& spRenderer, const Vec2& vAtlasSize)
