@@ -1,7 +1,7 @@
 #include "Image.h"
 
 #include <Logging/Log.h>
-#include <Helpers/ResourceCache.h>
+#include <Core/ResourceCache.h>
 
 namespace
 {
@@ -32,7 +32,7 @@ namespace baselib { namespace graphics {
 		}
 	}
 
-	boost::shared_ptr<Image> Image::load(const fs::path& fsPath)
+	std::shared_ptr<Image> Image::load(const fs::path& fsPath)
 	{
 		// Check if image file exists
 		if (!fs::exists(fsPath))
@@ -64,9 +64,9 @@ namespace baselib { namespace graphics {
 		return spImage;
 	}
 
-	boost::shared_ptr<Image> Image::create(int iWidth, int iHeight, int iBPP, unsigned char* pData )
+	std::shared_ptr<Image> Image::create(int iWidth, int iHeight, int iBPP, unsigned char* pData )
 	{
-		auto spImage = boost::shared_ptr<Image>(new Image(iWidth, iHeight, iBPP, pData));
+		auto spImage = std::shared_ptr<Image>(new Image(iWidth, iHeight, iBPP, pData));
 		return spImage;
 	}
 

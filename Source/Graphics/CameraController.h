@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Math/Math.h>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 namespace baselib 
 {
@@ -22,7 +22,7 @@ namespace baselib
 		{
 		public:
 			//! Creates a CameraController.
-			static boost::shared_ptr<CameraController> create(const boost::shared_ptr<Camera>& spCamera);
+			static std::shared_ptr<CameraController> create(const std::shared_ptr<Camera>& spCamera);
 
 			//! Destructor.
 			virtual ~CameraController();
@@ -31,9 +31,9 @@ namespace baselib
 			void update(double dDeltaTime);
 
 			//! Set the Camera to be controlled by this controller.
-			void setCamera(const boost::shared_ptr<Camera>& spCamera) { m_spCamera = spCamera; }
+			void setCamera(const std::shared_ptr<Camera>& spCamera) { m_spCamera = spCamera; }
 			//! Getter for setCamera()
-			boost::shared_ptr<Camera> getCamera() const { return m_spCamera; }
+			std::shared_ptr<Camera> getCamera() const { return m_spCamera; }
 
 			//! Camera controls
 			void setMovingForward(bool b) { m_bMovingForward = b; }
@@ -68,10 +68,10 @@ namespace baselib
 
 		protected:
 			//! Protected constructor - must be created by static create().
-			CameraController(const boost::shared_ptr<Camera>& spCamera);
+			CameraController(const std::shared_ptr<Camera>& spCamera);
 
 		private:
-			boost::shared_ptr<Camera> m_spCamera; //!< The camera that is controlled by this controller.
+			std::shared_ptr<Camera> m_spCamera; //!< The camera that is controlled by this controller.
 
 			Vec3 m_vPosition;			//!< Camera position in world space.
 			float m_fPitch;				//!< Camera pitch in degrees.

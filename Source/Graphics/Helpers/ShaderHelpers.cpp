@@ -4,7 +4,7 @@
 
 namespace baselib { namespace graphics {
 
-	void prepareShader(const boost::shared_ptr<Shader>& spShader)
+	void prepareShader(const std::shared_ptr<Shader>& spShader)
 	{
 		spShader->bind();
 	}

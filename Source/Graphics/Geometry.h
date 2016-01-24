@@ -1,6 +1,6 @@
 #pragma once
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 namespace baselib 
 {
@@ -54,16 +54,16 @@ namespace baselib
 			//! Get the primitive type.
 			PrimitiveType getPrimitiveType() const { return m_ePrimitiveType; }
 			//! Get the vertex list.
-			boost::shared_ptr<VertexListInterface> getVertexList() const { return m_spVertexList; }
+			std::shared_ptr<VertexListInterface> getVertexList() const { return m_spVertexList; }
 
 		protected:
 			//! Protected constructor - derived classes must be created by static create.
-			Geometry(unsigned int uVAO, PrimitiveType ePrimitiveType, const boost::shared_ptr<VertexListInterface>& spVertexList);
+			Geometry(unsigned int uVAO, PrimitiveType ePrimitiveType, const std::shared_ptr<VertexListInterface>& spVertexList);
 
 		private:
 			unsigned int m_uVAO;  //!< The geometry VAO - Vertex array object.
 			PrimitiveType m_ePrimitiveType; //!< The type of primitive shapes the geometry is composed of.
-			boost::shared_ptr<VertexListInterface> m_spVertexList; //!< The vertex list used to create this goemetry buffer.
+			std::shared_ptr<VertexListInterface> m_spVertexList; //!< The vertex list used to create this goemetry buffer.
 
 		};
 	}

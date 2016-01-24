@@ -1,6 +1,6 @@
 #include "FontLoader.h"
 
-#include <Helpers/NullPtr.h>
+#include <Core/NullPtr.h>
 #include <Logging/Log.h>
 #include <Font/Font.h>
 #include <ft2build.h>
@@ -13,9 +13,9 @@ namespace baselib { namespace font {
 		FT_Library g_FTLib;
 	}
 
-	boost::shared_ptr<FontLoader> FontLoader::create()
+	std::shared_ptr<FontLoader> FontLoader::create()
 	{
-		return boost::shared_ptr<FontLoader>(new FontLoader());
+		return std::shared_ptr<FontLoader>(new FontLoader());
 	}
 
 	FontLoader::FontLoader()
@@ -50,7 +50,7 @@ namespace baselib { namespace font {
 		}
 	}
 
-	boost::shared_ptr<Font> FontLoader::loadFont(const fs::path& fsPath, const boost::shared_ptr<graphics::Renderer>& spRenderer, const Vec2& vAtlasSize)
+	std::shared_ptr<Font> FontLoader::loadFont(const fs::path& fsPath, const std::shared_ptr<graphics::Renderer>& spRenderer, const Vec2& vAtlasSize)
 	{
 		// Check if font file exists
 		if (!fs::exists(fsPath))
@@ -83,7 +83,7 @@ namespace baselib { namespace font {
 
 		FT_Set_Char_Size(ftFace, 50*64, 0, 100, 0);
 
-		return boost::shared_ptr<Font>(new Font(ftFace, spRenderer, vAtlasSize));
+		return std::shared_ptr<Font>(new Font(ftFace, spRenderer, vAtlasSize));
 	}
 
 } }

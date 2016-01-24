@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Math/Math.h>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 namespace baselib 
 {
@@ -21,7 +21,7 @@ namespace baselib
 			};
 
 			//! Creates a Camera.
-			static boost::shared_ptr<Camera> create();
+			static std::shared_ptr<Camera> create();
 
 			//! Destructor.
 			virtual ~Camera();

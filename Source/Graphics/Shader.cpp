@@ -8,7 +8,7 @@ namespace baselib { namespace graphics {
 
 	unsigned int Shader::m_uCurrentlyBound = ~0;
 
-	Shader::Shader(const boost::shared_ptr<ShaderPipeline>& spShaderPipeline)
+	Shader::Shader(const std::shared_ptr<ShaderPipeline>& spShaderPipeline)
 		: m_spShaderPipeline(spShaderPipeline)
 		, m_uID(spShaderPipeline->getID())
 	{

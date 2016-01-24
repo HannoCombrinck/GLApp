@@ -1,6 +1,6 @@
 ﻿#pragma once
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <boost/filesystem.hpp>
 
 namespace fs = boost::filesystem;
@@ -39,12 +39,12 @@ namespace baselib
 			};
 
 			//! Loads a texture object from file.
-			static boost::shared_ptr<Texture> load(const fs::path& fsPath);
+			static std::shared_ptr<Texture> load(const fs::path& fsPath);
 
 			//! Creates and returns a texture from an image.
-			static boost::shared_ptr<Texture> create(const boost::shared_ptr<Image>& spImage);
+			static std::shared_ptr<Texture> create(const std::shared_ptr<Image>& spImage);
 			//! Creates and returns a render target texture from an image.
-			static boost::shared_ptr<Texture> createRenderTarget(const boost::shared_ptr<Image>& spImage);
+			static std::shared_ptr<Texture> createRenderTarget(const std::shared_ptr<Image>& spImage);
 			
 			//! Destructor.
 			virtual ~Texture();

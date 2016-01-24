@@ -2,7 +2,7 @@
 
 #include <GL/glew.h>
 #include <Logging/Log.h>
-#include <Helpers/ResourceCache.h>
+#include <Core/ResourceCache.h>
 #include <boost/filesystem/fstream.hpp>
 #include <boost/range/algorithm/for_each.hpp>
 #include <boost/unordered_map.hpp>
@@ -54,7 +54,7 @@ namespace baselib { namespace graphics {
 		}
 	}
 
-	boost::shared_ptr<ShaderObject> ShaderObject::load(const fs::path& fsPath)
+	std::shared_ptr<ShaderObject> ShaderObject::load(const fs::path& fsPath)
 	{
 		// Check if file exists
 		if (!fs::exists(fsPath))
@@ -100,7 +100,7 @@ namespace baselib { namespace graphics {
 		return spShaderObject;
 	}
 
-	boost::shared_ptr<ShaderObject> ShaderObject::create(const std::string& sShaderSource, ShaderType eType)
+	std::shared_ptr<ShaderObject> ShaderObject::create(const std::string& sShaderSource, ShaderType eType)
 	{
 		// Get GL shader type
 		unsigned int uGLShaderType = getGLShaderType(eType);
@@ -149,7 +149,7 @@ namespace baselib { namespace graphics {
 
 		assert(iCompileStatus == GL_TRUE);
 
-		return boost::shared_ptr<ShaderObject>(new ShaderObject("", eType, uShaderObjectID, sShaderSource));;
+		return std::shared_ptr<ShaderObject>(new ShaderObject("", eType, uShaderObjectID, sShaderSource));;
 	}
 
 	ShaderObject::ShaderObject(const std::string& sName, ShaderType eType, unsigned int iID, const std::string& sSource) : m_sName(sName)

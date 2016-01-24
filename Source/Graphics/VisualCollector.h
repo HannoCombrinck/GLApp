@@ -1,6 +1,6 @@
 #pragma once
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <vector>
 
 namespace baselib 
@@ -23,13 +23,13 @@ namespace baselib
 		{
 		public:
 			//! Creates a VisualCollector.
-			static boost::shared_ptr<VisualCollector> create();
+			static std::shared_ptr<VisualCollector> create();
 
 			//! Destructor.
 			virtual ~VisualCollector();
 
 			//! Collect visuals from Node hierarchy 
-			void collect(const boost::shared_ptr<Node>& spNode);
+			void collect(const std::shared_ptr<Node>& spNode);
 			//! Clear the list of collected visuals
 			void clear();
 

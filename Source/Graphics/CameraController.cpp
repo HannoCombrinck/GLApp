@@ -6,12 +6,12 @@
 
 namespace baselib { namespace graphics {
 
-	boost::shared_ptr<CameraController> CameraController::create(const boost::shared_ptr<Camera>& spCamera)
+	std::shared_ptr<CameraController> CameraController::create(const std::shared_ptr<Camera>& spCamera)
 	{
-		return boost::shared_ptr<CameraController>(new CameraController(spCamera));
+		return std::shared_ptr<CameraController>(new CameraController(spCamera));
 	}
 
-	CameraController::CameraController(const boost::shared_ptr<Camera>& spCamera)
+	CameraController::CameraController(const std::shared_ptr<Camera>& spCamera)
 		: m_spCamera(spCamera)
 		, m_vPosition(Vec3(0.0f))
 		, m_fPitch(0.0f)

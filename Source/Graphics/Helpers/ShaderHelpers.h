@@ -1,6 +1,6 @@
 #pragma once
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 namespace baselib 
 {
@@ -15,6 +15,6 @@ namespace baselib
 	namespace graphics
 	{
 		//! Bind the shader and upload necessary shader data.
-		void prepareShader(const boost::shared_ptr<Shader>& spShader);
+		void prepareShader(const std::shared_ptr<Shader>& spShader);
 	}
 }

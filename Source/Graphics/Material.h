@@ -1,6 +1,6 @@
 #pragma once
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 namespace baselib 
 {
@@ -23,7 +23,7 @@ namespace baselib
 		{
 		public:
 			//! Creates a Material.
-			static boost::shared_ptr<Material> create(const boost::shared_ptr<Shader>& spShader, const boost::shared_ptr<Texture>& spTexture, const boost::shared_ptr<RenderState>& spRenderState);
+			static std::shared_ptr<Material> create(const std::shared_ptr<Shader>& spShader, const std::shared_ptr<Texture>& spTexture, const std::shared_ptr<RenderState>& spRenderState);
 
 			//! Destructor.
 			virtual ~Material();
@@ -32,22 +32,22 @@ namespace baselib
 			void bind();
 
 			//! Get the material shader.
-			boost::shared_ptr<Shader> getShader() const { return m_spShader; }
+			std::shared_ptr<Shader> getShader() const { return m_spShader; }
 			//! Set the material texture.
-			void setTexture(const boost::shared_ptr<Texture>& spTexture) { m_spTexture = spTexture; }
+			void setTexture(const std::shared_ptr<Texture>& spTexture) { m_spTexture = spTexture; }
 			//! Get the material texture.
-			boost::shared_ptr<Texture> getTexture() const { return m_spTexture; }
+			std::shared_ptr<Texture> getTexture() const { return m_spTexture; }
 			//! Get the material render state.
-			boost::shared_ptr<RenderState> getRenderState() const { return m_spRenderState; }
+			std::shared_ptr<RenderState> getRenderState() const { return m_spRenderState; }
 
 		protected:
 			//! Protected constructor - must be created by static create().
-			Material(const boost::shared_ptr<Shader>& spShader, const boost::shared_ptr<Texture>& spTexture, const boost::shared_ptr<RenderState>& spRenderState);
+			Material(const std::shared_ptr<Shader>& spShader, const std::shared_ptr<Texture>& spTexture, const std::shared_ptr<RenderState>& spRenderState);
 
 		private:
-			boost::shared_ptr<Shader> m_spShader;			//!< Shader used by this material.
-			boost::shared_ptr<Texture> m_spTexture;			//!< Texture used by this material.
-			boost::shared_ptr<RenderState> m_spRenderState;	//!< Render state associated with this material.
+			std::shared_ptr<Shader> m_spShader;			//!< Shader used by this material.
+			std::shared_ptr<Texture> m_spTexture;			//!< Texture used by this material.
+			std::shared_ptr<RenderState> m_spRenderState;	//!< Render state associated with this material.
 
 		};
 	}

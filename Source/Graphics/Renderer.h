@@ -4,7 +4,7 @@
 #include <Math/Math.h>
 #include <Graphics/Geometry.h>
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 namespace baselib 
 {
@@ -116,7 +116,7 @@ namespace baselib
 			};
 
 			//! Creates a Renderer.
-			static boost::shared_ptr<Renderer> create(int iWidth, int iHeight);
+			static std::shared_ptr<Renderer> create(int iWidth, int iHeight);
 
 			//! Destructor.
 			virtual ~Renderer();
@@ -151,7 +151,7 @@ namespace baselib
 			RenderStateValue getRenderState(RenderState eState) const { assert(eState < STATE_COUNT); return m_aeState[eState]; }
 
 			//! Get the back buffer.
-			boost::shared_ptr<FrameBuffer> getBackBuffer() const { return m_spBackBuffer; }
+			std::shared_ptr<FrameBuffer> getBackBuffer() const { return m_spBackBuffer; }
 
 		protected:
 			//! Protected constructor - must be created by static create().
@@ -165,7 +165,7 @@ namespace baselib
 			//! Apply a render state.
 			void applyRenderState(RenderState eState, RenderStateValue eValue);
 
-			boost::shared_ptr<FrameBuffer> m_spBackBuffer; //!< FrameBuffer object that represents the back buffer.
+			std::shared_ptr<FrameBuffer> m_spBackBuffer; //!< FrameBuffer object that represents the back buffer.
 
 			Vec4 m_vClearColour;					  //!< Current clear colour. Current render target will be cleared to this colour when calling clear().
 			Vec4 m_vViewportSize;					  //!< Current viewport size.

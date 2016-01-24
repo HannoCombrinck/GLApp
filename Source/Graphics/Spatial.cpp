@@ -28,7 +28,7 @@ namespace baselib { namespace graphics {
 		onUpdate(mParent);
 	}
 
-	void Spatial::traverse(const boost::function<void(const boost::shared_ptr<Spatial>&)>& f)
+	void Spatial::traverse(const boost::function<void(const std::shared_ptr<Spatial>&)>& f)
 	{
 		f(shared_from_this());
 	}

@@ -1,7 +1,7 @@
 #include "ModelLoader.h"
 
 #include <Logging/Log.h>
-#include <Helpers/NullPtr.h>
+#include <Core/NullPtr.h>
 #include <Graphics/Node.h>
 #include <Graphics/Visual.h>
 #include <Graphics/VertexList.h>
@@ -23,9 +23,9 @@ namespace fs = boost::filesystem;
 
 namespace baselib { namespace graphics {
 
-	boost::shared_ptr<ModelLoader> ModelLoader::create()
+	std::shared_ptr<ModelLoader> ModelLoader::create()
 	{
-		return boost::shared_ptr<ModelLoader>(new ModelLoader());
+		return std::shared_ptr<ModelLoader>(new ModelLoader());
 	}
 
 	ModelLoader::ModelLoader()
@@ -109,7 +109,7 @@ namespace baselib { namespace graphics {
 			return Vert(vPos, vNormal, vTangent, vBitangent, vTexCoord0, vTexCoord1);
 		}
 
-		boost::shared_ptr<Visual> buildVisual(const aiScene* pScene, aiMesh* pMesh)
+		std::shared_ptr<Visual> buildVisual(const aiScene* pScene, aiMesh* pMesh)
 		{
 			// Create vertex list that always uses following 6 attributes - will be partially filled in depending on what's available in aiMesh
 			auto spVL = VertexLayout::create();
@@ -119,7 +119,7 @@ namespace baselib { namespace graphics {
 			spVL->add("bitangent", 3, TYPE_FLOAT);
 			spVL->add("texcoord0", 2, TYPE_FLOAT, true);
 			spVL->add("texcoord1", 2, TYPE_FLOAT, true);
-			auto spVertexList = boost::shared_ptr<VertexList<Vert>>(new VertexList<Vert>(spVL));
+			auto spVertexList = std::shared_ptr<VertexList<Vert>>(new VertexList<Vert>(spVL));
 
 			// Get vertices from aiMesh
 			for (unsigned int i = 0; i < pMesh->mNumVertices; ++i)
@@ -137,7 +137,7 @@ namespace baselib { namespace graphics {
 				}
 			}
 
-			boost::shared_ptr<Texture> spDiffuseTexture = null_ptr;
+			std::shared_ptr<Texture> spDiffuseTexture = null_ptr;
 
 			// Get material properties and textures from aiMesh
 			if (pScene->HasMaterials())
@@ -158,7 +158,7 @@ namespace baselib { namespace graphics {
 			auto spVertexShader = ShaderObject::load("../Data/Shaders/Default.vert");
 			auto spFragmentShader = ShaderObject::load("../Data/Shaders/ColourSimple.frag");
 
-			std::vector<boost::shared_ptr<ShaderObject>> aspShaders;
+			std::vector<std::shared_ptr<ShaderObject>> aspShaders;
 			aspShaders.push_back(spVertexShader);
 			aspShaders.push_back(spFragmentShader);
 
@@ -171,7 +171,7 @@ namespace baselib { namespace graphics {
 			return Visual::create(spStaticGeometry, spMaterial);
 		}
 
-		void buildModel(const aiScene* pScene, aiNode* pNode, const boost::shared_ptr<Node> spParentNode)
+		void buildModel(const aiScene* pScene, aiNode* pNode, const std::shared_ptr<Node> spParentNode)
 		{
 			auto spNode = Node::create();
 			spNode->setName(pNode->mName.C_Str());
@@ -192,7 +192,7 @@ namespace baselib { namespace graphics {
 
 	}
 
-	boost::shared_ptr<Node> ModelLoader::load(const fs::path& fsPath)
+	std::shared_ptr<Node> ModelLoader::load(const fs::path& fsPath)
 	{
 		if (!fs::exists(fsPath))
 		{

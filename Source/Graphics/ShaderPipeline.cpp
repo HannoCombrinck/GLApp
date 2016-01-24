@@ -2,7 +2,7 @@
 
 #include <GL/glew.h>
 #include <Logging/Log.h>
-#include <Helpers/ResourceCache.h>
+#include <Core/ResourceCache.h>
 #include <Graphics/Shader.h>
 #include <Graphics/ShaderObject.h>
 #include <boost/range/algorithm/for_each.hpp>
@@ -14,7 +14,7 @@ namespace baselib { namespace graphics {
 		ResourceCache<ShaderPipeline> m_ShaderPipelineCache;
 
 		// Check for valid shader object combinations.
-		bool isValidPipeline(const std::vector<boost::shared_ptr<ShaderObject>>& aspShaderObjects)
+		bool isValidPipeline(const std::vector<std::shared_ptr<ShaderObject>>& aspShaderObjects)
 		{
 			bool bValid = true;
 
@@ -22,7 +22,7 @@ namespace baselib { namespace graphics {
 			int iCount[ShaderObject::NUM_SHADER_TYPES];
 			memset(iCount, 0, sizeof(int) * ShaderObject::NUM_SHADER_TYPES);
 
-			boost::for_each(aspShaderObjects, [&iCount, &bValid](const boost::shared_ptr<ShaderObject>& spShaderObject) {
+			boost::for_each(aspShaderObjects, [&iCount, &bValid](const std::shared_ptr<ShaderObject>& spShaderObject) {
 				ShaderObject::ShaderType eType = spShaderObject->getType();
 
 				if (eType < 0 || eType >= ShaderObject::NUM_SHADER_TYPES)
@@ -50,10 +50,10 @@ namespace baselib { namespace graphics {
 		}
 	}
 
-	boost::shared_ptr<ShaderPipeline> ShaderPipeline::create(const std::string& sName, const std::vector<boost::shared_ptr<ShaderObject>>& aspShaderObjects)
+	std::shared_ptr<ShaderPipeline> ShaderPipeline::create(const std::string& sName, const std::vector<std::shared_ptr<ShaderObject>>& aspShaderObjects)
 	{
 		std::string sShaderObjectString;
-		boost::for_each(aspShaderObjects, [&sShaderObjectString](const boost::shared_ptr<ShaderObject>& sp) {
+		boost::for_each(aspShaderObjects, [&sShaderObjectString](const std::shared_ptr<ShaderObject>& sp) {
 			sShaderObjectString += sp->getName();
 		});
 
@@ -73,7 +73,7 @@ namespace baselib { namespace graphics {
 
 		// Attach shader objects
 		LOG_VERBOSE << "Attaching shader objects to pipeline";
-		boost::for_each(aspShaderObjects, [&uShaderProgramID](const boost::shared_ptr<ShaderObject>& spShaderObject) {
+		boost::for_each(aspShaderObjects, [&uShaderProgramID](const std::shared_ptr<ShaderObject>& spShaderObject) {
 			glAttachShader(uShaderProgramID, spShaderObject->getID());
 		});
 
@@ -86,7 +86,7 @@ namespace baselib { namespace graphics {
 		// Keeping them attached, and alive, is useful for debugging purposes though.
 		// gDEBugger can, for example, rebuild and relink programs on the fly if they remain attached.
 		#ifndef _DEBUG
-		boost::for_each(aspShaderObjects, [&uShaderProgramID](const boost::shared_ptr<ShaderObject>& spShaderObject) {
+		boost::for_each(aspShaderObjects, [&uShaderProgramID](const std::shared_ptr<ShaderObject>& spShaderObject) {
 			glDetachShader(uShaderProgramID, spShaderObject->getID());
 		});
 		#endif
@@ -114,14 +114,14 @@ namespace baselib { namespace graphics {
 			assert(false);
 		}
 
-		auto spShaderPipeline = boost::shared_ptr<ShaderPipeline>(new ShaderPipeline(sName, uShaderProgramID, aspShaderObjects));
+		auto spShaderPipeline = std::shared_ptr<ShaderPipeline>(new ShaderPipeline(sName, uShaderProgramID, aspShaderObjects));
 		// Cache the shader pipeline
 		m_ShaderPipelineCache.add(sShaderObjectString, spShaderPipeline);
 
 		return spShaderPipeline;
 	}
 
-	ShaderPipeline::ShaderPipeline(const std::string& sName, unsigned int uID, const std::vector<boost::shared_ptr<ShaderObject>>& aspShaderObjects)
+	ShaderPipeline::ShaderPipeline(const std::string& sName, unsigned int uID, const std::vector<std::shared_ptr<ShaderObject>>& aspShaderObjects)
 		: m_sName(sName)
 		, m_uID(uID)
 		, m_aspShaderObjects(aspShaderObjects)
@@ -135,9 +135,9 @@ namespace baselib { namespace graphics {
 		glDeleteProgram(m_uID);
 	}
 
-	boost::shared_ptr<Shader> ShaderPipeline::createInstance()
+	std::shared_ptr<Shader> ShaderPipeline::createInstance()
 	{
-		return boost::shared_ptr<Shader>(new Shader(shared_from_this()));
+		return std::shared_ptr<Shader>(new Shader(shared_from_this()));
 	}
 
 } }

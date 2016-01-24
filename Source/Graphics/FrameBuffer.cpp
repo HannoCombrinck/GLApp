@@ -12,7 +12,7 @@ namespace baselib { namespace graphics {
 
 	namespace
 	{
-		void checkValidTargets(const std::vector<boost::shared_ptr<Texture>>& aColourAttachments)
+		void checkValidTargets(const std::vector<std::shared_ptr<Texture>>& aColourAttachments)
 		{
 			if (aColourAttachments.empty())
 			{
@@ -24,7 +24,7 @@ namespace baselib { namespace graphics {
 			int iHeight = aColourAttachments[0]->getHeight();
 			int iBPP = aColourAttachments[0]->getBPP();
 
-			boost::for_each(aColourAttachments, [iWidth, iHeight, iBPP](const boost::shared_ptr<Texture>& spTexture) {
+			boost::for_each(aColourAttachments, [iWidth, iHeight, iBPP](const std::shared_ptr<Texture>& spTexture) {
 				if (spTexture->getWidth() != iWidth || spTexture->getHeight() != iHeight)
 				{
 					LOG_ERROR << "All FrameBuffer target textures must have the same resolution";
@@ -56,12 +56,12 @@ namespace baselib { namespace graphics {
 											  GL_COLOR_ATTACHMENT15 };
 	}
 
-	boost::shared_ptr<FrameBuffer> FrameBuffer::create()
+	std::shared_ptr<FrameBuffer> FrameBuffer::create()
 	{
-		return boost::shared_ptr<FrameBuffer>(new FrameBuffer(0));
+		return std::shared_ptr<FrameBuffer>(new FrameBuffer(0));
 	}
 
-	boost::shared_ptr<FrameBuffer> FrameBuffer::create(const std::vector<boost::shared_ptr<Texture>>& aspColourTargets, const boost::shared_ptr<Texture>& spDepthTarget)
+	std::shared_ptr<FrameBuffer> FrameBuffer::create(const std::vector<std::shared_ptr<Texture>>& aspColourTargets, const std::shared_ptr<Texture>& spDepthTarget)
 	{
 		checkValidTargets(aspColourTargets);
 
@@ -72,7 +72,7 @@ namespace baselib { namespace graphics {
 
 		// Attach colour targets
 		int iCount = 0;
-		boost::for_each(aspColourTargets, [&iCount](const boost::shared_ptr<Texture>& spTarget) {
+		boost::for_each(aspColourTargets, [&iCount](const std::shared_ptr<Texture>& spTarget) {
 			if (spTarget->getType() == Texture::TEXTURE_2D)
 			{
 				if (iCount >= GL_MAX_COLOR_ATTACHMENTS)
@@ -105,18 +105,18 @@ namespace baselib { namespace graphics {
 		}
 
 		// Create frame buffer
-		return boost::shared_ptr<FrameBuffer>(new FrameBuffer(uID, aspColourTargets.size(), aspColourTargets, spDepthTarget));
+		return std::shared_ptr<FrameBuffer>(new FrameBuffer(uID, aspColourTargets.size(), aspColourTargets, spDepthTarget));
 	}
 
-	boost::shared_ptr<FrameBuffer> FrameBuffer::createEmpty()
+	std::shared_ptr<FrameBuffer> FrameBuffer::createEmpty()
 	{
 		// Create empty frame buffer object
 		unsigned int uID;
 		glGenFramebuffers(1, &uID);
-		return boost::shared_ptr<FrameBuffer>(new FrameBuffer(uID));
+		return std::shared_ptr<FrameBuffer>(new FrameBuffer(uID));
 	}
 
-	FrameBuffer::FrameBuffer(unsigned int uID, int iNumTargets, const std::vector<boost::shared_ptr<Texture>>& aspColourTargets, const boost::shared_ptr<Texture>& spDepthTarget)
+	FrameBuffer::FrameBuffer(unsigned int uID, int iNumTargets, const std::vector<std::shared_ptr<Texture>>& aspColourTargets, const std::shared_ptr<Texture>& spDepthTarget)
 		: m_uID(uID)
 		, m_iNumTargets(iNumTargets)
 		, m_aspColourTargets(aspColourTargets)
@@ -156,7 +156,7 @@ namespace baselib { namespace graphics {
 			glDrawBuffers(m_iNumTargets, aColourAttachmentBuffers);
 	}
 
-	void FrameBuffer::bind(const boost::shared_ptr<Texture>& spColourTarget)
+	void FrameBuffer::bind(const std::shared_ptr<Texture>& spColourTarget)
 	{
 		if (m_uID == 0)
 		{

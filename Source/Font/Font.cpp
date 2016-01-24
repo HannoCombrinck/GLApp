@@ -1,6 +1,6 @@
 #include "Font.h"
 
-#include <Helpers/NullPtr.h>
+#include <Core/NullPtr.h>
 #include <Graphics/Renderer.h>
 #include <Graphics/Texture.h>
 #include <Graphics/Image.h>
@@ -17,7 +17,7 @@ using namespace baselib::graphics;
 
 namespace baselib { namespace font {
 
-	Font::Font(FT_FaceRec_ *ftFace, const boost::shared_ptr<Renderer>& spRenderer, const Vec2& vAtlasSize)
+	Font::Font(FT_FaceRec_ *ftFace, const std::shared_ptr<Renderer>& spRenderer, const Vec2& vAtlasSize)
 		: m_FTFace(ftFace)
 		, m_spRenderer(spRenderer)
 		, m_vNextGlyphBottomLeft(Vec2(0.0f, 0.0f))
@@ -51,7 +51,7 @@ namespace baselib { namespace font {
 		m_spAtlas = Texture::create(spImage);
 		m_spTextureUpdateHelper = TextureUpdateHelper::create(m_spRenderer);
 
-		std::vector<boost::shared_ptr<ShaderObject>> aShaderObjects;
+		std::vector<std::shared_ptr<ShaderObject>> aShaderObjects;
 		aShaderObjects.push_back(ShaderObject::load("../Data/Shaders/TextureCopy.vert"));
 		aShaderObjects.push_back(ShaderObject::load("../Data/Shaders/TextureCopy.frag"));
 		m_spTextureCopyPipeline = ShaderPipeline::create("TextureCopy", aShaderObjects);
@@ -90,7 +90,7 @@ namespace baselib { namespace font {
 		}
 
 		// Create a texture from a FT_Bitmap
-		boost::shared_ptr<Texture> createGlyphTexture(const FT_Bitmap& ftBitmap)
+		std::shared_ptr<Texture> createGlyphTexture(const FT_Bitmap& ftBitmap)
 		{
 			int iWidth = ftBitmap.width;
 			int iHeight = ftBitmap.rows;
@@ -110,7 +110,7 @@ namespace baselib { namespace font {
 
 	}
 
-	boost::shared_ptr<Glyph> Font::getGlyph(unsigned char uChar) const
+	std::shared_ptr<Glyph> Font::getGlyph(unsigned char uChar) const
 	{
 		auto iter = m_GlyphMap.find(uChar);
 		if (iter != m_GlyphMap.end())
@@ -146,14 +146,14 @@ namespace baselib { namespace font {
 		unsigned int uAdvance = unsigned int(ftGM.horiAdvance) * 64;
 		unsigned int uBearingX = unsigned int(ftGM.horiBearingX) * 64;
 		unsigned int uBearingY = unsigned int(ftGM.horiBearingY) * 64;
-		auto spGlyph = boost::shared_ptr<Glyph>(new Glyph(uChar, uWidth, uHeight, uAdvance, uBearingX, uBearingY, vUVMin, vUVMax));
+		auto spGlyph = std::shared_ptr<Glyph>(new Glyph(uChar, uWidth, uHeight, uAdvance, uBearingX, uBearingY, vUVMin, vUVMax));
 
 		// Add to glyph cache
 		m_GlyphMap[uChar] = spGlyph;
 		return spGlyph;
 	}
 
-	bool Font::addToAtlas(Vec2& vNextGlyphBottomLeft, float& fMaxHeight, Vec2& vUVMin, Vec2& vUVMax, const boost::shared_ptr<Texture>& spTexture, const boost::shared_ptr<Texture>& spAtlas) const
+	bool Font::addToAtlas(Vec2& vNextGlyphBottomLeft, float& fMaxHeight, Vec2& vUVMin, Vec2& vUVMax, const std::shared_ptr<Texture>& spTexture, const std::shared_ptr<Texture>& spAtlas) const
 	{
 		// Check if glyph will fit horizontally
 		if (vNextGlyphBottomLeft.x + spTexture->getWidth() > spAtlas->getWidth())

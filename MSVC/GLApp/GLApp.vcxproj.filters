@@ -23,9 +23,6 @@
     <Filter Include="Data\Shaders">
       <UniqueIdentifier>{da1f3455-8131-436a-96e2-8314bb0ba1b8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header/Source Files\Helpers">
-      <UniqueIdentifier>{52296b28-59b5-421b-95d8-3fc395a6668f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Data\Textures">
       <UniqueIdentifier>{fe6f2c9e-275a-4c50-a54b-4de2c3e32329}</UniqueIdentifier>
     </Filter>
@@ -35,7 +32,13 @@
     <Filter Include="Header/Source Files\Graphics\Helpers">
       <UniqueIdentifier>{c2b53554-9174-408f-af35-dc711267b03a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header/Source Files\Apps">
+    <Filter Include="Header/Source Files\Tetris">
+      <UniqueIdentifier>{725fb0a1-af08-47ce-975e-0eb9ea6c0fb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header/Source Files\Core">
+      <UniqueIdentifier>{700aff81-1373-41d6-88d6-d002992d654b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header/Source Files\TestApps">
       <UniqueIdentifier>{716eddca-b7e2-4d49-a4a3-d128a47529e0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -88,9 +91,6 @@
     <ClCompile Include="..\..\Source\Graphics\StaticGeometry.cpp">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Helpers\NullPtr.cpp">
-      <Filter>Header/Source Files\Helpers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Graphics\Image.cpp">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClCompile>
@@ -118,15 +118,6 @@
     <ClCompile Include="..\..\Source\Graphics\Helpers\TextureUpdateHelper.cpp">
       <Filter>Header/Source Files\Graphics\Helpers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Helpers\Timer.cpp">
-      <Filter>Header/Source Files\Helpers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Apps\BaseApp.cpp">
-      <Filter>Header/Source Files\Apps</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Apps\DeferredRenderingApp.cpp">
-      <Filter>Header/Source Files\Apps</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Graphics\ModelLoader.cpp">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClCompile>
@@ -138,6 +129,30 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Graphics\Helpers\ShaderHelpers.cpp">
       <Filter>Header/Source Files\Graphics\Helpers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Tetris\Tetris.cpp">
+      <Filter>Header/Source Files\Tetris</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Tetris\Board.cpp">
+      <Filter>Header/Source Files\Tetris</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Core\AppBase.cpp">
+      <Filter>Header/Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Core\ResourceLoader.cpp">
+      <Filter>Header/Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Core\NullPtr.cpp">
+      <Filter>Header/Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Core\Timer.cpp">
+      <Filter>Header/Source Files\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\TestApps\BaseApp.cpp">
+      <Filter>Header/Source Files\TestApps</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\TestApps\DeferredRenderingApp.cpp">
+      <Filter>Header/Source Files\TestApps</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -192,12 +207,6 @@
     <ClInclude Include="..\..\Source\Graphics\StaticGeometry.h">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Helpers\ResourceCache.h">
-      <Filter>Header/Source Files\Helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Helpers\NullPtr.h">
-      <Filter>Header/Source Files\Helpers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Graphics\Image.h">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClInclude>
@@ -225,15 +234,6 @@
     <ClInclude Include="..\..\Source\Graphics\Helpers\TextureUpdateHelper.h">
       <Filter>Header/Source Files\Graphics\Helpers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Helpers\Timer.h">
-      <Filter>Header/Source Files\Helpers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Apps\BaseApp.h">
-      <Filter>Header/Source Files\Apps</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Apps\DeferredRenderingApp.h">
-      <Filter>Header/Source Files\Apps</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Graphics\ModelLoader.h">
       <Filter>Header/Source Files\Graphics</Filter>
     </ClInclude>
@@ -248,6 +248,33 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Graphics\Helpers\ShaderHelpers.h">
       <Filter>Header/Source Files\Graphics\Helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Tetris\Tetris.h">
+      <Filter>Header/Source Files\Tetris</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Tetris\Board.h">
+      <Filter>Header/Source Files\Tetris</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Core\AppBase.h">
+      <Filter>Header/Source Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Core\ResourceLoader.h">
+      <Filter>Header/Source Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Core\Timer.h">
+      <Filter>Header/Source Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Core\NullPtr.h">
+      <Filter>Header/Source Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Core\ResourceCache.h">
+      <Filter>Header/Source Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\TestApps\DeferredRenderingApp.h">
+      <Filter>Header/Source Files\TestApps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\TestApps\BaseApp.h">
+      <Filter>Header/Source Files\TestApps</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

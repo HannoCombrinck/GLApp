@@ -1,6 +1,6 @@
 #pragma once
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <vector>
 
 namespace baselib 
@@ -29,29 +29,29 @@ namespace baselib
 		{
 		public:
 			//! Creates a RenderJob.
-			static boost::shared_ptr<RenderJob> create(const boost::shared_ptr<Renderer>& spRenderer);
+			static std::shared_ptr<RenderJob> create(const std::shared_ptr<Renderer>& spRenderer);
 
 			//! Destructor.
 			virtual ~RenderJob();
 
 			//! Execute the job using shaders assigned to visual materials.
 			void execute(const std::vector<Visual*>& apVisuals,
-						 const boost::shared_ptr<FrameBuffer>& spFrameBuffer,
-						 const boost::shared_ptr<Camera>& spCamera,
+						 const std::shared_ptr<FrameBuffer>& spFrameBuffer,
+						 const std::shared_ptr<Camera>& spCamera,
 						 bool bClear = true);
 
 			//! Execute the job using the provided shader.
 			void execute(const std::vector<Visual*>& apVisuals,
-						 const boost::shared_ptr<FrameBuffer>& spFrameBuffer,
-						 const boost::shared_ptr<Camera>& spCamera,
-						 const boost::shared_ptr<Shader>& spShader,
+						 const std::shared_ptr<FrameBuffer>& spFrameBuffer,
+						 const std::shared_ptr<Camera>& spCamera,
+						 const std::shared_ptr<Shader>& spShader,
 						 bool bClear = true);
 		protected:
 			//! Protected constructor - must be created by static create().
-			RenderJob(const boost::shared_ptr<Renderer>& spRenderer);
+			RenderJob(const std::shared_ptr<Renderer>& spRenderer);
 
 		private:
-			boost::shared_ptr<Renderer> m_spRenderer;
+			std::shared_ptr<Renderer> m_spRenderer;
 
 		};
 	}

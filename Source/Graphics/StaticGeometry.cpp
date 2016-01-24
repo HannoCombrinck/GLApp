@@ -29,7 +29,7 @@ namespace baselib { namespace graphics {
 		}
 	}
 
-	boost::shared_ptr<StaticGeometry> StaticGeometry::create(const boost::shared_ptr<VertexListInterface>& spVertexList, PrimitiveType ePrimitiveType)
+	std::shared_ptr<StaticGeometry> StaticGeometry::create(const std::shared_ptr<VertexListInterface>& spVertexList, PrimitiveType ePrimitiveType)
 	{
 		LOG_VERBOSE << "Creating static geometry hardware buffers";
 		
@@ -63,10 +63,10 @@ namespace baselib { namespace graphics {
 		glBindVertexArray(0);
 
 		LOG_VERBOSE << "Successfully created static geometry hardware buffers";
-		return boost::shared_ptr<StaticGeometry>(new StaticGeometry(uVAO, uVBO, uIB, ePrimitiveType, spVertexList));
+		return std::shared_ptr<StaticGeometry>(new StaticGeometry(uVAO, uVBO, uIB, ePrimitiveType, spVertexList));
 	}
 
-	StaticGeometry::StaticGeometry(unsigned int uVAO, unsigned int uVBO, unsigned int uIB, PrimitiveType ePrimitiveType, const boost::shared_ptr<VertexListInterface>& spVertexList)
+	StaticGeometry::StaticGeometry(unsigned int uVAO, unsigned int uVBO, unsigned int uIB, PrimitiveType ePrimitiveType, const std::shared_ptr<VertexListInterface>& spVertexList)
 		: Geometry(uVAO, ePrimitiveType, spVertexList)
 		, m_uVBO(uVBO)
 		, m_uIB(uIB)

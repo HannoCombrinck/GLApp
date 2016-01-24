@@ -1,23 +1,16 @@
-#include <Apps/BaseApp.h>
-#include <Apps/DeferredRenderingApp.h>
+#include <Tetris/Tetris.h>
 
 using namespace std;
-using namespace baselib;
-
-#include <Logging/Log.h>
+using namespace tetris;
 
 int main(int arc, char** argv)
 {
-	Logger::setAddTimeStamp(false);
-	Logger::setLogLevel(LOGLEVEL_INFO);
+	Tetris t;
+	t.setSize(1024, 768);
+	t.setFullScreen(false);
+	t.setGLVersion(3, 2);
+	t.setWindowTitle("Tetris");
+	t.start();
 
-	//BaseApp app; 
-	DeferredRenderingApp app;
-	//app.setSize(1920, 1080);
-	app.setSize(1280, 960);
-	app.setFullScreen(false);
-	app.setGLVersion(3, 2);
-	app.setWindowTitle("Basic Deferred Rendering Test");
-	app.start();
 	return 0;
 }

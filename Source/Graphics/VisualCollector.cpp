@@ -7,9 +7,9 @@
 
 namespace baselib { namespace graphics {
 
-	boost::shared_ptr<VisualCollector> VisualCollector::create()
+	std::shared_ptr<VisualCollector> VisualCollector::create()
 	{
-		return boost::shared_ptr<VisualCollector>(new VisualCollector());
+		return std::shared_ptr<VisualCollector>(new VisualCollector());
 	}
 
 	VisualCollector::VisualCollector()
@@ -22,12 +22,12 @@ namespace baselib { namespace graphics {
 		LOG_VERBOSE << "VisualCollector destructor";
 	}
 
-	void VisualCollector::collect(const boost::shared_ptr<Node>& spNode)
+	void VisualCollector::collect(const std::shared_ptr<Node>& spNode)
 	{
 		// Traverse Node hierarchy and selectively add visuals
 		std::vector<Visual*>& apVisuals = m_apVisuals;
-		spNode->traverse([&apVisuals](const boost::shared_ptr<Spatial>& spSpatial) {
-			if (auto spVisual = boost::dynamic_pointer_cast<Visual>(spSpatial))
+		spNode->traverse([&apVisuals](const std::shared_ptr<Spatial>& spSpatial) {
+			if (auto spVisual = std::dynamic_pointer_cast<Visual>(spSpatial))
 				apVisuals.push_back(spVisual.get()); // TODO: Only add visuals if they aren't culled/filtered
 		});
 

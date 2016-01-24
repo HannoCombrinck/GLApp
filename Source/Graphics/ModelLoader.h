@@ -1,6 +1,6 @@
 #pragma once
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <boost/filesystem.hpp>
 
 namespace fs = boost::filesystem;
@@ -24,13 +24,13 @@ namespace baselib
 		{
 		public:
 			//! Creates a ModelLoader.
-			static boost::shared_ptr<ModelLoader> create();
+			static std::shared_ptr<ModelLoader> create();
 
 			//! Destructor.
 			virtual ~ModelLoader();
 
 			//! Load model from file
-			boost::shared_ptr<Node> load(const fs::path& fsPath);
+			std::shared_ptr<Node> load(const fs::path& fsPath);
 
 		protected:
 			//! Protected constructor - must be created by static create().

@@ -17,13 +17,13 @@ namespace baselib { namespace graphics {
 		};
 	}
 
-	boost::shared_ptr<StaticGeometry> createQuadGeometry()
+	std::shared_ptr<StaticGeometry> createQuadGeometry()
 	{
 		auto spVL = VertexLayout::create();
 		spVL->add("position", 3, TYPE_FLOAT);
 		spVL->add("texcoord", 2, TYPE_FLOAT, true);
 
-		auto spVertexList = boost::shared_ptr<VertexList<VertexPosUV>>(new VertexList<VertexPosUV>(spVL));
+		auto spVertexList = std::shared_ptr<VertexList<VertexPosUV>>(new VertexList<VertexPosUV>(spVL));
 		spVertexList->addVertex(VertexPosUV(Vec3(-1.0f, -1.0f, 0.0f), Vec2(0.0, 0.0)));
 		spVertexList->addVertex(VertexPosUV(Vec3(1.0f, -1.0f, 0.0f), Vec2(1.0, 0.0)));
 		spVertexList->addVertex(VertexPosUV(Vec3(1.0f, 1.0f, 0.0f), Vec2(1.0, 1.0)));

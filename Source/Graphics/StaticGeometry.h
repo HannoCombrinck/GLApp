@@ -21,7 +21,7 @@ namespace baselib
 		{
 		public:
 			//! Creates and returns a static geometry from a vertex list.
-			static boost::shared_ptr<StaticGeometry> create(const boost::shared_ptr<VertexListInterface>& spVertexList, PrimitiveType ePrimitiveType);
+			static std::shared_ptr<StaticGeometry> create(const std::shared_ptr<VertexListInterface>& spVertexList, PrimitiveType ePrimitiveType);
 
 			//! Destructor.
 			virtual ~StaticGeometry();
@@ -33,7 +33,7 @@ namespace baselib
 
 		protected:
 			//! Protected constructor - must be created by static create().
-			StaticGeometry(unsigned int uVAO, unsigned int uVBO, unsigned int uIB, PrimitiveType ePrimitiveType, const boost::shared_ptr<VertexListInterface>& spVertexList);
+			StaticGeometry(unsigned int uVAO, unsigned int uVBO, unsigned int uIB, PrimitiveType ePrimitiveType, const std::shared_ptr<VertexListInterface>& spVertexList);
 
 		private:
 			unsigned int m_uVBO; //!< The geometry VBO - Vertex buffer object

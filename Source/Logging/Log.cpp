@@ -3,9 +3,9 @@
 
 namespace baselib {
 
-	LOG_LEVEL Logger::m_LogLevel = LOGLEVEL_VERBOSE;
+	LOG_LEVEL Logger::m_LogLevel = LOGLEVEL_INFO;
 	bool Logger::m_bAddLogLevel = true;
-	bool Logger::m_bAddTimeStamp = true;
+	bool Logger::m_bAddTimeStamp = false;
 
 	Logger::Logger()
 	{

@@ -2,7 +2,7 @@
 
 #include <string>
 #include <Math/Math.h>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 namespace baselib 
 {
@@ -57,12 +57,12 @@ namespace baselib
 			
 		protected:
 			//! Protected constructor - must be created by ShaderPipeline.
-			Shader(const boost::shared_ptr<ShaderPipeline>& spShaderPipeline);
+			Shader(const std::shared_ptr<ShaderPipeline>& spShaderPipeline);
 
 		private:
 			static unsigned int m_uCurrentlyBound; //!< Currently bound shader.
 
-			boost::shared_ptr<ShaderPipeline> m_spShaderPipeline; //!< The pipeline that this instanced was created from
+			std::shared_ptr<ShaderPipeline> m_spShaderPipeline; //!< The pipeline that this instanced was created from
 			unsigned int m_uID; //!< Shader program ID.
 			
 		};

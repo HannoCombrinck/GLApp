@@ -1,6 +1,6 @@
 #pragma once
 
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <boost/filesystem.hpp>
 #include <Math/Math.h>
 
@@ -29,13 +29,13 @@ namespace baselib
 		{
 		public:
 			//! Creates a FontLoader.
-			static boost::shared_ptr<FontLoader> create();
+			static std::shared_ptr<FontLoader> create();
 			
 			//! Destructor.
 			~FontLoader();
 		
 			//! Load and create a font.
-			boost::shared_ptr<Font> loadFont(const fs::path& fsPath, const boost::shared_ptr<graphics::Renderer>& spRenderer, const Vec2& vAtlasSize);
+			std::shared_ptr<Font> loadFont(const fs::path& fsPath, const std::shared_ptr<graphics::Renderer>& spRenderer, const Vec2& vAtlasSize);
 
 		protected:
 			//! Protected constructor - must be created by static create().

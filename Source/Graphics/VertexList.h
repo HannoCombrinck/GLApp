@@ -56,7 +56,7 @@ namespace baselib
 		{
 		public:
 			//! Creates a VertexLayout.
-			static boost::shared_ptr<VertexLayout> create() { return boost::shared_ptr<VertexLayout>(new VertexLayout()); }
+			static std::shared_ptr<VertexLayout> create() { return std::shared_ptr<VertexLayout>(new VertexLayout()); }
 
 			//! Add a vertex attribute to the layout.
 			void add(const VertexAttribute& va) { m_Attributes.push_back(va); }
@@ -99,7 +99,7 @@ namespace baselib
 			//! Get the number of indices.
 			virtual unsigned int getNumIndices() const = 0;
 			//! Get the vertex attribute layout.
-			virtual boost::shared_ptr<VertexLayout> getVertexLayout() const = 0;
+			virtual std::shared_ptr<VertexLayout> getVertexLayout() const = 0;
 			//! Get vertex size in bytes.
 			virtual int getVertexSize() const = 0;
 		};
@@ -111,7 +111,7 @@ namespace baselib
 		class VertexList : public VertexListInterface
 		{
 		public:
-			VertexList(const boost::shared_ptr<VertexLayout>& spVertexLayout)
+			VertexList(const std::shared_ptr<VertexLayout>& spVertexLayout)
 				: m_spVertexLayout(spVertexLayout)
 			{ 
 				LOG_VERBOSE << "VertexList constructor";
@@ -129,7 +129,7 @@ namespace baselib
 			virtual const void* getIndexBufferData() const { return reinterpret_cast<const void*>(&m_aIndices[0]); }
 			virtual unsigned int getIndexBufferSize() const { return m_aIndices.size() * sizeof(unsigned int); }
 			virtual unsigned int getNumIndices() const { return m_aIndices.size(); }
-			virtual boost::shared_ptr<VertexLayout> getVertexLayout() const { return m_spVertexLayout; }
+			virtual std::shared_ptr<VertexLayout> getVertexLayout() const { return m_spVertexLayout; }
 			virtual int getVertexSize() const { return sizeof(VertexType); }
 
 			//! Add a vertex to the list.
@@ -148,7 +148,7 @@ namespace baselib
 			const std::vector<unsigned int>& getIndices() const { return m_aIndices; }
 
 		private:
-			boost::shared_ptr<VertexLayout> m_spVertexLayout;	//!< The vertex layout description.
+			std::shared_ptr<VertexLayout> m_spVertexLayout;	//!< The vertex layout description.
 			std::vector<VertexType> m_aVertices;				//!< The vertex data.
 			std::vector<unsigned int> m_aIndices;				//!< The index data.
 		};

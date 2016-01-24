@@ -1,7 +1,7 @@
 #include "TextureUpdateHelper.h"
 
 #include <Logging/Log.h>
-#include <Helpers/NullPtr.h>
+#include <Core/NullPtr.h>
 #include <Graphics/Renderer.h>
 #include <Graphics/Shader.h>
 #include <Graphics/Texture.h>
@@ -13,13 +13,13 @@
 
 namespace baselib { namespace graphics {
 
-	boost::shared_ptr<TextureUpdateHelper> TextureUpdateHelper::create(const boost::shared_ptr<Renderer> spRenderer)
+	std::shared_ptr<TextureUpdateHelper> TextureUpdateHelper::create(const std::shared_ptr<Renderer> spRenderer)
 	{
 		assert(spRenderer);
-		return boost::shared_ptr<TextureUpdateHelper>(new TextureUpdateHelper(spRenderer));
+		return std::shared_ptr<TextureUpdateHelper>(new TextureUpdateHelper(spRenderer));
 	}
 
-	TextureUpdateHelper::TextureUpdateHelper(const boost::shared_ptr<Renderer> spRenderer)
+	TextureUpdateHelper::TextureUpdateHelper(const std::shared_ptr<Renderer> spRenderer)
 		: m_spRenderer(spRenderer)
 	{
 		LOG_VERBOSE << "TextureUpdateHelper constructor";
@@ -31,17 +31,17 @@ namespace baselib { namespace graphics {
 		LOG_VERBOSE << "TextureUpdateHelper destructor";
 	}
 
-	void TextureUpdateHelper::updateRegion(const boost::shared_ptr<Texture> spInputTexture, const boost::shared_ptr<Texture> spTargetTexture, const boost::shared_ptr<Shader> spShader)
+	void TextureUpdateHelper::updateRegion(const std::shared_ptr<Texture> spInputTexture, const std::shared_ptr<Texture> spTargetTexture, const std::shared_ptr<Shader> spShader)
 	{
 		updateRegion(spInputTexture, Vec2(0.0f, 0.0f), Vec2(1.0f, 1.0f), spTargetTexture, spShader);
 	}
 
-	void TextureUpdateHelper::updateRegion(const boost::shared_ptr<Texture> spInputTexture, const Vec2& vMinTo, const Vec2& vMaxTo, const boost::shared_ptr<Texture> spTargetTexture, const boost::shared_ptr<Shader> spShader)
+	void TextureUpdateHelper::updateRegion(const std::shared_ptr<Texture> spInputTexture, const Vec2& vMinTo, const Vec2& vMaxTo, const std::shared_ptr<Texture> spTargetTexture, const std::shared_ptr<Shader> spShader)
 	{
 		updateRegion(Vec2(0.0f, 0.0f), Vec2(1.0f, 1.0f), spInputTexture, vMinTo, vMaxTo, spTargetTexture, spShader);
 	}
 
-	void TextureUpdateHelper::updateRegion(const Vec2& vMinFrom, const Vec2& vMaxFrom, const boost::shared_ptr<Texture> spInputTexture, const Vec2& vMinTo, const Vec2& vMaxTo, const boost::shared_ptr<Texture> spTargetTexture, const boost::shared_ptr<Shader> spShader)
+	void TextureUpdateHelper::updateRegion(const Vec2& vMinFrom, const Vec2& vMaxFrom, const std::shared_ptr<Texture> spInputTexture, const Vec2& vMinTo, const Vec2& vMaxTo, const std::shared_ptr<Texture> spTargetTexture, const std::shared_ptr<Shader> spShader)
 	{
 		m_spFrameBuffer->bind(spTargetTexture); // TODO: View port size needs to be set
 		m_spRenderer->setViewportSize(Vec4(0, 0, spTargetTexture->getWidth(), spTargetTexture->getHeight()));
@@ -81,7 +81,7 @@ namespace baselib { namespace graphics {
 		spVL->add("position", 3, TYPE_FLOAT);
 		spVL->add("texcoord", 2, TYPE_FLOAT, true);
 
-		auto spVertexList = boost::shared_ptr<VertexList<VertexPosUV>>(new VertexList<VertexPosUV>(spVL));
+		auto spVertexList = std::shared_ptr<VertexList<VertexPosUV>>(new VertexList<VertexPosUV>(spVL));
 		spVertexList->addVertex(VertexPosUV(Vec3(0.0f, 0.0f, 0.0f), Vec2(0.0, 0.0)));
 		spVertexList->addVertex(VertexPosUV(Vec3(1.0f, 0.0f, 0.0f), Vec2(1.0, 0.0)));
 		spVertexList->addVertex(VertexPosUV(Vec3(1.0f, 1.0f, 0.0f), Vec2(1.0, 1.0)));

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <Graphics/Spatial.h>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 #include <boost/weak_ptr.hpp>
 #include <vector>
 
@@ -24,20 +24,20 @@ namespace baselib
 		{
 		public:
 			//! Creates a Node.
-			static boost::shared_ptr<Node> create();
+			static std::shared_ptr<Node> create();
 
 			//! Destructor.
 			virtual ~Node();
 
 			//! Add a child node.
-			void addChild(const boost::shared_ptr<Spatial>& spSpatial);
+			void addChild(const std::shared_ptr<Spatial>& spSpatial);
 			//! Removes a child node.
-			void removeChild(const boost::shared_ptr<Spatial>& spSpatial);
+			void removeChild(const std::shared_ptr<Spatial>& spSpatial);
 			//! Remove all children nodes.
 			void removeAllChildren();
 
 			//! Apply f to this node and all its children.
-			virtual void traverse(const boost::function<void(const boost::shared_ptr<Spatial>&)>& f);
+			virtual void traverse(const boost::function<void(const std::shared_ptr<Spatial>&)>& f);
 
 		protected:
 			//! Protected constructor - must be created by static create().
@@ -47,7 +47,7 @@ namespace baselib
 			//! Recursively update children Nodes.
 			virtual void onUpdate(const Mat4& mParent);
 
-			std::vector<boost::shared_ptr<Spatial>> m_aChildren; //!< List of children Nodes.
+			std::vector<std::shared_ptr<Spatial>> m_aChildren; //!< List of children Nodes.
 		};
 	}
 }

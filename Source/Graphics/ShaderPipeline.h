@@ -2,8 +2,7 @@
 
 #include <string>
 #include <vector>
-#include <boost/shared_ptr.hpp>
-#include <boost/enable_shared_from_this.hpp>
+#include <memory>
 
 namespace baselib 
 {
@@ -23,17 +22,17 @@ namespace baselib
 		 *  Shader instances created from the same pipeline share the same ID
 		 *  but have different uniforms, textures etc.
 		 */
-		class ShaderPipeline : public boost::enable_shared_from_this<ShaderPipeline>
+		class ShaderPipeline : public std::enable_shared_from_this<ShaderPipeline>
 		{
 		public:
 			//! Creates and links a shader pipeline with the given shader objects.
-			static boost::shared_ptr<ShaderPipeline> create(const std::string& sName, const std::vector<boost::shared_ptr<ShaderObject>>& aspShaderObjects);
+			static std::shared_ptr<ShaderPipeline> create(const std::string& sName, const std::vector<std::shared_ptr<ShaderObject>>& aspShaderObjects);
 
 			//! Destructor.
 			virtual ~ShaderPipeline();
 
 			//! Create a Shader instance based on this pipeline.
-			boost::shared_ptr<Shader> createInstance();
+			std::shared_ptr<Shader> createInstance();
 
 			//! Get pipeline name.
 			std::string getName() const { return m_sName; }
@@ -42,12 +41,12 @@ namespace baselib
 
 		protected:
 			//! Protected constructors - must be created by static create().
-			ShaderPipeline(const std::string& sName, unsigned int uID, const std::vector<boost::shared_ptr<ShaderObject>>& aspShaderObjects);
+			ShaderPipeline(const std::string& sName, unsigned int uID, const std::vector<std::shared_ptr<ShaderObject>>& aspShaderObjects);
 
 		private:
 			std::string m_sName;  //!< Pipeline name.
 			unsigned int m_uID;	  //!< Shader pipeline ID.
-			std::vector<boost::shared_ptr<ShaderObject>> m_aspShaderObjects; //!< The shader objects used to create this pipeline. Only used for debugging.
+			std::vector<std::shared_ptr<ShaderObject>> m_aspShaderObjects; //!< The shader objects used to create this pipeline. Only used for debugging.
 
 		};
 	}

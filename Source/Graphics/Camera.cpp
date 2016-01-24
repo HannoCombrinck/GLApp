@@ -5,9 +5,9 @@
 
 namespace baselib { namespace graphics {
 
-	boost::shared_ptr<Camera> Camera::create()
+	std::shared_ptr<Camera> Camera::create()
 	{
-		return boost::shared_ptr<Camera>(new Camera());
+		return std::shared_ptr<Camera>(new Camera());
 	}
 
 	Camera::Camera()

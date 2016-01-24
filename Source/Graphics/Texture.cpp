@@ -2,7 +2,7 @@
 
 #include <Graphics/Image.h>
 #include <Logging/Log.h>
-#include <Helpers/ResourceCache.h>
+#include <Core/ResourceCache.h>
 #include <GL/glew.h>
 
 // GL_MAX_TEXTURE_SIZE
@@ -17,7 +17,7 @@ namespace baselib { namespace graphics {
 		ResourceCache<Texture> m_TextureCache;
 	}
 
-	boost::shared_ptr<Texture> Texture::load(const fs::path& fsPath)
+	std::shared_ptr<Texture> Texture::load(const fs::path& fsPath)
 	{
 		// Check if image file exists
 		if (!fs::exists(fsPath))
@@ -42,7 +42,7 @@ namespace baselib { namespace graphics {
 		return spTexture;
 	}
 
-	boost::shared_ptr<Texture> Texture::create(const boost::shared_ptr<Image>& spImage)
+	std::shared_ptr<Texture> Texture::create(const std::shared_ptr<Image>& spImage)
 	{
 		glActiveTexture(GL_TEXTURE0);
 
@@ -88,10 +88,10 @@ namespace baselib { namespace graphics {
 		glGetFloatv(GL_MAX_TEXTURE_MAX_ANISOTROPY_EXT, &fAnisotropicMax);
 		glTexParameterf(GL_TEXTURE_2D, GL_TEXTURE_MAX_ANISOTROPY_EXT, fAnisotropicMax);
 
-		return boost::shared_ptr<Texture>(new Texture(uID, Texture::TEXTURE_2D, spImage->getWidth(), spImage->getHeight(), spImage->getBPP()));
+		return std::shared_ptr<Texture>(new Texture(uID, Texture::TEXTURE_2D, spImage->getWidth(), spImage->getHeight(), spImage->getBPP()));
 	}
 
-	boost::shared_ptr<Texture> Texture::createRenderTarget(const boost::shared_ptr<Image>& spImage)
+	std::shared_ptr<Texture> Texture::createRenderTarget(const std::shared_ptr<Image>& spImage)
 	{
 		glActiveTexture(GL_TEXTURE0);
 
@@ -125,7 +125,7 @@ namespace baselib { namespace graphics {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 
-		return boost::shared_ptr<Texture>(new Texture(uID, Texture::TEXTURE_2D, spImage->getWidth(), spImage->getHeight(), spImage->getBPP()));
+		return std::shared_ptr<Texture>(new Texture(uID, Texture::TEXTURE_2D, spImage->getWidth(), spImage->getHeight(), spImage->getBPP()));
 	}
 
 	Texture::Texture(unsigned int uID, TextureType eType, int iWidth, int iHeight, int iBPP)

@@ -6,9 +6,9 @@
 
 namespace baselib { namespace graphics {
 
-	boost::shared_ptr<Renderer> Renderer::create(int iWidth, int iHeight)
+	std::shared_ptr<Renderer> Renderer::create(int iWidth, int iHeight)
 	{
-		return boost::shared_ptr<Renderer>(new Renderer(iWidth, iHeight));
+		return std::shared_ptr<Renderer>(new Renderer(iWidth, iHeight));
 	}
 
 	Renderer::Renderer(int iWidth, int iHeight)
