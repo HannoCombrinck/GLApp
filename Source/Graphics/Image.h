@@ -3,6 +3,8 @@
 #include <memory>
 #include <boost/filesystem.hpp>
 
+#include <Core/Resource.h>
+
 namespace fs = boost::filesystem;
 
 namespace baselib 
@@ -12,7 +14,7 @@ namespace baselib
 		/*! @brief TODO
 		 *
 		 */
-		class Image
+		class Image : public Resource
 		{
 		public:
 			//! Load an image from file
