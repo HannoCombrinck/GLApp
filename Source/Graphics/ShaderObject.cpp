@@ -2,7 +2,6 @@
 
 #include <GL/glew.h>
 #include <Logging/Log.h>
-#include <Core/ResourceCache.h>
 #include <boost/filesystem/fstream.hpp>
 #include <boost/range/algorithm/for_each.hpp>
 #include <boost/unordered_map.hpp>
@@ -12,8 +11,6 @@ namespace baselib { namespace graphics {
 
 	namespace
 	{
-		ResourceCache<ShaderObject> m_ShaderCache;
-
 		boost::unordered_map<ShaderObject::ShaderType, std::pair<std::string, unsigned int>> aShaderTypeMap = boost::assign::map_list_of
 			(ShaderObject::VERTEX_SHADER,		   std::make_pair("vertex",					 GL_VERTEX_SHADER))
 			(ShaderObject::TESS_CONTROL_SHADER,    std::make_pair("tessellation control",	 GL_TESS_CONTROL_SHADER))
@@ -63,17 +60,10 @@ namespace baselib { namespace graphics {
 			assert(false);
 		}
 
-		// Get canonical path
-		std::string sCanonicalPath = fs::canonical(fsPath).string();
-
-		// Check shader cache
-		if (auto sp = m_ShaderCache.get(sCanonicalPath))
-			return sp;
-
 		// Check if file has an extension
 		if (!fsPath.has_extension())
 		{
-			LOG_ERROR << "Shader source file " << sCanonicalPath << " does not have an extension";
+			LOG_ERROR << "Shader source file " << fsPath.string() << " does not have an extension";
 			assert(false);
 		}
 
@@ -89,13 +79,10 @@ namespace baselib { namespace graphics {
 		}
 
 		// Load the shader source from file and create the shader object
-		LOG_INFO << "Loading: " << sCanonicalPath;
-		std::string sSource = loadSourceFromFile(sCanonicalPath);
+		LOG_INFO << "Loading: " << fsPath.string();
+		std::string sSource = loadSourceFromFile(fsPath.string());
 		auto spShaderObject = ShaderObject::create(sSource, eType);
 		spShaderObject->setName(fsPath.string());
-
-		// Cache the shader object
-		m_ShaderCache.add(sCanonicalPath, spShaderObject);
 
 		return spShaderObject;
 	}

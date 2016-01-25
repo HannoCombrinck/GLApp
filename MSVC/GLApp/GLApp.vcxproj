@@ -80,7 +80,6 @@
   <ItemGroup>
     <ClCompile Include="..\..\Source\Core\AppBase.cpp" />
     <ClCompile Include="..\..\Source\Core\NullPtr.cpp" />
-    <ClCompile Include="..\..\Source\Core\ResourceLoader.cpp" />
     <ClCompile Include="..\..\Source\Core\Timer.cpp" />
     <ClCompile Include="..\..\Source\Font\Font.cpp" />
     <ClCompile Include="..\..\Source\Font\FontLoader.cpp" />
@@ -119,7 +118,8 @@
   <ItemGroup>
     <ClInclude Include="..\..\Source\Core\AppBase.h" />
     <ClInclude Include="..\..\Source\Core\NullPtr.h" />
-    <ClInclude Include="..\..\Source\Core\ResourceCache.h" />
+    <ClInclude Include="..\..\Source\Core\Resource.h" />
+    <ClInclude Include="..\..\Source\Core\ObjectCache.h" />
     <ClInclude Include="..\..\Source\Core\ResourceLoader.h" />
     <ClInclude Include="..\..\Source\Core\Timer.h" />
     <ClInclude Include="..\..\Source\Font\Font.h" />

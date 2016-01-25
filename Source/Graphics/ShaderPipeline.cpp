@@ -2,7 +2,7 @@
 
 #include <GL/glew.h>
 #include <Logging/Log.h>
-#include <Core/ResourceCache.h>
+#include <Core/ObjectCache.h>
 #include <Graphics/Shader.h>
 #include <Graphics/ShaderObject.h>
 #include <boost/range/algorithm/for_each.hpp>
@@ -11,7 +11,7 @@ namespace baselib { namespace graphics {
 
 	namespace
 	{
-		ResourceCache<ShaderPipeline> m_ShaderPipelineCache;
+		ObjectCache<ShaderPipeline> m_ShaderPipelineCache;
 
 		// Check for valid shader object combinations.
 		bool isValidPipeline(const std::vector<std::shared_ptr<ShaderObject>>& aspShaderObjects)

@@ -2,7 +2,6 @@
 
 #include <Graphics/Image.h>
 #include <Logging/Log.h>
-#include <Core/ResourceCache.h>
 #include <GL/glew.h>
 
 // GL_MAX_TEXTURE_SIZE
@@ -11,11 +10,6 @@ namespace baselib { namespace graphics {
 
 	unsigned int Texture::m_uCurrentlyBound = ~0;
 	unsigned int Texture::m_uActiveUnit = ~0;
-
-	namespace
-	{
-		ResourceCache<Texture> m_TextureCache;
-	}
 
 	std::shared_ptr<Texture> Texture::load(const fs::path& fsPath)
 	{
@@ -26,18 +20,8 @@ namespace baselib { namespace graphics {
 			assert(false);
 		}
 
-		// Get canonical path
-		std::string sCanonicalPath = fs::canonical(fsPath).string();
-
-		// Check texture cache
-		if (auto sp = m_TextureCache.get(sCanonicalPath))
-			return sp;
-
 		auto spImage = Image::load(fsPath);
 		auto spTexture = Texture::create(spImage);
-
-		// Add to texture cache
-		m_TextureCache.add(sCanonicalPath, spTexture);
 
 		return spTexture;
 	}

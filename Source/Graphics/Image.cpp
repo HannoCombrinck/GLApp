@@ -1,7 +1,6 @@
 #include "Image.h"
 
 #include <Logging/Log.h>
-#include <Core/ResourceCache.h>
 
 namespace
 {
@@ -12,8 +11,6 @@ namespace baselib { namespace graphics {
 
 	namespace
 	{
-		ResourceCache<Image> m_ImageCache;
-
 		void flipY(unsigned char* pData, int iX, int iY, int iBytesPerPixel)
 		{
 			int iRowSize = iX * iBytesPerPixel;
@@ -43,25 +40,15 @@ namespace baselib { namespace graphics {
 
 		LOG_INFO << "Loading: " << fs::canonical(fsPath);
 
-		// Get canonical path
-		std::string sCanonicalPath = fs::canonical(fsPath).string();
-
-		// Check image cache
-		if (auto sp = m_ImageCache.get(sCanonicalPath))
-			return sp;
-
 		// Load the image using stblib
 		int iX = 0;
 		int iY = 0;
 		int iChannels = 0;
-		unsigned char* pData = stbi_load(sCanonicalPath.c_str(), &iX, &iY, &iChannels, 0);
+		unsigned char* pData = stbi_load(fsPath.string().c_str(), &iX, &iY, &iChannels, 0);
 		int iBPP = iChannels*8; // Assume 8 bits per pixel.
 		flipY(pData, iX, iY, iChannels);
 
-		// Create image object and add to cache
-		auto spImage = Image::create(iX, iY, iBPP, pData);
-		m_ImageCache.add(sCanonicalPath, spImage);
-		return spImage;
+		return Image::create(iX, iY, iBPP, pData);
 	}
 
 	std::shared_ptr<Image> Image::create(int iWidth, int iHeight, int iBPP, unsigned char* pData )

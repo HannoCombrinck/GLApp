@@ -139,9 +139,6 @@
     <ClCompile Include="..\..\Source\Core\AppBase.cpp">
       <Filter>Header/Source Files\Core</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Core\ResourceLoader.cpp">
-      <Filter>Header/Source Files\Core</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Core\NullPtr.cpp">
       <Filter>Header/Source Files\Core</Filter>
     </ClCompile>
@@ -267,14 +264,17 @@
     <ClInclude Include="..\..\Source\Core\NullPtr.h">
       <Filter>Header/Source Files\Core</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Core\ResourceCache.h">
-      <Filter>Header/Source Files\Core</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\TestApps\DeferredRenderingApp.h">
       <Filter>Header/Source Files\TestApps</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\TestApps\BaseApp.h">
       <Filter>Header/Source Files\TestApps</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Core\Resource.h">
+      <Filter>Header/Source Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Core\ObjectCache.h">
+      <Filter>Header/Source Files\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

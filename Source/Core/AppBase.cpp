@@ -56,7 +56,7 @@ namespace baselib {
 	{
 		LOG_VERBOSE << "AppBase init";
 
-		m_spResourceLoader = std::shared_ptr<ResourceLoader>(new ResourceLoader());
+		m_spResourceLoader = ResourceLoader::create();
 
 		// Create test renderer
 		m_spRenderer = Renderer::create(iWidth, iHeight);

@@ -2,6 +2,9 @@
 
 #include <string>
 #include <memory>
+
+#include <Core/Resource.h>
+
 #include <boost/filesystem.hpp>
 
 namespace fs = boost::filesystem;
@@ -13,7 +16,7 @@ namespace baselib
 		/*! @brief A ShaderObject represents a single programmable stage in a render pipeline.
 		 *
 		 */
-		class ShaderObject
+		class ShaderObject : public Resource
 		{
 		public:
 			//! All possible types of shader objects
