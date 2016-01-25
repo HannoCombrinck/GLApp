@@ -2,7 +2,11 @@
 
 #include <Logging/Log.h>
 
+#include <Core/ResourceLoader.h>
 #include <Core/NullPtr.h>
+#include <boost/filesystem.hpp>
+
+namespace fs = boost::filesystem;
 
 using namespace baselib;
 
@@ -22,6 +26,7 @@ namespace tetris {
 	{
 		LOG_INFO << "Tetris init";
 		// Load assets here
+		
 	}
 
 	void Tetris::onAppUpdate(double dDeltaTime)

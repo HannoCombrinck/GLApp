@@ -2,7 +2,9 @@
 
 #include <Logging/Log.h>
 
-#include <Graphics/Node.h>
+#include <Graphics/Texture.h>
+#include <Graphics/Image.h>
+#include <Graphics/ShaderObject.h>
 
 #include <Core/NullPtr.h>
 
@@ -16,11 +18,6 @@ namespace baselib {
 	ResourceLoader::~ResourceLoader()
 	{
 		LOG_VERBOSE << "ResourceLoader destructor";
-	}
-
-	std::shared_ptr<graphics::Node> ResourceLoader::getModel(const std::string& sFilename) 
-	{ 
-		return null_ptr; 
 	}
 
 }
