@@ -16,54 +16,58 @@ namespace baselib
 {
 	namespace graphics
 	{
-		/*! @brief TODO
+		/*! @brief ImageData represents a 2D block of pixels stored in the given format
 		 *
 		 */
 		class ImageData : public Resource
 		{
 		public:
 
-			enum ImageFormat
+			//! Pixel data format
+			enum PixelFormat
 			{
-				G8,
-				G16,
-				G32,
-				RGB8,
-				RGBA8,
-				RGBA16F,
-				RGBA32F,
-				DXT1,
-				DXT3,
-				DXT5,
-				UNDEFINED
+				G8,			// Grayscale - 8 bits per pixel
+				G16F,		// Grayscale - 16 bits per pixel, floating point format
+				G32F,		// Grayscale - 32 bits per pixel, floating point format 
+				RGB8,		// RGB - 8 bits per channel, 24 bits per pixel
+				RGBA8,		// RGBA - 8 bits per channel, 32 bits per pixel
+				RGBA16F,	// RGBA - 16 bits per channel, 64 bits per pixel, floating point format
+				RGBA32F,	// RGBA - 32 bits per channel, 128 bits per pixel, floating point format
+				DXT1,		// RGB - hardware compression, 6:1 ratio no alpha
+				DXT3,		// RGBA - hardware compression, 4:1 ratio with explicit alpha
+				DXT5,		// RGBA - hardware compression, 4:1 ratio with interpolated alpha
+				UNDEFINED	// Undefined format
 			};
 	
 			//! Load image data from file
 			static std::shared_ptr<ImageData> load(const fs::path& fsPath);
 
 			//! Create an image object
-			static std::shared_ptr<ImageData> create(int iWidth, int iHeight, ImageFormat eFormat, unsigned char* pData);
+			static std::shared_ptr<ImageData> create(unsigned int uWidth, unsigned int uHeight, PixelFormat eFormat, unsigned char* pData);
 
 			//! Destructor.
 			virtual ~ImageData();
 
 			//! Get image width.
-			int getWidth() const { return m_iWidth; }
+			unsigned int getWidth() const { return m_uWidth; }
 			//! Get image height.
-			int getHeight() const { return m_iHeight; }
+			unsigned int getHeight() const { return m_uHeight; }
 			//! Get image depth.
-			ImageFormat getFormat() const { return m_eFormat; }
+			PixelFormat getFormat() const { return m_eFormat; }
 			//! Get image data.
 			unsigned char* getData() { return m_pData; }
+
+			//! Resource type override
+			virtual std::string getResourceType() const { return "ImageData"; }
 		
 		protected:
 			//! Protected constructor - must be constructed by static Create().
-			ImageData(int iWidth, int iHeight, ImageFormat eFormat, unsigned char* pData);
+			ImageData(unsigned int uWidth, unsigned int uHeight, PixelFormat eFormat, unsigned char* pData);
 
 		private:
-			int m_iWidth;			//!< Width of the image.
-			int m_iHeight;			//!< Height of the image.
-			ImageFormat m_eFormat;	//!< Pixel format.
+			unsigned int m_uWidth;	//!< Width of the image.
+			unsigned int m_uHeight;	//!< Height of the image.
+			PixelFormat m_eFormat;	//!< Pixel format.
 			unsigned char* m_pData; //!< Raw image data.
 
 		};

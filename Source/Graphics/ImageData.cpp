@@ -45,21 +45,21 @@ namespace baselib { namespace graphics {
 		int iY = 0;
 		int iChannels = 0;
 		unsigned char* pData = 0;//stbi_load(fsPath.string().c_str(), &iX, &iY, &iChannels, 0);
-		ImageFormat eFormat = RGBA8; // TODO: Get correct format - for now assume RGBA8
+		PixelFormat eFormat = RGBA8; // TODO: Get correct format - for now assume RGBA8
 		flipY(pData, iX, iY, iChannels);
 
 		return ImageData::create(iX, iY, eFormat, pData);
 	}
 
-	std::shared_ptr<ImageData> ImageData::create(int iWidth, int iHeight, ImageFormat eFormat, unsigned char* pData)
+	std::shared_ptr<ImageData> ImageData::create(unsigned int uWidth, unsigned int uHeight, PixelFormat eFormat, unsigned char* pData)
 	{
-		auto spImage = std::shared_ptr<ImageData>(new ImageData(iWidth, iHeight, eFormat, pData));
+		auto spImage = std::shared_ptr<ImageData>(new ImageData(uWidth, uHeight, eFormat, pData));
 		return spImage;
 	}
 
-	ImageData::ImageData(int iWidth, int iHeight, ImageFormat eFormat, unsigned char* pData)
-		: m_iWidth(iWidth)
-		, m_iHeight(iHeight)
+	ImageData::ImageData(unsigned int uWidth, unsigned int uHeight, PixelFormat eFormat, unsigned char* pData)
+		: m_uWidth(uWidth)
+		, m_uHeight(uHeight)
 		, m_eFormat(eFormat)
 		, m_pData(pData)
 	{

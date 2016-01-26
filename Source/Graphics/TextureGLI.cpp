@@ -19,18 +19,15 @@ namespace baselib { namespace graphics {
 
 		// TODO
 
-		auto spTexture = std::shared_ptr<TextureGLI>(new TextureGLI(0, TEXTURE_2D, 0, 0, 0));
+		auto spTexture = std::shared_ptr<TextureGLI>(new TextureGLI(0, TEXTURE_2D));
 		return spTexture;
 	}
 
 	//std::shared_ptr<TextureGLI> TextureGLI::create()
 	
-	TextureGLI::TextureGLI(unsigned int uID, TextureType eType, int iWidth, int iHeight, int iBPP)
+	TextureGLI::TextureGLI(unsigned int uID, TextureType eType)
 		: m_uID(uID)
 		, m_eType(eType)
-		, m_iWidth(iWidth)
-		, m_iHeight(iHeight)
-		, m_iBPP(iBPP)
 	{
 		LOG_VERBOSE << "TextureGLI constructor";
 	}

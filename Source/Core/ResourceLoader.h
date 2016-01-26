@@ -12,7 +12,7 @@
 
 namespace baselib
 {
-	/*! @brief Resource loader does all loading and caching of resource i.e. textures, shaders, sounds etc.
+	/*! @brief Resource loader does all loading and caching of resources i.e. textures, shaders, sounds etc.
 	 *
 	 */
 	class ResourceLoader
@@ -39,7 +39,7 @@ namespace baselib
 		}
 
 	private:
-		//! Protected constructor - must be constructed by static Create().
+		//! Private constructor - must be constructed by static Create().
 		ResourceLoader() {}
 
 		ObjectCache<Resource> m_Cache;

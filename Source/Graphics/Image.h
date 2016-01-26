@@ -34,6 +34,9 @@ namespace baselib
 			int getBPP() const { return m_iBPP; }
 			//! Get image data.
 			unsigned char* getData() { return m_pData; }
+
+			//! Resource type override
+			virtual std::string getResourceType() const { return "Image"; }
 		
 		protected:
 			//! Protected constructor - must be constructed by static Create().

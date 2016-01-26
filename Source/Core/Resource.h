@@ -19,6 +19,9 @@ namespace baselib
 		//! Destructor.
 		virtual ~Resource() {}
 	
+		//! Get the resource type string
+		virtual std::string getResourceType() const = 0;
+
 		//! Set resource filename
 		void setFilename(const fs::path& phFilename) { m_phFilename = phFilename; }
 		//! Get resource filename

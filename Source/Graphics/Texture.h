@@ -54,8 +54,7 @@ namespace baselib
 
 			//! Get the texture object ID.
 			unsigned int getID() { return m_uID; }
-			//! Get the texture type. TODO: This should be an abstract function and implementations should return appropriate type - just returning TEXTURE_2D now for testing
-			//virtual TextureType getType() const = 0;
+			//! Get the texture type.
 			virtual TextureType getType() const { return TEXTURE_2D; }
 			//! Get texture width.
 			int getWidth() const { return m_iWidth; }

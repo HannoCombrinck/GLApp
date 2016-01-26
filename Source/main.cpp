@@ -6,9 +6,8 @@ using namespace tetris;
 int main(int arc, char** argv)
 {
 	Tetris t;
-	t.setSize(1024, 768);
+	t.setSize(512, 512);
 	t.setFullScreen(false);
-	t.setGLVersion(3, 2);
 	t.setWindowTitle("Tetris");
 	t.start();
 

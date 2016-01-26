@@ -52,6 +52,9 @@ namespace baselib
 			//! Get shader ID.
 			unsigned int getID() const { return m_uID; }
 
+			//! Resource type override
+			virtual std::string getResourceType() const { return "ShaderObject"; }
+
 		protected:
 			//! Protected constructor - must be created by static create().
 			ShaderObject(const std::string& sName, ShaderType eType, unsigned int iID, const std::string& sSource);
