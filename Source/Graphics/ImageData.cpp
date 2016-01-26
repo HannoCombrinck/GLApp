@@ -4,7 +4,7 @@
 
 namespace
 {
-	#include <stblib/stb_image.c>
+	//#include <stblib/stb_image.c>
 }
 
 namespace baselib { namespace graphics {
@@ -44,7 +44,7 @@ namespace baselib { namespace graphics {
 		int iX = 0;
 		int iY = 0;
 		int iChannels = 0;
-		unsigned char* pData = stbi_load(fsPath.string().c_str(), &iX, &iY, &iChannels, 0);
+		unsigned char* pData = 0;//stbi_load(fsPath.string().c_str(), &iX, &iY, &iChannels, 0);
 		ImageFormat eFormat = RGBA8; // TODO: Get correct format - for now assume RGBA8
 		flipY(pData, iX, iY, iChannels);
 
