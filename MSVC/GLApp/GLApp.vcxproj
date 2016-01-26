@@ -93,6 +93,7 @@
     <ClCompile Include="..\..\Source\Graphics\Helpers\ShaderHelpers.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Helpers\TextureUpdateHelper.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Image.cpp" />
+    <ClCompile Include="..\..\Source\Graphics\ImageData.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Material.cpp" />
     <ClCompile Include="..\..\Source\Graphics\ModelLoader.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Node.cpp" />
@@ -105,6 +106,7 @@
     <ClCompile Include="..\..\Source\Graphics\Spatial.cpp" />
     <ClCompile Include="..\..\Source\Graphics\StaticGeometry.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Texture.cpp" />
+    <ClCompile Include="..\..\Source\Graphics\TextureGLI.cpp" />
     <ClCompile Include="..\..\Source\Graphics\Visual.cpp" />
     <ClCompile Include="..\..\Source\Graphics\VisualCollector.cpp" />
     <ClCompile Include="..\..\Source\Logging\Log.cpp" />
@@ -135,6 +137,7 @@
     <ClInclude Include="..\..\Source\Graphics\Helpers\ShaderHelpers.h" />
     <ClInclude Include="..\..\Source\Graphics\Helpers\TextureUpdateHelper.h" />
     <ClInclude Include="..\..\Source\Graphics\Image.h" />
+    <ClInclude Include="..\..\Source\Graphics\ImageData.h" />
     <ClInclude Include="..\..\Source\Graphics\Material.h" />
     <ClInclude Include="..\..\Source\Graphics\ModelLoader.h" />
     <ClInclude Include="..\..\Source\Graphics\Node.h" />
@@ -147,6 +150,7 @@
     <ClInclude Include="..\..\Source\Graphics\Spatial.h" />
     <ClInclude Include="..\..\Source\Graphics\StaticGeometry.h" />
     <ClInclude Include="..\..\Source\Graphics\Texture.h" />
+    <ClInclude Include="..\..\Source\Graphics\TextureGLI.h" />
     <ClInclude Include="..\..\Source\Graphics\VertexList.h" />
     <ClInclude Include="..\..\Source\Graphics\Visual.h" />
     <ClInclude Include="..\..\Source\Graphics\VisualCollector.h" />

@@ -151,6 +151,12 @@
     <ClCompile Include="..\..\Source\TestApps\DeferredRenderingApp.cpp">
       <Filter>Header/Source Files\TestApps</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Graphics\TextureGLI.cpp">
+      <Filter>Header/Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Graphics\ImageData.cpp">
+      <Filter>Header/Source Files\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\GLFWApp\GLFWApp.h">
@@ -275,6 +281,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Core\ObjectCache.h">
       <Filter>Header/Source Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Graphics\TextureGLI.h">
+      <Filter>Header/Source Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Graphics\ImageData.h">
+      <Filter>Header/Source Files\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
