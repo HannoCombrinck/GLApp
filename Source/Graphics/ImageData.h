@@ -63,7 +63,7 @@ namespace baselib
 		private:
 			int m_iWidth;			//!< Width of the image.
 			int m_iHeight;			//!< Height of the image.
-			ImageFormat m_eFormat;			//!< Pixel format.
+			ImageFormat m_eFormat;	//!< Pixel format.
 			unsigned char* m_pData; //!< Raw image data.
 
 		};
