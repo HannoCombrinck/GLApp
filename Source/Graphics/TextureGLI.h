@@ -1,9 +1,18 @@
 ﻿#pragma once
 
 #include <memory>
+#include <vector>
 #include <boost/filesystem.hpp>
 
 namespace fs = boost::filesystem;
+
+namespace baselib 
+{
+	namespace graphics
+	{
+		class ImageData;
+	}
+}
 
 namespace baselib 
 {
@@ -46,6 +55,13 @@ namespace baselib
 			unsigned int getID() { return m_uID; }
 			//! Get the texture type.
 			virtual TextureType getType() const { return TEXTURE_2D; } // TODO
+
+			//! Get the number of array slices
+			unsigned int getNumArraySlices() const { return m_uArraySlices; }
+			//! Get the number of texture faces
+			unsigned int getNumFaces() const { return m_uFaces; }
+			//! Get the number of mipmap levels
+			unsigned int getNumMipMaps() const { return m_uMipLevels; }
 			
 
 		protected:
@@ -56,11 +72,14 @@ namespace baselib
 			static unsigned int m_uCurrentlyBound; //!< Currently bound texture.
 			static unsigned int m_uActiveUnit;	   //!< Active texture unit.
 
-			unsigned int m_uID;  //!< Texture object ID.
-			TextureType m_eType; //!< Texture type.
-			
-			// TODO: add ImageData arrays
+			unsigned int m_uID;				//!< Texture object ID.
+			TextureType m_eType;			//!< Texture type.
+			unsigned int m_uArraySlices;	//!< Number of slices in texture array.
+			unsigned int m_uFaces;			//!< Number of faces, for the sake of cubemaps.
+			unsigned int m_uMipLevels;		//!< Number of mipmap levels.
 
+			//! Texture images for all array slices, cube faces and mipmap levels
+			std::vector<std::vector<std::vector<std::shared_ptr<ImageData>>>> m_Images;
 		};
 	}
 }

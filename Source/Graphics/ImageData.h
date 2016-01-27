@@ -26,11 +26,13 @@ namespace baselib
 			//! Pixel data format
 			enum PixelFormat
 			{
-				G8,			// Grayscale - 8 bits per pixel
+				G8,			// Grayscale - 8 bits per pixel, unsigned normalized integer format
 				G16F,		// Grayscale - 16 bits per pixel, floating point format
 				G32F,		// Grayscale - 32 bits per pixel, floating point format 
-				RGB8,		// RGB - 8 bits per channel, 24 bits per pixel
-				RGBA8,		// RGBA - 8 bits per channel, 32 bits per pixel
+				RGB8,		// RGB - 8 bits per channel, 24 bits per pixel, unsigned normalized integer format
+				SRGB8,		// Same format as RGB but in sRGB colour space
+				RGBA8,		// RGBA - 8 bits per channel, 32 bits per pixel, unsigned normalized integer format
+				SRGBA8,		// Same format as RGBA but in sRGB colour space
 				RGBA16F,	// RGBA - 16 bits per channel, 64 bits per pixel, floating point format
 				RGBA32F,	// RGBA - 32 bits per channel, 128 bits per pixel, floating point format
 				DXT1,		// RGB - hardware compression, 6:1 ratio no alpha
