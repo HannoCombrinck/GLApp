@@ -6,6 +6,8 @@
 #include <Core/NullPtr.h>
 #include <boost/filesystem.hpp>
 
+#include <Graphics/TextureGLI.h>
+
 namespace fs = boost::filesystem;
 
 using namespace baselib;
@@ -26,7 +28,9 @@ namespace tetris {
 	{
 		LOG_INFO << "Tetris init";
 		// Load assets here
-		
+
+		// Test dds texture load
+		auto spTex = graphics::TextureGLI::load("../Data/Textures/test.dds");
 	}
 
 	void Tetris::onAppUpdate(double dDeltaTime)

@@ -36,8 +36,11 @@ namespace baselib
 				TEXTURE_1D_ARRAY,
 				TEXTURE_2D_ARRAY,
 				TEXTURE_CUBE_MAP_ARRAY,
-				TEXTURE_2D_MULTISAMPLE
+				TEXTURE_2D_MULTISAMPLE,
+				TEXTURE_UNDEFINED
 			};
+
+			typedef std::vector<std::vector<std::vector<std::shared_ptr<ImageData>>>> image_data_vec;
 
 			//! Loads a texture object from file.
 			static std::shared_ptr<TextureGLI> load(const fs::path& fsPath);
@@ -54,7 +57,7 @@ namespace baselib
 			//! Get the texture object ID.
 			unsigned int getID() { return m_uID; }
 			//! Get the texture type.
-			virtual TextureType getType() const { return TEXTURE_2D; } // TODO
+			virtual TextureType getType() const { return m_eType; }
 
 			//! Get the number of array slices
 			unsigned int getNumArraySlices() const { return m_uArraySlices; }
@@ -63,10 +66,14 @@ namespace baselib
 			//! Get the number of mipmap levels
 			unsigned int getNumMipMaps() const { return m_uMipLevels; }
 			
+			//! Get the image data vector
+			const image_data_vec& getImageData() const { return m_aImages; }
+			//! Modify the image data vector
+			image_data_vec& modifyImageData() { return m_aImages; }
 
 		protected:
 			//! Protected constructor - must be constructed by static Create().
-			TextureGLI(unsigned int uID, TextureType eType);
+			TextureGLI(unsigned int uID, TextureType eType, unsigned int uArraySlices, unsigned int uFaces, unsigned int uMipLevels);
 
 		private:
 			static unsigned int m_uCurrentlyBound; //!< Currently bound texture.
@@ -75,11 +82,10 @@ namespace baselib
 			unsigned int m_uID;				//!< Texture object ID.
 			TextureType m_eType;			//!< Texture type.
 			unsigned int m_uArraySlices;	//!< Number of slices in texture array.
-			unsigned int m_uFaces;			//!< Number of faces, for the sake of cubemaps.
+			unsigned int m_uFaces;			//!< Number of faces, for the sake of cube maps.
 			unsigned int m_uMipLevels;		//!< Number of mipmap levels.
 
-			//! Texture images for all array slices, cube faces and mipmap levels
-			std::vector<std::vector<std::vector<std::shared_ptr<ImageData>>>> m_Images;
+			image_data_vec m_aImages;		//!< Texture images for all array slices, cube faces and mipmap levels
 		};
 	}
 }
