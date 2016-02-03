@@ -4,6 +4,8 @@
 #include <vector>
 #include <boost/filesystem.hpp>
 
+#include <Core/Resource.h>
+
 namespace fs = boost::filesystem;
 
 namespace baselib 
@@ -21,7 +23,7 @@ namespace baselib
 		/*! @brief TODO
 		 *
 		 */
-		class TextureGLI
+		class TextureGLI : public Resource
 		{
 		public:
 			//! All possible texture types.
@@ -70,6 +72,9 @@ namespace baselib
 			const image_data_vec& getImageData() const { return m_aImages; }
 			//! Modify the image data vector
 			image_data_vec& modifyImageData() { return m_aImages; }
+
+			//! Resource type override
+			virtual std::string getResourceType() const { return "Texture"; }
 
 		protected:
 			//! Protected constructor - must be constructed by static Create().
