@@ -13,6 +13,7 @@ namespace tetris
 
 	private:
 		void onAppInit() override;
+		void onAppDestroy() override;
 		void onAppUpdate(double dDeltaTime) override;
 
 	};

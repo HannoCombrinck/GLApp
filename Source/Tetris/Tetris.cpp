@@ -33,6 +33,11 @@ namespace tetris {
 		auto spTex = graphics::TextureGLI::load("../Data/Textures/test.dds");
 	}
 
+	void Tetris::onAppDestroy()
+	{
+		LOG_INFO << "Tetris destroy";
+	}
+
 	void Tetris::onAppUpdate(double dDeltaTime)
 	{
 		auto dt = dDeltaTime;

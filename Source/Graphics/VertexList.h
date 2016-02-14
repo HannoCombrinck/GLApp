@@ -42,7 +42,7 @@ namespace baselib
 			}
 
 			std::string sName;			//!< Vertex attribute name.
-			int iIndex;					//!< Index of the vertex attribute (as defined in shader via layout qualifier.
+			int iIndex;					//!< Index of the vertex attribute (as defined in shader via layout qualifier).
 			int iNumElements;			//!< The number of elements that make up the vertex attribute
 			VertexAttributeType eType;	//!< The type of the attribute elements.
 			int iOffset;				//!< Offset of the attribute in bytes.
