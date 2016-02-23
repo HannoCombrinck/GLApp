@@ -97,6 +97,9 @@ namespace baselib
 		//! Window close event callback.
 		void windowClose();
 		boost::signals2::scoped_connection m_WindowCloseConnection;
+		//! File drop event callback.
+		void fileDrop(const std::vector<std::string>& asPaths);
+		boost::signals2::scoped_connection m_FileDropConnection;
 
 		//! Called after window and OpenGL context creation to allow for derived app resrouce creation
 		virtual void onInit(int iWidth, int iHeight) {}
@@ -143,6 +146,8 @@ namespace baselib
 		virtual void onWindowClose() {}
 		//! Called when window is refreshed.
 		virtual void onWindowRefresh() {}
+		//! Called when file(s) are dropped on window from explorer.
+		virtual void onFileDrop(const std::vector<std::string>& asPaths) {}
 
 		bool m_bAppRunning;			 //!< While true the main update loop will execute. When set to false the main loop terminates and the app closes.
 		GLFWwindow* m_pWindow;		 //!< The GLFW window.

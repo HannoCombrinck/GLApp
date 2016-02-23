@@ -54,6 +54,7 @@ namespace baselib {
 		boost::signals2::signal<void (int iWidth, int iHeight)> WindowFrameBufferResizeSignal;
 		boost::signals2::signal<void ()> WindowRefreshSignal;
 		boost::signals2::signal<void ()> WindowCloseSignal;
+		boost::signals2::signal<void (const std::vector<std::string>& aPaths)> FileDropSignal;
 
 		void keyEventCallback(GLFWwindow* pWindow, int iKey, int iScancode, int iAction, int iMods)
 		{
@@ -101,6 +102,15 @@ namespace baselib {
 		void windowCloseCallback(GLFWwindow* pWindow)
 		{
 			WindowCloseSignal();
+		}
+
+		void fileDropCallback(GLFWwindow* pWindow, int iNumFiles, const char** aPaths)
+		{
+			std::vector<std::string> asPaths;
+			for (int i = 0; i < iNumFiles; ++i)
+				asPaths.push_back(aPaths[i]);
+
+			FileDropSignal(asPaths);
 		}
 	}
 
@@ -162,6 +172,8 @@ namespace baselib {
 		m_WindowRefreshConnection = WindowRefreshSignal.connect(boost::bind(&GLFWApp::windowRefresh, this));
 		glfwSetWindowCloseCallback(m_pWindow, windowCloseCallback);
 		m_WindowCloseConnection = WindowCloseSignal.connect(boost::bind(&GLFWApp::windowClose, this));
+		glfwSetDropCallback(m_pWindow, fileDropCallback);
+		m_FileDropConnection = FileDropSignal.connect(boost::bind(&GLFWApp::fileDrop, this, _1));
 
 		// Successfully created window and context
 		setAppRunning(true);
@@ -311,6 +323,11 @@ namespace baselib {
 	void GLFWApp::windowClose()
 	{
 		onWindowClose();
+	}
+
+	void GLFWApp::fileDrop(const std::vector<std::string>& asPaths)
+	{
+		onFileDrop(asPaths);
 	}
 
 	void GLFWApp::swapBuffers()

@@ -1,14 +1,13 @@
-#include <Tetris/Tetris.h>
+#include <ModelViewer/ModelViewer.h>
 
 using namespace std;
-using namespace tetris;
 
 int main(int arc, char** argv)
 {
-	Tetris t;
+	ModelViewer t;
 	t.setSize(512, 512);
 	t.setFullScreen(false);
-	t.setWindowTitle("Tetris");
+	t.setWindowTitle("ModelViewer");
 	t.start();
 
 	return 0;

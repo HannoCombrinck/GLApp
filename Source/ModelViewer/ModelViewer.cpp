@@ -34,3 +34,17 @@ void ModelViewer::onAppUpdate(double dDeltaTime)
 {
 	auto dt = dDeltaTime;
 }
+
+void ModelViewer::onKeyPress( int iKey )
+{
+	LOG_INFO << iKey;
+}
+
+void ModelViewer::onFileDrop(const std::vector<std::string>& asPaths)
+{
+	LOG_INFO << "Files dropped on window:";
+	for (auto i = asPaths.begin(); i != asPaths.end(); ++i)
+	{
+		LOG_INFO << "\t" << (*i);
+	}
+}
