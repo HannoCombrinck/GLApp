@@ -41,6 +41,9 @@
     <Filter Include="Header/Source Files\TestApps">
       <UniqueIdentifier>{716eddca-b7e2-4d49-a4a3-d128a47529e0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header/Source Files\ModelViewer">
+      <UniqueIdentifier>{1307d0c5-247d-4e7a-bebc-1ceab3b554ca}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\main.cpp">
@@ -156,6 +159,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Graphics\ImageData.cpp">
       <Filter>Header/Source Files\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\ModelViewer\ModelViewer.cpp">
+      <Filter>Header/Source Files\ModelViewer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -287,6 +293,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Graphics\ImageData.h">
       <Filter>Header/Source Files\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ModelViewer\ModelViewer.h">
+      <Filter>Header/Source Files\ModelViewer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
