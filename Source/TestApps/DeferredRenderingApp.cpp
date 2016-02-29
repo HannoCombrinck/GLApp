@@ -98,7 +98,7 @@ namespace baselib {
 		auto spTestModel = spModelLoader->load("../Data/Models/sponza/sponza.fbx");
 
 		// Create quad geometry
-		m_spQuadGeometry = createQuadGeometry();
+		m_spQuadGeometry = createQuad();
 
 		// Load scene with sphere
 		auto spUnitSphere = spModelLoader->load("../Data/Models/UnitSphere.fbx");

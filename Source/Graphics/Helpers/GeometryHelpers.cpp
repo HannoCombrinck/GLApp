@@ -15,9 +15,17 @@ namespace baselib { namespace graphics {
 			Vec3 vPos;
 			Vec2 vUV;
 		};
+
+		struct VertexPos
+		{
+			VertexPos(const Vec3& _vPos)
+				: vPos(_vPos) {}
+
+			Vec3 vPos;
+		};
 	}
 
-	std::shared_ptr<StaticGeometry> createQuadGeometry()
+	std::shared_ptr<StaticGeometry> createQuad()
 	{
 		auto spVL = VertexLayout::create();
 		spVL->add("position", 3, TYPE_FLOAT);
@@ -36,6 +44,49 @@ namespace baselib { namespace graphics {
 		spVertexList->addIndex(3);
 
 		return StaticGeometry::create(spVertexList, Geometry::TRIANGLES);
+	}
+
+	std::shared_ptr<StaticGeometry> createGrid(int iLines, float fLineSpacing, bool xzPlane/*=true*/, bool xyPlane/*=false*/, bool yzPlane/*=false*/)
+	{
+		auto spVL = VertexLayout::create();
+		spVL->add("position", 3, TYPE_FLOAT);
+
+		float fHalfLength = float(iLines - 1) * fLineSpacing;
+
+		auto spVertexList = std::shared_ptr<VertexList<VertexPos>>(new VertexList<VertexPos>(spVL));
+		for (int i = -iLines; i <= iLines; ++i)
+		{
+			float fOffset = float(i) * fLineSpacing;
+
+			if (xzPlane)
+			{
+				spVertexList->addVertex(VertexPos(Vec3(fOffset, 0.0f, -fHalfLength)));
+				spVertexList->addVertex(VertexPos(Vec3(fOffset, 0.0f, fHalfLength)));
+
+				spVertexList->addVertex(VertexPos(Vec3(-fHalfLength, 0.0f, fOffset)));
+				spVertexList->addVertex(VertexPos(Vec3(fHalfLength, 0.0f, fOffset)));
+			}
+
+			if (xyPlane)
+			{
+				spVertexList->addVertex(VertexPos(Vec3(fOffset, -fHalfLength, 0.0f)));
+				spVertexList->addVertex(VertexPos(Vec3(fOffset, fHalfLength, 0.0f)));
+
+				spVertexList->addVertex(VertexPos(Vec3(-fHalfLength, fOffset, 0.0f)));
+				spVertexList->addVertex(VertexPos(Vec3(fHalfLength, fOffset, 0.0f)));
+			}
+
+			if (yzPlane)
+			{
+				spVertexList->addVertex(VertexPos(Vec3(0.0f, fOffset, -fHalfLength)));
+				spVertexList->addVertex(VertexPos(Vec3(0.0f, fOffset, fHalfLength)));
+
+				spVertexList->addVertex(VertexPos(Vec3(0.0f, -fHalfLength, fOffset)));
+				spVertexList->addVertex(VertexPos(Vec3(0.0f, fHalfLength, fOffset)));
+			}
+		}
+
+		return StaticGeometry::create(spVertexList, Geometry::LINES);
 	}
 
 } }
