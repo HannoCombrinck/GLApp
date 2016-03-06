@@ -7,6 +7,12 @@
 
 namespace baselib { namespace graphics {
 
+	std::shared_ptr<Node> Node::load(const fs::path& fsPath)
+	{
+		// Load node hierarchy from disk with ModelLoader
+		return Node::create();
+	}
+
 	std::shared_ptr<Node> Node::create()
 	{
 		return std::shared_ptr<Node>(new Node());

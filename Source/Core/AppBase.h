@@ -27,7 +27,7 @@ namespace baselib
 		virtual ~AppBase();
 
 	protected:
-		std::shared_ptr<ResourceLoader> GetResourceLoader() const { return m_spResourceLoader; }
+		std::shared_ptr<ResourceLoader> getResourceLoader() const { return m_spResourceLoader; }
 
 	private:
 		void onInit(int iWidth, int iHeight);

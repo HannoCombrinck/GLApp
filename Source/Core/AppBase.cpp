@@ -49,6 +49,7 @@ namespace baselib {
 
 	void AppBase::onWindowResize(int iWidth, int iHeight)
 	{
+		LOG_INFO << "Resizing window to: " << iWidth << "x" << iHeight;
 	}
 
 }

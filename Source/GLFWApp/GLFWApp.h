@@ -38,6 +38,11 @@ namespace baselib
 		//! Getter for setWindowTitle().
 		std::string getWindowTitle() const { return m_sWindowTitle; }
 
+		//! Set window position.
+		void setPosition(int iX, int iY);
+		//! Get window position.
+		void getPosition(int &iX, int &iY);
+
 		//! Set window size.
 		void setSize(int iWidth, int iHeight);
 		//! Get window size.
@@ -161,6 +166,8 @@ namespace baselib
 		double m_dCurrentTime;		 //!< Current time elapsed since application started.
 		double m_dPreviousTime;		 //!< Time elapsed up to previous update cycle. So time elapsed since previous update = m_dCurrentTime - m_dPreviousTime.
 
+		int m_iPosX;				 //!< Current window X position
+		int m_iPosY;				 //!< Cuurent window Y position
 		int m_iWidth;				 //!< Current window width
 		int m_iHeight;				 //!< Current window height
 		bool m_bFullscreen;			 //!< True if in fullscreen mode, false for windowed mode

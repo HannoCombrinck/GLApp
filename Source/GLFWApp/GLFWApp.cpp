@@ -21,6 +21,8 @@ namespace baselib {
 		, m_bLockMousePos(false)
 		, m_dCurrentTime(0.0)
 		, m_dPreviousTime(0.0)
+		, m_iPosX(0)
+		, m_iPosY(0)
 		, m_iWidth(800)
 		, m_iHeight(600)
 		, m_bFullscreen(false)
@@ -135,6 +137,7 @@ namespace baselib {
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, m_iMinorVersion);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // TODO: Test forward compatible vs not forward compatible
+		glfwWindowHint(GLFW_DECORATED, GL_FALSE);
 		m_pWindow = glfwCreateWindow(m_iWidth, m_iHeight, m_sWindowTitle.c_str(), pMonitor, NULL);
 		if (!m_pWindow)
 		{
@@ -358,6 +361,19 @@ namespace baselib {
 	{
 		m_sWindowTitle = s;
 		glfwSetWindowTitle(m_pWindow, s.c_str());
+	}
+
+	void GLFWApp::setPosition(int iX, int iY)
+	{
+		m_iPosX = iX;
+		m_iPosY = iY;
+		glfwSetWindowPos(m_pWindow, m_iPosX, m_iPosY);
+	}
+
+	void GLFWApp::getPosition(int &iX, int &iY)
+	{
+		iX = m_iPosX;
+		iY = m_iPosY;
 	}
 
 	void GLFWApp::setSize(int iWidth, int iHeight)

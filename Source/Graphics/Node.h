@@ -1,9 +1,13 @@
 #pragma once
 
+#include <Core/Resource.h>
 #include <Graphics/Spatial.h>
 #include <memory>
-#include <boost/weak_ptr.hpp>
 #include <vector>
+#include <boost/weak_ptr.hpp>
+#include <boost/filesystem.hpp>
+
+namespace fs = boost::filesystem;
 
 namespace baselib 
 {
@@ -21,8 +25,12 @@ namespace baselib
 		 *
 		 */
 		class Node : public Spatial
+				   , public Resource
 		{
 		public:
+			//! Loads a Node hierarchy from file.
+			static std::shared_ptr<Node> load(const fs::path& fsPath);
+
 			//! Creates a Node.
 			static std::shared_ptr<Node> create();
 
@@ -38,6 +46,9 @@ namespace baselib
 
 			//! Apply f to this node and all its children.
 			virtual void traverse(const boost::function<void(const std::shared_ptr<Spatial>&)>& f);
+
+			//! Resource type override
+			virtual std::string getResourceType() const { return "Node"; }
 
 		protected:
 			//! Protected constructor - must be created by static create().

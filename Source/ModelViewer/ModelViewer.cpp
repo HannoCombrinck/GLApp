@@ -6,6 +6,8 @@
 #include <Core/NullPtr.h>
 #include <boost/filesystem.hpp>
 
+#include <Graphics/Node.h>
+
 namespace fs = boost::filesystem;
 
 using namespace baselib;
@@ -42,9 +44,11 @@ void ModelViewer::onKeyPress( int iKey )
 
 void ModelViewer::onFileDrop(const std::vector<std::string>& asPaths)
 {
-	LOG_INFO << "Files dropped on window:";
+	LOG_INFO << "Importing files:";
 	for (auto i = asPaths.begin(); i != asPaths.end(); ++i)
 	{
 		LOG_INFO << "\t" << (*i);
+		auto sModelPath = *i;
+		auto spModel = getResourceLoader()->load<graphics::Node>(sModelPath);
 	}
 }
