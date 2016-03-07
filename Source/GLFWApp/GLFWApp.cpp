@@ -137,7 +137,7 @@ namespace baselib {
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, m_iMinorVersion);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE); // TODO: Test forward compatible vs not forward compatible
-		glfwWindowHint(GLFW_DECORATED, GL_FALSE);
+		//glfwWindowHint(GLFW_DECORATED, GL_FALSE);
 		m_pWindow = glfwCreateWindow(m_iWidth, m_iHeight, m_sWindowTitle.c_str(), pMonitor, NULL);
 		if (!m_pWindow)
 		{
