@@ -3,12 +3,14 @@ BinD/
 Debug
 Release
 ipch
+*~
 *.opensdf
 *.sdf
 *.suo
 *.vcxproj.user
 *.nvuser
 *.swp
+*.VC.db
 Site/Source/.cabal-sandbox/
 Site/Source/cabal.sandbox.config
 Site/Source/_cache
