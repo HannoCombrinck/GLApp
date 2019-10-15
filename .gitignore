@@ -5,6 +5,7 @@ Release
 ipch
 *~
 *.opensdf
+*.opendb
 *.sdf
 *.suo
 *.vcxproj.user
