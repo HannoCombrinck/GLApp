@@ -44,6 +44,9 @@
     <Filter Include="Header/Source Files\ModelViewer">
       <UniqueIdentifier>{1307d0c5-247d-4e7a-bebc-1ceab3b554ca}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Dependencies">
+      <UniqueIdentifier>{4c3ca947-2728-4ae0-9a96-7c3b457dfc4c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Source\main.cpp">
@@ -338,5 +341,16 @@
     <None Include="..\..\Data\Shaders\LightAmbient.frag">
       <Filter>Data\Shaders</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <CopyDependencies Include="..\..\Libraries\DLL\glew32.dll">
+      <Filter>Dependencies</Filter>
+    </CopyDependencies>
+    <CopyDependencies Include="..\..\Libraries\DLL\glfw3.dll">
+      <Filter>Dependencies</Filter>
+    </CopyDependencies>
+    <CopyDependencies Include="..\..\Libraries\DLL\glfw3_d.dll">
+      <Filter>Dependencies</Filter>
+    </CopyDependencies>
   </ItemGroup>
 </Project>
